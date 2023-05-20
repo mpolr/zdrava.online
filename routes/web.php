@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\RegisterController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +15,40 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/', ['as' => 'index', function () {
+    if (Auth::user()) { // TODO: Сделать через middleware
+        return redirect()->route('site.dashboard');
+    }
+
+    return view('index');
+}]);
+
+Route::get('dashboard', ['as' => 'site.dashboard', function () {
+    return view('dashboard');
+}]);
+
+/* Аутентификация */
+Route::group(['prefix' => 'auth'], function () {
+    Route::get('/', function () {
+        return redirect()->route('auth.login');
+    });
+
+    Route::get('logout', [LoginController::class, 'logout'])->name('auth.logout');
+    Route::get('login', ['as' => 'auth.login', function () {
+        if (Auth::user()) { // TODO: Сделать через middleware
+            return redirect()->route('site.dashboard');
+        }
+
+        return view('auth.login');
+    }]);
+    Route::get('register', ['as' => 'auth.register', function () {
+        if (Auth::user()) { // TODO: Сделать через middleware
+            return redirect()->route('site.dashboard');
+        }
+
+        return view('auth/register');
+    }]);
+
+    Route::post('login', [LoginController::class, 'authenticate'])->name('auth.login.post');
+    Route::post('register', [RegisterController::class, 'register'])->name('auth.register.post');
 });
