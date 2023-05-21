@@ -12,6 +12,7 @@ return new class extends Migration
             $table->string('first_name')->after('id');
             $table->string('last_name')->after('first_name');
             $table->string('nickname')->after('last_name')->nullable();
+            $table->string('photo')->after('nickname')->nullable();
             $table->boolean('subscribe_news')->after('email');
             $table->dropColumn('name');
         });
@@ -25,6 +26,7 @@ return new class extends Migration
                 'first_name',
                 'last_name',
                 'nickname',
+                'photo',
                 'subscribe_news'
             ]);
             $table->string('name')->after('id');

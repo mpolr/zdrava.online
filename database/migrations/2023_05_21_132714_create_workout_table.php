@@ -8,16 +8,14 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('android_app', function (Blueprint $table) {
+        Schema::create('workout', function (Blueprint $table) {
             $table->id();
-            $table->string('version');
-            $table->string('description');
             $table->timestamps();
         });
     }
 
     public function down(): void
     {
-        Schema::dropIfExists('android_app');
+        Schema::dropIfExists('workout');
     }
 };
