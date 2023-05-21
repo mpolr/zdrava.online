@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\DownloadAppController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,6 +23,8 @@ Route::get('/', ['as' => 'index', function () {
 
     return view('index');
 }]);
+
+Route::get('download-app', [DownloadAppController::class, 'index'])->name('app.download');
 
 Route::get('dashboard', ['as' => 'site.dashboard', function () {
     return view('dashboard');
