@@ -82,16 +82,16 @@
                             <div class="flex items-center justify-between space-x-5 bg-white px-4">
                                 <a class="menu-hover text-base font-medium text-black lg:mx-0" onClick="">
                                     @if (Auth::user()->photo)
-                                        <img
-                                            src="{{ asset('/pictures/athletes/' . Auth::user()->id . '/' . Auth::user()->photo . '/medium.jpg') }}"
-                                            class="rounded-full"
-                                            style="height: 25px; width: 25px"
-                                            alt=""
-                                            loading="lazy" />
+                                        <img src="{{ asset('/pictures/athletes/' . Auth::user()->id . '/' . Auth::user()->photo . '/medium.jpg') }}"
+                                             alt="{{ Auth::user()->first_name }} {{ Auth::user()->last_name }}"
+                                             loading="lazy"
+                                             class="w9 h-9 p-1 rounded-full ring-2 ring-gray-300 dark:ring-gray-500" />
                                     @else
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                                            <path stroke-linecap="round" stroke-linejoin="round" d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z" />
-                                        </svg>
+                                        <div class="relative inline-flex items-center justify-center w-9 h-9 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600">
+                                            <span class="font-medium text-gray-600 dark:text-gray-300">
+                                                {{ Str::limit(Auth::user()->first_name, 1, '') }}{{ Str::limit(Auth::user()->last_name, 1, '') }}
+                                            </span>
+                                        </div>
                                     @endif
                                 </a>
                                 <span>
