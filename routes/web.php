@@ -58,7 +58,7 @@ Route::group(['prefix' => 'auth'], function () {
 });
 
 /* Настройки */
-Route::group(['prefix' => 'settings'], function () {
+Route::group(['prefix' => 'settings', 'middleware' => 'auth'], function () {
     Route::get('/', function () {
         return redirect()->route('settings.profile');
     });
