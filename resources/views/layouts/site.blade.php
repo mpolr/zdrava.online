@@ -78,14 +78,14 @@
                 </div>
                 <div class="flex items-center lg:ml-auto">
                     @auth
-                        <div class="group relative cursor-pointer py-2">
+                        <div class="group relative cursor-pointer py-1">
                             <div class="flex items-center justify-between space-x-5 bg-white px-4">
                                 <a class="menu-hover text-base font-medium text-black lg:mx-0" onClick="">
                                     @if (Auth::user()->photo)
                                         <img src="{{ asset('/pictures/athletes/' . Auth::user()->id . '/' . Auth::user()->photo) }}"
                                              alt="{{ Auth::user()->first_name }} {{ Auth::user()->last_name }}"
                                              loading="lazy"
-                                             class="w9 h-9 p-1 rounded-full ring-2 ring-gray-300 dark:ring-gray-500" />
+                                             class="w9 h-9 p-1 rounded-full ring-1 ring-gray-300 dark:ring-gray-500" />
                                     @else
                                         <div class="relative inline-flex items-center justify-center w-9 h-9 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600">
                                             <span class="font-medium text-gray-600 dark:text-gray-300">

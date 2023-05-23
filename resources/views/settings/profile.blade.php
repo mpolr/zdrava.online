@@ -18,13 +18,39 @@
                 </button>
             </div>
         @endif
+        @if ($errors->any())
+            <div class="flex p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                <svg aria-hidden="true" class="flex-shrink-0 inline w-5 h-5 mr-3" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path></svg>
+                <span class="sr-only">Danger</span>
+                <div>
+                    <span class="font-medium">{{ __('Ensure that these requirements are met:') }}</span>
+                    <ul class="mt-1.5 ml-4 list-disc list-inside">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ __($error) }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            </div>
+            <div class="alert alert-danger">
+                <ul>
+
+                </ul>
+            </div>
+        @endif
         <form action="{{ route('upload.avatar') }}" method="POST" class="shadow p-12" enctype="multipart/form-data">
             @csrf
             Аватар:
             <div class="flex items-center justify-center w-full">
                 <label for="avatar" class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
                     <div class="flex flex-col items-center justify-center pt-5 pb-6">
-                        <svg aria-hidden="true" class="w-10 h-10 mb-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path></svg>
+                        @if (Auth::user()->photo)
+                            <img src="{{ asset('/pictures/athletes/' . Auth::user()->id . '/' . Auth::user()->photo) }}"
+                                 alt="{{ Auth::user()->first_name }} {{ Auth::user()->last_name }}"
+                                 loading="lazy"
+                                 class="w-32 h-32 mb-3 p-1 rounded-full ring-2 ring-gray-300 dark:ring-gray-500" />
+                        @else
+                            <svg aria-hidden="true" class="w-10 h-10 mb-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path></svg>
+                        @endif
                         <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span class="font-semibold">{{ __('Click to select file') }}</span> {{ __('or drag and drop') }}</p>
                         <p class="text-xs text-gray-500 dark:text-gray-400">PNG, JPG {{ __('or') }} GIF ({{ __('max.') }} 512x512px)</p>
                     </div>

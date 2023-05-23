@@ -27,5 +27,7 @@
     "max.": "макс.",
     "Submit": "Отправить",
     "Public profile": "Публичный профиль",
-    "File Upload successfully": "Файл успешно загружен"
+    "File Upload successfully": "Файл успешно загружен",
+    "Ensure that these requirements are met:": "Обнаружена одна или несколько ошибок:",
+    "The avatar field is required.": "Новый аватар не выбран"
 }
