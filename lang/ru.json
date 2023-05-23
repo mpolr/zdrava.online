@@ -20,5 +20,12 @@
     "Settings": "Настройки",
     "My profile": "Мой профиль",
     "My account": "Мой аккаунт",
-    "Privacy": "Конфиденциальность"
+    "Privacy": "Конфиденциальность",
+    "Click to select file": "Нажмите чтобы выбрать файл",
+    "or drag and drop": "или перетащите сюда",
+    "or": "или",
+    "max.": "макс.",
+    "Submit": "Отправить",
+    "Public profile": "Публичный профиль",
+    "File Upload successfully": "Файл успешно загружен"
 }

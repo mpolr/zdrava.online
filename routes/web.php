@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\DownloadAppController;
 use App\Http\Controllers\SettingsController;
+use App\Http\Controllers\UploadController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -66,4 +67,14 @@ Route::group(['prefix' => 'settings', 'middleware' => 'auth'], function () {
     Route::get('profile', [SettingsController::class, 'profile'])->name('settings.profile');
     Route::get('account', [SettingsController::class, 'account'])->name('settings.account');
     Route::get('privacy', [SettingsController::class, 'privacy'])->name('settings.privacy');
+});
+
+/* Настройки */
+Route::group(['prefix' => 'upload'], function () {
+    Route::get('/', function () {
+        return redirect()->route('site.dashboard');
+    });
+
+    Route::post('avatar', [UploadController::class, 'avatar'])->name('upload.avatar');
+    Route::post('workout', [UploadController::class, 'workout'])->name('upload.workout');
 });

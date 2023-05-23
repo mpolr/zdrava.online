@@ -82,7 +82,7 @@
                             <div class="flex items-center justify-between space-x-5 bg-white px-4">
                                 <a class="menu-hover text-base font-medium text-black lg:mx-0" onClick="">
                                     @if (Auth::user()->photo)
-                                        <img src="{{ asset('/pictures/athletes/' . Auth::user()->id . '/' . Auth::user()->photo . '/medium.jpg') }}"
+                                        <img src="{{ asset('/pictures/athletes/' . Auth::user()->id . '/' . Auth::user()->photo) }}"
                                              alt="{{ Auth::user()->first_name }} {{ Auth::user()->last_name }}"
                                              loading="lazy"
                                              class="w9 h-9 p-1 rounded-full ring-2 ring-gray-300 dark:ring-gray-500" />
