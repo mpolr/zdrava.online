@@ -51,7 +51,7 @@
                         </svg>
                     </a>
                     <div>
-                        <a class="text-xl text-neutral-800 dark:text-neutral-200" href="#">
+                        <a href="{{ route('index') }}" class="text-xl text-neutral-800 dark:text-neutral-200">
                             {{ __('Zdrava') }}
                         </a>
                     </div>
@@ -107,8 +107,8 @@
                                 <a class="my-2 block border-b border-gray-100 py-1 text-gray-500 hover:text-black md:mx-2">
                                     Мой профиль
                                 </a>
-                                <a class="my-2 block border-b border-gray-100 py-1 text-gray-500 hover:text-black md:mx-2">
-                                    Настройки
+                                <a href="{{ route('settings.profile') }}" class="my-2 block border-b border-gray-100 py-1 text-gray-500 hover:text-black md:mx-2">
+                                    {{ __('Settings') }}
                                 </a>
                                 <a href="{{ route('auth.logout') }}" class="font-semibold my-2 block border-b border-gray-100 py-1 text-black-500 hover:text-black md:mx-2">
                                     {{ __('Logout') }}

@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\DownloadAppController;
+use App\Http\Controllers\SettingsController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -54,4 +55,15 @@ Route::group(['prefix' => 'auth'], function () {
 
     Route::post('login', [LoginController::class, 'authenticate'])->name('auth.login.post');
     Route::post('register', [RegisterController::class, 'register'])->name('auth.register.post');
+});
+
+/* Настройки */
+Route::group(['prefix' => 'settings'], function () {
+    Route::get('/', function () {
+        return redirect()->route('settings.profile');
+    });
+
+    Route::get('profile', [SettingsController::class, 'profile'])->name('settings.profile');
+    Route::get('account', [SettingsController::class, 'account'])->name('settings.account');
+    Route::get('privacy', [SettingsController::class, 'privacy'])->name('settings.privacy');
 });
