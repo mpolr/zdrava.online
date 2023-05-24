@@ -11,6 +11,7 @@ return new class extends Migration
         Schema::create('android_app', function (Blueprint $table) {
             $table->id();
             $table->string('version');
+            $table->bigInteger('downloads')->unsigned();
             $table->string('description');
             $table->timestamps();
         });

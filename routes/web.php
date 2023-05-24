@@ -26,7 +26,8 @@ Route::get('/', ['as' => 'index', function () {
     return view('index');
 }]);
 
-Route::get('download-app', [DownloadAppController::class, 'index'])->name('app.download');
+Route::get('download-app', [DownloadAppController::class, 'index'])->name('app');
+Route::get('download-app/download/{version?}', [DownloadAppController::class, 'download'])->name('app.download');
 
 Route::get('dashboard', ['as' => 'site.dashboard', function () {
     return view('dashboard');

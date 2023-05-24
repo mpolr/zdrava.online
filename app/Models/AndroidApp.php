@@ -13,6 +13,7 @@ class AndroidApp extends Model
 
     protected $fillable = [
         'version',
+        'downloads',
         'description',
     ];
 }
