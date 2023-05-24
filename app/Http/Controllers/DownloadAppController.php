@@ -33,6 +33,12 @@ class DownloadAppController extends Controller
         $app->downloads += 1;
         $app->save();
 
-        return Storage::download('public/android/zdrava-' . $app->version . '.apk');
+        return Storage::download(
+            'public/android/zdrava-' . $app->version . '.apk',
+            null,
+            [
+                'Content-Type' => 'application/vnd.android.package-archive',
+            ]
+        );
     }
 }
