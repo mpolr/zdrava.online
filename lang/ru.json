@@ -29,5 +29,9 @@
     "Public profile": "Публичный профиль",
     "File Upload successfully": "Файл успешно загружен",
     "Ensure that these requirements are met:": "Обнаружена одна или несколько ошибок:",
-    "The avatar field is required.": "Новый аватар не выбран"
+    "The avatar field is required.": "Новый аватар не выбран",
+    "File": "Файл",
+    "megabyte": "мегабайт",
+    "Manually add": "Добавить вручную",
+    "Upload and sync workouts": "Загрузить и синхронизировать тренировки"
 }

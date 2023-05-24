@@ -1,9 +1,9 @@
-@extends('layouts.settings')
-@section('settings.content')
+@extends('layouts.upload')
+@section('upload.content')
     <div class="w-2/4">
         <!-- Контент -->
         <h2 class="mb-2 mt-0 text-4xl font-medium leading-tight text-black">
-            {{ __('My profile') }}
+            {{ __('Upload and sync workouts') }}
         </h2>
         @if ($message = Session::get('success'))
             <div id="alert-3" class="flex p-4 mb-4 text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400" role="alert">
@@ -32,43 +32,24 @@
                 </div>
             </div>
         @endif
-        <form action="{{ route('upload.avatar') }}" method="POST" class="p-2" enctype="multipart/form-data">
+        <form action="{{ route('upload.workout') }}" method="POST" class="p-2" enctype="multipart/form-data">
             @csrf
-            Аватар:
             <div class="flex items-center justify-center w-full">
-                <label for="avatar" class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
+                <label for="workout" class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
                     <div class="flex flex-col items-center justify-center pt-5 pb-6">
-                        @if (Auth::user()->photo)
-                            <img src="{{ asset('/pictures/athletes/' . Auth::user()->id . '/' . Auth::user()->photo) }}"
-                                 alt="{{ Auth::user()->first_name }} {{ Auth::user()->last_name }}"
-                                 loading="lazy"
-                                 class="w-32 h-32 mb-3 p-1 rounded-full ring-2 ring-gray-300 dark:ring-gray-500" />
-                        @else
-                            <svg aria-hidden="true" class="w-10 h-10 mb-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path></svg>
-                        @endif
+                        <svg aria-hidden="true" class="w-10 h-10 mb-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path></svg>
                         <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span class="font-semibold">{{ __('Click to select file') }}</span> {{ __('or drag and drop') }}</p>
-                        <p class="text-xs text-gray-500 dark:text-gray-400">PNG, JPG {{ __('or') }} GIF ({{ __('max.') }} 512x512px)</p>
+                        <p class="text-xs text-gray-500 dark:text-gray-400">FIT, GPX {{ __('or') }} TCX ({{ __('max.') }} 25 {{ __('megabyte') }})</p>
                     </div>
-                    <input id="avatar" name="avatar" type="file" class="hidden" />
+                    <input id="workout" name="workout" type="file" class="hidden" multiple />
                 </label>
             </div>
             <p class="py-2">
                 <button type="submit" class="px-4 py-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">{{ __('Submit') }}</button>
             </p>
-{{--            <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700">--}}
+            {{--            <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700">--}}
         </form>
     </div>
     <div class="w-1/4 lg:w-3/12 px-8">
-        <h3 class="text-3xl font-bold dark:text-white">
-            {{ __('My account') }}
-        </h3>
-        <p class="pt-4">
-            Почта:<br/>
-            {{ Auth::user()->email }}
-        </p>
-        <p class="pt-4">
-            Регистрация:<br/>
-            {{ Auth::user()->created_at }}
-        </p>
     </div>
 @endsection

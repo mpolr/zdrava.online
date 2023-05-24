@@ -70,10 +70,14 @@ Route::group(['prefix' => 'settings', 'middleware' => 'auth'], function () {
     Route::get('privacy', [SettingsController::class, 'privacy'])->name('settings.privacy');
 });
 
-/* Настройки */
+/* Загрузка файлов на сервер */
 Route::group(['prefix' => 'upload'], function () {
     Route::get('/', function () {
         return redirect()->route('site.dashboard');
+    });
+
+    Route::get('workout', function () {
+        return view('upload/workout');
     });
 
     Route::post('avatar', [UploadController::class, 'avatar'])->name('upload.avatar');

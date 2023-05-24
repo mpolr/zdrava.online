@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "08de0ee7314d158993e795b84a070759",
+    "content-hash": "c0e31e05e5deb7d2f611fb44e8041718",
     "packages": [
         {
             "name": "brick/math",
@@ -2993,6 +2993,55 @@
                 }
             ],
             "time": "2023-04-15T23:01:58+00:00"
+        },
+        {
+            "name": "sibyx/phpgpx",
+            "version": "1.2.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Sibyx/phpGPX.git",
+                "reference": "ae2fc57617ded987710e22128d94a0c20d4401da"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Sibyx/phpGPX/zipball/ae2fc57617ded987710e22128d94a0c20d4401da",
+                "reference": "ae2fc57617ded987710e22128d94a0c20d4401da",
+                "shasum": ""
+            },
+            "require": {
+                "ext-dom": "*",
+                "ext-simplexml": "*",
+                "lib-libxml": "*",
+                "php": ">=5.5"
+            },
+            "require-dev": {
+                "evert/phpdoc-md": "~0.2.0",
+                "friendsofphp/php-cs-fixer": "^2.18",
+                "phpunit/phpunit": "^6.5"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "phpGPX\\": "src/phpGPX/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jakub Dubec",
+                    "email": "jakub.dubec@gmail.com",
+                    "homepage": "https://jakubdubec.me"
+                }
+            ],
+            "description": "A simple PHP library for GPX import/export",
+            "support": {
+                "issues": "https://github.com/Sibyx/phpGPX/issues",
+                "source": "https://github.com/Sibyx/phpGPX/tree/1.2.1"
+            },
+            "time": "2022-07-30T20:25:35+00:00"
         },
         {
             "name": "symfony/console",

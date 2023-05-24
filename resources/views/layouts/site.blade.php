@@ -101,12 +101,12 @@
                                 </span>
                             </div>
                             <div class="invisible absolute z-50 flex right-0 w-48 flex-col bg-gray-100 py-1 px-4 shadow-xl group-hover:visible" onClick="">
-                                <a class="my-2 block border-b border-gray-100 py-1 text-success hover:text-black md:mx-2">
-                                    Найти друзей
-                                </a>
-                                <a class="my-2 block border-b border-gray-100 py-1 text-gray-500 hover:text-black md:mx-2">
-                                    Мой профиль
-                                </a>
+{{--                                <a class="my-2 block border-b border-gray-100 py-1 text-success hover:text-black md:mx-2">--}}
+{{--                                    Найти друзей--}}
+{{--                                </a>--}}
+{{--                                <a class="my-2 block border-b border-gray-100 py-1 text-gray-500 hover:text-black md:mx-2">--}}
+{{--                                    Мой профиль--}}
+{{--                                </a>--}}
                                 <a href="{{ route('settings.profile') }}" class="my-2 block border-b border-gray-100 py-1 text-gray-500 hover:text-black md:mx-2">
                                     {{ __('Settings') }}
                                 </a>
@@ -124,18 +124,18 @@
                                 </span>
                             </div>
                             <div class="invisible absolute z-50 flex right-0 w-56 flex-col bg-gray-100 py-1 px-4 text-gray-800 shadow-xl group-hover:visible" onClick="">
-                                <a class="my-2 block border-b border-gray-100 py-1 text-gray-500 hover:text-black md:mx-2">
+                                <a href="{{ route('upload.workout') }}" class="my-2 block border-b border-gray-100 py-1 text-gray-500 hover:text-black md:mx-2">
                                     Загрузить тренировку
                                 </a>
-                                <a class="my-2 block border-b border-gray-100 py-1 text-gray-500 hover:text-black md:mx-2">
-                                    Добавить тренировку вручную
-                                </a>
-                                <a class="my-2 block border-b border-gray-100 py-1 text-gray-500 hover:text-black md:mx-2">
-                                    Новый маршрут
-                                </a>
-                                <a class="my-2 block border-b border-gray-100 py-1 text-gray-500 hover:text-black md:mx-2">
-                                    Создать запись
-                                </a>
+{{--                                <a class="my-2 block border-b border-gray-100 py-1 text-gray-500 hover:text-black md:mx-2">--}}
+{{--                                    Добавить тренировку вручную--}}
+{{--                                </a>--}}
+{{--                                <a class="my-2 block border-b border-gray-100 py-1 text-gray-500 hover:text-black md:mx-2">--}}
+{{--                                    Новый маршрут--}}
+{{--                                </a>--}}
+{{--                                <a class="my-2 block border-b border-gray-100 py-1 text-gray-500 hover:text-black md:mx-2">--}}
+{{--                                    Создать запись--}}
+{{--                                </a>--}}
                             </div>
                         </div>
                     @else
