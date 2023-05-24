@@ -5,11 +5,11 @@
             <div class="grid lg:grid-cols-2 gap-12 flex items-center">
                 <div class="mt-12 lg:mt-0">
                     <h1 class="text-5xl md:text-6xl xl:text-7xl font-bold tracking-tight mb-12">
-                        Already with us?<br />
-                        <span class="text-blue-600">Welcome back!</span>
+                        {{ __('Already with us?') }}<br />
+                        <span class="text-blue-600">{{ __('Welcome back!') }}</span>
                     </h1>
                     <p class="text-gray-600">
-                        We're miss you<br />
+                        {{ __('We\'re miss you') }}
                     </p>
                 </div>
                 <div class="mb-12 lg:mb-0">

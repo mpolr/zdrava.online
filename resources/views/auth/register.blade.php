@@ -5,12 +5,13 @@
             <div class="grid lg:grid-cols-2 gap-12 flex items-center">
                 <div class="mt-12 lg:mt-0">
                     <h1 class="text-5xl md:text-6xl xl:text-7xl font-bold tracking-tight mb-12">
-                        Try Zdrava.<br />
-                        <span class="text-blue-600">Invite friends.</span>
+                        <span class="text-blue-600">{{ __('Zdrava') }}</span>
                     </h1>
                     <p class="text-gray-600">
-                        Register today and start tracking your progress.<br />
-                        Discover new peoples and places.
+                        {{ __('Try Zdrava.') }} ({{ __('alpha test') }})<br />
+{{--                        Register today and start tracking your progress.<br />--}}
+{{--                        Discover new peoples and places.<br />--}}
+                        {{ __('We already have :count people', ['count' => \App\Models\User::count()]) }}
                     </p>
                 </div>
                 <div class="mb-12 lg:mb-0">
