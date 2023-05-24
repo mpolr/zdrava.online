@@ -30,7 +30,7 @@ Route::get('download-app', [DownloadAppController::class, 'index'])->name('app.d
 
 Route::get('dashboard', ['as' => 'site.dashboard', function () {
     return view('dashboard');
-}]);
+}])->middleware([\App\Http\Middleware\Authenticate::class]);
 
 /* Аутентификация */
 Route::group(['prefix' => 'auth'], function () {
