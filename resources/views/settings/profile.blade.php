@@ -37,7 +37,7 @@
                 </ul>
             </div>
         @endif
-        <form action="{{ route('upload.avatar') }}" method="POST" class="shadow p-12" enctype="multipart/form-data">
+        <form action="{{ route('upload.avatar') }}" method="POST" class="p-2" enctype="multipart/form-data">
             @csrf
             Аватар:
             <div class="flex items-center justify-center w-full">
@@ -60,11 +60,20 @@
             <p class="py-2">
                 <button type="submit" class="px-4 py-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">{{ __('Submit') }}</button>
             </p>
+{{--            <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700">--}}
         </form>
     </div>
-    <div class="w-1/4 lg:w-3/12 px-4">
-        <p>
-            Всякое-разное тут
+    <div class="w-1/4 lg:w-3/12 px-8">
+        <h3 class="text-3xl font-bold dark:text-white">
+            {{ __('My account') }}
+        </h3>
+        <p class="pt-4">
+            Почта:<br/>
+            {{ Auth::user()->email }}
+        </p>
+        <p class="pt-4">
+            Регистрация:<br/>
+            {{ Auth::user()->created_at }}
         </p>
     </div>
 @endsection
