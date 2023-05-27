@@ -41,7 +41,7 @@
                         <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span class="font-semibold">{{ __('Click to select file') }}</span> {{ __('or drag and drop') }}</p>
                         <p class="text-xs text-gray-500 dark:text-gray-400">FIT, GPX {{ __('or') }} TCX ({{ __('max.') }} 25 {{ __('megabyte') }})</p>
                     </div>
-                    <input id="workout" name="workout" type="file" class="hidden" multiple />
+                    <input id="workout" name="workout[]" type="file" class="hidden" multiple />
                 </label>
             </div>
             <p class="py-2">
