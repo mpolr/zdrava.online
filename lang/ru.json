@@ -40,5 +40,21 @@
     "Already with us?": "Уже с нами?",
     "Welcome back!": "С возвращением!",
     "We're miss you": "Мы скучали по вам",
-    "Workout": "Тренировка"
+    "Workout": "Тренировка",
+    "My workouts": "Мои тренировки",
+    "Type": "Тип",
+    "Name": "Название",
+    "Time": "Время",
+    "Distance": "Дистанция",
+    "Altitude": "Высота",
+    "Edit": "Изменить",
+    "Delete": "Удалить",
+    "Share": "Поделиться",
+    ":distance km": ":distance км",
+    ":elevation m": ":elevation м",
+    "Workouts: :count": "Тренировок: :count",
+    "upload files": "загрузите файлы",
+    "Workouts not found. Record one using :zdrava-app or :upload manually": "Тренировки не найдены. Запишите их с помощью :zdrava-app или :upload вручную",
+    "Overview": "Обзор",
+    "Analysis": "Анализ"
 }

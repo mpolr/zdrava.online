@@ -1,10 +1,14 @@
 <?php
 
+use App\Http\Controllers\ActivitiesController;
+use App\Http\Controllers\AthleteController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DownloadAppController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\UploadController;
+use App\Http\Middleware\Authenticate;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -29,9 +33,8 @@ Route::get('/', ['as' => 'index', function () {
 Route::get('download-app', [DownloadAppController::class, 'index'])->name('app');
 Route::get('download-app/download/{version?}', [DownloadAppController::class, 'download'])->name('app.download');
 
-Route::get('dashboard', ['as' => 'site.dashboard', function () {
-    return view('dashboard');
-}])->middleware([\App\Http\Middleware\Authenticate::class]);
+Route::middleware(Authenticate::class)->get('dashboard', [DashboardController::class, 'index'])->name('site.dashboard');
+Route::middleware(Authenticate::class)->get('dashboard', [DashboardController::class, 'index'])->name('site.dashboard');
 
 /* Аутентификация */
 Route::group(['prefix' => 'auth'], function () {
@@ -57,6 +60,24 @@ Route::group(['prefix' => 'auth'], function () {
 
     Route::post('login', [LoginController::class, 'authenticate'])->name('auth.login.post');
     Route::post('register', [RegisterController::class, 'register'])->name('auth.register.post');
+});
+
+/* Спортсмен */
+Route::group(['prefix' => 'athlete', 'middleware' => 'auth'], function () {
+    Route::get('/', function () {
+//        return redirect()->route('settings.profile');
+    });
+
+    Route::get('training', [AthleteController::class, 'training'])->name('athlete.training');
+});
+
+/* Тренировки */
+Route::group(['prefix' => 'activities', 'middleware' => 'auth'], function () {
+    Route::get('/', function () {
+        return redirect()->route('athlete.training');
+    });
+
+    Route::get('/{id}', [ActivitiesController::class, 'get'])->name('activities.get');
 });
 
 /* Настройки */
