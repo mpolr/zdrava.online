@@ -19,6 +19,9 @@ class DownloadAppController extends Controller
     public function download(?string $version = null): StreamedResponse
     {
         $app = null;
+        if (strpos($version, '.') == 0) {
+            abort(404);
+        }
 
         if (!empty($version)) {
             $app = AndroidApp::where([
