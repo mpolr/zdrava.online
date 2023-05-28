@@ -8,6 +8,7 @@ use App\Models\Activities;
 use phpGPX\phpGPX;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Throwable;
 
 class UploadController extends Controller
 {
@@ -76,12 +77,15 @@ class UploadController extends Controller
     /**
      * @throws \Exception
      */
-    private function processFIT(string $file, StoreWorkoutRequest $request, string $filename): bool
+    private function processFIT(string $file, StoreWorkoutRequest $request, string $filename)
     {
         // TODO: Рассчитать avg_pace, min_altitude, max_altitude
-        $fit = new phpFITFileAnalysis(Storage::path($file), [
-            'pace' => true,
-        ]);
+        try {
+            $fit = new phpFITFileAnalysis(Storage::path($file));
+        } catch (Throwable $e) {
+            report($e);
+            return false;
+        }
 
         $activity = new Activities();
         $activity->users_id = $request->user()->id;
@@ -117,7 +121,12 @@ class UploadController extends Controller
     private function processGPX(string $file, StoreWorkoutRequest $request, string $filename): bool
     {
         $gpx = new phpGPX();
-        $gpx = $gpx->parse(Storage::get($file));
+        try {
+            $gpx = $gpx->parse(Storage::get($file));
+        } catch (Throwable $e) {
+            report($e);
+            return false;
+        }
 
         foreach ($gpx->tracks as $track) {
             // Statistics for whole track

@@ -1,6 +1,7 @@
 @extends('layouts.site')
 @section('js')
     <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet-src.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-gpx/1.7.0/gpx.min.js"></script>
 @endsection
 
 @section('content')
@@ -88,6 +89,22 @@
                                         </h5>
                                         <span class="text-gray-500 dark:text-gray-400">
                                             {{ __('Max. speed') }}
+                                        </span>
+                                    </div>
+                                    <div class="flex-1 mx-2 h-10">
+                                        <h5 class="mb-0 text-2xl font-normal tracking-tight text-gray-900 dark:text-white">
+                                            {{ $activity->avg_heart_rate }}
+                                        </h5>
+                                        <span class="text-gray-500 dark:text-gray-400">
+                                            {{ __('Avg. HR') }}
+                                        </span>
+                                    </div>
+                                    <div class="flex-1 mx-2 h-10">
+                                        <h5 class="mb-0 text-2xl font-normal tracking-tight text-gray-900 dark:text-white">
+                                            {{ $activity->avg_cadence }}
+                                        </h5>
+                                        <span class="text-gray-500 dark:text-gray-400">
+                                            {{ __('Avg. cadence') }}
                                         </span>
                                     </div>
                                 </div>

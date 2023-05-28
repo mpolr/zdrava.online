@@ -60,6 +60,8 @@
     ":speed km/h": ":speed км/ч",
     "Avg. speed": "Ср. скорость",
     "Max. speed": "Макс. скорость",
+    "Avg. cadence": "Ср. каденс",
+    "Avg. HR": "Ср. пульс",
     "Workouts: :count": "Тренировок: :count",
     "upload files": "загрузите файлы",
     "Workouts not found. Record one using :zdrava-app or :upload manually": "Тренировки не найдены. Запишите их с помощью :zdrava-app или :upload вручную",
