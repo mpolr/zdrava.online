@@ -15,6 +15,7 @@
 
     <!-- Scripts -->
     @vite('resources/js/app.js')
+    @yield('js')
 </head>
 <body class="bg-gray-50">
     <section class="mb-40">

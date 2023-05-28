@@ -1,3 +1,9 @@
+@import "leaflet";
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.leaflet-attribution-flag {
+    visibility: hidden !important;
+    display: none !important;
+}

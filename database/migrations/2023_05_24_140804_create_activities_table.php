@@ -11,12 +11,15 @@ return new class extends Migration
         Schema::create('activities', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('users_id')->unsigned();
-            $table->text('type')->default('bicycle');
+            $table->integer('sport')->default(2);
+            $table->integer('sub_sport')->default(7);
             $table->text('name')->nullable();
             $table->text('description')->nullable();
             $table->text('creator')->nullable();
+            $table->integer('device_manufacturers_id')->nullable();
             $table->float('distance')->nullable();
             $table->float('avg_speed')->nullable();
+            $table->float('max_speed')->nullable();
             $table->float('avg_pace')->nullable();
             $table->float('min_altitude')->nullable();
             $table->float('max_altitude')->nullable();
@@ -25,7 +28,18 @@ return new class extends Migration
             $table->dateTimeTz('started_at')->nullable();
             $table->dateTimeTz('finished_at')->nullable();
             $table->integer('duration')->nullable();
+            $table->integer('duration_total')->nullable();
+            $table->integer('avg_heart_rate')->nullable();
+            $table->integer('max_heart_rate')->nullable();
+            $table->integer('avg_cadence')->nullable();
+            $table->integer('max_cadence')->nullable();
+            $table->integer('total_calories')->nullable();
             $table->text('file')->nullable();
+            $table->text('image')->nullable();
+            $table->float('start_position_lat')->nullable();
+            $table->float('start_position_long')->nullable();
+            $table->float('end_position_lat')->nullable();
+            $table->float('end_position_long')->nullable();
             $table->timestamps();
         });
     }

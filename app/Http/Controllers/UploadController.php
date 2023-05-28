@@ -83,22 +83,32 @@ class UploadController extends Controller
             'pace' => true,
         ]);
 
-        // TODO: Переименовать type в sport, добавить subsport, завести таблички для этого дела
-        // подумать как лучше заюзать $fit->manufacturer()
-
         $activity = new Activities();
         $activity->users_id = $request->user()->id;
-        $activity->type = strtolower($fit->enumData('sport', $fit->data_mesgs['sport']['sport']));
+        $activity->sport = $fit->data_mesgs['sport']['sport'];
+        $activity->sub_sport = $fit->data_mesgs['sport']['sub_sport'];
         $activity->name = !empty($fit->data_mesgs['sport']['name']) ? $fit->data_mesgs['sport']['name'] : __('Workout');
         $activity->creator = !empty($fit->data_mesgs['file_id']['manufacturer']) ? $fit->data_mesgs['file_id']['manufacturer'] : 'Zdrava';
+        $activity->device_manufacturers_id = $fit->data_mesgs['file_id']['manufacturer'];
         $activity->distance = $fit->data_mesgs['session']['total_distance'];
         $activity->avg_speed = $fit->data_mesgs['session']['avg_speed'];
+        $activity->max_speed = $fit->data_mesgs['session']['max_speed'];
         $activity->elevation_gain = $fit->data_mesgs['session']['total_ascent'];
         $activity->elevation_loss = $fit->data_mesgs['session']['total_descent'];
         $activity->started_at = $fit->data_mesgs['session']['start_time'];
         $activity->finished_at = $fit->data_mesgs['session']['start_time'] + $fit->data_mesgs['session']['total_elapsed_time'];
         $activity->duration = $fit->data_mesgs['session']['total_timer_time'];
+        $activity->duration_total = $fit->data_mesgs['lap']['total_elapsed_time'];
+        $activity->avg_heart_rate = $fit->data_mesgs['session']['avg_heart_rate'];
+        $activity->max_heart_rate = $fit->data_mesgs['session']['max_heart_rate'];
+        $activity->avg_cadence = $fit->data_mesgs['session']['avg_cadence'];
+        $activity->max_cadence = $fit->data_mesgs['session']['max_cadence'];
+        $activity->total_calories = $fit->data_mesgs['session']['total_calories'];
         $activity->file = $filename;
+        $activity->start_position_lat = $fit->data_mesgs['session']['start_position_lat'];
+        $activity->start_position_long = $fit->data_mesgs['session']['start_position_long'];
+        $activity->end_position_lat = $fit->data_mesgs['lap']['end_position_lat'];
+        $activity->end_position_long = $fit->data_mesgs['lap']['end_position_long'];
         $activity->save();
 
         return true;
@@ -112,17 +122,45 @@ class UploadController extends Controller
         foreach ($gpx->tracks as $track) {
             // Statistics for whole track
             $statsTrack[] = $track->stats->toArray();
+
+            foreach ($track->segments as $segment) {
+                $maxSpeed = 0;
+
+                foreach ($segment->points as $point) {
+                    $speed = $point->extensions->speed; // Получаем скорость точки
+
+                    if ($speed > $maxSpeed) {
+                        $maxSpeed = $speed;
+                    }
+                }
+            }
         }
+
 
         $stat = array_merge_recursive($statsTrack)[0];
 
+        $startedAt = new DateTime($stat['startedAt']);
+        $finishedAt = new DateTime($stat['finishedAt']);
+        $interval = $startedAt->diff($finishedAt);
+        $totalDuration = $interval->s + ($interval->i * 60) + ($interval->h * 3600) + ($interval->days * 86400);
+
+        $segment = $track->segments[0];
+        $startPoint = $segment->points[0];
+        $endPoint = $segment->points[count($segment->points) - 1];
+        $startLatitude = $startPoint->latitude;
+        $startLongitude = $startPoint->longitude;
+        $endLatitude = $endPoint->latitude;
+        $endLongitude = $endPoint->longitude;
+
+//        die(print_r($gpx->tracks[0]));
+//        die(print_r($stat));
+
         $activity = new Activities();
         $activity->users_id = $request->user()->id;
-        $activity->type = 'bicycle';
         $activity->name = !empty($gpx->tracks[0]->name) ? $gpx->tracks[0]->name : __('Workout');
-        $activity->creator = !empty($gpx->creator) ? $gpx->creator : 'Zdrava';
         $activity->distance = $stat['distance'];
         $activity->avg_speed = $stat['avgSpeed'];
+        $activity->max_speed = $maxSpeed;
         $activity->avg_pace = $stat['avgPace'];
         $activity->min_altitude = $stat['minAltitude'];
         $activity->max_altitude = $stat['maxAltitude'];
@@ -131,7 +169,18 @@ class UploadController extends Controller
         $activity->started_at = $stat['startedAt'];
         $activity->finished_at = $stat['finishedAt'];
         $activity->duration = $stat['duration'];
+        $activity->duration_total = $totalDuration;
+        // TODO: Сделать avg_heart_rate, max_heart_rate, avg_cadence, max_cadence, total_calories
+        $activity->avg_heart_rate = 0;
+        $activity->max_heart_rate = 0;
+        $activity->avg_cadence = 0;
+        $activity->max_cadence = 0;
+        $activity->total_calories = 0;
         $activity->file = $filename;
+        $activity->start_position_lat = $startLatitude;
+        $activity->start_position_long = $startLongitude;
+        $activity->end_position_lat = $endLatitude;
+        $activity->end_position_long = $endLongitude;
         $activity->save();
 
         return true;
