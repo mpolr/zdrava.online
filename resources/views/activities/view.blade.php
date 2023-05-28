@@ -28,7 +28,7 @@
                     <div id="accordion-flush-body-1" class="hidden" aria-labelledby="accordion-flush-heading-1">
                         <div class="py-5 border-b border-gray-200 dark:border-gray-700">
                             <p class="mb-2 text-gray-500 dark:text-gray-400">
-                                TODO: Информация о тренировке
+                                {{ \Carbon\Carbon::parse($activity->started_at)->translatedFormat('d F Y г., l') }}
                             </p>
                         </div>
                     </div>

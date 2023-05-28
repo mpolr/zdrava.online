@@ -24,7 +24,7 @@
                 </div>
                 <div class="mb-6 ml-6 pb-6">
                     <span class="text-sm text-primary transition duration-150 ease-in-out hover:text-primary-600 focus:text-primary-600 active:text-primary-700 dark:text-primary-400 dark:hover:text-primary-500 dark:focus:text-primary-500 dark:active:text-primary-600">
-                        {{ date_format($version->created_at, 'd M Y') }}
+                        {{ \Carbon\Carbon::parse($version->created_at)->translatedFormat('d.m.Y, l') }}
                     </span>
                     <p class="mb-4 mt-2 text-neutral-600 dark:text-neutral-300">
                         {!! $version->description !!}

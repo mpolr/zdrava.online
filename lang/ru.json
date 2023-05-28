@@ -20,6 +20,7 @@
     "Settings": "Настройки",
     "My profile": "Мой профиль",
     "My account": "Мой аккаунт",
+    "Upload workout": "Загрузить тренировку",
     "Privacy": "Конфиденциальность",
     "Click to select file": "Нажмите чтобы выбрать файл",
     "or drag and drop": "или перетащите сюда",
@@ -43,6 +44,7 @@
     "Workout": "Тренировка",
     "My workouts": "Мои тренировки",
     "Type": "Тип",
+    "Date": "Дата",
     "Name": "Название",
     "Time": "Время",
     "Distance": "Дистанция",
@@ -56,5 +58,7 @@
     "upload files": "загрузите файлы",
     "Workouts not found. Record one using :zdrava-app or :upload manually": "Тренировки не найдены. Запишите их с помощью :zdrava-app или :upload вручную",
     "Overview": "Обзор",
-    "Analysis": "Анализ"
+    "Analysis": "Анализ",
+    "Interface language": "Язык интерфейса",
+    "Save": "Сохранить"
 }

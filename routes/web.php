@@ -88,6 +88,9 @@ Route::group(['prefix' => 'settings', 'middleware' => 'auth'], function () {
 
     Route::get('profile', [SettingsController::class, 'profile'])->name('settings.profile');
     Route::get('account', [SettingsController::class, 'account'])->name('settings.account');
+
+    Route::post('lang', [SettingsController::class, 'setLocale'])->name('settings.account.set.locale');
+
     Route::get('privacy', [SettingsController::class, 'privacy'])->name('settings.privacy');
 });
 

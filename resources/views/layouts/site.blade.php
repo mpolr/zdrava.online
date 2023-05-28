@@ -133,7 +133,7 @@
                             </div>
                             <div class="invisible absolute z-50 flex right-0 w-56 flex-col bg-gray-100 py-1 px-4 text-gray-800 shadow-xl group-hover:visible" onClick="">
                                 <a href="{{ route('upload.workout') }}" class="my-2 block border-b border-gray-100 py-1 text-gray-500 hover:text-black md:mx-2">
-                                    Загрузить тренировку
+                                    {{ __('Upload workout') }}
                                 </a>
 {{--                                <a class="my-2 block border-b border-gray-100 py-1 text-gray-500 hover:text-black md:mx-2">--}}
 {{--                                    Добавить тренировку вручную--}}
