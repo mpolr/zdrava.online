@@ -28,8 +28,8 @@
                     <div id="accordion-flush-body-overview" class="hidden" aria-labelledby="accordion-flush-heading-overview">
                         <div class="flex flex-col items-center bg-white border border-gray-200 shadow md:flex-row max-w-full dark:border-gray-700 dark:bg-gray-800">
                             <div class="flex flex-col justify-between p-4 leading-normal w-1/2">
-                                <p class="mb-2 text-gray-500 dark:text-gray-400">
-                                    {{ \Carbon\Carbon::parse($activity->started_at)->translatedFormat('d F Y г., l') }} - Россия
+                                <p class="mb-2 text-sm text-gray-500 dark:text-gray-400">
+                                    {{ \Carbon\Carbon::parse($activity->started_at)->translatedFormat('d F Y г., l, H:i') }} - Россия
                                 </p>
                                 <h4 class="mb-2 mt-0 text-3xl font-medium leading-tight text-black">
                                     {{ $activity->name }}
@@ -40,7 +40,7 @@
                                 <div class="flex">
                                     <div class="flex-1 mx-2 h-12">
                                         <h5 class="mb-0 text-2xl font-normal tracking-tight text-gray-900 dark:text-white">
-                                            {{ __(':distance km', ['distance' => $activity->distance]) }}
+                                            {{ __(':distance km', ['distance' => number_format($activity->distance, 2, ',')]) }}
                                         </h5>
                                         <span class="text-gray-500 dark:text-gray-400">
                                             {{ __('Distance') }}
@@ -48,7 +48,7 @@
                                     </div>
                                     <div class="flex-1 mx-2 h-10">
                                         <h5 class="mb-0 text-2xl font-normal tracking-tight text-gray-900 dark:text-white">
-                                            {{ $activity->duration / 60 }}
+                                            {{ number_format($activity->duration / 60, 2, ':') }}
                                         </h5>
                                         <span class="text-gray-500 dark:text-gray-400">
                                             {{ __('Duration') }}
@@ -64,7 +64,7 @@
                                     </div>
                                     <div class="flex-1 mx-2 h-10">
                                         <h5 class="mb-0 text-2xl font-normal tracking-tight text-gray-900 dark:text-white">
-                                            {{ __(':speed km/h', ['speed' => number_format($activity->avg_speed, 1)]) }}
+                                            {{ __(':speed km/h', ['speed' => number_format($activity->avg_speed, 1, ',')]) }}
                                         </h5>
                                         <span class="text-gray-500 dark:text-gray-400">
                                             {{ __('Avg. speed') }}

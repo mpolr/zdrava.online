@@ -84,10 +84,10 @@
                                             </a>
                                         </td>
                                         <td class="px-6 py-4">
-                                            {{ $activity->duration / 60 }}
+                                            {{ number_format($activity->duration / 60, 2, ':') }}
                                         </td>
                                         <td class="px-6 py-4">
-                                            {{ __(':distance km', ['distance' => $activity->distance]) }}
+                                            {{ __(':distance km', ['distance' => number_format($activity->distance, 2, ',')]) }}
                                         </td>
                                         <td class="px-6 py-4">
                                             {{ __(':elevation m', ['elevation' => $activity->elevation_gain]) }}
