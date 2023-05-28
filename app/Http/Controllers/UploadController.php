@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreWorkoutRequest;
 use App\Models\Activities;
 use phpGPX\phpGPX;
 use Illuminate\Http\Request;
@@ -30,18 +31,13 @@ class UploadController extends Controller
         return redirect()->back();
     }
 
-    public function workout(Request $request): string
+    public function workout(StoreWorkoutRequest $request): string
     {
-        // TODO: Удалить XML и сделать кастомную валидацию
-        // https://stackoverflow.com/questions/67958399/laravel-change-mime-type-of-a-file-on-the-request-object
-        $this->validate($request, [
-            'workout' => 'required',
-            'workout.*' => 'file|mimes:gpx,fit,tcx,xml|max:25000',
-        ]);
+        $result = false;
 
         foreach ($request->allFiles()['workout'] as $uploadedFile) {
             $name = $uploadedFile->hashName();
-            $name = str_replace('.xml', null, $name);
+            $name = str_replace('.xml', '', $name);
             $extension = $uploadedFile->getClientOriginalExtension();
 
             $uploadedFileName = "{$name}.{$extension}";
@@ -52,37 +48,72 @@ class UploadController extends Controller
                 $uploadedFileName
             );
 
-            // TODO: Найти парсеры FIT и TCX файлов
-            $gpx = new phpGPX();
-            $gpx = $gpx->parse(Storage::get($file));
-
-            foreach ($gpx->tracks as $track) {
-                // Statistics for whole track
-                $statsTrack[] = $track->stats->toArray();
+            if (!empty($file)) {
+                switch ($extension) {
+                    case 'gpx':
+                        $result = $this->processGPX($file, $request, $uploadedFileName);
+                        break;
+                    case 'fit':
+                        $result = $this->processFIT($file, $request, $uploadedFileName);
+                        break;
+                    case 'tcx':
+                        $result = $this->processTCX($file, $request, $uploadedFileName);
+                        break;
+                }
             }
-
-            $stat = array_merge_recursive($statsTrack)[0];
-
-            $activity = new Activities();
-            $activity->users_id = $request->user()->id;
-            $activity->type = 'bicycle';
-            $activity->name = !empty($gpx->tracks[0]->name) ? $gpx->tracks[0]->name : __('Workout');
-            $activity->creator = !empty($gpx->creator) ? $gpx->creator : 'Zdrava';
-            $activity->distance = $stat['distance'];
-            $activity->avg_speed = $stat['avgSpeed'];
-            $activity->avg_pace = $stat['avgPace'];
-            $activity->min_altitude = $stat['minAltitude'];
-            $activity->max_altitude = $stat['maxAltitude'];
-            $activity->elevation_gain = $stat['cumulativeElevationGain'];
-            $activity->elevation_loss = $stat['cumulativeElevationLoss'];
-            $activity->started_at = $stat['startedAt'];
-            $activity->finished_at = $stat['finishedAt'];
-            $activity->duration = $stat['duration'];
-            $activity->file = $uploadedFileName;
-            $activity->save();
         }
 
-        session()->flash('success', __('File Upload successfully'));
+        if ($result) {
+            session()->flash('success', __('File Upload successfully'));
+        } else {
+            session()->flash('error', __('Error occurred'));
+        }
+
         return redirect()->back();
+    }
+
+    private function processFIT(string $file, StoreWorkoutRequest $request, string $filename): bool
+    {
+        // TODO: Найти парсер FIT файлов
+        return true;
+    }
+
+    private function processGPX(string $file, StoreWorkoutRequest $request, string $filename): bool
+    {
+        $gpx = new phpGPX();
+        $gpx = $gpx->parse(Storage::get($file));
+
+        foreach ($gpx->tracks as $track) {
+            // Statistics for whole track
+            $statsTrack[] = $track->stats->toArray();
+        }
+
+        $stat = array_merge_recursive($statsTrack)[0];
+
+        $activity = new Activities();
+        $activity->users_id = $request->user()->id;
+        $activity->type = 'bicycle';
+        $activity->name = !empty($gpx->tracks[0]->name) ? $gpx->tracks[0]->name : __('Workout');
+        $activity->creator = !empty($gpx->creator) ? $gpx->creator : 'Zdrava';
+        $activity->distance = $stat['distance'];
+        $activity->avg_speed = $stat['avgSpeed'];
+        $activity->avg_pace = $stat['avgPace'];
+        $activity->min_altitude = $stat['minAltitude'];
+        $activity->max_altitude = $stat['maxAltitude'];
+        $activity->elevation_gain = $stat['cumulativeElevationGain'];
+        $activity->elevation_loss = $stat['cumulativeElevationLoss'];
+        $activity->started_at = $stat['startedAt'];
+        $activity->finished_at = $stat['finishedAt'];
+        $activity->duration = $stat['duration'];
+        $activity->file = $filename;
+        $activity->save();
+
+        return true;
+    }
+
+    private function processTCX(string $file, StoreWorkoutRequest $request, string $filename): bool
+    {
+        // TODO: Найти парсер TCX файлов
+        return true;
     }
 }
