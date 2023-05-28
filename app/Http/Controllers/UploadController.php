@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use adriangibbons\phpFITFileAnalysis;
 use App\Http\Requests\StoreWorkoutRequest;
 use App\Models\Activities;
 use phpGPX\phpGPX;
@@ -37,7 +38,7 @@ class UploadController extends Controller
 
         foreach ($request->allFiles()['workout'] as $uploadedFile) {
             $name = $uploadedFile->hashName();
-            $name = str_replace('.xml', '', $name);
+            $name = str_replace(['.xml', '.bin'], '', $name);
             $extension = $uploadedFile->getClientOriginalExtension();
 
             $uploadedFileName = "{$name}.{$extension}";
@@ -72,9 +73,29 @@ class UploadController extends Controller
         return redirect()->back();
     }
 
+    /**
+     * @throws \Exception
+     */
     private function processFIT(string $file, StoreWorkoutRequest $request, string $filename): bool
     {
-        // TODO: Найти парсер FIT файлов
+        // TODO: Рассчитать avg_pace, min_altitude, max_altitude
+        $fit = new phpFITFileAnalysis(Storage::path($file));
+
+        $activity = new Activities();
+        $activity->users_id = $request->user()->id;
+        $activity->type = 'bicycle';
+        $activity->name = !empty($fit->data_mesgs['sport']['name']) ? $fit->data_mesgs['sport']['name'] : __('Workout');
+        $activity->creator = !empty($fit->data_mesgs['file_id']['manufacturer']) ? $fit->data_mesgs['file_id']['manufacturer'] : 'Zdrava';
+        $activity->distance = $fit->data_mesgs['session']['total_distance'];
+        $activity->avg_speed = $fit->data_mesgs['session']['avg_speed'];
+        $activity->elevation_gain = $fit->data_mesgs['session']['total_ascent'];
+        $activity->elevation_loss = $fit->data_mesgs['session']['total_descent'];
+        $activity->started_at = $fit->data_mesgs['session']['start_time'];
+        $activity->finished_at = $fit->data_mesgs['session']['start_time'] + $fit->data_mesgs['session']['total_elapsed_time'];
+        $activity->duration = $fit->data_mesgs['session']['total_timer_time'];
+        $activity->file = $filename;
+        $activity->save();
+
         return true;
     }
 
