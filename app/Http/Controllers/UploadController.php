@@ -83,6 +83,7 @@ class UploadController extends Controller
         try {
             $fit = new phpFITFileAnalysis(Storage::path($file));
         } catch (Throwable $e) {
+            Storage::delete($file);
             report($e);
             return false;
         }
@@ -124,6 +125,7 @@ class UploadController extends Controller
         try {
             $gpx = $gpx->parse(Storage::get($file));
         } catch (Throwable $e) {
+            Storage::delete($file);
             report($e);
             return false;
         }
