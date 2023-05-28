@@ -79,11 +79,16 @@ class UploadController extends Controller
     private function processFIT(string $file, StoreWorkoutRequest $request, string $filename): bool
     {
         // TODO: Рассчитать avg_pace, min_altitude, max_altitude
-        $fit = new phpFITFileAnalysis(Storage::path($file));
+        $fit = new phpFITFileAnalysis(Storage::path($file), [
+            'pace' => true,
+        ]);
+
+        // TODO: Переименовать type в sport, добавить subsport, завести таблички для этого дела
+        // подумать как лучше заюзать $fit->manufacturer()
 
         $activity = new Activities();
         $activity->users_id = $request->user()->id;
-        $activity->type = 'bicycle';
+        $activity->type = strtolower($fit->enumData('sport', $fit->data_mesgs['sport']['sport']));
         $activity->name = !empty($fit->data_mesgs['sport']['name']) ? $fit->data_mesgs['sport']['name'] : __('Workout');
         $activity->creator = !empty($fit->data_mesgs['file_id']['manufacturer']) ? $fit->data_mesgs['file_id']['manufacturer'] : 'Zdrava';
         $activity->distance = $fit->data_mesgs['session']['total_distance'];
