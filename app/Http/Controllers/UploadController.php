@@ -71,7 +71,7 @@ class UploadController extends Controller
             session()->flash('error', __('Error occurred'));
         }
 
-        return redirect()->back();
+        return redirect()->refresh();
     }
 
     /**
@@ -116,7 +116,33 @@ class UploadController extends Controller
         $activity->end_position_long = $fit->data_mesgs['lap']['end_position_long'];
         $activity->save();
 
+        $this->convertFitToGpx($fit, $request->user()->id, $filename);
+
         return true;
+    }
+
+    private function convertFitToGpx(phpFITFileAnalysis $fit, int $userId, string $filename): void
+    {
+        $rootNode = new \SimpleXMLElement('<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+            <gpx xmlns="http://www.topografix.com/GPX/1/1" version="1.1"></gpx>');
+        $trkNode = $rootNode->addChild('trk');
+        $trksegNode = $trkNode->addChild('trkseg');
+
+        try {
+            foreach ($fit->data_mesgs['record']['timestamp'] as $timestamp) {
+                $trkptNode = $trksegNode->addChild('trkpt');
+                $trkptNode->addAttribute('lat', $fit->data_mesgs['record']['position_lat'][$timestamp]);
+                $trkptNode->addAttribute('lon', $fit->data_mesgs['record']['position_long'][$timestamp]);
+                if (!empty($fit->data_mesgs['record']['altitude'][$timestamp])) {
+                    $trkptNode->addChild('ele', $fit->data_mesgs['record']['altitude'][$timestamp]);
+                }
+                $trkptNode->addChild('time', date('Y-m-d\TH:i:s.000\Z', $timestamp));
+            }
+
+            Storage::write('public/activities/'. $userId .'/'. $filename .'.gpx', $rootNode->asXML());
+        } catch (Throwable $e) {
+            report($e);
+        }
     }
 
     private function processGPX(string $file, StoreWorkoutRequest $request, string $filename): bool
