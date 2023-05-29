@@ -136,6 +136,26 @@
                             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                                 attribution: '© OpenStreetMap'
                             }).addTo(map);
+
+                            let gpx = '{{ $gpxFile }}';
+                            new L.GPX(gpx, {
+                                async: true,
+                                marker_options: {
+                                    iconSize: [24, 24],
+                                    iconAnchor: [12, 12],
+                                    startIconUrl: '/storage/images/pin-start.png',
+                                    endIconUrl: '/storage/images/pin-finish.png',
+                                    shadowUrl: null
+                                },
+                                polyline_options: {
+                                    color: 'red',
+                                    opacity: 0.75,
+                                    weight: 5,
+                                    lineCap: 'round',
+                                }
+                            }).on('loaded', function(e) {
+                                map.fitBounds(e.target.getBounds());
+                            }).addTo(map);
                         }
                         initMap();
                     </script>

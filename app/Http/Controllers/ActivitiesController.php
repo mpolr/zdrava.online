@@ -7,6 +7,7 @@ use App\Models\DeviceManufacturers;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ActivitiesController extends Controller
 {
@@ -33,10 +34,16 @@ class ActivitiesController extends Controller
             'long' => $startLong + ($endLong - $startLong) * $percentage
         ];
 
+        $gpxFile = $activity->file;
+        if (strpos($activity->file, '.fit')) {
+            $gpxFile = $activity->file.'.gpx';
+        }
+
         return view('activities.view', [
             'activity' => $activity,
             'manufacturer' => $deviceManufacturer,
             'mapCenter' => $mapCenter,
+            'gpxFile' => Storage::url('public/activities/'. $activity->users_id .'/'. $gpxFile),
         ]);
     }
 }
