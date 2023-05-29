@@ -103,7 +103,7 @@ class UploadController extends Controller
         $activity->started_at = $fit->data_mesgs['session']['start_time'];
         $activity->finished_at = $fit->data_mesgs['session']['start_time'] + $fit->data_mesgs['session']['total_elapsed_time'];
         $activity->duration = $fit->data_mesgs['session']['total_timer_time'];
-        $activity->duration_total = $fit->data_mesgs['lap']['total_elapsed_time'];
+        $activity->duration_total = $fit->data_mesgs['session']['total_elapsed_time'];
         $activity->avg_heart_rate = $fit->data_mesgs['session']['avg_heart_rate'];
         $activity->max_heart_rate = $fit->data_mesgs['session']['max_heart_rate'];
         $activity->avg_cadence = $fit->data_mesgs['session']['avg_cadence'];
@@ -112,8 +112,12 @@ class UploadController extends Controller
         $activity->file = $filename;
         $activity->start_position_lat = $fit->data_mesgs['session']['start_position_lat'];
         $activity->start_position_long = $fit->data_mesgs['session']['start_position_long'];
-        $activity->end_position_lat = $fit->data_mesgs['lap']['end_position_lat'];
-        $activity->end_position_long = $fit->data_mesgs['lap']['end_position_long'];
+        $activity->end_position_lat = last($fit->data_mesgs['lap']['end_position_lat']);
+        $activity->end_position_long = last($fit->data_mesgs['lap']['end_position_long']);
+        $geo = $this->geocode($activity->start_position_lat, $activity->start_position_long);
+        $activity->country = $geo['country'];
+        $activity->locality = $geo['locality'];
+
         $activity->save();
 
         $this->convertFitToGpx($fit, $request->user()->id, $filename);
@@ -218,6 +222,10 @@ class UploadController extends Controller
         $activity->start_position_long = $startLongitude;
         $activity->end_position_lat = $endLatitude;
         $activity->end_position_long = $endLongitude;
+        $geo = $this->geocode($activity->start_position_lat, $activity->start_position_long);
+        $activity->country = $geo['country'];
+        $activity->locality = $geo['locality'];
+
         $activity->save();
 
         return true;
@@ -227,5 +235,23 @@ class UploadController extends Controller
     {
         // TODO: Найти парсер TCX файлов
         return true;
+    }
+
+    private function geocode($latitude, $longitude): ?array
+    {
+        try {
+            $geo = app('geocoder')
+                ->using('nominatim')
+                ->reverse($latitude, $longitude)
+                ->get()
+                ->first();
+        } catch (Throwable $e) {
+            return null;
+        }
+
+        return [
+            'country' => $geo->getCountry()->getCode(),
+            'locality' => $geo->getLocality()
+        ];
     }
 }

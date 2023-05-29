@@ -40,6 +40,8 @@ return new class extends Migration
             $table->float('start_position_long')->nullable();
             $table->float('end_position_lat')->nullable();
             $table->float('end_position_long')->nullable();
+            $table->string('country', 255)->nullable();
+            $table->string('locality', 255)->nullable();
             $table->timestamps();
         });
     }

@@ -37,6 +37,8 @@ class Activities extends Model
         'start_position_long',
         'end_position_lat',
         'end_position_long',
+        'country',
+        'locality',
     ];
 
     protected $casts = [
