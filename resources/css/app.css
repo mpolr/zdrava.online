@@ -3,6 +3,10 @@
 @tailwind components;
 @tailwind utilities;
 
+html {
+    font-family: Ubuntu, Roboto, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont;
+}
+
 .leaflet-attribution-flag {
     visibility: hidden !important;
     display: none !important;
