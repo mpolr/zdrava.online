@@ -89,7 +89,7 @@ class UploadController extends Controller
         }
 
         $activity = new Activities();
-        $activity->users_id = $request->user()->id;
+        $activity->user_id = $request->user()->id;
         $activity->sport = $fit->data_mesgs['sport']['sport'];
         $activity->sub_sport = $fit->data_mesgs['sport']['sub_sport'];
         $activity->name = !empty($fit->data_mesgs['sport']['name']) ? $fit->data_mesgs['sport']['name'] : __('Workout');
@@ -197,7 +197,7 @@ class UploadController extends Controller
 //        die(print_r($stat));
 
         $activity = new Activities();
-        $activity->users_id = $request->user()->id;
+        $activity->user_id = $request->user()->id;
         $activity->name = !empty($gpx->tracks[0]->name) ? $gpx->tracks[0]->name : __('Workout');
         $activity->distance = $stat['distance'];
         $activity->avg_speed = $stat['avgSpeed'];

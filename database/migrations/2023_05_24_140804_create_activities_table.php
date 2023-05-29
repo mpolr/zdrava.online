@@ -10,7 +10,7 @@ return new class extends Migration
     {
         Schema::create('activities', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('users_id')->unsigned();
+            $table->bigInteger('user_id')->unsigned();
             $table->integer('sport')->default(2);
             $table->integer('sub_sport')->default(7);
             $table->text('name')->nullable();

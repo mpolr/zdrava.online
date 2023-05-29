@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Storage;
 class Activities extends Model
 {
     protected $fillable = [
-        'users_id',
+        'user_id',
         'sport',
         'sub_sport',
         'name',
@@ -82,7 +82,7 @@ class Activities extends Model
             $gpxFile = $this->file.'.gpx';
         }
 
-        return Storage::url('public/activities/'. $this->users_id .'/'. $gpxFile);
+        return Storage::url('public/activities/'. $this->user_id .'/'. $gpxFile);
     }
 
     public function getAverageSpeed(): string

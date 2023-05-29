@@ -48,16 +48,16 @@
                             </p>
                             <p class="mb-3 text-center text-gray-600 dark:text-gray-400">
                                 Тренировки<br />
-                                {{ \App\Models\Activities::where(['users_id' => Auth::user()->id])->count() }}
+                                {{ \App\Models\Activities::where(['user_id' => Auth::user()->id])->count() }}
                             </p>
                         </div>
                         <div class="text-sm mt-4">
                             <span class="text-sm text-gray-500 dark:text-gray-400">Последняя тренировка</span>
                             <p>
-                                <a class="text-large hover-orange" href="{{ route('activities.get', \App\Models\Activities::where(['users_id' => Auth::user()->id])->latest()->first()->id) }}">
+                                <a class="text-large hover-orange" href="{{ route('activities.get', $activities->latest()->first()->id) }}">
                                     <strong>
-                                        {{ \App\Models\Activities::where(['users_id' => Auth::user()->id])->latest()->first()->name }}
-                                    </strong> &blacksquare; <time class="timestamp text-sm">{{ \App\Models\Activities::where(['users_id' => Auth::user()->id])->latest()->first()->getShortStartDate() }}</time>
+                                        {{ $activities->latest()->first()->name }}
+                                    </strong> &blacksquare; <time class="timestamp text-sm">{{ $activities->latest()->first()->getShortStartDate() }}</time>
                                 </a>
                             </p>
                         </div>

@@ -11,10 +11,8 @@ class AthleteController extends Controller
 {
     public function training(): Factory|View
     {
-        $activities = Activities::where([
-            'users_id' => \Auth::user()->id,
-        ])->limit(100)->get();
-
-        return view('athlete.training', ['activities' => $activities]);
+        return view('athlete.training', [
+            'activities' => \Auth::user()->activities()->limit(100)->get()
+        ]);
     }
 }
