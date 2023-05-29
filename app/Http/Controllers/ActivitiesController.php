@@ -14,6 +14,11 @@ class ActivitiesController extends Controller
     public function get(int $id): Factory|View
     {
         $activity = Activities::where(['id' => $id])->first();
+
+        if (empty($activity)) {
+            abort(404);
+        }
+
         if (!empty($activity->device_manufacturers_id) && is_numeric($activity->device_manufacturers_id)) {
             $deviceManufacturer = DeviceManufacturers::where([
                 'code' => $activity->device_manufacturers_id
