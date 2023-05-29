@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Mail\UserRegistrationConfirmation;
 use App\Models\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
@@ -10,6 +11,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 
 class RegisterController extends Controller
@@ -35,13 +37,17 @@ class RegisterController extends Controller
             'subscribe_news' => 'boolean',
         ]);
 
-        User::create([
+        $user = User::create([
             'first_name' => $request->first_name,
             'last_name' => $request->last_name,
             'email' => $request->email,
             'subscribe_news' => $request->subscribe_news,
             'password' => Hash::make($request->password)
         ]);
+
+        Mail::to($user->email)->send(new UserRegistrationConfirmation($user));
+
+        // TODO: Не пускать без подтверждения почты
 
         $credentials = $request->only(['email', 'password']);
         Auth::attempt($credentials);
