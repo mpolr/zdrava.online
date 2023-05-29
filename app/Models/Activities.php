@@ -2,7 +2,9 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 class Activities extends Model
 {
@@ -45,4 +47,90 @@ class Activities extends Model
         'started_at' => 'datetime',
         'finished_at' => 'datetime',
     ];
+
+    public function getDeviceManufacturer(): ?string
+    {
+        if (!empty($this->device_manufacturers_id) && is_numeric($this->device_manufacturers_id)) {
+            return DeviceManufacturers::where([
+                'code' => $this->device_manufacturers_id
+            ])->first()->description;
+        }
+
+        return null;
+    }
+
+    public function getTrackCenter(): array
+    {
+        $startLat = $this->start_position_lat;
+        $startLong = $this->start_position_long;
+        $endLat = $this->end_position_lat;
+        $endLong = $this->end_position_long;
+        // Процент промежуточной точки
+        // (0.0 - начальная точка, 1.0 - конечная точка)
+        $percentage = 0.5;
+
+        return [
+            'lat' => $startLat + ($endLat - $startLat) * $percentage,
+            'long' => $startLong + ($endLong - $startLong) * $percentage
+        ];
+    }
+
+    public function getGPXFile(): string
+    {
+        $gpxFile = $this->file;
+        if (strpos($this->file, '.fit')) {
+            $gpxFile = $this->file.'.gpx';
+        }
+
+        return Storage::url('public/activities/'. $this->users_id .'/'. $gpxFile);
+    }
+
+    public function getAverageSpeed(): string
+    {
+        return number_format($this->avg_speed, 1, ',');
+    }
+
+    public function getMaxSpeed(): string
+    {
+        return number_format($this->max_speed, 1, ',');
+    }
+
+    public function getDuration(): bool|string
+    {
+        return date('H:i:s', $this->duration);
+    }
+
+    public function getDurationTotal(): bool|string
+    {
+        return date('H:i:s', $this->duration_total);
+    }
+
+    public function getDistance(): string
+    {
+        return number_format($this->distance, 2, ',');
+    }
+
+    public function getCountry(): string
+    {
+        // TODO: Сделать таблицу с сопоставлением стран
+        $countries = [
+            'RU' => 'Россия',
+        ];
+
+        if (array_key_exists($this->country, $countries)) {
+            return $countries[$this->country];
+        }
+
+        return $this->country;
+    }
+
+    public function getLongStartDate()
+    {
+        return Carbon::parse($this->started_at)->translatedFormat('d F Y г, l, H:i');
+    }
+
+    public function getShortStartDate()
+    {
+        return Carbon::parse($this->started_at)->translatedFormat('l, d.m.Y');
+    }
 }

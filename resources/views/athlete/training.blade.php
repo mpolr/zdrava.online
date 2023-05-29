@@ -76,7 +76,7 @@
                                             {{ $activity->type }}
                                         </th>
                                         <td class="px-6 py-4">
-                                            {{ \Carbon\Carbon::parse($activity->started_at)->translatedFormat('l, d.m.Y') }}
+                                            {{ $activity->getShortStartDate() }}
                                         </td>
                                         <td class="px-6 py-4">
                                             <a href="{{ route('activities.get', $activity->id) }}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">
@@ -84,10 +84,10 @@
                                             </a>
                                         </td>
                                         <td class="px-6 py-4">
-                                            {{ number_format($activity->duration / 60, 2, ':') }}
+                                            {{ $activity->getDuration() }}
                                         </td>
                                         <td class="px-6 py-4">
-                                            {{ __(':distance km', ['distance' => number_format($activity->distance, 2, ',')]) }}
+                                            {{ __(':distance km', ['distance' => $activity->getDistance()]) }}
                                         </td>
                                         <td class="px-6 py-4">
                                             {{ __(':elevation m', ['elevation' => $activity->elevation_gain]) }}

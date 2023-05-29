@@ -32,7 +32,7 @@
                         <div class="flex flex-col items-start bg-white border border-gray-200 shadow md:flex-row max-w-full dark:border-gray-700 dark:bg-gray-800">
                             <div class="flex flex-col justify-between p-4 leading-normal w-1/2">
                                 <p class="mb-2 text-sm text-gray-500 dark:text-gray-400">
-                                    {{ \Carbon\Carbon::parse($activity->started_at)->translatedFormat('d F Y г., l, H:i') }} - Россия
+                                    {{ $activity->getLongStartDate() }} - {{ $activity->locality }}, {{ $activity->getCountry() }}
                                 </p>
                                 <h4 class="mb-2 mt-0 text-3xl font-medium leading-tight text-black">
                                     {{ $activity->name }}
@@ -43,7 +43,7 @@
                                 <div class="flex">
                                     <div class="flex-1 mx-2 h-12">
                                         <h5 class="mb-0 text-2xl font-normal tracking-tight text-gray-900 dark:text-white">
-                                            {{ __(':distance km', ['distance' => number_format($activity->distance, 2, ',')]) }}
+                                            {{ __(':distance km', ['distance' => $activity->getDistance()]) }}
                                         </h5>
                                         <span class="text-gray-500 dark:text-gray-400">
                                             {{ __('Distance') }}
@@ -51,7 +51,7 @@
                                     </div>
                                     <div class="flex-1 mx-2 h-10">
                                         <h5 class="mb-0 text-2xl font-normal tracking-tight text-gray-900 dark:text-white">
-                                            {{ sprintf("%02d:%02d", floor($activity->duration / 60), $activity->duration % 60) }}
+                                            {{ $activity->getDuration() }}
                                         </h5>
                                         <span class="text-gray-500 dark:text-gray-400">
                                             {{ __('Duration') }}
@@ -59,7 +59,7 @@
                                     </div>
                                     <div class="flex-1 mx-2 h-10">
                                         <h5 class="mb-0 text-2xl font-normal tracking-tight text-gray-900 dark:text-white">
-                                            {{ sprintf("%02d:%02d", floor($activity->duration_total / 60), $activity->duration_total % 60) }}
+                                            {{ $activity->getDurationTotal() }}
                                         </h5>
                                         <span class="text-gray-500 dark:text-gray-400">
                                             {{ __('Duration total') }}
@@ -77,7 +77,7 @@
                                 <div class="flex my-4">
                                     <div class="flex-1 mx-2 h-10">
                                         <h5 class="mb-0 text-2xl font-normal tracking-tight text-gray-900 dark:text-white">
-                                            {{ __(':speed km/h', ['speed' => number_format($activity->avg_speed, 1, ',')]) }}
+                                            {{ __(':speed km/h', ['speed' => $activity->getAverageSpeed()]) }}
                                         </h5>
                                         <span class="text-gray-500 dark:text-gray-400">
                                             {{ __('Avg. speed') }}
@@ -85,7 +85,7 @@
                                     </div>
                                     <div class="flex-1 mx-2 h-10">
                                         <h5 class="mb-0 text-2xl font-normal tracking-tight text-gray-900 dark:text-white">
-                                            {{ __(':speed km/h', ['speed' => number_format($activity->max_speed, 1, ',')]) }}
+                                            {{ __(':speed km/h', ['speed' => $activity->getMaxSpeed()]) }}
                                         </h5>
                                         <span class="text-gray-500 dark:text-gray-400">
                                             {{ __('Max. speed') }}
@@ -111,7 +111,7 @@
                                 <div class="w-full mt-3">
                                     <hr />
                                     <p class="mb-3 mt-3 font-normal text-gray-700 dark:text-gray-400">
-                                        {{ $manufacturer }}
+                                        {{ $activity->getDeviceManufacturer() }}
                                     </p>
                                 </div>
                             </div>
@@ -127,8 +127,8 @@
 
                             map = L.map('map', {
                                 center: {
-                                    lat: {{ $mapCenter['lat'] }},
-                                    lng: {{ $mapCenter['long'] }},
+                                    lat: {{ $activity->getTrackCenter()['lat'] }},
+                                    lng: {{ $activity->getTrackCenter()['long'] }},
                                 },
                                 zoom: 12
                             });
@@ -137,7 +137,7 @@
                                 attribution: '© OpenStreetMap'
                             }).addTo(map);
 
-                            let gpx = '{{ $gpxFile }}';
+                            let gpx = '{{ $activity->getGPXFile() }}';
                             new L.GPX(gpx, {
                                 async: true,
                                 marker_options: {
