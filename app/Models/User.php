@@ -31,4 +31,9 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function getPhoto(): string
+    {
+        return asset('/pictures/athletes/'. $this->id .'/'. $this->photo);
+    }
 }

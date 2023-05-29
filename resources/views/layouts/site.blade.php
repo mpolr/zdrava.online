@@ -18,7 +18,7 @@
     @vite('resources/js/app.js')
     @yield('js')
 </head>
-<body class="bg-gray-50">
+<body>
     <section class="mb-40">
         <nav class="navbar navbar-expand-lg shadow-md py-2 bg-white relative flex items-center w-full justify-between">
             <div class="px-6 w-full flex flex-wrap items-center justify-between">
@@ -63,6 +63,11 @@
                     <div class="hidden w-full md:block md:w-auto" id="navbar-dropdown">
                         <ul class="flex flex-col font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
                             <li>
+                                <a href="{{ route('app') }}" class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">
+                                    {{ __('Download Zdrava :version for android', ['version' => '']) }}
+                                </a>
+                            </li>
+                            <li>
                                 <button id="dropdownNavbarLink" data-dropdown-toggle="dropdownNavbar" class="flex items-center justify-between w-full py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 md:w-auto dark:text-white md:dark:hover:text-blue-500 dark:focus:text-white dark:border-gray-700 dark:hover:bg-gray-700 md:dark:hover:bg-transparent">
                                     {{ __('Workout') }} <svg class="w-5 h-5 ml-1" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
                                 </button>
@@ -92,7 +97,7 @@
                             <div class="flex items-center justify-between space-x-5 bg-white px-4">
                                 <a class="menu-hover text-base font-medium text-black lg:mx-0" onClick="">
                                     @if (Auth::user()->photo)
-                                        <img src="{{ asset('/pictures/athletes/' . Auth::user()->id . '/' . Auth::user()->photo) }}"
+                                        <img src="{{ Auth::user()->getPhoto() }}"
                                              alt="{{ Auth::user()->first_name }} {{ Auth::user()->last_name }}"
                                              loading="lazy"
                                              class="w9 h-9 p-1 rounded-full ring-1 ring-gray-300 dark:ring-gray-500" />
@@ -111,9 +116,9 @@
                                 </span>
                             </div>
                             <div class="invisible absolute z-50 flex right-0 w-48 flex-col bg-gray-100 py-1 px-4 shadow-xl group-hover:visible" onClick="">
-{{--                                <a class="my-2 block border-b border-gray-100 py-1 text-success hover:text-black md:mx-2">--}}
-{{--                                    Найти друзей--}}
-{{--                                </a>--}}
+                                <a class="my-2 block border-b border-gray-100 py-1 text-success hover:text-black md:mx-2">
+                                    Найти друзей
+                                </a>
 {{--                                <a class="my-2 block border-b border-gray-100 py-1 text-gray-500 hover:text-black md:mx-2">--}}
 {{--                                    Мой профиль--}}
 {{--                                </a>--}}

@@ -5,6 +5,7 @@
 
 html {
     font-family: Ubuntu, Roboto, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont;
+    background-color: #f7f7fa;
 }
 
 .leaflet-attribution-flag {
