@@ -13,9 +13,11 @@
 
     <!-- Styles -->
     @vite('resources/css/app.css')
+    @livewireStyles
 
     <!-- Scripts -->
     @vite('resources/js/app.js')
+    @livewireScripts
     @yield('js')
 </head>
 <body>
@@ -116,8 +118,8 @@
                                 </span>
                             </div>
                             <div class="invisible absolute z-50 flex right-0 w-48 flex-col bg-gray-100 py-1 px-4 shadow-xl group-hover:visible" onClick="">
-                                <a class="my-2 block border-b border-gray-100 py-1 text-success hover:text-black md:mx-2">
-                                    Найти друзей
+                                <a href="{{ route('friends.find') }}" class="my-2 block border-b border-gray-100 py-1 text-success hover:text-black md:mx-2">
+                                    {{ __('Find friends') }}
                                 </a>
 {{--                                <a class="my-2 block border-b border-gray-100 py-1 text-gray-500 hover:text-black md:mx-2">--}}
 {{--                                    Мой профиль--}}

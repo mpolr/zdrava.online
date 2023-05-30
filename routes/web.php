@@ -6,21 +6,11 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DownloadAppController;
+use App\Http\Controllers\FriendsController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\UploadController;
 use App\Http\Middleware\Authenticate;
 use Illuminate\Support\Facades\Route;
-
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
 
 Route::get('/', ['as' => 'index', function () {
     if (Auth::user()) { // TODO: Сделать через middleware
@@ -104,6 +94,14 @@ Route::group(['prefix' => 'upload'], function () {
         return view('upload/workout');
     });
 
-    Route::post('avatar', [UploadController::class, 'avatar'])->name('upload.avatar');
     Route::post('workout', [UploadController::class, 'workout'])->name('upload.workout');
+});
+
+/* Друзья */
+Route::group(['prefix' => 'friends', 'middleware' => 'auth'], function () {
+    Route::get('/', function () {
+        return redirect()->route('friends.find');
+    });
+
+    Route::any('find', [FriendsController::class, 'find'])->name('friends.find');
 });
