@@ -82,7 +82,7 @@ Route::group(['prefix' => 'settings', 'middleware' => 'auth'], function () {
 });
 
 /* Загрузка файлов на сервер */
-Route::group(['prefix' => 'upload'], function () {
+Route::group(['prefix' => 'upload', 'middleware' => 'auth'], function () {
     Route::get('/', function () {
         return redirect()->route('site.dashboard');
     });
