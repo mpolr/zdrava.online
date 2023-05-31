@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Select;
+namespace App\Http\Livewire\Settings;
 
 use Carbon\Carbon;
 use Illuminate\Contracts\View\Factory;
@@ -8,7 +8,7 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
 use Livewire\Component;
 
-class Locale extends Component
+class Account extends Component
 {
     public string $locale;
 
@@ -19,7 +19,7 @@ class Locale extends Component
 
     public function render(): View|Application|Factory
     {
-        return view('livewire.select.locale');
+        return view('livewire.settings.account');
     }
 
     public function save()
