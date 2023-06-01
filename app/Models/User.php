@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
@@ -22,6 +23,7 @@ class User extends Authenticatable
         'email',
         'subscribe_news',
         'password',
+        'private',
     ];
 
     protected $hidden = [
@@ -32,6 +34,7 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
+        'private' => 'boolean',
     ];
 
     public function getPhoto(): ?string
@@ -39,13 +42,33 @@ class User extends Authenticatable
         return !empty($this->photo) ? Storage::url('pictures/athletes/'. $this->id .'/'. $this->photo) : null;
     }
 
-    public function getNickname(bool $addAtSymbol= false): ?string
+    public function getNickname(bool $addAtSymbol = false): ?string
     {
         return !empty($this->nickname) ? ($addAtSymbol ? '@'.$this->nickname : $this->nickname) : null;
+    }
+
+    public function getFullName(): string
+    {
+        return "{$this->first_name} {$this->last_name}";
+    }
+
+    public function getInitials(): string
+    {
+        return strtoupper(Str::limit($this->first_name, 1, '').Str::limit($this->last_name, 1, ''));
     }
 
     public function activities(): HasMany
     {
         return $this->hasMany(Activities::class);
+    }
+
+    public function subscriptions(): HasMany
+    {
+        return $this->hasMany(Subscription::class, 'subscriber_id');
+    }
+
+    public function subscribers(): HasMany
+    {
+        return $this->hasMany(Subscription::class, 'user_id');
     }
 }

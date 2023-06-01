@@ -2,7 +2,7 @@
 @section('content')
     <main class="container mx-auto px-0 py-12">
         <div class="flex">
-            <div class="w-2/4 lg:w-3/12 px-4">
+            <div class="w-1/4">
                 <!-- Боковое меню -->
                 <div class="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
                     <div class="flex justify-end px-4 pt-4">
@@ -32,7 +32,7 @@
                             <a href="{{ route('settings.profile') }}">
                                 <div class="relative inline-flex items-center justify-center w-24 h-24 mb-3 overflow-hidden bg-gray-300 rounded-full dark:bg-gray-600">
                                     <span class="font-bold text-3xl text-gray-600 dark:text-gray-300">
-                                        {{ Str::limit(Auth::user()->first_name, 1, '') }}{{ Str::limit(Auth::user()->last_name, 1, '') }}
+                                        {{ Auth::user()->getInitials() }}
                                     </span>
                                 </div>
                             </a>
@@ -69,30 +69,10 @@
                 </div>
             </div>
             <div class="w-2/4">
-                <!-- Контент и графики -->
-                <p>
-                    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eligendi harum tempore
-                    cupiditate asperiores provident, itaque, quo ex iusto rerum voluptatum delectus corporis
-                    quisquam maxime a ipsam nisi sapiente qui optio! Dignissimos harum quod culpa officiis
-                    suscipit soluta labore! Expedita quas, nesciunt similique autem, sunt, doloribus pariatur
-                    maxime qui sint id enim. Placeat, maxime labore. Dolores ex provident ipsa impedit, omnis
-                    magni earum. Sed fuga ex ducimus consequatur corporis, architecto nesciunt vitae ipsum
-                    consequuntur perspiciatis nulla esse voluptatem quos dolorum delectus similique eum vero
-                    in est velit quasi pariatur blanditiis incidunt quam.
-                </p>
+
             </div>
-            <div class="w-1/4 lg:w-3/12 px-4">
-                <!-- Боковое меню -->
-                <p>
-                    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eligendi harum tempore
-                    cupiditate asperiores provident, itaque, quo ex iusto rerum voluptatum delectus corporis
-                    quisquam maxime a ipsam nisi sapiente qui optio! Dignissimos harum quod culpa officiis
-                    suscipit soluta labore! Expedita quas, nesciunt similique autem, sunt, doloribus pariatur
-                    maxime qui sint id enim. Placeat, maxime labore. Dolores ex provident ipsa impedit, omnis
-                    magni earum. Sed fuga ex ducimus consequatur corporis, architecto nesciunt vitae ipsum
-                    consequuntur perspiciatis nulla esse voluptatem quos dolorum delectus similique eum vero
-                    in est velit quasi pariatur blanditiis incidunt quam.
-                </p>
+            <div class="w-1/4">
+
             </div>
         </div>
     </main>

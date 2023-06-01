@@ -106,7 +106,7 @@
                                     @else
                                         <div class="relative inline-flex items-center justify-center w-9 h-9 overflow-hidden bg-gray-300 rounded-full dark:bg-gray-600">
                                             <span class="font-medium text-gray-600 dark:text-gray-300">
-                                                {{ Str::limit(Auth::user()->first_name, 1, '') }}{{ Str::limit(Auth::user()->last_name, 1, '') }}
+                                                {{ Auth::user()->getInitials() }}
                                             </span>
                                         </div>
                                     @endif

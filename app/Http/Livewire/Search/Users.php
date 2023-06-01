@@ -2,20 +2,32 @@
 
 namespace App\Http\Livewire\Search;
 
+use App\Models\Subscription;
 use App\Models\User;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 use Livewire\Component;
 
 class Users extends Component
 {
     public string $search = '';
     public mixed $users = [];
+    public $subscriptions;
+    public $awaiting;
 
     protected array $rules = [
         'search' => 'string|min:2|max:64',
     ];
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->subscriptions = Auth::user()->subscriptions->where('confirmed', 1)->pluck('user_id')->toArray();
+        $this->awaiting = Auth::user()->subscriptions->where('confirmed', 0)->pluck('user_id')->toArray();
+    }
 
     public function render(): View|Application|Factory|null
     {
@@ -36,9 +48,37 @@ class Users extends Component
         }
     }
 
-    public function subscribe(User $user)
+    public function subscribe(User $user): void
     {
-        // TODO: Друзья и всё такое
-        session()->flash('success', __('Subscription request sent.'));
+        $subscription = new Subscription;
+        $subscription->user_id = $user->id;
+        $subscription->subscriber_id = Auth::user()->id;
+        $subscription->save();
+
+        session()->flash('success', __('Subscription request sent'));
+    }
+
+    public function unsubscribe(User $user): void
+    {
+        $subscription = Subscription::where('user_id', $user->id)
+            ->where('subscriber_id', Auth::user()->id)
+            ->first();
+        $subscription->delete();
+
+        session()->flash('success', __('Successfully unsubscribed from ":user"', [
+            'user' => $user->getFullName()
+        ]));
+    }
+
+    public function cancel(User $user): void
+    {
+        $subscription = Subscription::where('user_id', $user->id)
+            ->where('subscriber_id', Auth::user()->id)
+            ->first();
+        $subscription->delete();
+
+        session()->flash('success', __('Subscription request cancelled', [
+            'user' => $user->getFullName()
+        ]));
     }
 }

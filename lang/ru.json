@@ -2,8 +2,8 @@
     "Email address": "Электронная почта",
     "Password": "Пароль",
     "Password confirmation": "Повторите пароль",
-    "First name": "Ваше имя",
-    "Last name": "Ваша фамилия",
+    "First name": "Имя",
+    "Last name": "Фамилия",
     "Login": "Вход",
     "Logout": "Выйти",
     "Remember me": "Запомнить меня",
@@ -73,10 +73,12 @@
     "Search": "Поиск",
     "Name, nickname or email...": "Имя, ник или email...",
     "Photo": "Фотография",
-    "First name": "Имя",
-    "Last name": "Фамилия",
     "Nickname": "Ник",
     "Subscribe": "Подписаться",
     "Unsubscribe": "Отписаться",
-    "Subscription request sent.": "Запрос на подписку отправлен"
+    "Subscription request": "Запрос на подписку",
+    "Cancel subscription request": "Отменить запрос на подписку",
+    "Subscription request sent": "Запрос на подписку отправлен",
+    "Subscription request cancelled": "Запрос на подписку отменен",
+    "Successfully unsubscribed from \":user\"": "Вы успешно отписались от \":user\""
 }

@@ -14,6 +14,7 @@ return new class extends Migration
             $table->string('nickname')->after('last_name')->nullable();
             $table->string('photo')->after('nickname')->nullable();
             $table->boolean('subscribe_news')->after('email');
+            $table->boolean('private')->after('password');
             $table->dropColumn('name');
         });
     }
@@ -27,7 +28,8 @@ return new class extends Migration
                 'last_name',
                 'nickname',
                 'photo',
-                'subscribe_news'
+                'subscribe_news',
+                'private',
             ]);
             $table->string('name')->after('id');
         });
