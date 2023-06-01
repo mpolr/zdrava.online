@@ -36,7 +36,12 @@ class User extends Authenticatable
 
     public function getPhoto(): ?string
     {
-        return Storage::url('pictures/athletes/'. $this->id .'/'. $this->photo);
+        return !empty($this->photo) ? Storage::url('pictures/athletes/'. $this->id .'/'. $this->photo) : null;
+    }
+
+    public function getNickname(bool $addAtSymbol= false): ?string
+    {
+        return !empty($this->nickname) ? ($addAtSymbol ? '@'.$this->nickname : $this->nickname) : null;
     }
 
     public function activities(): HasMany

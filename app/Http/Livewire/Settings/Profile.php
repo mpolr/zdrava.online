@@ -15,14 +15,15 @@ class Profile extends Component
     public string $photo;
 
     protected array $rules = [
-        'user.nickname' => 'string|max:16',
-        'user.first_name' => 'string|max:64',
-        'user.last_name' => 'string|max:64',
+        'user.nickname' => 'string|max:20',
+        'user.first_name' => 'string|min:2|max:64',
+        'user.last_name' => 'string|min:2|max:64',
         'user.subscribe_news' => 'boolean',
     ];
 
-    public function mount(): void
+    public function __construct()
     {
+        parent::__construct();
         $this->user = \Auth::user();
     }
 

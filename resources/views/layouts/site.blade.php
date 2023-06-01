@@ -104,7 +104,7 @@
                                              loading="lazy"
                                              class="w9 h-9 p-1 rounded-full ring-1 ring-gray-300 dark:ring-gray-500" />
                                     @else
-                                        <div class="relative inline-flex items-center justify-center w-9 h-9 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600">
+                                        <div class="relative inline-flex items-center justify-center w-9 h-9 overflow-hidden bg-gray-300 rounded-full dark:bg-gray-600">
                                             <span class="font-medium text-gray-600 dark:text-gray-300">
                                                 {{ Str::limit(Auth::user()->first_name, 1, '') }}{{ Str::limit(Auth::user()->last_name, 1, '') }}
                                             </span>

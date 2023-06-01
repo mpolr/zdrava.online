@@ -6,14 +6,16 @@ use Carbon\Carbon;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
+use Illuminate\Http\RedirectResponse;
 use Livewire\Component;
 
 class Account extends Component
 {
     public string $locale;
 
-    public function mount(): void
+    public function __construct()
     {
+        parent::__construct();
         $this->locale = app()->getLocale();
     }
 
@@ -22,7 +24,7 @@ class Account extends Component
         return view('livewire.settings.account');
     }
 
-    public function save()
+    public function save(): RedirectResponse
     {
         if (!in_array($this->locale, config('app.available_locales'))) {
             abort(400);

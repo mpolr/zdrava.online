@@ -69,8 +69,14 @@
     "Analysis": "Анализ",
     "Interface language": "Язык интерфейса",
     "Save": "Сохранить",
+    "Find friends": "Найти друзей",
+    "Search": "Поиск",
+    "Name, nickname or email...": "Имя, ник или email...",
     "Photo": "Фотография",
     "First name": "Имя",
     "Last name": "Фамилия",
-    "Nickname": "Ник"
+    "Nickname": "Ник",
+    "Subscribe": "Подписаться",
+    "Unsubscribe": "Отписаться",
+    "Subscription request sent.": "Запрос на подписку отправлен"
 }
