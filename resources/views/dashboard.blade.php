@@ -54,11 +54,15 @@
                         <div class="text-sm mt-4">
                             <span class="text-sm text-gray-500 dark:text-gray-400">Последняя тренировка</span>
                             <p>
+                                @if (!empty($activities->latest()->first()))
                                 <a class="text-large hover-orange" href="{{ route('activities.get', $activities->latest()->first()->id) }}">
                                     <strong>
                                         {{ $activities->latest()->first()->name }}
                                     </strong> &blacksquare; <time class="timestamp text-sm">{{ $activities->latest()->first()->getShortStartDate() }}</time>
                                 </a>
+                                @else
+                                    <strong>-</strong>
+                                @endif
                             </p>
                         </div>
 {{--                        <div class="flex mt-4 space-x-3 md:mt-6">--}}

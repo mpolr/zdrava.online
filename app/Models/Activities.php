@@ -114,6 +114,7 @@ class Activities extends Model
     {
         // TODO: Сделать таблицу с сопоставлением стран
         $countries = [
+            null => 'Страна не указана',
             'RU' => 'Россия',
         ];
 

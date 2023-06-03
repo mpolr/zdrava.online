@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use adriangibbons\phpFITFileAnalysis;
 use App\Http\Requests\StoreWorkoutRequest;
 use App\Models\Activities;
+use DateTime;
 use phpGPX\phpGPX;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -147,7 +148,10 @@ class UploadController extends Controller
                 $maxSpeed = 0;
 
                 foreach ($segment->points as $point) {
-                    $speed = $point->extensions->speed; // Получаем скорость точки
+                    $speed = 0;
+                    if (!empty($point->extensions->speed)) {
+                        $speed = $point->extensions->speed; // Получаем скорость точки
+                    }
 
                     if ($speed > $maxSpeed) {
                         $maxSpeed = $speed;
@@ -202,8 +206,10 @@ class UploadController extends Controller
         $activity->end_position_lat = $endLatitude;
         $activity->end_position_long = $endLongitude;
         $geo = $this->geocode($activity->start_position_lat, $activity->start_position_long);
-        $activity->country = $geo['country'];
-        $activity->locality = $geo['locality'];
+        if ($geo) {
+            $activity->country = $geo['country'];
+            $activity->locality = $geo['locality'];
+        }
 
         $activity->save();
 

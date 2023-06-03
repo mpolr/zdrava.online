@@ -32,7 +32,8 @@
                         <div class="flex flex-col items-start bg-white border border-gray-200 shadow md:flex-row max-w-full dark:border-gray-700 dark:bg-gray-800">
                             <div class="flex flex-col justify-between p-4 leading-normal w-1/2">
                                 <p class="mb-2 text-sm text-gray-500 dark:text-gray-400">
-                                    {{ $activity->getLongStartDate() }} - {{ $activity->locality }}, {{ $activity->getCountry() }}
+                                    {{ $activity->getLongStartDate() }}
+                                    @if($activity->locality) - {{ $activity->locality }}@endif, {{ $activity->getCountry() }}
                                 </p>
                                 <h4 class="mb-2 mt-0 text-3xl font-medium leading-tight text-black">
                                     {{ $activity->name }}
