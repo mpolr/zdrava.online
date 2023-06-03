@@ -13,4 +13,9 @@ class FriendsController extends Controller
     {
         return view('friends.find');
     }
+
+    public function requests(): Factory|View
+    {
+        return view('friends.requests');
+    }
 }

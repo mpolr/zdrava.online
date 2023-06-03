@@ -100,5 +100,6 @@ Route::group(['prefix' => 'friends', 'middleware' => 'auth'], function () {
         return redirect()->route('friends.find');
     });
 
-    Route::any('find', [FriendsController::class, 'find'])->name('friends.find');
+    Route::get('find', [FriendsController::class, 'find'])->name('friends.find');
+    Route::get('requests', [FriendsController::class, 'requests'])->name('friends.requests');
 });

@@ -30,12 +30,12 @@
                             @else
                                 <div class="relative inline-flex items-center justify-center w-12 h-12 overflow-hidden bg-gray-300 rounded-full dark:bg-gray-600">
                             <span class="font-medium text-gray-600 dark:text-gray-300">
-                                {{ Str::limit($user->first_name, 1, '') }}{{ Str::limit($user->last_name, 1, '') }}
+                                {{ $user->getInitials() }}
                             </span>
                                 </div>
                             @endif
                             <div class="min-w-0 flex-auto">
-                                <p class="text-sm font-semibold leading-6 text-gray-900">{{ $user->first_name }} {{ $user->last_name }}</p>
+                                <p class="text-sm font-semibold leading-6 text-gray-900">{{ $user->getFullName() }}</p>
                                 <p class="mt-1 truncate text-xs leading-5 text-gray-500">{{ $user->getNickname(true) }}</p>
                             </div>
                         </div>

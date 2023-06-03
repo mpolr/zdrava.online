@@ -80,5 +80,11 @@
     "Cancel subscription request": "Отменить запрос на подписку",
     "Subscription request sent": "Запрос на подписку отправлен",
     "Subscription request cancelled": "Запрос на подписку отменен",
-    "Successfully unsubscribed from \":user\"": "Вы успешно отписались от \":user\""
+    "Successfully unsubscribed from \":user\"": "Вы успешно отписались от \":user\"",
+    "Subscription requests": "Запросы на подписку",
+    "Request sent: :datetime": "Запрос отправлен: :datetime",
+    "Accept": "Принять",
+    "Decline": "Отклонить",
+    "\":user\" is now your subscriber": "Теперь \":user\" ваш подписчик",
+    "Subscription request from \":user\" declined": "Запрос на подписку от \":user\" отклонён"
 }

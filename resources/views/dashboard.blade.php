@@ -2,7 +2,7 @@
 @section('content')
     <main class="container mx-auto px-0 py-12">
         <div class="flex">
-            <div class="w-1/4">
+            <div class="w-1/4 lg:max-w-lg">
                 <!-- Боковое меню -->
                 <div class="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
                     <div class="flex justify-end px-4 pt-4">
@@ -41,10 +41,10 @@
                         <span class="text-sm text-gray-500 dark:text-gray-400">{{ Auth::user()->nickname }}</span>
                         <div class="grid text-sm mt-4 grid-cols-1 gap-6 sm:grid-cols-3">
                             <p class="mb-3 text-center text-gray-600 dark:text-gray-400">
-                                Подписки<br />0
+                                Подписки<br />{{ Auth::user()->subscriptions()->where('confirmed', 1)->count() }}
                             </p>
                             <p class="mb-3 text-center text-gray-600 dark:text-gray-400">
-                                Подписчики<br />0
+                                Подписчики<br />{{ Auth::user()->subscribers()->where('confirmed', 1)->count() }}
                             </p>
                             <p class="mb-3 text-center text-gray-600 dark:text-gray-400">
                                 Тренировки<br />

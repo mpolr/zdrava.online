@@ -17,11 +17,11 @@ class Subscription extends Model
 
     public function user(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->belongsTo(User::class, 'subscriber_id');
     }
 
     public function subscriber(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'subscriber_id');
+        return $this->belongsTo(User::class, 'user_id');
     }
 }

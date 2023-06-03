@@ -8,7 +8,6 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Validator;
 use Livewire\Component;
 
 class Users extends Component
@@ -48,7 +47,7 @@ class Users extends Component
         }
     }
 
-    public function subscribe(User $user): void
+    public function subscribe(User $user)
     {
         $subscription = new Subscription;
         $subscription->user_id = $user->id;
@@ -56,9 +55,11 @@ class Users extends Component
         $subscription->save();
 
         session()->flash('success', __('Subscription request sent'));
+
+        return redirect()->route('friends.find');
     }
 
-    public function unsubscribe(User $user): void
+    public function unsubscribe(User $user)
     {
         $subscription = Subscription::where('user_id', $user->id)
             ->where('subscriber_id', Auth::user()->id)
@@ -68,9 +69,11 @@ class Users extends Component
         session()->flash('success', __('Successfully unsubscribed from ":user"', [
             'user' => $user->getFullName()
         ]));
+
+        return redirect()->route('friends.find');
     }
 
-    public function cancel(User $user): void
+    public function cancel(User $user)
     {
         $subscription = Subscription::where('user_id', $user->id)
             ->where('subscriber_id', Auth::user()->id)
@@ -80,5 +83,7 @@ class Users extends Component
         session()->flash('success', __('Subscription request cancelled', [
             'user' => $user->getFullName()
         ]));
+
+        return redirect()->route('friends.find');
     }
 }

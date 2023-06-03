@@ -26,28 +26,8 @@
             <div class="px-6 w-full flex flex-wrap items-center justify-between">
                 <div class="flex items-center">
                     <button
-                        class="navbar-toggler border-0 py-3 lg:hidden leading-none text-xl bg-transparent text-gray-600 hover:text-gray-700 focus:text-gray-700 transition-shadow duration-150 ease-in-out mr-2"
-                        type="button"
-                        data-bs-toggle="collapse"
-                        data-bs-target="#navbarSupportedContentY"
-                        aria-controls="navbarSupportedContentY"
-                        aria-expanded="false"
-                        aria-label="Toggle navigation"
-                    >
-                        <svg
-                            aria-hidden="true"
-                            focusable="false"
-                            data-prefix="fas"
-                            class="w-5"
-                            role="img"
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 448 512"
-                        >
-                            <path
-                                fill="currentColor"
-                                d="M16 132h416c8.837 0 16-7.163 16-16V76c0-8.837-7.163-16-16-16H16C7.163 60 0 67.163 0 76v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16z"
-                            ></path>
-                        </svg>
+                        class="navbar-toggler border-0 py-3 lg:hidden leading-none text-xl bg-transparent text-gray-600 hover:text-gray-700 focus:text-gray-700 transition-shadow duration-150 ease-in-out mr-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContentY" aria-controls="navbarSupportedContentY" aria-expanded="false" aria-label="Toggle navigation">
+                        <svg aria-hidden="true" focusable="false" data-prefix="fas" class="w-5" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M16 132h416c8.837 0 16-7.163 16-16V76c0-8.837-7.163-16-16-16H16C7.163 60 0 67.163 0 76v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16z"></path></svg>
                     </button>
                     <a class="navbar-brand text-blue-600" href="{{ route('index') }}">
                         <img src="{{ asset('favicon.svg') }}" width="24" height="24" alt="{{ __('Zdrava') }}">
@@ -95,7 +75,11 @@
                     @auth
                         <div class="group relative cursor-pointer py-1">
                             <div class="flex items-center justify-between space-x-5 bg-white px-4">
-                                <a class="menu-hover text-base font-medium text-black lg:mx-0" onClick="">
+                                <a class="menu-hover text-base font-medium text-black lg:mx-0" onClick=""
+                                @if (Auth::user()->subscribers()->where('confirmed', 0)->count() > 0)
+                                    href="{{ route('friends.requests') }}"
+                                @endif
+                                >
                                     @if (Auth::user()->photo)
                                         <img src="{{ Auth::user()->getPhoto() }}"
                                              alt="{{ Auth::user()->first_name }} {{ Auth::user()->last_name }}"
@@ -109,6 +93,11 @@
                                         </div>
                                     @endif
                                 </a>
+                                @if (Auth::user()->subscribers()->where('confirmed', 0)->count() > 0)
+                                    <div class="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-red-500 border-2 border-white rounded-full -top-1 right-11 dark:border-gray-900">
+                                        {{ Auth::user()->subscribers()->where('confirmed', 0)->count() }}
+                                    </div>
+                                @endif
                                 <span>
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
@@ -119,9 +108,6 @@
                                 <a href="{{ route('friends.find') }}" class="my-2 block border-b border-gray-100 py-1 text-success hover:text-black md:mx-2">
                                     {{ __('Find friends') }}
                                 </a>
-{{--                                <a class="my-2 block border-b border-gray-100 py-1 text-gray-500 hover:text-black md:mx-2">--}}
-{{--                                    Мой профиль--}}
-{{--                                </a>--}}
                                 <a href="{{ route('settings.profile') }}" class="my-2 block border-b border-gray-100 py-1 text-gray-500 hover:text-black md:mx-2">
                                     {{ __('Settings') }}
                                 </a>
