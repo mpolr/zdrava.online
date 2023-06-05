@@ -28,7 +28,7 @@ class Users extends Component
         $this->awaiting = Auth::user()->subscriptions->where('confirmed', 0)->pluck('user_id')->toArray();
     }
 
-    public function render(): View|Application|Factory|null
+    public function render()
     {
         return view('livewire.search.users');
     }
@@ -47,7 +47,7 @@ class Users extends Component
         }
     }
 
-    public function subscribe(User $user)
+    public function subscribe(User $user): \Illuminate\Http\RedirectResponse
     {
         $subscription = new Subscription;
         $subscription->user_id = $user->id;
@@ -59,7 +59,7 @@ class Users extends Component
         return redirect()->route('friends.find');
     }
 
-    public function unsubscribe(User $user)
+    public function unsubscribe(User $user): \Illuminate\Http\RedirectResponse
     {
         $subscription = Subscription::where('user_id', $user->id)
             ->where('subscriber_id', Auth::user()->id)
@@ -73,7 +73,7 @@ class Users extends Component
         return redirect()->route('friends.find');
     }
 
-    public function cancel(User $user)
+    public function cancel(User $user): \Illuminate\Http\RedirectResponse
     {
         $subscription = Subscription::where('user_id', $user->id)
             ->where('subscriber_id', Auth::user()->id)

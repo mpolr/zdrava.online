@@ -19,7 +19,7 @@ class Account extends Component
         $this->locale = app()->getLocale();
     }
 
-    public function render(): View|Application|Factory
+    public function render(): \Illuminate\View\View|View|Application|Factory
     {
         return view('livewire.settings.account');
     }

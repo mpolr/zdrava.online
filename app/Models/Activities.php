@@ -112,9 +112,12 @@ class Activities extends Model
 
     public function getCountry(): string
     {
+        if (empty($this->country)) {
+            return 'Страна не указана';
+        }
+
         // TODO: Сделать таблицу с сопоставлением стран
         $countries = [
-            null => 'Страна не указана',
             'RU' => 'Россия',
         ];
 
@@ -125,13 +128,18 @@ class Activities extends Model
         return $this->country;
     }
 
-    public function getLongStartDate()
+    public function getLongStartDate(): string
     {
         return Carbon::parse($this->started_at)->translatedFormat('d F Y г, l, H:i');
     }
 
-    public function getShortStartDate()
+    public function getShortStartDate(): string
     {
         return Carbon::parse($this->started_at)->translatedFormat('l, d.m.Y');
+    }
+
+    public function getCount(): int
+    {
+        return $this->count();
     }
 }

@@ -2,17 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Activities;
-use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AthleteController extends Controller
 {
-    public function training(): Factory|View
+    public function training(): \Illuminate\View\View|View
     {
         return view('athlete.training', [
-            'activities' => \Auth::user()->activities()->limit(100)->get()
+            'activities' => Auth::user()->activities->limit(100)->get()
         ]);
     }
 }

@@ -9,7 +9,7 @@ use Livewire\Component;
 
 class Errors extends Component
 {
-    public function render(): View|Application|Factory
+    public function render(): \Illuminate\View\View|View|Application|Factory
     {
         return view('livewire.toast.errors');
     }

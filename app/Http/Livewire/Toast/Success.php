@@ -10,7 +10,7 @@ use Livewire\Component;
 
 class Success extends Component
 {
-    public function render(): View|Application|Factory
+    public function render(): \Illuminate\View\View|View|Application|Factory
     {
         return view('livewire.toast.success');
     }

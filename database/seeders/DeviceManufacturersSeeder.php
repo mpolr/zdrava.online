@@ -17,7 +17,7 @@ class DeviceManufacturersSeeder extends Seeder
             while (($data = fgetcsv($file)) !== false) {
                 $manufacturer = new \App\Models\DeviceManufacturers();
                 $manufacturer->manufacturer = $data[0];
-                $manufacturer->code = $data[1];
+                $manufacturer->code = (int)$data[1];
                 $manufacturer->description = $data[2];
                 $manufacturer->save();
             }

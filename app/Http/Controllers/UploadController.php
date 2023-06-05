@@ -6,14 +6,14 @@ use adriangibbons\phpFITFileAnalysis;
 use App\Http\Requests\StoreWorkoutRequest;
 use App\Models\Activities;
 use DateTime;
+use Illuminate\Http\RedirectResponse;
 use phpGPX\phpGPX;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Throwable;
 
 class UploadController extends Controller
 {
-    public function workout(StoreWorkoutRequest $request): string
+    public function workout(StoreWorkoutRequest $request): RedirectResponse
     {
         $result = false;
 
@@ -57,7 +57,7 @@ class UploadController extends Controller
     /**
      * @throws \Exception
      */
-    private function processFIT(string $file, StoreWorkoutRequest $request, string $filename)
+    private function processFIT(string $file, StoreWorkoutRequest $request, string $filename): bool
     {
         // TODO: Рассчитать avg_pace, min_altitude, max_altitude
         try {

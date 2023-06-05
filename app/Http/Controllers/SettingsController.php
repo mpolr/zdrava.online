@@ -2,24 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use Carbon\Carbon;
-use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
-use Illuminate\Http\Request;
 
 class SettingsController extends Controller
 {
-    public function profile(): Factory|View
+    public function profile(): \Illuminate\View\View|View
     {
         return view('settings.profile');
     }
 
-    public function account(): Factory|View
+    public function account(): \Illuminate\View\View|View
     {
         return view('settings.account');
     }
 
-    public function privacy(): Factory|View
+    public function privacy(): \Illuminate\View\View|View
     {
         return view('settings.privacy');
     }

@@ -12,7 +12,7 @@ class Profile extends Component
     use WithFileUploads;
 
     public User $user;
-    public string $photo;
+    public $photo;
 
     protected array $rules = [
         'user.nickname' => 'string|max:20',

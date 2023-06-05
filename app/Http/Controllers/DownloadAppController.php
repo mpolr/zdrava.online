@@ -3,14 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\AndroidApp;
-use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class DownloadAppController extends Controller
 {
-    public function index(): Factory|View
+    public function index(): \Illuminate\View\View|View
     {
         $appVersions = AndroidApp::all()->sortDesc();
         return view('app.index', ['versions' => $appVersions]);
