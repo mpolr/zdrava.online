@@ -10,7 +10,7 @@ class AthleteController extends Controller
     public function training(): \Illuminate\View\View|View
     {
         return view('athlete.training', [
-            'activities' => Auth::user()->activities->limit(100)->get()
+            'activities' => Auth::user()->activities()->limit(100)->get()
         ]);
     }
 }

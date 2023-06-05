@@ -9,7 +9,7 @@ class DashboardController extends Controller
     public function index(): \Illuminate\View\View|View
     {
         return view('dashboard', [
-            'activities' => \Auth::user()->activities
+            'activities' => \Auth::user()->activities()
         ]);
     }
 }
