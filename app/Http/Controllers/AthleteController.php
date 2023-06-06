@@ -17,19 +17,33 @@ class AthleteController extends Controller
 
     public function subscribers(?int $userId = null): \Illuminate\View\View|View
     {
-        $user = (empty($userId) ? Auth::user() : User::find($userId));
+        if (empty($userId)) {
+            $user = Auth::user();
+        } else {
+            $user = User::find($userId);
+            if (empty($user)) {
+                abort(404);
+            }
+        }
 
         return view('athlete.subscribers', [
-            'subscribers' => $user->subscribers,
+            'user' => $user,
         ]);
     }
 
     public function subscriptions(?int $userId = null): \Illuminate\View\View|View
     {
-        $user = (empty($userId) ? Auth::user() : User::find($userId));
+        if (empty($userId)) {
+            $user = Auth::user();
+        } else {
+            $user = User::find($userId);
+            if (empty($user)) {
+                abort(404);
+            }
+        }
 
         return view('athlete.subscriptions', [
-            'subscriptions' => $user->subscriptions,
+            'user' => $user,
         ]);
     }
 }

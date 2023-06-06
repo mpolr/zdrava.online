@@ -5,7 +5,7 @@
             <div class="w-full">
                 <!-- Контент -->
                 <h2 class="mb-2 mt-0 text-4xl font-medium leading-tight text-black">
-                    {{ __('My subscribers') }}
+                    {{ __(':user - subscribers', ['user' => $user->getFullName()]) }}
                 </h2>
                 {{-- TODO: Поиск--}}
                 <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
@@ -18,18 +18,18 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @if (!count($subscribers))
+                        @if (!count($user->subscribers))
                             <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                                 <th scope="row" colspan="9" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                     {!! __('Subscribers not found.') !!}
                                 </th>
                             </tr>
                         @else
-                            @foreach($subscribers as $user)
+                            @foreach($user->subscribers as $suser)
                                 <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                                     <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                        <a href="{{ route('athlete.profile', $user->id) }}">
-                                            {{ $user->getFullName() }}
+                                        <a href="{{ route('athlete.profile', $suser->id) }}">
+                                            {{ $suser->getFullName() }}
                                         </a>
                                     </th>
                                 </tr>

@@ -85,8 +85,8 @@
     "Request sent: :datetime": "Запрос отправлен: :datetime",
     "Accept": "Принять",
     "Decline": "Отклонить",
-    "My subscriptions": "Мои подписки",
-    "My subscribers": "Мои подписчики",
+    ":user - subscriptions": ":user - подписки",
+    ":user - subscribers": ":user - подписчики",
     "User": "Пользователь",
     "\":user\" is now your subscriber": "Теперь \":user\" ваш подписчик",
     "Subscription request from \":user\" declined": "Запрос на подписку от \":user\" отклонён"
