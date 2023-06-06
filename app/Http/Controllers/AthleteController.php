@@ -20,10 +20,7 @@ class AthleteController extends Controller
         if (empty($userId)) {
             $user = Auth::user();
         } else {
-            $user = User::find($userId);
-            if (empty($user)) {
-                abort(404);
-            }
+            $user = User::findOrFail($userId);
         }
 
         return view('athlete.subscribers', [
@@ -36,10 +33,7 @@ class AthleteController extends Controller
         if (empty($userId)) {
             $user = Auth::user();
         } else {
-            $user = User::find($userId);
-            if (empty($user)) {
-                abort(404);
-            }
+            $user = User::findOrFail($userId);
         }
 
         return view('athlete.subscriptions', [

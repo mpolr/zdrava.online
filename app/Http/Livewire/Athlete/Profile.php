@@ -16,11 +16,7 @@ class Profile extends Component
         if (empty($id)) {
             $this->user = Auth::user();
         } else {
-            $user = User::find($id);
-            if (empty($user)) {
-                abort(404);
-            }
-
+            $user = User::findOrFail($id);
             $this->user = $user;
         }
     }
