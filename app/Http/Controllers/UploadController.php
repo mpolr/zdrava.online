@@ -182,7 +182,13 @@ class UploadController extends Controller
         $activity = new Activities();
         $activity->user_id = $request->user()->id;
         $activity->name = !empty($gpx->tracks[0]->name) ? $gpx->tracks[0]->name : __('Workout');
-        $activity->distance = $stat['distance'];
+
+        $distance = explode('.', $stat['distance'])[0];
+        $kilometers = floor($distance / 1000);
+        $meters = substr(round($distance % 1000), 0, 2);
+        $distance = $kilometers . '.' . $meters;
+
+        $activity->distance = $distance;
         $activity->avg_speed = $stat['avgSpeed'];
         $activity->max_speed = $maxSpeed;
         $activity->avg_pace = $stat['avgPace'];
