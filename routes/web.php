@@ -54,11 +54,12 @@ Route::group(['prefix' => 'auth'], function () {
 
 /* Спортсмен */
 Route::group(['prefix' => 'athlete', 'middleware' => 'auth'], function () {
-    Route::get('/', function () {
-//        return redirect()->route('settings.profile');
-    });
-
     Route::get('training', [AthleteController::class, 'training'])->name('athlete.training');
+    // Подписчики пользователя
+    Route::get('subscribers', [AthleteController::class, 'subscribers'])->name('athlete.subscribers');
+    // Подписки пользователя (на кого подписан)
+    Route::get('subscriptions', [AthleteController::class, 'subscriptions'])->name('athlete.subscriptions');
+    Route::get('{id?}', \App\Http\Livewire\Athlete\Profile::class)->name('athlete.profile');
 });
 
 /* Тренировки */

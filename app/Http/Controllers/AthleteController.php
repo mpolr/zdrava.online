@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Auth;
 
@@ -11,6 +12,24 @@ class AthleteController extends Controller
     {
         return view('athlete.training', [
             'activities' => Auth::user()->activities()->limit(100)->get()
+        ]);
+    }
+
+    public function subscribers(?int $userId = null): \Illuminate\View\View|View
+    {
+        $user = (empty($userId) ? Auth::user() : User::find($userId));
+
+        return view('athlete.subscribers', [
+            'subscribers' => $user->subscribers,
+        ]);
+    }
+
+    public function subscriptions(?int $userId = null): \Illuminate\View\View|View
+    {
+        $user = (empty($userId) ? Auth::user() : User::find($userId));
+
+        return view('athlete.subscriptions', [
+            'subscriptions' => $user->subscriptions,
         ]);
     }
 }

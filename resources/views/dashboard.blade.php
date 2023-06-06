@@ -40,16 +40,22 @@
                         <h5 class="mb-1 text-xl font-medium text-gray-900 dark:text-white">{{ Auth::user()->first_name }} {{ Auth::user()->last_name }}</h5>
                         <span class="text-sm text-gray-500 dark:text-gray-400">{{ Auth::user()->nickname }}</span>
                         <div class="grid text-sm mt-4 grid-cols-1 gap-6 sm:grid-cols-3">
-                            <p class="mb-3 text-center text-gray-600 dark:text-gray-400">
-                                Подписки<br />{{ Auth::user()->subscriptions()->where('confirmed', 1)->count() }}
-                            </p>
-                            <p class="mb-3 text-center text-gray-600 dark:text-gray-400">
-                                Подписчики<br />{{ Auth::user()->subscribers()->where('confirmed', 1)->count() }}
-                            </p>
-                            <p class="mb-3 text-center text-gray-600 dark:text-gray-400">
-                                Тренировки<br />
-                                {{ \App\Models\Activities::where(['user_id' => Auth::user()->id])->count() }}
-                            </p>
+                            <a href="{{ route('athlete.subscriptions') }}">
+                                <p class="mb-3 text-center text-gray-600 dark:text-gray-400">
+                                    Подписки<br />{{ Auth::user()->subscriptions()->where('confirmed', 1)->count() }}
+                                </p>
+                            </a>
+                            <a href="{{ route('athlete.subscribers') }}">
+                                <p class="mb-3 text-center text-gray-600 dark:text-gray-400">
+                                    Подписчики<br />{{ Auth::user()->subscribers()->where('confirmed', 1)->count() }}
+                                </p>
+                            </a>
+                            <a href="{{ route('athlete.training') }}">
+                                <p class="mb-3 text-center text-gray-600 dark:text-gray-400">
+                                    Тренировки<br />
+                                    {{ Auth::user()->activities->count() ? Auth::user()->activities->count() : 0 }}
+                                </p>
+                            </a>
                         </div>
                         <div class="text-sm mt-4">
                             <span class="text-sm text-gray-500 dark:text-gray-400">Последняя тренировка</span>
