@@ -3,11 +3,9 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\UserResource;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
@@ -20,7 +18,7 @@ class LoginController extends Controller
 
         $remember = $request->boolean('remember_me');
 
-        if (Auth::attempt($credentials, $remember)) {
+        if (\Auth::attempt($credentials, $remember)) {
             $request->session()->regenerate();
             return redirect()->intended(route('site.dashboard'));
         }
@@ -32,7 +30,7 @@ class LoginController extends Controller
 
     public function logout(Request $request): RedirectResponse
     {
-        Auth::logout();
+        \Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
         return redirect()->route('index');
@@ -45,11 +43,11 @@ class LoginController extends Controller
             'password' => ['required'],
         ]);
 
-        if (Auth::attempt($credentials)) {
+        if (\Auth::attempt($credentials)) {
             return response()->json([
                 'success' => true,
                 'message' => 'Login success',
-                'token' => Auth::user()->remember_token
+                'token' => \Auth::user()->remember_token
             ]);
         }
 
