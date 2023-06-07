@@ -30,7 +30,8 @@ class UploadController extends Controller
             $file = Storage::putFileAs(
                 'public/activities/' . $request->user()->id,
                 $uploadedFile,
-                $uploadedFileName
+                $uploadedFileName,
+                'public'
             );
 
             if (!empty($file)) {
@@ -79,7 +80,8 @@ class UploadController extends Controller
             $file = Storage::putFileAs(
                 'public/activities/' . $user->id,
                 $uploadedFile,
-                $uploadedFileName
+                $uploadedFileName,
+                'public'
             );
 
             $result = true;
