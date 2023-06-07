@@ -41,7 +41,7 @@ class RegisterController extends Controller
             'first_name' => $request->first_name,
             'last_name' => $request->last_name,
             'email' => $request->email,
-            'subscribe_news' => $request->subscribe_news,
+            'subscribe_news' => $request->subscribe_news ? 1 : 0,
             'password' => Hash::make($request->password)
         ]);
 
