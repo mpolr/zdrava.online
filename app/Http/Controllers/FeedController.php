@@ -2,25 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
 use Illuminate\Http\JsonResponse;
-use Faker;
 use Illuminate\Http\Request;
 
 class FeedController extends Controller
 {
     protected function feed(Request $request): JsonResponse
     {
-        $faker = Faker\Factory::create('ru_RU');
-
-        $token = $request->get('token');
-        $user = User::where('remember_token', $token)->first();
+        $user = auth('sanctum')->user();
 
         if (empty($user)) {
             return response()->json([
                 'success' => false,
                 'message' => 'User not found'
-            ]);
+            ], 401);
         }
 
         $activities = $user->activities;
@@ -45,7 +40,7 @@ class FeedController extends Controller
                 'avg_speed' => $activity->avg_speed,
                 'elevation_gain' => $activity->elevation_gain,
                 'started_at' => $activity->started_at,
-                'commentsCount' => $faker->unique()->randomDigit,
+                'commentsCount' => 0,
                 'likesCount' => 0,
                 'sharesCount' => 0,
             ];

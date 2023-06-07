@@ -17,4 +17,5 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('/login', [LoginController::class, 'authenticateApi']);
 
-Route::middleware('auth:sanctum')->post('/feed', [FeedController::class, 'feed']);
+Route::middleware('auth:sanctum')->get('/feed', [FeedController::class, 'feed']);
+Route::middleware('auth:sanctum')->post('/upload', [\App\Http\Controllers\UploadController::class, 'workoutApi']);
