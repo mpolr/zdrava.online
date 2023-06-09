@@ -7,6 +7,7 @@ use App\Http\Requests\StoreWorkoutRequest;
 use App\Models\Activities;
 use App\Models\User;
 use DateTime;
+use Gpx2Png\Gpx2Png;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -225,9 +226,6 @@ class UploadController extends Controller
         $endLatitude = $endPoint->latitude;
         $endLongitude = $endPoint->longitude;
 
-//        die(print_r($gpx->tracks[0]));
-//        die(print_r($stat));
-
         $activity = new Activities();
         $activity->user_id = $request->user()->id;
         $activity->name = !empty($gpx->tracks[0]->name) ? $gpx->tracks[0]->name : __('Workout');
@@ -256,6 +254,12 @@ class UploadController extends Controller
         $activity->max_cadence = 0;
         $activity->total_calories = 0;
         $activity->file = $filename;
+
+        $image = $this->generateImageFromGPX($file);
+        if (!empty($image)) {
+            $activity->image = $filename.'.png';
+        }
+
         $activity->start_position_lat = $startLatitude;
         $activity->start_position_long = $startLongitude;
         $activity->end_position_lat = $endLatitude;
@@ -275,6 +279,17 @@ class UploadController extends Controller
     {
         // TODO: Найти парсер TCX файлов
         return true;
+    }
+
+    private function generateImageFromGPX(string $file): bool
+    {
+        $fullFilePath = Storage::path($file);
+        $gpx2png = new Gpx2Png();
+        $gpx2png->loadFile($fullFilePath);
+
+        $res = $gpx2png->generateImage();
+        $image = $res->data();
+        return Storage::put($file.'.png', $image, 'public');
     }
 
     private function processGPXApi(User $user, string $file, string $filename): bool
@@ -323,9 +338,6 @@ class UploadController extends Controller
         $endLatitude = $endPoint->latitude;
         $endLongitude = $endPoint->longitude;
 
-//        die(print_r($gpx->tracks[0]));
-//        die(print_r($stat));
-
         $activity = new Activities();
         $activity->user_id = $user->id;
         $activity->name = !empty($gpx->tracks[0]->name) ? $gpx->tracks[0]->name : __('Workout');
@@ -354,6 +366,12 @@ class UploadController extends Controller
         $activity->max_cadence = 0;
         $activity->total_calories = 0;
         $activity->file = $filename;
+
+        $image = $this->generateImageFromGPX($file);
+        if (!empty($image)) {
+            $activity->image = $filename.'.png';
+        }
+
         $activity->start_position_lat = $startLatitude;
         $activity->start_position_long = $startLongitude;
         $activity->end_position_lat = $endLatitude;

@@ -90,6 +90,11 @@ class Activities extends Model
         return number_format($this->avg_speed, 1, ',');
     }
 
+    public function getElevationGain(): string
+    {
+        return number_format($this->elevation_gain, 1, ',');
+    }
+
     public function getMaxSpeed(): string
     {
         return number_format($this->max_speed, 1, ',');

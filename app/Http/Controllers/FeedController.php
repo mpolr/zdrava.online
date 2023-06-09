@@ -29,12 +29,18 @@ class FeedController extends Controller
 
         $feedItems = [];
         foreach ($activities as $activity) {
+
+            $imageUrl = 'https://mpolr.ru/images/zdrava-ride.jpg';
+            if (!empty($activity->image)) {
+                $imageUrl = 'https://zdrava.mpolr.ru/storage/activities/'.$user->id.'/'.$activity->image;
+            }
+
             $feedItems[] = [
                 'id' => $activity->id,
-                'user_id' => $activity->user_id,
+                'userId' => $activity->user_id,
                 'name' => $activity->name,
                 'description' => $activity->description,
-                'imageUrl' => 'https://mpolr.ru/images/zdrava-ride.jpg',
+                'imageUrl' => $imageUrl,
                 'userName' => $user->getFullName(),
                 'distance' => $activity->distance,
                 'avgSpeed' => $activity->avg_speed,
