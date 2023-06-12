@@ -59,6 +59,11 @@ class Activities extends Model
         return null;
     }
 
+    public function getUser(): ?User
+    {
+        return User::find($this->user_id);
+    }
+
     public function getTrackCenter(): array
     {
         $startLat = $this->start_position_lat;
