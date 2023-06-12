@@ -73,13 +73,8 @@ class User extends Authenticatable
         );
     }
 
-    public function subscribers(): BelongsToMany
+    public function subscribers(): HasMany
     {
-        return $this->belongsToMany(
-            User::class,
-            'subscriptions',
-            'subscriber_id',
-            'user_id'
-        );
+        return $this->hasMany(Subscription::class);
     }
 }

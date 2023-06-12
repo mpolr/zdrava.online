@@ -14,10 +14,7 @@ class Requests extends Component
     public function __construct()
     {
         parent::__construct();
-        $this->requests = Subscription::where([
-            'user_id' => \auth()->user()->id,
-            'confirmed' => 0
-        ])->get();
+        $this->requests = Auth::user()->subscribers()->where('confirmed', 0)->get();
     }
 
     public function render()
