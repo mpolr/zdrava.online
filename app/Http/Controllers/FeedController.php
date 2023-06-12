@@ -32,7 +32,7 @@ class FeedController extends Controller
 
             $imageUrl = 'https://mpolr.ru/images/zdrava-ride.jpg';
             if (!empty($activity->image)) {
-                $imageUrl = 'https://zdrava.mpolr.ru/storage/activities/'.$user->id.'/'.$activity->image;
+                $imageUrl = $activity->getImage($user->id, true);
             }
 
             $feedItems[] = [

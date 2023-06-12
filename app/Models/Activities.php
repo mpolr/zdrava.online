@@ -152,4 +152,15 @@ class Activities extends Model
     {
         return $this->count();
     }
+
+    public function getImage(?int $userId = null, bool $fullUrl = false): string
+    {
+        if (empty($userId)) {
+            $userId = auth()->user()->id;
+        }
+
+        $path = "activities/{$userId}/{$this->image}";
+
+        return $fullUrl ? asset(Storage::url($path)) : Storage::url($path);
+    }
 }
