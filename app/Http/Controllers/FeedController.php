@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Activities;
+use App\Models\Subscription;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -18,7 +20,12 @@ class FeedController extends Controller
             ], 401);
         }
 
-        $activities = $user->activities;
+        $activities = Activities::where('user_id', $user->id)
+            ->orWhereIn('user_id', Subscription::select(['user_id'])
+                ->where('subscriber_id', $user->id)
+                ->where('confirmed', 1))
+            ->orderBy('created_at', 'DESC')
+            ->get();
 
         if (empty($activities)) {
             return response()->json([
@@ -29,19 +36,13 @@ class FeedController extends Controller
 
         $feedItems = [];
         foreach ($activities as $activity) {
-
-            $imageUrl = 'https://mpolr.ru/images/zdrava-ride.jpg';
-            if (!empty($activity->image)) {
-                $imageUrl = $activity->getImage($user->id, true);
-            }
-
             $feedItems[] = [
                 'id' => $activity->id,
                 'userId' => $activity->user_id,
                 'name' => $activity->name,
                 'description' => $activity->description,
-                'imageUrl' => $imageUrl,
-                'userName' => $user->getFullName(),
+                'imageUrl' => $activity->getImage($user->id, true),
+                'userName' => $activity->getUser()->getFullName(),
                 'distance' => $activity->distance,
                 'avgSpeed' => $activity->avg_speed,
                 'elevationGain' => $activity->elevation_gain,

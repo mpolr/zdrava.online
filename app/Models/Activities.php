@@ -153,8 +153,10 @@ class Activities extends Model
         return $this->count();
     }
 
-    public function getImage(?int $userId = null, bool $fullUrl = false): string
+    public function getImage(?int $userId = null, bool $fullUrl = false): ?string
     {
+        if (empty($this->image)) return null;
+
         if (empty($userId)) {
             $userId = auth()->user()->id;
         }
