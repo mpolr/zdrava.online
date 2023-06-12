@@ -168,6 +168,5 @@
 
         @yield('content')
     </section>
-
 </body>
 </html>

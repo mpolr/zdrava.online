@@ -1,10 +1,10 @@
 @extends('layouts.site')
 @section('content')
-    <main class="container mx-auto px-0 py-12">
-        <div class="flex">
-            <div class="w-1/4 lg:max-w-lg">
+    <main class="container mx-auto px-0 pt-12">
+        <div class="flex flex-wrap">
+            <div class="w-full lg:w-1/4 lg:max-w-lg">
                 <!-- Боковое меню -->
-                <div class="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+                <div class="w-full mb-6 max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
                     <div class="flex justify-end px-4 pt-4">
                         <button id="dropdownButton" data-dropdown-toggle="dropdown" class="inline-block text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:ring-4 focus:outline-none focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-1.5" type="button">
                             <span class="sr-only">Open dropdown</span>
@@ -39,7 +39,7 @@
                         @endif
                         <h5 class="mb-1 text-xl font-medium text-gray-900 dark:text-white">{{ Auth::user()->first_name }} {{ Auth::user()->last_name }}</h5>
                         <span class="text-sm text-gray-500 dark:text-gray-400">{{ Auth::user()->nickname }}</span>
-                        <div class="grid text-sm mt-4 grid-cols-1 gap-6 sm:grid-cols-3">
+                        <div class="grid text-sm mt-4 grid-cols-3 gap-6 sm:grid-cols-3">
                             <a href="{{ route('athlete.subscriptions') }}">
                                 <p class="mb-3 text-center text-gray-600 dark:text-gray-400">
                                     Подписки<br />{{ Auth::user()->subscriptions()->where('confirmed', 1)->count() }}
@@ -57,7 +57,7 @@
                                 </p>
                             </a>
                         </div>
-                        <div class="text-sm mt-4">
+                        <div class="text-sm mt-4 ml-4 mr-4">
                             <span class="text-sm text-gray-500 dark:text-gray-400">Последняя тренировка</span>
                             <p>
                                 @if (!empty(auth()->user()->activities()->latest()->first()))
@@ -78,10 +78,10 @@
                     </div>
                 </div>
             </div>
-            <div class="w-2/4 ml-4">
+            <div class="w-full lg:w-1/4 lg:ml-4">
                 @if($activities)
                     @foreach($activities as $activity)
-                        <div class="max-w-full mb-2 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+                        <div class="max-w-full mb-3 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
                             <div class="p-4">
                                 <div class="flex gap-x-4">
                                     @if($activity->getUser()->getPhoto())
@@ -143,7 +143,7 @@
                     Нет тренировок
                 @endif
             </div>
-            <div class="w-1/4">
+            <div class="w-full lg:w-1/4">
 
             </div>
         </div>
