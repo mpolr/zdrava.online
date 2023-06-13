@@ -80,13 +80,16 @@ class Activities extends Model
         ];
     }
 
-    public function getGPXFile(): string
+    public function getGPXFile(bool $onlyFileName = false): string
     {
         $gpxFile = $this->file;
         if (strpos($this->file, '.fit')) {
             $gpxFile = $this->file.'.gpx';
         }
 
+        if ($onlyFileName) {
+            return $gpxFile;
+        }
         return Storage::url('public/activities/'. $this->user_id .'/'. $gpxFile);
     }
 

@@ -138,6 +138,32 @@
                                 attribution: '© OpenStreetMap'
                             }).addTo(map);
 
+                            L.Control.Button = L.Control.extend({
+                                options: {
+                                    position: 'topright'
+                                },
+                                onAdd: function (map) {
+                                    var container = L.DomUtil.create('div', 'leaflet-control text-center content-center flex justify-center items-center');
+                                    var button = L.DomUtil.create('div', 'leaflet-control-button border-2 border-black text-black bg-white', container);
+                                    button.innerHTML = '<button class="mt-1"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" /></svg></button>';
+                                    container.title = "{{ __('Download :file', ['file' => 'GPX']) }}";
+                                    L.DomEvent.disableClickPropagation(button);
+                                    L.DomEvent.on(button, 'click', function(){
+                                        var fileUrl = '{{ $activity->getGPXFile() }}';
+                                        var fileName = '{{ $activity->getGPXFile(true) }}';
+                                        var link = document.createElement('a');
+                                        link.href = fileUrl;
+                                        link.download = fileName;
+                                        link.click();
+                                    });
+
+                                    return container;
+                                },
+                                onRemove: function(map) {},
+                            });
+                            var control = new L.Control.Button()
+                            control.addTo(map);
+
                             let gpx = '{{ $activity->getGPXFile() }}';
                             new L.GPX(gpx, {
                                 async: true,
