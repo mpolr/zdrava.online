@@ -95,7 +95,7 @@ class Activities extends Model
 
     public function getAverageSpeed(): string
     {
-        return number_format($this->avg_speed, 1, ',');
+        return number_format($this->avg_speed * 3.6, 1, ',');
     }
 
     public function getElevationGain(): string
@@ -105,7 +105,7 @@ class Activities extends Model
 
     public function getMaxSpeed(): string
     {
-        return number_format($this->max_speed, 1, ',');
+        return number_format($this->max_speed * 3.6, 1, ',');
     }
 
     public function getDuration(): bool|string
