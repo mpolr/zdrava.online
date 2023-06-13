@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Controllers\Api\ApiActivityController;
+use App\Http\Controllers\Api\ApiFeedController;
 use App\Http\Controllers\Auth\LoginController;
-use App\Http\Controllers\FeedController;
+use App\Http\Controllers\UploadController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,5 +19,6 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('/login', [LoginController::class, 'authenticateApi']);
 
-Route::middleware('auth:sanctum')->get('/feed', [FeedController::class, 'feed']);
-Route::middleware('auth:sanctum')->post('/upload', [\App\Http\Controllers\UploadController::class, 'workoutApi']);
+Route::middleware('auth:sanctum')->get('/feed', [ApiFeedController::class, 'feed']);
+Route::middleware('auth:sanctum')->get('/activity/{id}/comments', [ApiActivityController::class, 'activityComments']);
+Route::middleware('auth:sanctum')->post('/upload', [UploadController::class, 'workoutApi']);

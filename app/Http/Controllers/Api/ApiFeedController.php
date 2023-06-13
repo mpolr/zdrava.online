@@ -1,13 +1,14 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Controller;
 use App\Models\Activities;
 use App\Models\Subscription;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
-class FeedController extends Controller
+class ApiFeedController extends Controller
 {
     protected function feed(Request $request): JsonResponse
     {
@@ -36,6 +37,8 @@ class FeedController extends Controller
 
         $feedItems = [];
         foreach ($activities as $activity) {
+            $comments = $activity->comments;
+
             $feedItems[] = [
                 'id' => $activity->id,
                 'userId' => $activity->user_id,
@@ -47,7 +50,8 @@ class FeedController extends Controller
                 'avgSpeed' => $activity->avg_speed,
                 'elevationGain' => $activity->elevation_gain,
                 'startedAt' => $activity->started_at,
-                'commentsCount' => 0,
+                'comments' => $comments,
+                'commentsCount' => count($comments),
                 'likesCount' => 0,
                 'sharesCount' => 0,
             ];
