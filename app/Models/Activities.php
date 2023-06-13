@@ -155,7 +155,9 @@ class Activities extends Model
 
     public function getImage(?int $userId = null, bool $fullUrl = false): ?string
     {
-        if (empty($this->image)) return null;
+        if (empty($this->image)) {
+            return null;
+        }
 
         if (empty($userId)) {
             $userId = auth()->user()->id;
@@ -164,5 +166,10 @@ class Activities extends Model
         $path = "activities/{$userId}/{$this->image}";
 
         return $fullUrl ? asset(Storage::url($path)) : Storage::url($path);
+    }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
     }
 }

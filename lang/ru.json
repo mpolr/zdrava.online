@@ -89,5 +89,7 @@
     ":user - subscribers": ":user - подписчики",
     "User": "Пользователь",
     "\":user\" is now your subscriber": "Теперь \":user\" ваш подписчик",
-    "Subscription request from \":user\" declined": "Запрос на подписку от \":user\" отклонён"
+    "Subscription request from \":user\" declined": "Запрос на подписку от \":user\" отклонён",
+    "Reply": "Ответить",
+    "Like": "Нравится"
 }

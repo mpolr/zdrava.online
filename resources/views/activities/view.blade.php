@@ -161,6 +161,7 @@
                         initMap();
                     </script>
                 </div>
+                @livewire('comments.comments', ['activityId' => $activity->id])
             </div>
         </div>
     </main>
