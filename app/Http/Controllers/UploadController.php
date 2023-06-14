@@ -191,23 +191,32 @@ class UploadController extends Controller
             return false;
         }
 
+        $elevation = 0;
+
         foreach ($gpx->tracks as $track) {
             // Statistics for whole track
             $statsTrack[] = $track->stats->toArray();
 
             foreach ($track->segments as $segment) {
                 $maxSpeed = 0;
+                $pointElevation = 0;
 
                 foreach ($segment->points as $point) {
-                    $speed = 0;
-                    if (!empty($point->extensions->speed)) {
-                        $speed = $point->extensions->speed; // Получаем скорость точки
+                    $pointSpeed = 0;
+                    if ($point->elevation > $pointElevation) {
+                        $pointElevation += $point->elevation;
                     }
 
-                    if ($speed > $maxSpeed) {
-                        $maxSpeed = $speed;
+                    if (!empty($point->extensions->speed)) {
+                        $pointSpeed = $point->extensions->speed; // Получаем скорость точки
+                    }
+
+                    if ($pointSpeed > $maxSpeed) {
+                        $maxSpeed = $pointSpeed;
                     }
                 }
+
+                $elevation += $pointElevation;
             }
         }
 
@@ -241,7 +250,7 @@ class UploadController extends Controller
         $activity->avg_pace = $stat['avgPace'];
         $activity->min_altitude = $stat['minAltitude'];
         $activity->max_altitude = $stat['maxAltitude'];
-        $activity->elevation_gain = $stat['cumulativeElevationGain'];
+        $activity->elevation_gain = $elevation;
         $activity->elevation_loss = $stat['cumulativeElevationLoss'];
         $activity->started_at = $stat['startedAt'];
         $activity->finished_at = $stat['finishedAt'];
@@ -303,23 +312,32 @@ class UploadController extends Controller
             return false;
         }
 
+        $elevation = 0;
+
         foreach ($gpx->tracks as $track) {
             // Statistics for whole track
             $statsTrack[] = $track->stats->toArray();
 
             foreach ($track->segments as $segment) {
                 $maxSpeed = 0;
+                $pointElevation = 0;
 
                 foreach ($segment->points as $point) {
-                    $speed = 0;
-                    if (!empty($point->extensions->speed)) {
-                        $speed = $point->extensions->speed; // Получаем скорость точки
+                    $pointSpeed = 0;
+                    if ($point->elevation > $pointElevation) {
+                        $pointElevation += $point->elevation;
                     }
 
-                    if ($speed > $maxSpeed) {
-                        $maxSpeed = $speed;
+                    if (!empty($point->extensions->speed)) {
+                        $pointSpeed = $point->extensions->speed; // Получаем скорость точки
+                    }
+
+                    if ($pointSpeed > $maxSpeed) {
+                        $maxSpeed = $pointSpeed;
                     }
                 }
+
+                $elevation += $pointElevation;
             }
         }
 
@@ -353,7 +371,7 @@ class UploadController extends Controller
         $activity->avg_pace = $stat['avgPace'];
         $activity->min_altitude = $stat['minAltitude'];
         $activity->max_altitude = $stat['maxAltitude'];
-        $activity->elevation_gain = $stat['cumulativeElevationGain'];
+        $activity->elevation_gain = $elevation;
         $activity->elevation_loss = $stat['cumulativeElevationLoss'];
         $activity->started_at = $stat['startedAt'];
         $activity->finished_at = $stat['finishedAt'];
