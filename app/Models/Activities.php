@@ -163,7 +163,7 @@ class Activities extends Model
         }
 
         if (empty($userId)) {
-            $userId = auth()->user()->id;
+            $userId = $this->user_id;
         }
 
         $path = "activities/{$userId}/{$this->image}";

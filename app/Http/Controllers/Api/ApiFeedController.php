@@ -44,7 +44,7 @@ class ApiFeedController extends Controller
                 'userId' => $activity->user_id,
                 'name' => $activity->name,
                 'description' => $activity->description,
-                'imageUrl' => $activity->getImage($user->id, true),
+                'imageUrl' => $activity->getImage($activity->user_id, true),
                 'userName' => $activity->getUser()->getFullName(),
                 'distance' => $activity->distance,
                 'avgSpeed' => $activity->avg_speed,
