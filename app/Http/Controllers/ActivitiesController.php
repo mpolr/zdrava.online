@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Activities;
 use Illuminate\Contracts\View\View;
+use Storage;
 
 class ActivitiesController extends Controller
 {
@@ -14,5 +15,30 @@ class ActivitiesController extends Controller
         return view('activities.view', [
             'activity' => $activity
         ]);
+    }
+
+    public function delete(int $id): \Illuminate\Http\RedirectResponse
+    {
+        $activity = Activities::findOrFail($id);
+
+        if (auth()->user()->id === $activity->user_id) {
+            $gpxFile = $activity->file;
+            if (strpos($activity->file, '.fit')) {
+                $gpxFile = $activity->file.'.gpx';
+            }
+
+            if ($activity->file !== $gpxFile) {
+                Storage::delete('public/activities/'. $activity->user_id .'/'. $gpxFile);
+            }
+
+            Storage::delete('public/activities/'. $activity->user_id .'/'. $activity->file);
+            Storage::delete('public/activities/'. $activity->user_id .'/'. $activity->image);
+
+            Activities::destroy($id);
+
+            return redirect()->route('site.dashboard');
+        }
+
+        return redirect()->refresh();
     }
 }
