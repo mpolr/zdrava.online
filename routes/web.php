@@ -71,6 +71,8 @@ Route::group(['prefix' => 'activities', 'middleware' => 'auth'], function () {
     });
 
     Route::get('/{id}', [ActivitiesController::class, 'get'])->name('activities.get');
+
+    Route::post('/{id}/delete', [ActivitiesController::class, 'delete'])->name('activities.delete');
 });
 
 /* Настройки */
