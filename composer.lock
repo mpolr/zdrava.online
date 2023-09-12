@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6300ebd0087e95ed973e4b2be1afddfd",
+    "content-hash": "44a6c7a975412f5e5cda70aba484f207",
     "packages": [
         {
             "name": "adriangibbons/php-fit-file-analysis",
@@ -1537,17 +1537,17 @@
             "time": "2014-12-15T23:03:51+00:00"
         },
         {
-            "name": "knyazevdev/gpx2png",
-            "version": "1.3.1",
+            "name": "kravenor/gpx2png",
+            "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://github.com/knyazevdev/gpx2png.git",
-                "reference": "d6c4b772d45eb6b5383b89253ae5b5f380aaab49"
+                "url": "https://github.com/kravenor/gpx2png.git",
+                "reference": "596753e41f34565158edb3024f0ca23816779abb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/knyazevdev/gpx2png/zipball/d6c4b772d45eb6b5383b89253ae5b5f380aaab49",
-                "reference": "d6c4b772d45eb6b5383b89253ae5b5f380aaab49",
+                "url": "https://api.github.com/repos/kravenor/gpx2png/zipball/596753e41f34565158edb3024f0ca23816779abb",
+                "reference": "596753e41f34565158edb3024f0ca23816779abb",
                 "shasum": ""
             },
             "require": {
@@ -1558,6 +1558,7 @@
             "require-dev": {
                 "phpunit/phpunit": "4.*"
             },
+            "default-branch": true,
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -1575,13 +1576,13 @@
             ],
             "authors": [
                 {
-                    "name": ":Alexey Knyazev",
-                    "email": "alexey.knyaz@gmail.com",
+                    "name": ":Simone Baldelli",
+                    "email": "baldelli.simone@gmail.com",
                     "role": "Developer"
                 }
             ],
             "description": "Gpx and track to image on OSM and other tiles",
-            "homepage": "https://github.com/knyazevdev/gpx2png",
+            "homepage": "https://github.com/kravenor/gpx2png",
             "keywords": [
                 "gpx2image",
                 "gpx2osm",
@@ -1589,10 +1590,9 @@
                 "track2png"
             ],
             "support": {
-                "issues": "https://github.com/knyazevdev/gpx2png/issues",
-                "source": "https://github.com/knyazevdev/gpx2png/tree/1.3.1"
+                "source": "https://github.com/kravenor/gpx2png/tree/v.1.0.1"
             },
-            "time": "2020-04-17T14:43:11+00:00"
+            "time": "2023-06-25T13:25:43+00:00"
         },
         {
             "name": "laravel/framework",
@@ -12079,12 +12079,14 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "kravenor/gpx2png": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
         "php": "^8.1"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.3.0"
+    "plugin-api-version": "2.6.0"
 }

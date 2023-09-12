@@ -294,6 +294,11 @@ class UploadController extends Controller
     {
         $fullFilePath = Storage::path($file);
         $gpx2png = new Gpx2Png();
+        $gpx2png->imageParams->max_width = 1280;
+        $gpx2png->imageParams->max_height = 1280;
+        $gpx2png->imageParams->padding = 20;
+        $gpx2png->drawParams->autoCropToBounds = 0;
+        $gpx2png->drawParams->track->distanceLabelsFrequency = 0;
         $gpx2png->loadFile($fullFilePath);
 
         $res = $gpx2png->generateImage();
