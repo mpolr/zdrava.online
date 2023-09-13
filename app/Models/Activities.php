@@ -5,9 +5,13 @@ namespace App\Models;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
+use App\Contracts\Likeable;
+use App\Models\Concerns\Likes;
 
-class Activities extends Model
+class Activities extends Model implements Likeable
 {
+    use Likes;
+
     protected $fillable = [
         'user_id',
         'sport',
