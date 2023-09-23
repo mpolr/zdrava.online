@@ -166,7 +166,11 @@
             </div>
         </nav>
 
-        @yield('content')
+        @if(empty($slot))
+            @yield('content')
+        @else
+            {{ $slot }}
+        @endif
     </section>
 </body>
 </html>

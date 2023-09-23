@@ -24,6 +24,7 @@
     "Privacy": "Конфиденциальность",
     "Click to select file": "Нажмите чтобы выбрать файл",
     "or drag and drop": "или перетащите сюда",
+    "up to": "до",
     "or": "или",
     "max.": "макс.",
     "Submit": "Отправить",
@@ -94,5 +95,10 @@
     "Like": "Нравится",
     "Download :file": "Скачать :file",
     "Telegram": "Telegram-канал",
-    "Activity \":name\" successfully deleted": "Тренировка \":name\" успешно удалена"
+    "Activity \":name\" successfully deleted": "Тренировка \":name\" успешно удалена",
+    "Edit activity": "Редактировать",
+    "The changes were successfully saved": "Изменения успешно сохранены",
+    "Tell, how the training went": "Расскажите, как прошла тренировка",
+    "Description": "Описание",
+    "Media": "Медиафайлы"
 }

@@ -5,7 +5,7 @@
     <scripts>
       <script value="build" />
     </scripts>
-    <node-interpreter value="sshConfig://mpolr@192.168.1.254:22 password/usr/bin/node" />
+    <node-interpreter value="$USER_HOME$/.nvm/versions/node/v20.3.0/bin/node" />
     <envs />
     <method v="2" />
   </configuration>

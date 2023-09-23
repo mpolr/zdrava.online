@@ -11,6 +11,7 @@ use App\Http\Controllers\FriendsController;
 use App\Http\Controllers\LikeController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\UploadController;
+use App\Http\Livewire\Activity\Edit;
 use App\Http\Middleware\Authenticate;
 use Illuminate\Support\Facades\Route;
 
@@ -74,6 +75,7 @@ Route::group(['prefix' => 'activities', 'middleware' => 'auth'], function () {
 
     Route::get('/{id}', [ActivitiesController::class, 'get'])->name('activities.get');
     Route::post('/{id}/delete', [ActivitiesController::class, 'delete'])->name('activities.delete');
+    Route::get('/{id}/edit', Edit::class)->name('activities.edit');
 
     Route::post('like', [LikeController::class, 'like'])->name('activities.like');
     Route::delete('like', [LikeController::class, 'unlike'])->name('activities.unlike');

@@ -25,26 +25,37 @@
                     <!-- Dropdown menu -->
                     <div id="dropdown" class="z-10 hidden text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
                         <ul class="py-2" aria-labelledby="dropdownButton">
+                            @if ($activity->getUser()->id == auth()->user()->id || auth()->user()->hasRole('admin'))
+                            <li>
+                                <a href="{{ route('activities.edit', $activity->id) }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
+                                    {{ __('Edit activity') }}
+                                </a>
+                            </li>
+                            @endif
                             <li>
                                 <a href="{{ $activity->getGPXFile() }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
                                     {{ __('Download :file', ['file' => 'GPX']) }}
                                 </a>
                             </li>
-                            @if ($activity->getUser()->id == auth()->user()->id || auth()->user()->hasRole('admin'))
-                            <li>
-                                <a href="#" onclick="event.preventDefault(); document.getElementById('activity-delete-form').submit();" class="block px-4 py-2 text-sm text-red-600 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
-                                    {{ __('Delete') }}
-                                </a>
-                                <form id="activity-delete-form" action="{{ route('activities.delete', $activity->id) }}" method="POST" style="display: none;">
-                                    {{ csrf_field() }}
-                                </form>
-                            </li>
-                            @endif
                         </ul>
+                        @if ($activity->getUser()->id == auth()->user()->id || auth()->user()->hasRole('admin'))
+                        <div class="py-2">
+                            <a href="#" onclick="event.preventDefault(); document.getElementById('activity-delete-form').submit();" class="block px-4 py-2 text-sm text-red-600 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
+                                {{ __('Delete') }}
+                            </a>
+                            <form id="activity-delete-form" action="{{ route('activities.delete', $activity->id) }}" method="POST" style="display: none;">
+                                {{ csrf_field() }}
+                            </form>
+                        </div>
+                        @endif
                     </div>
                 </div>
             </div>
             <div class="w-3/4">
+                @error('search') @livewire('toast.errors') @enderror
+                @if (Session::get('success'))
+                    @livewire('toast.success')
+                @endif
                 <div id="accordion-flush" data-accordion="collapse" data-active-classes="bg-white dark:bg-gray-900 text-gray-900 dark:text-white" data-inactive-classes="text-gray-500 dark:text-gray-400">
                     <h2 id="accordion-flush-heading-overview">
                         <button type="button" class="flex items-center justify-between w-full px-4 py-5 font-medium text-left text-gray-500 border-b border-gray-200 dark:border-gray-700 dark:text-gray-400" data-accordion-target="#accordion-flush-body-overview" aria-expanded="true" aria-controls="accordion-flush-body-overview">
