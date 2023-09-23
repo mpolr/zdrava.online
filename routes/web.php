@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ActivitiesController;
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AthleteController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
@@ -110,4 +111,9 @@ Route::group(['prefix' => 'friends', 'middleware' => 'auth'], function () {
 
     Route::get('find', [FriendsController::class, 'find'])->name('friends.find');
     Route::get('requests', [FriendsController::class, 'requests'])->name('friends.requests');
+});
+
+/* Админка */
+Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
+    Route::get('/', [AdminController::class, 'index'])->name('admin.index');
 });
