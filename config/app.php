@@ -183,6 +183,8 @@ return [
         App\Providers\RouteServiceProvider::class,
         Geocoder\Laravel\Providers\GeocoderService::class,
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
+        App\Providers\RolesServiceProvider::class,
+        App\Providers\PermissionServiceProvider::class,
     ])->toArray(),
 
     /*
