@@ -7,8 +7,10 @@ use App\Models\User;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
+use Livewire\Redirector;
 
 class Users extends Component
 {
@@ -47,7 +49,7 @@ class Users extends Component
         }
     }
 
-    public function subscribe(User $user): \Illuminate\Http\RedirectResponse
+    public function subscribe(User $user): Redirector|RedirectResponse
     {
         $subscription = new Subscription;
         $subscription->user_id = $user->id;
@@ -59,7 +61,7 @@ class Users extends Component
         return redirect()->route('friends.find');
     }
 
-    public function unsubscribe(User $user): \Illuminate\Http\RedirectResponse
+    public function unsubscribe(User $user): RedirectResponse
     {
         $subscription = Subscription::where('user_id', $user->id)
             ->where('subscriber_id', Auth::user()->id)
@@ -73,7 +75,7 @@ class Users extends Component
         return redirect()->route('friends.find');
     }
 
-    public function cancel(User $user): \Illuminate\Http\RedirectResponse
+    public function cancel(User $user): RedirectResponse
     {
         $subscription = Subscription::where('user_id', $user->id)
             ->where('subscriber_id', Auth::user()->id)
