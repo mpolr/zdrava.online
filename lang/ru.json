@@ -93,5 +93,6 @@
     "Reply": "Ответить",
     "Like": "Нравится",
     "Download :file": "Скачать :file",
-    "Telegram": "Telegram-канал"
+    "Telegram": "Telegram-канал",
+    "Activity \":name\" successfully deleted": "Тренировка \":name\" успешно удалена"
 }

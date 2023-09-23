@@ -1,6 +1,10 @@
 @extends('layouts.site')
 @section('content')
     <main class="container mx-auto px-0 pt-12">
+        @error('search') @livewire('toast.errors') @enderror
+        @if (Session::get('success'))
+            @livewire('toast.success')
+        @endif
         <div class="flex flex-wrap">
             <div class="w-full lg:w-1/4 lg:max-w-lg">
                 <!-- Боковое меню -->

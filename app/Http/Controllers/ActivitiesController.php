@@ -21,7 +21,7 @@ class ActivitiesController extends Controller
     {
         $activity = Activities::findOrFail($id);
 
-        if (auth()->user()->id === $activity->user_id) {
+        if (auth()->user()->id === $activity->user_id || auth()->user()->hasRole('admin')) {
             $gpxFile = $activity->file;
             if (strpos($activity->file, '.fit')) {
                 $gpxFile = $activity->file.'.gpx';
@@ -33,6 +33,10 @@ class ActivitiesController extends Controller
 
             Storage::delete('public/activities/'. $activity->user_id .'/'. $activity->file);
             Storage::delete('public/activities/'. $activity->user_id .'/'. $activity->image);
+
+            session()->flash('success', __('Activity ":name" successfully deleted', [
+                'name' => $activity->name
+            ]));
 
             Activities::destroy($id);
 

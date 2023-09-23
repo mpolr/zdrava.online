@@ -8,3 +8,4 @@
 ## Полезные ссылки / то что используется в проекте
 
 - Простая система [лайков и дизлайков](https://dev.to/bdelespierre/how-to-implement-a-simple-like-system-with-laravel-lfe/comments)
+- [Руководства по Ролям и Правам в Laravel](https://laravel.demiart.ru/guide-to-roles-and-permissions/)

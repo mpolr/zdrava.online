@@ -30,9 +30,9 @@
                                     {{ __('Download :file', ['file' => 'GPX']) }}
                                 </a>
                             </li>
-                            @if ($activity->getUser()->id == auth()->user()->id)
+                            @if ($activity->getUser()->id == auth()->user()->id || auth()->user()->hasRole('admin'))
                             <li>
-                                <a href="{{ route('activities.delete', $activity->id) }}" onclick="event.preventDefault(); document.getElementById('activity-delete-form').submit();" class="block px-4 py-2 text-sm text-red-600 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
+                                <a href="#" onclick="event.preventDefault(); document.getElementById('activity-delete-form').submit();" class="block px-4 py-2 text-sm text-red-600 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
                                     {{ __('Delete') }}
                                 </a>
                                 <form id="activity-delete-form" action="{{ route('activities.delete', $activity->id) }}" method="POST" style="display: none;">
