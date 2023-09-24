@@ -62,7 +62,7 @@
                                         {{ $user->id }}
                                     </th>
                                     <td class="px-6 py-4">
-                                        @if($user->photo)
+                                        @if($user->getPhoto())
                                             <img class="h-12 w-12 flex-none rounded-full" src="{{ $user->getPhoto() }}" alt="">
                                         @else
                                             <div class="relative inline-flex items-center justify-center w-12 h-12 overflow-hidden bg-gray-300 rounded-full dark:bg-gray-600">

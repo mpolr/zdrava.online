@@ -29,7 +29,7 @@
                     </div>
                     @endif
                     <div class="flex flex-col items-center pb-10">
-                        @if (Auth::user()->photo)
+                        @if (Auth::user()->getPhoto())
                             <img class="w-32 h-32 mb-3 p-1 rounded-full ring-2 ring-gray-300 dark:ring-gray-500" src="{{ Auth::user()->getPhoto() }}" alt="{{ Auth::user()->getFullName() }}" loading="lazy"/>
                         @else
                             <a href="{{ route('settings.profile') }}">
