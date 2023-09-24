@@ -100,5 +100,10 @@
     "The changes were successfully saved": "Изменения успешно сохранены",
     "Tell, how the training went": "Расскажите, как прошла тренировка",
     "Description": "Описание",
-    "Media": "Медиафайлы"
+    "Media": "Медиафайлы",
+    "Subscriptions": "Подписки",
+    "Subscribers": "Подписчики",
+    "Activities": "Тренировки",
+    "Your tasks": "Ваши задачи",
+    "You have no active tasks": "У вас нет активных задач"
 }

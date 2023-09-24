@@ -93,7 +93,7 @@
                                             {{ __(':elevation m', ['elevation' => $activity->elevation_gain]) }}
                                         </td>
                                         <td class="px-0 py-4 text-right">
-                                            <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">{{ __('Edit') }}</a>
+                                            <a href="{{ route('activities.edit', $activity->id) }}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">{{ __('Edit') }}</a>
                                         </td>
                                         <td class="px-0 py-4 text-right">
                                             <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">{{ __('Delete') }}</a>

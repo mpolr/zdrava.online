@@ -1,14 +1,15 @@
 @extends('layouts.site')
 @section('content')
-    <main class="container mx-auto px-0 pt-12">
+    <main class="container mx-auto px-0 pt-12 max-w-screen-2xl">
         @error('search') @livewire('toast.errors') @enderror
         @if (Session::get('success'))
             @livewire('toast.success')
         @endif
-        <div class="flex flex-wrap">
-            <div class="w-full lg:w-1/4 lg:max-w-lg">
+        <div class="grid grid-cols-4 gap-4">
+            <div class="w-full">
                 <!-- Боковое меню -->
                 <div class="w-full mb-6 max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+                    @if(auth()->user()->hasRole('admin'))
                     <div class="flex justify-end px-4 pt-4">
                         <button id="dropdownButton" data-dropdown-toggle="dropdown" class="inline-block text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:ring-4 focus:outline-none focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-1.5" type="button">
                             <span class="sr-only">Open dropdown</span>
@@ -18,17 +19,15 @@
                         <div id="dropdown" class="z-10 hidden text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
                             <ul class="py-2" aria-labelledby="dropdownButton">
                                 <li>
-                                    <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Edit</a>
-                                </li>
-                                <li>
-                                    <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Export Data</a>
-                                </li>
-                                <li>
-                                    <a href="#" class="block px-4 py-2 text-sm text-red-600 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Delete</a>
+                                    <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">{{ __('Edit') }}</a>
                                 </li>
                             </ul>
+                            <div class="py-2">
+                                <a href="#" class="block px-4 py-2 text-sm text-red-600 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">{{ __('Delete') }}</a>
+                            </div>
                         </div>
                     </div>
+                    @endif
                     <div class="flex flex-col items-center pb-10">
                         @if (Auth::user()->photo)
                             <img class="w-24 h-24 mb-3 rounded-full shadow-lg" src="{{ Auth::user()->getPhoto() }}" alt="{{ Auth::user()->first_name }} {{ Auth::user()->last_name }}"/>
@@ -42,21 +41,21 @@
                             </a>
                         @endif
                         <h5 class="mb-1 text-xl font-medium text-gray-900 dark:text-white">{{ Auth::user()->first_name }} {{ Auth::user()->last_name }}</h5>
-                        <span class="text-sm text-gray-500 dark:text-gray-400">{{ Auth::user()->nickname }}</span>
+                        <span class="text-sm text-gray-500 dark:text-gray-400">{{ '@' . Auth::user()->nickname }}</span>
                         <div class="grid text-sm mt-4 grid-cols-3 gap-6 sm:grid-cols-3">
                             <a href="{{ route('athlete.subscriptions') }}">
                                 <p class="mb-3 text-center text-gray-600 dark:text-gray-400">
-                                    Подписки<br />{{ Auth::user()->subscriptions()->where('confirmed', 1)->count() }}
+                                    {{ __('Subscriptions') }}<br />{{ Auth::user()->subscriptions()->where('confirmed', 1)->count() }}
                                 </p>
                             </a>
                             <a href="{{ route('athlete.subscribers') }}">
                                 <p class="mb-3 text-center text-gray-600 dark:text-gray-400">
-                                    Подписчики<br />{{ Auth::user()->subscribers()->where('confirmed', 1)->count() }}
+                                    {{ __('Subscribers') }}<br />{{ Auth::user()->subscribers()->where('confirmed', 1)->count() }}
                                 </p>
                             </a>
                             <a href="{{ route('athlete.training') }}">
                                 <p class="mb-3 text-center text-gray-600 dark:text-gray-400">
-                                    Тренировки<br />
+                                    {{ __('Activities') }}<br />
                                     {{ Auth::user()->activities->count() ? Auth::user()->activities->count() : 0 }}
                                 </p>
                             </a>
@@ -82,7 +81,7 @@
                     </div>
                 </div>
             </div>
-            <div class="w-full lg:w-1/4 lg:ml-4">
+            <div class="w-full col-span-2">
                 @if($activities)
                     @foreach($activities as $activity)
                         <div class="max-w-full mb-3 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
@@ -153,8 +152,16 @@
                     Нет тренировок
                 @endif
             </div>
-            <div class="w-full lg:w-1/4">
-
+            <div class="w-full">
+                <!-- Боковое меню справа -->
+                <div class="w-full mb-6 max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+                    <div class="flex flex-col p-4">
+                        <h3 class="mb-1 text-xl font-medium text-gray-900 dark:text-white">{{ __('Your tasks') }}</h3>
+                        <div class="flex flex-col p-4">
+                            <span class="text-sm text-gray-500 dark:text-gray-400">{{ __('You have no active tasks') }}</span>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </main>

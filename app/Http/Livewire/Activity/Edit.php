@@ -29,6 +29,7 @@ class Edit extends Component
     {
         session()->flash('success', __('The changes were successfully saved'));
         $this->activity->save();
+        // TODO: Редирект на предыдущую страницу. redirect()->back() редиректит на эту же страницу, разобраться
         return redirect()->route('activities.get', $this->activity->id);
     }
 }
