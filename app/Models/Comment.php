@@ -2,12 +2,16 @@
 
 namespace App\Models;
 
+use App\Contracts\Likeable;
+use App\Models\Concerns\Likes;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class Comment extends Model
+class Comment extends Model implements Likeable
 {
+    use Likes;
+
     protected $fillable = [
         'activities_id',
         'user_id',

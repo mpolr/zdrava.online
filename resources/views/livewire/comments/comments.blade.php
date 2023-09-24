@@ -1,10 +1,10 @@
 <div>
-    <div class="container px-0 mx-auto sm:px-5 mt-6 items-left">
+    <div class="container mx-auto mt-6 items-left">
         <!-- Отображение комментариев -->
         <div class="space-y-4">
             <!-- Цикл по массиву комментариев -->
             @foreach ($comments as $comment)
-                <div class="flex-col w-full py-4 mx-auto bg-white border-b-2 border-r-2 border-gray-200 sm:px-4 sm:py-4 md:px-4 sm:rounded-lg sm:shadow-sm md:w-2/3">
+                <div class="flex-col w-full py-4 bg-white border-b-2 border-r-2 border-gray-200 sm:px-4 sm:py-4 md:px-4 sm:rounded-lg sm:shadow-sm">
                     <div class="flex flex-row">
                         <img class="object-cover w-12 h-12 border-2 border-gray-300 rounded-full"
                              alt="{{ $comment['author'] }}'s avatar"
@@ -37,7 +37,7 @@
                     </div>
 
                     <!-- Отображение ответов на комментарий -->
-                    <div class="ml-12 space-y-2">
+                    <div class="ml-12 mt-2 space-y-2">
                         <!-- Цикл по массиву ответов -->
                         @foreach ($comment['replies'] as $reply)
                             <div class="flex flex-row">
@@ -49,7 +49,7 @@
                                         {{ $reply['author'] }}
                                         <span class="ml-2 text-xs font-normal text-gray-500">{{ $reply['date'] }}</span>
                                     </div>
-                                    <div class="flex-1 px-2 ml-2 text-xs font-medium leading-loose text-gray-600">
+                                    <div class="flex-1 px-2 ml-2 text-sm font-medium leading-loose text-gray-600">
                                         {{ $reply['text'] }}
                                     </div>
                                     <button title="{{ __('Like') }}" class="inline-flex items-center px-1 -ml-1 flex-column">
