@@ -97,49 +97,6 @@
                     @auth
                         <div class="group relative cursor-pointer py-1">
                             <div class="flex items-center justify-between space-x-5 bg-white px-4">
-                                <a class="menu-hover text-base font-medium text-black lg:mx-0" onClick=""
-                                @if (Auth::user()->subscribers()->where('confirmed', 0)->count() > 0)
-                                    href="{{ route('friends.requests') }}"
-                                @endif
-                                >
-                                    @if (Auth::user()->photo)
-                                        <img src="{{ Auth::user()->getPhoto() }}"
-                                             alt="{{ Auth::user()->first_name }} {{ Auth::user()->last_name }}"
-                                             loading="lazy"
-                                             class="w9 h-9 p-1 rounded-full ring-1 ring-gray-300 dark:ring-gray-500" />
-                                    @else
-                                        <div class="relative inline-flex items-center justify-center w-9 h-9 overflow-hidden bg-gray-300 rounded-full dark:bg-gray-600">
-                                            <span class="font-medium text-gray-600 dark:text-gray-300">
-                                                {{ Auth::user()->getInitials() }}
-                                            </span>
-                                        </div>
-                                    @endif
-                                </a>
-                                @if (Auth::user()->subscribers()->where('confirmed', 0)->count() > 0)
-                                    <div class="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-red-500 border-2 border-white rounded-full -top-1 right-11 dark:border-gray-900">
-                                        {{ Auth::user()->subscribers()->where('confirmed', 0)->count() }}
-                                    </div>
-                                @endif
-                                <span>
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
-                                    </svg>
-                                </span>
-                            </div>
-                            <div class="invisible absolute z-50 flex right-0 w-48 flex-col bg-gray-100 py-1 px-4 shadow-xl group-hover:visible" onClick="">
-                                <a href="{{ route('friends.find') }}" class="my-2 block border-b border-gray-100 py-1 text-success hover:text-black md:mx-2">
-                                    {{ __('Find friends') }}
-                                </a>
-                                <a href="{{ route('settings.profile') }}" class="my-2 block border-b border-gray-100 py-1 text-gray-500 hover:text-black md:mx-2">
-                                    {{ __('Settings') }}
-                                </a>
-                                <a href="{{ route('auth.logout') }}" class="font-semibold my-2 block border-b border-gray-100 py-1 text-black-500 hover:text-black md:mx-2">
-                                    {{ __('Logout') }}
-                                </a>
-                            </div>
-                        </div>
-                        <div class="group relative cursor-pointer py-2">
-                            <div class="flex items-center justify-between space-x-5 bg-white px-4">
                                 <span>
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -150,15 +107,73 @@
                                 <a href="{{ route('upload.workout') }}" class="my-2 block border-b border-gray-100 py-1 text-gray-500 hover:text-black md:mx-2">
                                     {{ __('Upload workout') }}
                                 </a>
-{{--                                <a class="my-2 block border-b border-gray-100 py-1 text-gray-500 hover:text-black md:mx-2">--}}
-{{--                                    Добавить тренировку вручную--}}
-{{--                                </a>--}}
-{{--                                <a class="my-2 block border-b border-gray-100 py-1 text-gray-500 hover:text-black md:mx-2">--}}
-{{--                                    Новый маршрут--}}
-{{--                                </a>--}}
-{{--                                <a class="my-2 block border-b border-gray-100 py-1 text-gray-500 hover:text-black md:mx-2">--}}
-{{--                                    Создать запись--}}
-{{--                                </a>--}}
+                                {{--                                <a class="my-2 block border-b border-gray-100 py-1 text-gray-500 hover:text-black md:mx-2">--}}
+                                {{--                                    Добавить тренировку вручную--}}
+                                {{--                                </a>--}}
+                                {{--                                <a class="my-2 block border-b border-gray-100 py-1 text-gray-500 hover:text-black md:mx-2">--}}
+                                {{--                                    Новый маршрут--}}
+                                {{--                                </a>--}}
+                                {{--                                <a class="my-2 block border-b border-gray-100 py-1 text-gray-500 hover:text-black md:mx-2">--}}
+                                {{--                                    Создать запись--}}
+                                {{--                                </a>--}}
+                            </div>
+                        </div>
+                        @if (auth()->user()->subscribers()->where('confirmed', 0)->count() > 0)
+                            <div class="group relative cursor-pointer py-1">
+                                <div class="flex items-center justify-between space-x-5 bg-white px-4">
+                                    <span>
+                                        <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 stroke-gray-700" xmlns="http://www.w3.org/2000/svg">
+                                          <path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0M3.124 7.5A8.969 8.969 0 015.292 3m13.416 0a8.969 8.969 0 012.168 4.5" />
+                                        </svg>
+                                    </span>
+                                    <div class="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-orange-500 border-2 border-white rounded-full -top-1 -right-0 dark:border-gray-900">
+                                        {{ auth()->user()->subscribers()->where('confirmed', 0)->count() }}
+                                    </div>
+                                </div>
+                                <div class="invisible absolute z-50 flex right-0 w-56 flex-col bg-gray-100 py-1 px-4 text-gray-800 shadow-xl group-hover:visible" onClick="">
+                                    <a href="{{ route('friends.requests') }}" class="my-2 block border-b border-gray-100 py-1 text-black md:mx-2">
+                                        {{ __('Subscription requests: :count', ['count' => auth()->user()->subscribers()->where('confirmed', 0)->count()]) }}
+                                    </a>
+                                </div>
+                            </div>
+                        @endif
+                        <div class="group relative cursor-pointer py-1">
+                            <div class="flex items-center justify-between space-x-5 bg-white px-4">
+                                <a class="menu-hover text-base font-medium text-black lg:mx-0" onClick="">
+                                    @if (auth()->user()->photo)
+                                        <img src="{{ auth()->user()->getPhoto() }}"
+                                             alt="{{ auth()->user()->first_name }} {{ auth()->user()->last_name }}"
+                                             loading="lazy"
+                                             class="w9 h-9 p-1 rounded-full ring-1 ring-gray-300 dark:ring-gray-500" />
+                                    @else
+                                        <div class="relative inline-flex items-center justify-center w-9 h-9 overflow-hidden bg-gray-300 rounded-full dark:bg-gray-600">
+                                            <span class="font-medium text-gray-600 dark:text-gray-300">
+                                                {{ auth()->user()->getInitials() }}
+                                            </span>
+                                        </div>
+                                    @endif
+                                </a>
+                                <span>
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                                    </svg>
+                                </span>
+                            </div>
+                            <div class="invisible absolute z-50 flex right-0 w-48 flex-col bg-gray-100 py-1 px-4 shadow-xl group-hover:visible" onClick="">
+                                <a href="{{ route('friends.find') }}" class="my-2 block border-b border-gray-100 py-1 text-success hover:text-success-700 md:mx-2">
+                                    {{ __('Find friends') }}
+                                </a>
+                                <a href="{{ route('settings.profile') }}" class="my-2 block border-b border-gray-100 py-1 text-gray-500 hover:text-black md:mx-2">
+                                    {{ __('Settings') }}
+                                </a>
+                                @if(auth()->user()->hasRole('admin'))
+                                    <a href="{{ route('admin.index') }}" class="my-2 block border-b border-gray-100 py-1 text-red-500 hover:text-red-700 md:mx-2">
+                                        {{ __('Admin panel') }}
+                                    </a>
+                                @endif
+                                <a href="{{ route('auth.logout') }}" class="font-semibold my-2 block border-b border-gray-100 py-1 text-black-500 hover:text-black md:mx-2">
+                                    {{ __('Logout') }}
+                                </a>
                             </div>
                         </div>
                     @else

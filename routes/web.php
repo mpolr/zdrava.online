@@ -111,8 +111,8 @@ Route::group(['prefix' => 'friends', 'middleware' => 'auth'], function () {
         return redirect()->route('friends.find');
     });
 
-    Route::get('find', [FriendsController::class, 'find'])->name('friends.find');
-    Route::get('requests', [FriendsController::class, 'requests'])->name('friends.requests');
+    Route::get('find', \App\Http\Livewire\Search\Users::class)->name('friends.find');
+    Route::get('requests', \App\Http\Livewire\Friends\Requests::class)->name('friends.requests');
 });
 
 /* Админка */

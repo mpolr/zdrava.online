@@ -60,9 +60,9 @@ class User extends Authenticatable
         return strtoupper(Str::limit($this->first_name, 1, '').Str::limit($this->last_name, 1, ''));
     }
 
-    public function activities(): HasMany
+    public function activities(string $orderBy = 'DESC'): HasMany
     {
-        return $this->hasMany(Activities::class);
+        return $this->hasMany(Activities::class)->orderBy('created_at', $orderBy);
     }
 
     public function subscriptions(): BelongsToMany

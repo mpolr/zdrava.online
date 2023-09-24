@@ -30,7 +30,7 @@ class Users extends Component
         $this->awaiting = Auth::user()->subscriptions->where('confirmed', 0)->pluck('user_id')->toArray();
     }
 
-    public function render()
+    public function render(): View|Application|Factory|\Illuminate\Contracts\Foundation\Application
     {
         return view('livewire.search.users');
     }

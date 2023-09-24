@@ -1,14 +1,13 @@
-@extends('layouts.site')
-@section('content')
-<main class="container mx-auto px-0 py-12">
-    <div class="flex">
-        <div class="w-1/4">
+<main class="container mx-auto px-0 pt-12 max-w-screen-2xl">
+    @error('profile') @livewire('toast.errors') @enderror
+    @if (Session::get('success'))
+        @livewire('toast.success')
+    @endif
+    <div class="grid grid-cols-4 gap-4">
+        <div class="w-full">
             <div class="flex items-center justify-center w-full">
                 @if ($user->photo)
-                    <img src="{{ $user->getPhoto() }}"
-                         alt="{{ $user->getFullName() }}"
-                         loading="lazy"
-                         class="w-32 h-32 mb-3 p-1 rounded-full ring-2 ring-gray-300 dark:ring-gray-500" />
+                    <img src="{{ $user->getPhoto() }}" alt="{{ $user->getFullName() }}" class="w-32 h-32 mb-3 p-1 rounded-full ring-2 ring-gray-300 dark:ring-gray-500" loading="lazy"/>
                 @else
                     <div class="relative inline-flex items-center justify-center w-24 h-24 mb-3 overflow-hidden bg-gray-300 rounded-full dark:bg-gray-600">
                         <span class="font-bold text-3xl text-gray-600 dark:text-gray-300">
@@ -22,13 +21,13 @@
             </div>
             <hr class="h-px mt-4 mb-8 bg-gray-200 border-0 dark:bg-gray-700">
         </div>
-        <div class="w-4/4 ml-4">
+        <div class="w-full col-span-2">
             <div class="pl-4">
                 @error('profile') @livewire('toast.errors') @enderror
                 @if (Session::get('success'))
                     @livewire('toast.success')
                 @endif
-                @if($user->activities)
+                @if(count($user->activities) >= 1)
                     @foreach($user->activities as $activity)
                         <div class="max-w-full mb-3 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
                             <div class="p-4">
@@ -72,28 +71,38 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div>
-
-                                </div>
                             </div>
                             <div class="p-0">
-                                <a href="#">
-                                    <img class="max-h-60" src="{{ $activity->getImage() }}" alt="" />
+                                <a href="{{ route('activities.get', $activity->id) }}">
+                                    <img class="h-auto max-w-full" src="{{ $activity->getImage() }}" alt="" />
                                 </a>
                             </div>
                             <div class="p-0">
+                                <div class="flex flex-wrap items-center justify-end gap-4" role="group">
+                                    @include('components.like', ['model' => $activity])
 
+                                    <button type="button" class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-500 bg-transparent hover:text-black focus:text-orange-500 dark:border-white dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:bg-gray-700">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 mr-2"><path stroke-linecap="round" stroke-linejoin="round" d="M7.5 8.25h9m-9 3H12m-9.75 1.51c0 1.6 1.123 2.994 2.707 3.227 1.129.166 2.27.293 3.423.379.35.026.67.21.865.501L12 21l2.755-4.133a1.14 1.14 0 01.865-.501 48.172 48.172 0 003.423-.379c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0012 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018z" /></svg>
+                                        {{ count($activity->comments) }}
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     @endforeach
                 @else
-                    // TODO: Нет тренировок
+                    <!-- Боковое меню справа -->
+                    <div class="w-full mb-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+                        <div class="flex flex-col p-4">
+                            <div class="flex flex-col p-4">
+                                <span class="text-sm text-gray-500 dark:text-gray-400">{{ __('This athlete has no training yet') }}</span>
+                            </div>
+                        </div>
+                    </div>
                 @endif
             </div>
         </div>
-        <div class="w-1/4">
+        <div class="w-full">
 
         </div>
     </div>
 </main>
-@endsection

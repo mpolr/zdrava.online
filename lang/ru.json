@@ -105,5 +105,12 @@
     "Subscribers": "Подписчики",
     "Activities": "Тренировки",
     "Your tasks": "Ваши задачи",
-    "You have no active tasks": "У вас нет активных задач"
+    "You have no active tasks": "У вас нет активных задач",
+    "Admin panel": "Админпанель",
+    "This athlete has no training yet": "У этого спортсмена пока нет тренировок",
+    "Subscription requests: :count": "Запросы на подписку: :count",
+    "Ride": "Заезд",
+    "Mountain bike ride": "Горный велозаезд",
+    "Walking": "Ходьба",
+    "Run": "Бег"
 }
