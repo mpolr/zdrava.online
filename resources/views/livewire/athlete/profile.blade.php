@@ -6,7 +6,7 @@
     <div class="grid grid-cols-4 gap-4">
         <div class="w-full">
             <div class="flex items-center justify-center w-full">
-                @if ($user->photo)
+                @if ($user->getPhoto())
                     <img src="{{ $user->getPhoto() }}" alt="{{ $user->getFullName() }}" class="w-32 h-32 mb-3 p-1 rounded-full ring-2 ring-gray-300 dark:ring-gray-500" loading="lazy"/>
                 @else
                     <div class="relative inline-flex items-center justify-center w-24 h-24 mb-3 overflow-hidden bg-gray-300 rounded-full dark:bg-gray-600">

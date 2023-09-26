@@ -140,7 +140,7 @@
                         <div class="group relative cursor-pointer py-1">
                             <div class="flex items-center justify-between space-x-5 bg-white px-4">
                                 <a class="menu-hover text-base font-medium text-black lg:mx-0" onClick="">
-                                    @if (auth()->user()->photo)
+                                    @if (auth()->user()->getPhoto())
                                         <img src="{{ auth()->user()->getPhoto() }}"
                                              alt="{{ auth()->user()->first_name }} {{ auth()->user()->last_name }}"
                                              loading="lazy"

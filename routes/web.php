@@ -8,11 +8,14 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DownloadAppController;
 use App\Http\Controllers\FriendsController;
+use App\Http\Controllers\Import\StravaController;
 use App\Http\Controllers\LikeController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\UploadController;
 use App\Http\Livewire\Activity\Edit;
 use App\Http\Middleware\Authenticate;
+use App\Http\Middleware\VerifyCsrfToken;
+use App\Services\StravaWebhookService;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', ['as' => 'index', function () {
@@ -117,5 +120,15 @@ Route::group(['prefix' => 'friends', 'middleware' => 'auth'], function () {
 
 /* Админка */
 Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
-    Route::get('/', [AdminController::class, 'index'])->name('admin.index');
+    Route::get('/', \App\Http\Livewire\Admin\Index::class)->name('admin.index');
+    Route::get('users', \App\Http\Livewire\Admin\Users::class)->name('admin.users');
+    Route::get('segments', \App\Http\Livewire\Admin\Segments::class)->name('admin.segments');
+    Route::get('import/strava', \App\Http\Livewire\Admin\Import\Strava::class)->name('admin.import.strava.csv');
+});
+
+/* Импорт данных */
+Route::group(['prefix' => 'import'], function () {
+    /* Strava */
+    Route::get('strava/auth', [StravaController::class, 'auth'])->name('strava.auth')->middleware('auth');
+    Route::get('strava/token', [StravaController::class, 'getToken'])->name('strava.token');
 });

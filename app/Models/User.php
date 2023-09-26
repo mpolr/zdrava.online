@@ -42,7 +42,15 @@ class User extends Authenticatable
 
     public function getPhoto(): ?string
     {
-        return !empty($this->photo) ? Storage::url('pictures/athletes/'. $this->id .'/'. $this->photo) : null;
+        if (empty($this->photo)) {
+            return null;
+        }
+
+        if (str_starts_with($this->photo, 'http')) {
+            return $this->photo;
+        } else {
+            return Storage::url('pictures/athletes/'. $this->id .'/'. $this->photo);
+        }
     }
 
     public function getNickname(bool $addAtSymbol = false): ?string
