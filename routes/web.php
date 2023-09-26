@@ -122,6 +122,7 @@ Route::group(['prefix' => 'friends', 'middleware' => 'auth'], function () {
 Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
     Route::get('/', \App\Http\Livewire\Admin\Index::class)->name('admin.index');
     Route::get('users', \App\Http\Livewire\Admin\Users::class)->name('admin.users');
+    Route::get('segments', \App\Http\Livewire\Admin\Segments::class)->name('admin.segments');
     Route::get('import/strava', \App\Http\Livewire\Admin\Import\Strava::class)->name('admin.import.strava.csv');
 });
 

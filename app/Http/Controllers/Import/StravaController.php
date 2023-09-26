@@ -19,7 +19,6 @@ class StravaController extends Controller
 
     public function auth(): \Illuminate\Foundation\Application|\Illuminate\Routing\Redirector|\Illuminate\Http\RedirectResponse|\Illuminate\Contracts\Foundation\Application
     {
-//        return Strava::authenticate($scope = 'read_all,profile:read_all,activity:read_all');
         return Strava::authenticate($scope = 'read_all,profile:read_all,activity:read_all', route('strava.token', [
             'uid' => auth()->user()->id,
             'cs' => md5(auth()->user()->email),
@@ -74,14 +73,11 @@ class StravaController extends Controller
             }
         }
 
-        $athlete = Strava::athlete($this->accessToken);
-        $activities = Strava::activities($this->accessToken, 1, 50);
-        $athleteRoutes = Strava::athleteRoutes($this->accessToken, $this->stravaUserId, 1, 50);
-        $starredSegments = Strava::starredSegments($this->accessToken, 1, 50);
+        return redirect()->route('site.dashboard');
     }
 
-    private function refreshToken() {
-        if (strtotime(Carbon::now()) > $this->expiresAt) {
+    private function refreshToken(): void {
+        if (strtotime(Carbon::now()->toDateTimeString()) > $this->expiresAt) {
             $refresh = Strava::refreshToken($this->refreshToken);
 
             $this->accessToken = $refresh->access_token;

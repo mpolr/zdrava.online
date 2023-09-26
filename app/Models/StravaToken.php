@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class StravaToken extends Model
 {
+    protected $primaryKey = 'strava_user_id';
+    public $incrementing = false;
     public $timestamps = false;
 
     protected $fillable = [

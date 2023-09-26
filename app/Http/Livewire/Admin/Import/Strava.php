@@ -6,7 +6,9 @@ use App\Models\Segment;
 use Database\Seeders\PermissionSeeder;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
+use Livewire\Redirector;
 use Livewire\WithFileUploads;
+use App\Jobs\ImportStravaSegments;
 
 class Strava extends Component
 {
@@ -14,12 +16,17 @@ class Strava extends Component
 
     public $stravaCSV;
 
+    public function __construct($id = null)
+    {
+        parent::__construct($id);
+    }
+
     public function render(): \Illuminate\Contracts\View\View|\Illuminate\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\Foundation\Application
     {
         return view('livewire.admin.import.strava');
     }
 
-    public function upload()
+    public function upload(): \Illuminate\Http\RedirectResponse|Redirector
     {
         $stravaIds = [];
 
@@ -67,6 +74,28 @@ class Strava extends Component
             session()->flash('error', 'Ошибка загрузки файла');
         }
 
+        return redirect()->route('admin.import.strava.csv');
+    }
+
+    public function processStrava(): \Illuminate\Http\RedirectResponse|Redirector
+    {
+        $segments = Segment::where('strava_segment_id', 'IS NOT', null)
+            ->where('name', null)
+            ->where('created_at', null)
+            ->where('updated_at', null)
+            ->get();
+
+        if ($segments->count() == 0) {
+            session()->flash('error', 'Нет сегментов для импорта из Strava');
+            return redirect()->route('admin.import.strava.csv');
+        }
+
+        foreach ($segments as $segment) {
+            ImportStravaSegments::dispatch(auth()->id(), $segment);
+        }
+        \Artisan::call('queue:work');
+
+        session()->flash('success', count($segments) . ' сегментов будет импортировано из Strava');
         return redirect()->route('admin.import.strava.csv');
     }
 }

@@ -5,6 +5,10 @@
             @if (Session::get('success'))
                 @livewire('toast.success')
             @endif
+        </div>
+    </div>
+    <div class="grid grid-cols-1 gap-4">
+        <div class="w-full">
             <p class="mb-6">
                 <a href="https://doogal.co.uk/SegmentExplorer" target="_blank">Скачать CSV с сегментами</a>
             </p>
@@ -16,11 +20,10 @@
                 Обработать сегменты
             </button>
         </div>
-        <div class="w-fit">
-
-        </div>
-        <div class="w-fit">
-
+        <div class="w-full">
+            <button wire:click="processStrava" type="button" class="mt-6 text-white bg-orange-500 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-orange-500 focus:outline-none">
+                Добавить обработку сегментов без информации
+            </button>
         </div>
     </div>
 </main>

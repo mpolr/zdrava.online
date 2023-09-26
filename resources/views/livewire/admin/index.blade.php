@@ -9,7 +9,8 @@
     </div>
     <div class="grid grid-cols-3 gap-4">
         <div class="w-full">
-            <a href="{{ route('admin.users') }}">{{ __('Users') }}</a>
+            <p><a href="{{ route('admin.users') }}">{{ __('Users') }}</a></p>
+            <p><a href="{{ route('admin.segments') }}">{{ __('Segments') }}</a></p>
         </div>
         <div class="w-fit">
             <a href="{{ route('admin.import.strava.csv') }}">{{ __('Strava import CSV') }}</a>

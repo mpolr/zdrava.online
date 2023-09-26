@@ -16,6 +16,8 @@ class Segment extends Model
         'end_latlng',
         'private',
         'polyline',
+        'created_at',
+        'updated_at',
     ];
 
     protected $casts = [
