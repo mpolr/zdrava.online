@@ -19,6 +19,7 @@
         "flowbite": "^1.6.5",
         "leaflet": "^1.9.4",
         "leaflet-gpx": "^1.7.0",
+        "polyline-encoded": "^0.0.9",
         "tw-elements": "^1.0.0-beta2"
     }
 }

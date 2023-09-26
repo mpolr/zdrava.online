@@ -118,6 +118,16 @@ Route::group(['prefix' => 'friends', 'middleware' => 'auth'], function () {
     Route::get('requests', \App\Http\Livewire\Friends\Requests::class)->name('friends.requests');
 });
 
+/* Сегменты */
+Route::group(['prefix' => 'segments', 'middleware' => 'auth'], function () {
+    Route::get('/', function () {
+        return redirect()->route('site.dashboard');
+    });
+
+    Route::get('explore', \App\Http\Livewire\Segments\Explore::class)->name('segments.explore');
+    Route::get('search', \App\Http\Livewire\Segments\Search::class)->name('segments.search');
+});
+
 /* Админка */
 Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
     Route::get('/', \App\Http\Livewire\Admin\Index::class)->name('admin.index');
