@@ -12,8 +12,9 @@ class Explore extends Component
 
     public function mount(): void
     {
-        $this->segments = Segment::select(['id', 'name', 'polyline'])
-            ->where('name', '!=' ,null)
+        $this->segments = Segment::select(['id', 'name', 'distance', 'total_elevation_gain', 'polyline', 'start_latlng'])
+            ->where('name', '!=', null)
+            ->where('private', '!=', 1)
             ->get('*');
     }
 

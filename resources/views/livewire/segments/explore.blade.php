@@ -2,7 +2,6 @@
     <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet-src.js"></script>
     <script src="https://unpkg.com/polyline-encoded@0.0.9/Polyline.encoded.js"></script>
 @endsection
-
 <main class="container mx-auto px-0 py-12 max-w-screen-lg">
     <div class="grid grid-cols-1 gap-4">
         <div class="w-full">
@@ -13,9 +12,35 @@
             @endif
         </div>
     </div>
-    <div class="grid grid-cols-1 gap-4">
+    <div class="grid grid-cols-3 gap-4 mt-6">
         <div class="w-full">
-            <div id="map" class="center-block" style="width: 100%; height: 650px;"></div>
+            <h4 class="text-2xl font-bold dark:text-white">{{ __('Segments') }}</h4>
+            <div class="mt-6">
+                <ul class="max-w-md">
+                    @foreach($segments as $segment)
+                        <li class="pb-3 sm:pb-4">
+                            <a href="#">
+                            <div class="flex items-center space-x-4">
+                                <div class="flex-1 min-w-0">
+                                    <p class="text-sm font-medium text-gray-900 truncate dark:text-white">
+                                        {{ Str::limit($segment->name, 30, ' ...') }}
+                                    </p>
+                                    <p class="text-sm text-gray-500 truncate dark:text-gray-400">
+                                        &Delta; {{ __('Elevation') }}: {{ __(':elevation m', ['elevation' => $segment->total_elevation_gain]) }}
+                                    </p>
+                                </div>
+                                <div class="inline-flex items-center text-base font-semibold text-gray-600 dark:text-white">
+                                    {{ __(':distance m', ['distance' => $segment->distance]) }}
+                                </div>
+                            </div>
+                            </a>
+                        </li>
+                    @endforeach
+                </ul>
+            </div>
+        </div>
+        <div class="w-full col-span-2">
+            <div id="map" class="center-block z-0" style="width: 100%; height: 650px;"></div>
             <script>
                 if ("geolocation" in navigator) {
                     navigator.geolocation.getCurrentPosition(
@@ -44,18 +69,32 @@
                         attribution: '© OpenStreetMap'
                     }).addTo(map);
 
+                    let segmentsLayer = L.layerGroup();
+                    map.addLayer(segmentsLayer);
                     let dataSet = JSON.parse({!!json_encode($segments->toJson())!!});
+
+                    const markerOptions = {
+                        radius: 6,
+                        fillColor: "#ff653e",
+                        color: "#000",
+                        weight: 1,
+                        opacity: 0.6,
+                        fillOpacity: 0.9,
+                    };
+
                     dataSet.forEach((item) => {
+                        console.log(item);
                         let polyline = L.Polyline.fromEncoded(item.polyline, {
                             weight: 4,
-                            color: '#f30'
-                        }).addTo(map);
-                    })
+                            color: '#ff5d34',
+                            opacity: 0.6
+                        }).addTo(segmentsLayer);
 
-                    let encoded = "ouruIkvk~Gg@iFk@{HWkB[_EU}AEq@KaA@MKkBC{A?gADWCY@o@Ce@FoAHeEXwEl@qFb@kGNoAPs@d@eEJkB^cDRgEf@gDRmBHgALw@Bw@ReBd@{DP{@Dq@PkAd@oE`@sCd@cBHQx@aDd@wAVm@Ro@P_@v@_CVo@X_Ab@mBt@mBr@iCd@wADYTs@Pc@x@kCd@kAb@{@`@eA`@yAr@sBTaAb@wAXkAPqADqA@sAFwCCmC?cF@i@AeBDwBDcAQuEOmAe@gCWiA_A_G]wAWwAo@aEaAcF[wBw@{DMe@[oBcAaFOgBUwAe@iEi@gDc@sDOyAe@kHQ}AEu@?uCB}ALmCPsBFgARoBHcCXmC@m@NgCTeCHyB@_At@}JPqFT_C@]NiBXqEPyAJwBLmDJmAb@gHBqBFsAAqASgBg@aFGgAIi@";
+                        let latLng = item.start_latlng.split(',');
+                        L.circleMarker([latLng[0], latLng[1]], markerOptions).addTo(segmentsLayer);
+                    });
 
-
-                    //map.fitBounds(polyline.getBounds());
+                    // map.fitBounds(segmentsLayer.getBounds());
                 }
             </script>
         </div>

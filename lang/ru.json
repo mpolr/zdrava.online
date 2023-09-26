@@ -54,6 +54,7 @@
     "Delete": "Удалить",
     "Share": "Поделиться",
     ":distance km": ":distance км",
+    ":distance m": ":distance м",
     ":elevation m": ":elevation м",
     "Elevation": "Высота",
     "Duration": "Время",
@@ -115,6 +116,7 @@
     "Run": "Бег",
     "New items": "Новинки",
     "Explore segments": "Исследовать участки",
+    "Segments": "Участки",
     "Search segments": "Поиск участков",
     "Search athletes": "Поиск спортсменов",
     "Search clubs": "Клубы"
