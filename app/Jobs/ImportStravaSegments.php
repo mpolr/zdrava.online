@@ -30,11 +30,12 @@ class ImportStravaSegments implements ShouldQueue
         $this->segment = $segment;
     }
 
-    public function handle(): void
+    public function handle(): bool
     {
         $savedToken = StravaToken::where('user_id', $this->userId)->first();
         if (empty($savedToken)) {
             $this->fail('No Strava token found!');
+            return false;
         }
 
         if ($savedToken->expires_at < Carbon::now()->toDateTimeString()) {
@@ -44,19 +45,33 @@ class ImportStravaSegments implements ShouldQueue
             $savedToken->save();
         }
 
-        $segmentData = Strava::segment($savedToken->access_token, $this->segment->strava_segment_id);
+        try {
+            $segmentData = Strava::segment($savedToken->access_token, $this->segment->strava_segment_id);
+        } catch (\Exception $e) {
+            if ($e->getCode() === 429) {
+                $this->release(960);
+                return true;
+            } else {
+                $this->fail($e->getMessage());
+                return false;
+            }
+        }
+
         $limits = Strava::getApiLimits();
 
         if ($limits['usage']['daily'] >= 1000) {
             $this->release(86400);
+            return true;
         }
 
         if ($limits['usage']['15minutes'] >= 15) {
             $this->release(960);
+            return true;
         }
 
         if (empty($segmentData)) {
             $this->fail('Received empty Strava segment!');
+            return false;
         }
 
         $this->segment->activity_type = $segmentData->activity_type;
