@@ -30,12 +30,12 @@ class ImportStravaSegments implements ShouldQueue
         $this->segment = $segment;
     }
 
-    public function handle(): bool
+    public function handle(): void
     {
         $savedToken = StravaToken::where('user_id', $this->userId)->first();
         if (empty($savedToken)) {
             $this->fail('No Strava token found!');
-            return false;
+            return;
         }
 
         if ($savedToken->expires_at < Carbon::now()->toDateTimeString()) {
@@ -48,30 +48,35 @@ class ImportStravaSegments implements ShouldQueue
         try {
             $segmentData = Strava::segment($savedToken->access_token, $this->segment->strava_segment_id);
         } catch (\Exception $e) {
-            if ($e->getCode() === 429) {
-                $this->release(960);
-                return true;
-            } else {
-                $this->fail($e->getMessage());
-                return false;
+            switch ($e->getCode()) {
+                case 429: // 15 minutes limit
+                    $this->release(960);
+                    return;
+                case 403: // Dayly limit
+                    $this->release(86400);
+                    return;
+                default:
+                    $this->fail($e->getMessage());
+                    return;
             }
         }
 
         $limits = Strava::getApiLimits();
+        if (!empty($limits)) {
+            if ($limits['usage']['daily'] >= 1000) {
+                $this->release(86400);
+                return;
+            }
 
-        if ($limits['usage']['daily'] >= 1000) {
-            $this->release(86400);
-            return true;
-        }
-
-        if ($limits['usage']['15minutes'] >= 15) {
-            $this->release(960);
-            return true;
+            if ($limits['usage']['15minutes'] >= 15) {
+                $this->release(960);
+                return;
+            }
         }
 
         if (empty($segmentData)) {
             $this->fail('Received empty Strava segment!');
-            return false;
+            return;
         }
 
         $this->segment->activity_type = $segmentData->activity_type;

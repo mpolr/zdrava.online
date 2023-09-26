@@ -29,3 +29,5 @@ bootstrap/cache/
 .phpstorm.meta.php
 
 storage/app/temp/
+
+storage/app/livewire-tmp/

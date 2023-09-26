@@ -90,10 +90,21 @@ class Strava extends Component
             return redirect()->route('admin.import.strava.csv');
         }
 
+        $delay = 0;
+        $delayDay = 0;
+
+        $i = 1;
         foreach ($segments as $segment) {
-            ImportStravaSegments::dispatch(auth()->id(), $segment);
+            if ($i%100 === 0) {
+                $delay += 960;
+            }
+            if ($i%1000 === 0) {
+                $delayDay += 86400;
+            }
+            $delay += $delayDay;
+            ImportStravaSegments::dispatch(auth()->id(), $segment)->delay(now()->addSeconds($delay));
+            $i++;
         }
-        \Artisan::call('queue:work');
 
         session()->flash('success', count($segments) . ' сегментов будет импортировано из Strava');
         return redirect()->route('admin.import.strava.csv');
