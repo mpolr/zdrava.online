@@ -10,9 +10,6 @@
     <div class="grid grid-cols-1 gap-4">
         <div class="w-full">
             <!-- Контент -->
-            <h2 class="mb-2 mt-0 text-4xl font-medium leading-tight text-black">
-                {{ __('Admin dashboard') }}
-            </h2>
             <h4 class="mb-2 mt-0 text-3xl font-medium leading-tight text-black">
                 {{ __('Users: :count', ['count' => count($users)]) }}
             </h4>
