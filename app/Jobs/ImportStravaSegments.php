@@ -32,12 +32,14 @@ class ImportStravaSegments implements ShouldQueue
 
     public function handle(): void
     {
+        // TODO: Вынести получение SavedToken вовне и передавать его в конструктор чтобы не дёргать БД каждый раз
         $savedToken = StravaToken::where('user_id', $this->userId)->first();
         if (empty($savedToken)) {
             $this->fail('No Strava token found!');
             return;
         }
 
+        // TODO: ПРоверку оставляем тут
         if ($savedToken->expires_at < Carbon::now()->toDateTimeString()) {
             $refresh = Strava::refreshToken($savedToken->refresh_token);
             $savedToken->access_token = $refresh->access_token;
@@ -68,7 +70,7 @@ class ImportStravaSegments implements ShouldQueue
                 return;
             }
 
-            if ($limits['usage']['15minutes'] >= 15) {
+            if ($limits['usage']['15minutes'] >= 100) {
                 $this->release(960);
                 return;
             }

@@ -57,6 +57,7 @@
     ":distance m": ":distance м",
     ":elevation m": ":elevation м",
     "Elevation": "Высота",
+    "Elevation gain": "Набор высоты",
     "Duration": "Время",
     "Duration total": "Общее время",
     ":speed km/h": ":speed км/ч",
@@ -125,5 +126,6 @@
     "of": "из",
     "results": "результатов",
     "Support the developer": "Поддержите разработчика",
-    "Donate with QR-code": "или отсканируйте QR-код"
+    "Donate with QR-code": "или отсканируйте QR-код",
+    "Created": "Создан"
 }
