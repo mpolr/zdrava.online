@@ -133,6 +133,7 @@
                             layer.setStyle({
                                 opacity: 1.0,
                             });
+                            map.fitBounds(layer.getBounds());
                             layer.openPopup();
                         }
                     });
