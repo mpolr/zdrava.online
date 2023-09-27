@@ -102,7 +102,9 @@ class Strava extends Component
                 $delayDay += 86400;
             }
             $delay += $delayDay;
-            ImportStravaSegments::dispatch(auth()->id(), $segment)->delay(now()->addSeconds($delay));
+            ImportStravaSegments::dispatch(auth()->id(), $segment)
+                ->delay(now()->addSeconds($delay))
+                ->onQueue('import-strava-segments');
             $i++;
         }
 
