@@ -70,8 +70,8 @@
                     }).addTo(map);
 
                     let segmentsLayer = L.layerGroup();
-                    map.addLayer(segmentsLayer);
-                    let dataSet = JSON.parse({!!json_encode($segments->toJson())!!});
+                    let myFGMarker = new L.FeatureGroup();
+                    let dataSet = JSON.parse({!!json_encode($segments->getCollection()->toJson())!!});
 
                     const markerOptions = {
                         radius: 6,
@@ -83,20 +83,28 @@
                     };
 
                     dataSet.forEach((item) => {
-                        console.log(item);
                         let polyline = L.Polyline.fromEncoded(item.polyline, {
                             weight: 4,
                             color: '#ff5d34',
-                            opacity: 0.6
+                            opacity: 0.7
                         }).addTo(segmentsLayer);
 
                         let latLng = item.start_latlng.split(',');
-                        L.circleMarker([latLng[0], latLng[1]], markerOptions).addTo(segmentsLayer);
+                        L.circleMarker([latLng[0], latLng[1]], markerOptions).addTo(myFGMarker);
                     });
 
-                    // map.fitBounds(segmentsLayer.getBounds());
+                    map.addLayer(segmentsLayer);
+                    myFGMarker.addTo(map);
+                    map.fitBounds(myFGMarker.getBounds());
                 }
             </script>
+        </div>
+    </div>
+    <div class="grid grid-cols-1 gap-4">
+        <div class="w-full">
+            <div class="mt-6">
+                {{ $segments->onEachSide(0)->links() }}
+            </div>
         </div>
     </div>
 </main>
