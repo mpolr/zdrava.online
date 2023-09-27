@@ -12,13 +12,13 @@
             @endif
         </div>
     </div>
-    <div class="grid grid-cols-3 gap-4 mt-6">
+    <div class="grid grid-cols-3 gap-4 mt-3">
         <div class="w-full">
             <h4 class="text-2xl font-bold dark:text-white">{{ __('Segments') }}</h4>
-            <div class="mt-6">
+            <div class="mt-3">
                 <ul class="max-w-md">
                     @foreach($segments as $segment)
-                        <li class="pb-3 sm:pb-4">
+                        <li id="segment-{{ $segment->id }}" class="pb-4 sm:pb-4">
                             <a href="#" onclick="openPopup({{ $segment->id }});">
                             <div class="flex items-center space-x-4">
                                 <div class="flex-1 min-w-0">
@@ -40,7 +40,7 @@
             </div>
         </div>
         <div class="w-full col-span-2">
-            <div id="map" class="center-block z-0" style="width: 100%; height: 650px;"></div>
+            <div id="map" class="center-block z-0 mt-2" style="width: 100%; height: 650px;"></div>
             <script>
                 let map = [];
                 let userLat = 0;
