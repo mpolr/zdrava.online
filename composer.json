@@ -17,7 +17,8 @@
         "livewire/livewire": "^2.12",
         "sibyx/phpgpx": "1.2.1",
         "spatie/laravel-google-fonts": "^1.2",
-        "toin0u/geocoder-laravel": "^4.6"
+        "toin0u/geocoder-laravel": "^4.6",
+        "vladimir-yuldashev/laravel-queue-rabbitmq": "^13.3"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.8",
