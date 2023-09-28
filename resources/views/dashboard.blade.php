@@ -136,7 +136,7 @@
                             </div>
                             <div class="p-0">
                                 <a href="{{ route('activities.get', $activity->id) }}">
-                                    <img class="h-auto max-w-full" src="{{ $activity->getImage() }}" alt="" />
+                                    <img class="h-auto max-w-full" src="{{ $activity->getImage() }}" loading="lazy" alt="" />
                                 </a>
                             </div>
                             <div class="p-0">
