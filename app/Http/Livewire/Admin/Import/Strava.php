@@ -83,6 +83,7 @@ class Strava extends Component
             ->where('name', null)
             ->where('created_at', null)
             ->where('updated_at', null)
+            ->limit(1000)
             ->get();
 
         if ($segments->count() == 0) {
@@ -97,9 +98,6 @@ class Strava extends Component
         foreach ($segments as $segment) {
             if ($i%100 === 0) {
                 $delay += 960;
-            }
-            if ($i%1000 === 0) {
-                $delayDay += 86400;
             }
             $delay += $delayDay;
             ImportStravaSegments::dispatch(auth()->id(), $segment)

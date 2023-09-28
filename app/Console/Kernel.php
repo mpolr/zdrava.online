@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use App\Jobs\ImportStravaSegments;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -12,7 +13,18 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule): void
     {
-        // $schedule->command('inspire')->hourly();
+        /* Prepare segments to import from Strava */
+        $schedule->command('app:run-fetch-strava-segments')
+            ->timezone('UTC')
+            ->at('00:01');
+
+        /**
+         * Run background import segments from Strava to avoid API limits, if not running
+         */
+        $schedule->command('queue:work --queue=import-strava-segments')
+            ->hourly()
+            ->withoutOverlapping()
+            ->runInBackground();
     }
 
     /**

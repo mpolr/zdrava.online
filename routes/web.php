@@ -124,7 +124,7 @@ Route::group(['prefix' => 'segments', 'middleware' => 'auth'], function () {
         return redirect()->route('site.dashboard');
     });
 
-    Route::get('explore', \App\Http\Livewire\Segments\Explore::class)->name('segments.explore');
+    Route::get('explore/{id?}', \App\Http\Livewire\Segments\Explore::class)->name('segments.explore');
     Route::get('search', \App\Http\Livewire\Segments\Search::class)->name('segments.search');
 });
 

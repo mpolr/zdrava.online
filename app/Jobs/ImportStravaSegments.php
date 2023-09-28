@@ -20,7 +20,7 @@ class ImportStravaSegments implements ShouldQueue
     /**
      * Количество попыток выполнения задания.
      */
-    public $int = 2;
+    public int $int = 1;
     protected int $userId;
     protected Segment $segment;
 
@@ -30,13 +30,13 @@ class ImportStravaSegments implements ShouldQueue
         $this->segment = $segment;
     }
 
-    public function handle(): void
+    public function handle(): bool
     {
         // TODO: Вынести получение SavedToken вовне и передавать его в конструктор чтобы не дёргать БД каждый раз
         $savedToken = StravaToken::where('user_id', $this->userId)->first();
         if (empty($savedToken)) {
             $this->fail('No Strava token found!');
-            return;
+            return false;
         }
 
         // TODO: ПРоверку оставляем тут
@@ -52,33 +52,33 @@ class ImportStravaSegments implements ShouldQueue
         } catch (\Exception $e) {
             switch ($e->getCode()) {
                 case 429: // 15 minutes limit
-                    $this->release(960);
-                    return;
+                    $this->delete();
+                    return false;
                 case 403: // Dayly limit
-                    $this->release(86400);
-                    return;
+                    $this->delete();
+                    return false;
                 default:
                     $this->fail($e->getMessage());
-                    return;
+                    return false;
             }
         }
 
         $limits = Strava::getApiLimits();
         if (!empty($limits)) {
             if ($limits['usage']['daily'] >= 1000) {
-                $this->release(86400);
-                return;
+                $this->delete();
+                return false;
             }
 
             if ($limits['usage']['15minutes'] >= 100) {
-                $this->release(960);
-                return;
+                $this->delete();
+                return false;
             }
         }
 
         if (empty($segmentData)) {
             $this->fail('Received empty Strava segment!');
-            return;
+            return false;
         }
 
         $this->segment->activity_type = $segmentData->activity_type;
@@ -96,5 +96,6 @@ class ImportStravaSegments implements ShouldQueue
         $this->segment->save();
 
         $this->delete();
+        return true;
     }
 }
