@@ -1,21 +1,17 @@
 <?php
 
 use App\Http\Controllers\ActivitiesController;
-use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AthleteController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DownloadAppController;
-use App\Http\Controllers\FriendsController;
 use App\Http\Controllers\Import\StravaController;
 use App\Http\Controllers\LikeController;
-use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\UploadController;
 use App\Http\Livewire\Activity\Edit;
 use App\Http\Middleware\Authenticate;
 use App\Http\Middleware\VerifyCsrfToken;
-use App\Services\StravaWebhookService;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', ['as' => 'index', function () {
@@ -29,8 +25,7 @@ Route::get('/', ['as' => 'index', function () {
 Route::get('download-app', [DownloadAppController::class, 'index'])->name('app');
 Route::get('download-app/download/{version?}', [DownloadAppController::class, 'download'])->name('app.download');
 
-Route::middleware(Authenticate::class)->get('dashboard', [DashboardController::class, 'index'])->name('site.dashboard');
-Route::middleware(Authenticate::class)->get('dashboard', [DashboardController::class, 'index'])->name('site.dashboard');
+Route::middleware(Authenticate::class)->get('dashboard', \App\Http\Livewire\Dashboard::class)->name('site.dashboard');
 
 /* Аутентификация */
 Route::group(['prefix' => 'auth'], function () {
@@ -79,9 +74,6 @@ Route::group(['prefix' => 'activities', 'middleware' => 'auth'], function () {
     Route::get('/{id}', [ActivitiesController::class, 'get'])->name('activities.get');
     Route::post('/{id}/delete', [ActivitiesController::class, 'delete'])->name('activities.delete');
     Route::get('/{id}/edit', Edit::class)->name('activities.edit');
-
-    Route::post('like', [LikeController::class, 'like'])->name('activities.like');
-    Route::delete('like', [LikeController::class, 'unlike'])->name('activities.unlike');
 });
 
 /* Настройки */
@@ -90,9 +82,9 @@ Route::group(['prefix' => 'settings', 'middleware' => 'auth'], function () {
         return redirect()->route('settings.profile');
     });
 
-    Route::get('profile', [SettingsController::class, 'profile'])->name('settings.profile');
-    Route::get('account', [SettingsController::class, 'account'])->name('settings.account');
-    Route::get('privacy', [SettingsController::class, 'privacy'])->name('settings.privacy');
+    Route::get('profile', \App\Http\Livewire\Settings\Profile::class)->name('settings.profile');
+    Route::get('account', \App\Http\Livewire\Settings\Account::class)->name('settings.account');
+    Route::get('privacy', \App\Http\Livewire\Settings\Privacy::class)->name('settings.privacy');
 });
 
 /* Загрузка файлов на сервер */
