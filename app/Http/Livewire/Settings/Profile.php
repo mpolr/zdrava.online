@@ -21,9 +21,8 @@ class Profile extends Component
         'user.subscribe_news' => 'boolean',
     ];
 
-    public function __construct()
+    public function mount(): void
     {
-        parent::__construct();
         $this->user = \Auth::user();
     }
 
@@ -42,11 +41,9 @@ class Profile extends Component
             }
 
             $this->user->photo = $fileName;
-            $this->user->save();
-
-            session()->flash('success', __('File Upload successfully'));
-        } else {
-            $this->user->save();
         }
+
+        session()->flash('success', __('Profile successfully updated'));
+        $this->user->save();
     }
 }

@@ -43,7 +43,7 @@
     <!-- End Matomo Code -->
 </head>
 <body>
-    <section class="mb-40">
+    <section>
         <nav class="navbar navbar-expand-lg shadow-md py-2 bg-white relative flex items-center w-full justify-between">
             <div class="px-6 w-full flex flex-wrap items-center justify-between">
                 <div class="flex items-center">
@@ -210,12 +210,15 @@
                 </div>
             </div>
         </nav>
-
-        @if(empty($slot))
-            @yield('content')
-        @else
-            {{ $slot }}
-        @endif
     </section>
+    <div class="mx-auto text-grey-darkest">
+        <main class="w-full flex flex-wrap px-2 mx-auto lg:px-72 text-center-center">
+            @if(empty($slot))
+                @yield('content')
+            @else
+                {{ $slot }}
+            @endif
+        </main>
+    </div>
 </body>
 </html>
