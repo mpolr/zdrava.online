@@ -9,7 +9,7 @@ use Livewire\Component;
 
 class Segments extends Component
 {
-    private Collection|LengthAwarePaginator  $segments;
+    private Collection|LengthAwarePaginator $segments;
 
     public function mount(): void
     {
