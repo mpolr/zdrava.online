@@ -137,5 +137,9 @@
     "Your provided credentials do not match in our records": "Предоставленные вами учетные данные не совпадают с нашими записями",
     "passwords.sent": "Мы отправили вам ссылку для сброса пароля по электронной почте.",
     "passwords.reset": "Ваш пароль был успешно сброшен!",
-    "Dashboard": "Панель управления"
+    "Dashboard": "Панель управления",
+    "Users": "Пользователи",
+    "Users: :count": "Пользователи: :count",
+    "No": "Нет",
+    "You have successfully registered & logged in!": "Вы успешно зарегистрировались и вошли в систему!"
 }

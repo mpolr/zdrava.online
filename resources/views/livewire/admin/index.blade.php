@@ -17,7 +17,8 @@
             <a href="{{ route('admin.import.strava.csv') }}">{{ __('Strava import CSV') }}</a>
         </div>
         <div class="w-fit">
-
+            <p><a href="https://search.google.com/search-console?resource_id=sc-domain%3Azdrava.online&hl=ru" target="_blank">Google Search Console</a></p>
+            <p><a href="https://webmaster.yandex.ru/site/https:zdrava.online:443/dashboard/" target="_blank">Yandex Webmaster</a></p>
         </div>
     </div>
 </main>

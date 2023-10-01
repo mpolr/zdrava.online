@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Mail\UserRegistrationConfirmation;
 use App\Models\User;
 use App\Http\Controllers\Controller;
+use App\Services\ReservedUserNames;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\RedirectResponse;
@@ -13,10 +14,11 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 class RegisterController extends Controller
 {
-    use AuthorizesRequests, ValidatesRequests;
+    use AuthorizesRequests, ValidatesRequests, ReservedUserNames;
 
     protected string $redirectTo = '/';
 
@@ -30,8 +32,8 @@ class RegisterController extends Controller
     protected function register(Request $request): RedirectResponse
     {
         $request->validate([
-            'first_name' => 'required|string|max:250',
-            'last_name' => 'required|string|max:250',
+            'first_name' => ['required', 'string' , 'max:250', Rule::notIn(self::rules())],
+            'last_name' => ['required', 'string', 'max:250', Rule::notIn(self::rules())],
             'email' => 'required|email|max:250|unique:users',
             'password' => 'required|min:8|confirmed',
             'subscribe_news' => 'boolean',
@@ -53,6 +55,6 @@ class RegisterController extends Controller
         Auth::attempt($credentials);
         $request->session()->regenerate();
         return redirect()->route('site.dashboard')
-            ->withSuccess('You have successfully registered & logged in!');
+            ->with('success', __('You have successfully registered & logged in!'));
     }
 }

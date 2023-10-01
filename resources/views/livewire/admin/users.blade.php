@@ -88,7 +88,7 @@
                                     @if($user->private)
                                         Private
                                     @else
-                                        No
+                                        {{ __('No') }}
                                     @endif
                                 </td>
                                 <td class="px-6 py-4">
