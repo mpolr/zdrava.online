@@ -2,16 +2,16 @@
 
 use App\Http\Controllers\ActivitiesController;
 use App\Http\Controllers\AthleteController;
+use App\Http\Controllers\Auth\ForgotResetController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
-use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DownloadAppController;
 use App\Http\Controllers\Import\StravaController;
-use App\Http\Controllers\LikeController;
 use App\Http\Controllers\UploadController;
 use App\Http\Livewire\Activity\Edit;
 use App\Http\Middleware\Authenticate;
 use App\Http\Middleware\VerifyCsrfToken;
+use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', ['as' => 'index', function () {
@@ -48,6 +48,12 @@ Route::group(['prefix' => 'auth'], function () {
 
         return view('auth/register');
     }]);
+
+    Route::get('forgot-password', [ForgotResetController::class, 'forgot'])->name('auth.password.request');
+    Route::post('forgot-password', [ForgotResetController::class, 'sendLink'])->middleware('guest')->name('auth.password.email');
+
+    Route::get('reset-password/{token}', [ForgotResetController::class, 'showResetPassword'])->middleware('guest')->name('password.reset');
+    Route::post('reset-password', [ForgotResetController::class, 'resetPassword'])->middleware('guest')->name('auth.password.reset');
 
     Route::post('login', [LoginController::class, 'authenticate'])->name('auth.login.post');
     Route::post('register', [RegisterController::class, 'register'])->name('auth.register.post');
