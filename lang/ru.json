@@ -4,7 +4,7 @@
     "Password confirmation": "Повторите пароль",
     "First name": "Имя",
     "Last name": "Фамилия",
-    "Login": "Вход",
+    "Login": "Войти",
     "Logout": "Выйти",
     "Remember me": "Запомнить меня",
     "Subscribe to our newsletter": "Я хочу получать письма с новостями",
@@ -136,5 +136,6 @@
     "Confirm Password": "Подтверждение пароля",
     "Your provided credentials do not match in our records": "Предоставленные вами учетные данные не совпадают с нашими записями",
     "passwords.sent": "Мы отправили вам ссылку для сброса пароля по электронной почте.",
-    "passwords.reset": "Ваш пароль был успешно сброшен!"
+    "passwords.reset": "Ваш пароль был успешно сброшен!",
+    "Dashboard": "Панель управления"
 }

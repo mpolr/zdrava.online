@@ -1,3 +1,4 @@
+@section('title', $user->getFullName() . ' | Zdrava')
 <main class="container mx-auto px-0 pt-12 max-w-screen-2xl">
     @error('profile') @livewire('toast.errors') @enderror
     @if (Session::get('success'))

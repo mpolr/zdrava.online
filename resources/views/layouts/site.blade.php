@@ -8,12 +8,12 @@
     <!-- Open gpaph -->
     <meta property="og:url" content="{{ config('app.url') }}">
     <meta property="og:type" content="website">
-    <meta property="og:title" content="Zdrava - бег и велоспорт">
+    <meta property="og:title" content="@yield('title', 'Zdrava - ' . __('Social network for athletes'))">
     <meta property="og:description" content="Социальная сеть для спортсменов">
     <meta property="og:image" content="{{ config('app.url') }}/zdrava.png">
 
     <link rel="icon" href="{{ URL::asset('favicon.svg') }}">
-    <title>{{ config('app.name', 'Zdrava - соцсеть для спортсменов') }}</title>
+    <title>@yield('title', 'Zdrava - ' . __('Social network for athletes'))</title>
 
     <!-- Fonts -->
     @googlefonts('ubuntu')

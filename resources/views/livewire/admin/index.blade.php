@@ -1,3 +1,4 @@
+@section('title', __('Admin panel') . ' | Zdrava')
 <main class="container mx-auto px-0 py-12 max-w-screen-lg">
     <div class="grid grid-cols-1 gap-4">
         <div class="w-full">

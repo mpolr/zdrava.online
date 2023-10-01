@@ -1,3 +1,4 @@
+@section('title', __('Dashboard') . ' | Zdrava')
 {{-- Левый контейнер --}}
 <div class="xs:px-1 md:px-2 mt-4 w-full md:w-1/2 lg:w-1/4">
     <div class="w-full">

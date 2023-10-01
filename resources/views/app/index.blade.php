@@ -1,4 +1,5 @@
 @extends('layouts.site')
+@section('title', __('Zdrava android app') . ' | Zdrava')
 @section('content')
     <div class="container my-12 px-6 mx-auto">
         <p>

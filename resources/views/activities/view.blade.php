@@ -1,4 +1,5 @@
 @extends('layouts.site')
+@section('title', $activity->name . ' | Zdrava')
 @section('js')
     <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet-src.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-gpx/1.7.0/gpx.min.js"></script>

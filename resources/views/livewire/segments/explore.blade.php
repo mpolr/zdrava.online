@@ -1,3 +1,4 @@
+@section('title', __('Explore segments') . ' | Zdrava')
 @section('js')
     <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet-src.js"></script>
     <script src="https://unpkg.com/polyline-encoded@0.0.9/Polyline.encoded.js"></script>

@@ -1,3 +1,4 @@
+@section('title', __('Subscription requests') . ' | Zdrava')
 <main class="container mx-auto px-0 pt-12 max-w-screen-2xl">
     <div class="grid grid-cols-1 gap-4">
         <div class="w-full">

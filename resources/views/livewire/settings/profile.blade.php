@@ -1,3 +1,4 @@
+@section('title', __('My profile') . ' | Zdrava')
 <main class="container mx-auto px-0 py-12 max-w-screen-lg">
     <div class="grid grid-cols-3 gap-4">
         <div class="w-full">

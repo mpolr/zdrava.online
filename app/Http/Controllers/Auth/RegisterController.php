@@ -45,7 +45,7 @@ class RegisterController extends Controller
             'password' => Hash::make($request->password)
         ]);
 
-        Mail::to($user->email)->send(new UserRegistrationConfirmation($user));
+        //Mail::to($user->email)->send(new UserRegistrationConfirmation($user));
 
         // TODO: Не пускать без подтверждения почты
 
