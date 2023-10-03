@@ -1,5 +1,5 @@
 <div>
-    <div class="container mx-auto mt-6 items-left">
+    <div class="container mx-auto mt-0 items-left">
         <!-- Отображение комментариев -->
         <div class="space-y-4">
             <!-- Цикл по массиву комментариев -->
@@ -17,6 +17,7 @@
                             <div class="flex-1 px-2 ml-2 text-sm font-medium leading-loose text-gray-600">
                                 {{ $comment['text'] }}
                             </div>
+                            @if (!$onlyLast)
                             <button wire:click="replyToComment({{ $comment['id'] }})" title="{{ __('Reply') }}" class="inline-flex items-center px-1 pt-2 ml-1 flex-column">
                                 <svg class="w-5 h-5 ml-2 text-gray-600 cursor-pointer fill-current hover:text-gray-900"
                                      viewBox="0 0 95 78" xmlns="http://www.w3.org/2000/svg">
@@ -25,6 +26,7 @@
                                         fill-rule="nonzero" />
                                 </svg>
                             </button>
+                            @endif
                             <button title="{{ __('Like') }}" class="inline-flex items-center px-1 -ml-1 flex-column">
                                 <svg class="w-5 h-5 text-gray-600 cursor-pointer hover:text-gray-700" fill="none"
                                      stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -68,7 +70,7 @@
             @endforeach
         </div>
     </div>
-
+    @if (!$onlyLast)
     <form wire:submit.prevent="addComment" class="mt-4">
         <label>
             <textarea wire:model="commentContent" class="border border-gray-300 rounded-lg p-2 w-full" rows="3" placeholder="Введите комментарий"></textarea>
@@ -79,4 +81,5 @@
         <input type="hidden" wire:model="selectedCommentId">
         <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded mt-2">Отправить</button>
     </form>
+    @endif
 </div>

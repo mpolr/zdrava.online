@@ -141,5 +141,6 @@
     "Users": "Пользователи",
     "Users: :count": "Пользователи: :count",
     "No": "Нет",
-    "You have successfully registered & logged in!": "Вы успешно зарегистрировались и вошли в систему!"
+    "You have successfully registered & logged in!": "Вы успешно зарегистрировались и вошли в систему!",
+    "Comment added successfully": "Комментарий успешно добавлен"
 }

@@ -148,6 +148,7 @@
                             </button>
                         </div>
                     </div>
+                    @livewire('comments.comments', ['activityId' => $activity->id, 'onlyLast' => true])
                 </div>
             @endforeach
         @else
