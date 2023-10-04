@@ -50,9 +50,14 @@ class ApiFeedController extends Controller
                 'avgSpeed' => $activity->avg_speed,
                 'elevationGain' => $activity->elevation_gain,
                 'startedAt' => $activity->started_at,
-                'comments' => $comments,
-                'commentsCount' => count($comments),
-                'likesCount' => 0,
+                'comments' => [
+                    'count' => count($comments),
+                    'items' => $comments
+                ],
+                'likes' => [
+                    'count' => count($activity->likes),
+                    'likedByMe' => $user->hasLiked($activity),
+                ],
                 'sharesCount' => 0,
             ];
         }

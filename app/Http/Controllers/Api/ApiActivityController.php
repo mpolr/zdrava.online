@@ -4,13 +4,11 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Activities;
-use App\Models\Subscription;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 
 class ApiActivityController extends Controller
 {
-    protected function activityComments(Request $request, int $id): JsonResponse
+    protected function activityComments(int $id): JsonResponse
     {
         $user = auth('sanctum')->user();
 
@@ -33,5 +31,43 @@ class ApiActivityController extends Controller
         $comments = $activity->comments()->with('user', 'replies.user')->get();
 
         return response()->json(['comments' => $comments]);
+    }
+
+    protected function like(int $id): JsonResponse
+    {
+        $activity = Activities::find($id);
+        $user = auth('sanctum')->user();
+
+        if (empty($user)) {
+            return response()->json([
+                'success' => false,
+                'message' => 'User not found'
+            ], 401);
+        }
+
+        $user->like($activity);
+        return response()->json([
+            'success' => true,
+            'count' => count($activity->likes),
+        ]);
+    }
+
+    protected function unlike(int $id): JsonResponse
+    {
+        $activity = Activities::find($id);
+        $user = auth('sanctum')->user();
+
+        if (empty($user)) {
+            return response()->json([
+                'success' => false,
+                'message' => 'User not found'
+            ], 401);
+        }
+
+        $user->unlike($activity);
+        return response()->json([
+            'success' => true,
+            'count' => count($activity->likes),
+        ]);
     }
 }
