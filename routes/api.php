@@ -24,9 +24,7 @@ Route::middleware('auth:sanctum')->get('/feed', [ApiFeedController::class, 'feed
 Route::middleware('auth:sanctum')->get('/activity/{id}/comments', [ApiActivityController::class, 'activityComments']);
 Route::middleware('auth:sanctum')->post('/upload', [UploadController::class, 'workoutApi']);
 
-Route::middleware('auth:sanctum')->post('/activity/{id}/like', [ApiActivityController::class, 'like']);
-
-//Route::group(['prefix' => 'activity', 'middleware' => 'auth:sanctum'], function () {
-//    Route::post('like/{id}', [ApiActivityController::class, 'like']);
-//    Route::delete('like/{id}', [ApiActivityController::class, 'unlike']);
-//});
+Route::group(['as' => 'api.', 'prefix' => 'activity', 'middleware' => 'auth:sanctum'], function () {
+    Route::post('{id}/like', [ApiActivityController::class, 'like'])->name('like');
+    Route::delete('{id}/like', [ApiActivityController::class, 'unlike'])->name('unlike');
+});

@@ -99,7 +99,7 @@ class Activities extends Model implements Likeable
 
     public function getAverageSpeed(): string
     {
-        return number_format($this->avg_speed * 3.6, 1, ',');
+        return $this->avg_speed;
     }
 
     public function getElevationGain(): string
