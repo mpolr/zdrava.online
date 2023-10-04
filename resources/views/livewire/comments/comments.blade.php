@@ -11,7 +11,7 @@
                              src="{{ $comment['photo'] }}">
                         <div class="flex-col mt-1">
                             <div class="flex items-center flex-1 px-4 font-bold leading-tight">
-                                {{ $comment['author'] }}
+                                <a href="{{ route('athlete.profile', $comment['userId']) }}">{{ $comment['author'] }}</a>
                                 <span class="ml-2 text-xs font-normal text-gray-500">{{ $comment['date'] }}</span>
                             </div>
                             <div class="flex-1 px-2 ml-2 text-sm font-medium leading-loose text-gray-600">
@@ -48,7 +48,7 @@
                                      src="{{ $reply['photo'] }}">
                                 <div class="flex-col mt-1">
                                     <div class="flex items-center flex-1 px-2 font-medium leading-tight">
-                                        {{ $reply['author'] }}
+                                        <a href="{{ route('athlete.profile', $reply['userId']) }}">{{ $reply['author'] }}</a>
                                         <span class="ml-2 text-xs font-normal text-gray-500">{{ $reply['date'] }}</span>
                                     </div>
                                     <div class="flex-1 px-2 ml-2 text-sm font-medium leading-loose text-gray-600">
