@@ -116,6 +116,9 @@
                                     <h5 class="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
                                         {{ $activity->name }}
                                     </h5>
+                                    <p class="text-sm text-gray-600 dark:text-gray-400">
+                                        {{ Str::limit($activity->description, 140, ' ...') }}
+                                    </p>
                                 </a>
                                 <div class="grid text-sm mt-4 grid-cols-1 gap-6 sm:grid-cols-3">
                                     <p class="mb-3 text-left text-gray-600 dark:text-gray-400">
