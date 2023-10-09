@@ -109,7 +109,7 @@ class Activities extends Model implements Likeable
 
     public function getMaxSpeed(): string
     {
-        return number_format($this->max_speed * 3.6, 1, ',');
+        return $this->max_speed;
     }
 
     public function getDuration(): bool|string

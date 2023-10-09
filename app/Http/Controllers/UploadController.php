@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use adriangibbons\phpFITFileAnalysis;
+use App\Classes\GpxTools;
 use App\Http\Requests\StoreWorkoutRequest;
+use App\Jobs\ProcessFitFile;
 use App\Models\Activities;
 use App\Models\User;
 use DateTime;
-use Gpx2Png\Gpx2Png;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -26,25 +26,30 @@ class UploadController extends Controller
             $name = str_replace(['.xml', '.bin'], '', $name);
             $extension = $uploadedFile->getClientOriginalExtension();
 
-            $uploadedFileName = "{$name}.{$extension}";
+            $hashedFileName = "{$name}.{$extension}";
 
             $file = Storage::putFileAs(
-                'public/activities/' . $request->user()->id,
+                'temp',
                 $uploadedFile,
-                $uploadedFileName,
-                'public'
+                $hashedFileName,
+                'private'
             );
 
             if (!empty($file)) {
                 switch ($extension) {
                     case 'gpx':
-                        $result = $this->processGPX($file, $request, $uploadedFileName);
+                        $result = $this->processGPX($file, $request, $hashedFileName);
                         break;
                     case 'fit':
-                        $result = $this->processFIT($file, $request, $uploadedFileName);
+                        ProcessFitFile::dispatch($request->user()->id, $hashedFileName)->onQueue('process-fit');
+                        $result = true;
                         break;
                     case 'tcx':
-                        $result = $this->processTCX($file, $request, $uploadedFileName);
+                        $result = $this->processTCX($file, $request, $hashedFileName);
+                        break;
+                    default:
+                        session()->flash('error', __('Unsupported file!'));
+                        return redirect()->refresh();
                         break;
                 }
             }
@@ -105,81 +110,6 @@ class UploadController extends Controller
         }
     }
 
-    /**
-     * @throws \Exception
-     */
-    private function processFIT(string $file, StoreWorkoutRequest $request, string $filename): bool
-    {
-        // TODO: Рассчитать avg_pace, min_altitude, max_altitude
-        try {
-            $fit = new phpFITFileAnalysis(Storage::path($file));
-        } catch (Throwable $e) {
-            Storage::delete($file);
-            report($e);
-            return false;
-        }
-
-        $activity = new Activities();
-        $activity->user_id = $request->user()->id;
-        $activity->sport = $fit->data_mesgs['sport']['sport'];
-        $activity->sub_sport = $fit->data_mesgs['sport']['sub_sport'];
-        $activity->name = !empty($fit->data_mesgs['sport']['name']) ? $fit->data_mesgs['sport']['name'] : __('Workout');
-        $activity->creator = !empty($fit->data_mesgs['file_id']['manufacturer']) ? $fit->data_mesgs['file_id']['manufacturer'] : 'Zdrava';
-        $activity->device_manufacturers_id = $fit->data_mesgs['file_id']['manufacturer'];
-        $activity->distance = $fit->data_mesgs['session']['total_distance'];
-        $activity->avg_speed = $fit->data_mesgs['session']['avg_speed'];
-        $activity->max_speed = $fit->data_mesgs['session']['max_speed'];
-        $activity->elevation_gain = $fit->data_mesgs['session']['total_ascent'];
-        $activity->elevation_loss = $fit->data_mesgs['session']['total_descent'];
-        $activity->started_at = $fit->data_mesgs['session']['start_time'];
-        $activity->finished_at = $fit->data_mesgs['session']['start_time'] + $fit->data_mesgs['session']['total_elapsed_time'];
-        $activity->duration = $fit->data_mesgs['session']['total_timer_time'];
-        $activity->duration_total = $fit->data_mesgs['session']['total_elapsed_time'];
-        $activity->avg_heart_rate = $fit->data_mesgs['session']['avg_heart_rate'];
-        $activity->max_heart_rate = $fit->data_mesgs['session']['max_heart_rate'];
-        $activity->avg_cadence = $fit->data_mesgs['session']['avg_cadence'];
-        $activity->max_cadence = $fit->data_mesgs['session']['max_cadence'];
-        $activity->total_calories = $fit->data_mesgs['session']['total_calories'];
-        $activity->file = $filename;
-        $activity->start_position_lat = $fit->data_mesgs['session']['start_position_lat'];
-        $activity->start_position_long = $fit->data_mesgs['session']['start_position_long'];
-        $activity->end_position_lat = last($fit->data_mesgs['lap']['end_position_lat']);
-        $activity->end_position_long = last($fit->data_mesgs['lap']['end_position_long']);
-        $geo = $this->geocode($activity->start_position_lat, $activity->start_position_long);
-        $activity->country = $geo['country'];
-        $activity->locality = $geo['locality'];
-
-        $activity->save();
-
-        $this->convertFitToGpx($fit, $request->user()->id, $filename);
-
-        return true;
-    }
-
-    private function convertFitToGpx(phpFITFileAnalysis $fit, int $userId, string $filename): void
-    {
-        $rootNode = new \SimpleXMLElement('<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-            <gpx xmlns="http://www.topografix.com/GPX/1/1" version="1.1"></gpx>');
-        $trkNode = $rootNode->addChild('trk');
-        $trksegNode = $trkNode->addChild('trkseg');
-
-        try {
-            foreach ($fit->data_mesgs['record']['timestamp'] as $timestamp) {
-                $trkptNode = $trksegNode->addChild('trkpt');
-                $trkptNode->addAttribute('lat', $fit->data_mesgs['record']['position_lat'][$timestamp]);
-                $trkptNode->addAttribute('lon', $fit->data_mesgs['record']['position_long'][$timestamp]);
-                if (!empty($fit->data_mesgs['record']['altitude'][$timestamp])) {
-                    $trkptNode->addChild('ele', $fit->data_mesgs['record']['altitude'][$timestamp]);
-                }
-                $trkptNode->addChild('time', date('Y-m-d\TH:i:s.000\Z', $timestamp));
-            }
-
-            Storage::write('public/activities/'. $userId .'/'. $filename .'.gpx', $rootNode->asXML());
-        } catch (Throwable $e) {
-            report($e);
-        }
-    }
-
     private function processGPX(string $file, StoreWorkoutRequest $request, string $filename): bool
     {
         $gpx = new phpGPX();
@@ -192,6 +122,7 @@ class UploadController extends Controller
         }
 
         $elevation = 0;
+        $maxSpeed = 0;
 
         foreach ($gpx->tracks as $track) {
             // Statistics for whole track
@@ -200,6 +131,8 @@ class UploadController extends Controller
             foreach ($track->segments as $segment) {
                 $maxSpeed = 0;
                 $pointElevation = 0;
+                $pointElevationMin = 0;
+                $pointElevationMax = 0;
 
                 foreach ($segment->points as $point) {
                     $pointSpeed = 0;
@@ -207,12 +140,15 @@ class UploadController extends Controller
                         $pointElevation += $point->elevation;
                     }
 
-                    if (!empty($point->extensions->speed)) {
-                        $pointSpeed = $point->extensions->speed; // Получаем скорость точки
+                    if (!empty($point->extensions->trackPointExtension->speed)) {
+                        $pointSpeed = $point->extensions->trackPointExtension->speed;
                     }
+
+//                    dd($point);
 
                     if ($pointSpeed > $maxSpeed) {
                         $maxSpeed = $pointSpeed;
+                        dd($point);
                     }
                 }
 
@@ -221,10 +157,13 @@ class UploadController extends Controller
         }
 
         $stat = array_merge_recursive($statsTrack)[0];
+//        dd($maxSpeed);
 
         $startedAt = new DateTime($stat['startedAt']);
+
         $finishedAt = new DateTime($stat['finishedAt']);
         $interval = $startedAt->diff($finishedAt);
+//        dd($interval);
         $totalDuration = $interval->s + ($interval->i * 60) + ($interval->h * 3600) + ($interval->days * 86400);
 
         $segment = $track->segments[0];
@@ -264,7 +203,7 @@ class UploadController extends Controller
         $activity->total_calories = 0;
         $activity->file = $filename;
 
-        $image = $this->generateImageFromGPX($file);
+        $image = GpxTools::generateImageFromGPX($file, $request->user()->id);
         if (!empty($image)) {
             $activity->image = $filename.'.png';
         }
@@ -273,7 +212,7 @@ class UploadController extends Controller
         $activity->start_position_long = $startLongitude;
         $activity->end_position_lat = $endLatitude;
         $activity->end_position_long = $endLongitude;
-        $geo = $this->geocode($activity->start_position_lat, $activity->start_position_long);
+        $geo = GpxTools::geocode($activity->start_position_lat, $activity->start_position_long);
         if ($geo) {
             $activity->country = $geo['country'];
             $activity->locality = $geo['locality'];
@@ -290,22 +229,6 @@ class UploadController extends Controller
         return true;
     }
 
-    private function generateImageFromGPX(string $file): bool
-    {
-        $fullFilePath = Storage::path($file);
-        $gpx2png = new Gpx2Png();
-        $gpx2png->imageParams->max_width = 1280;
-        $gpx2png->imageParams->max_height = 1280;
-        $gpx2png->imageParams->padding = 20;
-        $gpx2png->drawParams->autoCropToBounds = 0;
-        $gpx2png->drawParams->track->distanceLabelsFrequency = 0;
-        $gpx2png->loadFile($fullFilePath);
-
-        $res = $gpx2png->generateImage();
-        $image = $res->data();
-        return Storage::put($file.'.png', $image, 'public');
-    }
-
     private function processGPXApi(User $user, string $file, string $filename): bool
     {
         $gpx = new phpGPX();
@@ -318,13 +241,13 @@ class UploadController extends Controller
         }
 
         $elevation = 0;
+        $maxSpeed = 0;
 
         foreach ($gpx->tracks as $track) {
             // Statistics for whole track
             $statsTrack[] = $track->stats->toArray();
 
             foreach ($track->segments as $segment) {
-                $maxSpeed = 0;
                 $pointElevation = 0;
 
                 foreach ($segment->points as $point) {
@@ -390,7 +313,7 @@ class UploadController extends Controller
         $activity->total_calories = 0;
         $activity->file = $filename;
 
-        $image = $this->generateImageFromGPX($file);
+        $image = GpxTools::generateImageFromGPX($file, $user->id);
         if (!empty($image)) {
             $activity->image = $filename.'.png';
         }
@@ -399,7 +322,7 @@ class UploadController extends Controller
         $activity->start_position_long = $startLongitude;
         $activity->end_position_lat = $endLatitude;
         $activity->end_position_long = $endLongitude;
-        $geo = $this->geocode($activity->start_position_lat, $activity->start_position_long);
+        $geo = GpxTools::geocode($activity->start_position_lat, $activity->start_position_long);
         if ($geo) {
             $activity->country = $geo['country'];
             $activity->locality = $geo['locality'];
@@ -408,23 +331,5 @@ class UploadController extends Controller
         $activity->save();
 
         return true;
-    }
-
-    private function geocode($latitude, $longitude): ?array
-    {
-        try {
-            $geo = app('geocoder')
-                ->using('nominatim')
-                ->reverse($latitude, $longitude)
-                ->get()
-                ->first();
-        } catch (Throwable $e) {
-            return null;
-        }
-
-        return [
-            'country' => $geo->getCountry()->getCode(),
-            'locality' => $geo->getLocality()
-        ];
     }
 }

@@ -81,68 +81,68 @@
                             <div class="flex flex-col justify-between p-4 leading-normal w-1/2">
                                 <div class="flex">
                                     <div class="flex-1 mx-2 h-12">
-                                        <h5 class="mb-0 text-2xl font-normal tracking-tight text-gray-900 dark:text-white">
+                                        <h5 class="mb-0 text-xl font-normal tracking-tight text-gray-900 dark:text-white">
                                             {{ __(':distance km', ['distance' => $activity->getDistance()]) }}
                                         </h5>
-                                        <span class="text-gray-500 dark:text-gray-400">
+                                        <span class="text-gray-500 text-sm dark:text-gray-400">
                                             {{ __('Distance') }}
                                         </span>
                                     </div>
                                     <div class="flex-1 mx-2 h-10">
-                                        <h5 class="mb-0 text-2xl font-normal tracking-tight text-gray-900 dark:text-white">
+                                        <h5 class="mb-0 text-xl font-normal tracking-tight text-gray-900 dark:text-white">
                                             {{ $activity->getDuration() }}
                                         </h5>
-                                        <span class="text-gray-500 dark:text-gray-400">
+                                        <span class="text-gray-500 text-sm dark:text-gray-400">
                                             {{ __('Duration') }}
                                         </span>
                                     </div>
                                     <div class="flex-1 mx-2 h-10">
-                                        <h5 class="mb-0 text-2xl font-normal tracking-tight text-gray-900 dark:text-white">
+                                        <h5 class="mb-0 text-xl font-normal tracking-tight text-gray-900 dark:text-white">
                                             {{ $activity->getDurationTotal() }}
                                         </h5>
-                                        <span class="text-gray-500 dark:text-gray-400">
+                                        <span class="text-gray-500 text-sm dark:text-gray-400">
                                             {{ __('Duration total') }}
                                         </span>
                                     </div>
                                     <div class="flex-1 mx-2 h-10">
-                                        <h5 class="mb-0 text-2xl font-normal tracking-tight text-gray-900 dark:text-white">
+                                        <h5 class="mb-0 text-xl font-normal tracking-tight text-gray-900 dark:text-white">
                                             {{ __(':elevation m', ['elevation' => $activity->elevation_gain]) }}
                                         </h5>
-                                        <span class="text-gray-500 dark:text-gray-400">
+                                        <span class="text-gray-500 text-sm dark:text-gray-400">
                                             {{ __('Elevation') }}
                                         </span>
                                     </div>
                                 </div>
                                 <div class="flex my-4">
                                     <div class="flex-1 mx-2 h-10">
-                                        <h5 class="mb-0 text-2xl font-normal tracking-tight text-gray-900 dark:text-white">
+                                        <h5 class="mb-0 text-xl font-normal tracking-tight text-gray-900 dark:text-white">
                                             {{ __(':speed km/h', ['speed' => $activity->getAverageSpeed()]) }}
                                         </h5>
-                                        <span class="text-gray-500 dark:text-gray-400">
+                                        <span class="text-gray-500 text-sm dark:text-gray-400">
                                             {{ __('Avg. speed') }}
                                         </span>
                                     </div>
                                     <div class="flex-1 mx-2 h-10">
-                                        <h5 class="mb-0 text-2xl font-normal tracking-tight text-gray-900 dark:text-white">
+                                        <h5 class="mb-0 text-xl font-normal tracking-tight text-gray-900 dark:text-white">
                                             {{ __(':speed km/h', ['speed' => $activity->getMaxSpeed()]) }}
                                         </h5>
-                                        <span class="text-gray-500 dark:text-gray-400">
+                                        <span class="text-gray-500 text-sm dark:text-gray-400">
                                             {{ __('Max. speed') }}
                                         </span>
                                     </div>
                                     <div class="flex-1 mx-2 h-10">
-                                        <h5 class="mb-0 text-2xl font-normal tracking-tight text-gray-900 dark:text-white">
+                                        <h5 class="mb-0 text-xl font-normal tracking-tight text-gray-900 dark:text-white">
                                             {{ $activity->avg_heart_rate }}
                                         </h5>
-                                        <span class="text-gray-500 dark:text-gray-400">
+                                        <span class="text-gray-500 text-sm dark:text-gray-400">
                                             {{ __('Avg. HR') }}
                                         </span>
                                     </div>
                                     <div class="flex-1 mx-2 h-10">
-                                        <h5 class="mb-0 text-2xl font-normal tracking-tight text-gray-900 dark:text-white">
+                                        <h5 class="mb-0 text-xl font-normal tracking-tight text-gray-900 dark:text-white">
                                             {{ $activity->avg_cadence }}
                                         </h5>
-                                        <span class="text-gray-500 dark:text-gray-400">
+                                        <span class="text-gray-500 text-sm dark:text-gray-400">
                                             {{ __('Avg. cadence') }}
                                         </span>
                                     </div>
