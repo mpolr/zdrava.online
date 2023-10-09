@@ -23,8 +23,8 @@ return new class extends Migration
             $table->float('avg_pace')->nullable();
             $table->float('min_altitude')->nullable();
             $table->float('max_altitude')->nullable();
-            $table->float('elevation_gain')->nullable();
-            $table->float('elevation_loss')->nullable();
+            $table->integer('elevation_gain')->nullable();
+            $table->integer('elevation_loss')->nullable();
             $table->dateTimeTz('started_at')->nullable();
             $table->dateTimeTz('finished_at')->nullable();
             $table->integer('duration')->nullable();
