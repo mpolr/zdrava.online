@@ -52,15 +52,18 @@ class Activities extends Model implements Likeable
         'finished_at' => 'datetime',
     ];
 
-    public function getDeviceManufacturer(): ?string
+    public function getDeviceManufacturer(): string
     {
-        if (!empty($this->device_manufacturers_id) && is_numeric($this->device_manufacturers_id)) {
-            return DeviceManufacturers::where([
-                'code' => $this->device_manufacturers_id
-            ])->first()->description;
+        if (!empty($this->device_manufacturers_id)) {
+            return $this->deviceManufacturer->description;
+        } else {
+            return __('Zdrava android app');
         }
+    }
 
-        return null;
+    public function deviceManufacturer(): \Illuminate\Database\Eloquent\Relations\HasOne
+    {
+        return $this->hasOne(DeviceManufacturers::class, 'id', 'device_manufacturers_id');
     }
 
     public function getUser(): ?User

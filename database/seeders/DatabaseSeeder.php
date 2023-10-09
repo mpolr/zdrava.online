@@ -12,5 +12,7 @@ class DatabaseSeeder extends Seeder
         $this->call(DeviceManufacturersSeeder::class);
         $this->call(RoleSeeder::class);
         $this->call(PermissionSeeder::class);
+        $this->call(SportSeeder::class);
+        $this->call(SubSportSeeder::class);
     }
 }

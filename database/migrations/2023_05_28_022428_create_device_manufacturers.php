@@ -9,8 +9,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('device_manufacturers', function (Blueprint $table) {
-            $table->id();
-            $table->integer('code');
+            $table->integer('id');
             $table->string('manufacturer');
             $table->string('description');
             $table->timestamps();
