@@ -25,4 +25,14 @@ class Segment extends Model
         'total_elevation_gain' => 'float',
         'private' => 'boolean',
     ];
+
+    public function getStartLatLng(): array
+    {
+        return explode(',', $this->start_latlng);
+    }
+
+    public function getEndLatLng(): array
+    {
+        return explode(',', $this->end_latlng);
+    }
 }

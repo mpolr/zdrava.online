@@ -27,7 +27,7 @@
                                         {{ Str::limit($segment->name, 30, ' ...') }}
                                     </p>
                                     <p class="text-sm text-gray-500 truncate dark:text-gray-400">
-                                        &Delta; {{ __('Elevation gain') }}: {{ __(':elevation m', ['elevation' => $segment->total_elevation_gain]) }}
+                                        &Delta; {{ __('Elevation gain') }}: {{ __(':elevation m', ['elevation' => $segment->total_elevation_gain]) }} <span wire:click="segmentDownloadFIT({{ $segment->id }})">{{ __('FIT') }}</span>
                                     </p>
                                 </div>
                                 <div class="inline-flex items-center text-base font-semibold text-gray-600 dark:text-white">
@@ -87,7 +87,8 @@
                     };
 
                     dataSet.forEach((item) => {
-                        let popupText = `<b>${item.name}</b><hr class="h-px my-2 bg-gray-200 border-0 dark:bg-gray-700">{{ __('Distance') }}: ${item.distance} m<br>{{ __('Elevation gain') }}: ${item.total_elevation_gain}`;
+                        let popupText = `<b>${item.name}</b><hr class="h-px my-2 bg-gray-200 border-0 dark:bg-gray-700">{{ __('Distance') }}: ${item.distance} m<br>
+                            {{ __('Elevation gain') }}: ${item.total_elevation_gain}<br>`;
 
                         let polyline = L.Polyline.fromEncoded(item.polyline, {
                             weight: 4,

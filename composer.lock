@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "bd9593ec0521d099823643e14e636687",
+    "content-hash": "f46dcaae6af28ace9c706b8e56c1a76c",
     "packages": [
         {
             "name": "adriangibbons/php-fit-file-analysis",
@@ -2716,6 +2716,62 @@
                 }
             ],
             "time": "2023-06-21T08:46:11+00:00"
+        },
+        {
+            "name": "mpolr/fit-file-parser",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mpolr/fit-file-parser.git",
+                "reference": "17796ab51c7853e9a92c0f1e8060b4ce7678812a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mpolr/fit-file-parser/zipball/17796ab51c7853e9a92c0f1e8060b4ce7678812a",
+                "reference": "17796ab51c7853e9a92c0f1e8060b4ce7678812a",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Fit\\": "src/"
+                },
+                "files": [
+                    "src/Zend_Io_Reader.php",
+                    "src/Zend_Io_Writer.php",
+                    "src/functions.php"
+                ]
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Ettore Delprino",
+                    "email": "edelprino@gmail.com"
+                },
+                {
+                    "name": "Patrick Thurmond",
+                    "email": "p_thurmond@yahoo.com"
+                },
+                {
+                    "name": "Stef Nielandt",
+                    "email": "stef.nielandt@dodo.be"
+                },
+                {
+                    "name": "Pavel Monahov",
+                    "email": "mpolr21@gmail.com"
+                }
+            ],
+            "description": "Tools to view and parse Garmin FIT files.",
+            "keywords": [
+                "fit",
+                "garmin"
+            ],
+            "support": {
+                "source": "https://github.com/mpolr/fit-file-parser/tree/1.0.0"
+            },
+            "time": "2023-10-10T14:50:44+00:00"
         },
         {
             "name": "nesbot/carbon",
@@ -12910,8 +12966,7 @@
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
-        "php": "^8.1",
-        "ext-imagick": "*"
+        "php": "^8.1"
     },
     "platform-dev": [],
     "plugin-api-version": "2.6.0"

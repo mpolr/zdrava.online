@@ -142,5 +142,7 @@
     "Users: :count": "Пользователи: :count",
     "No": "Нет",
     "You have successfully registered & logged in!": "Вы успешно зарегистрировались и вошли в систему!",
-    "Comment added successfully": "Комментарий успешно добавлен"
+    "Comment added successfully": "Комментарий успешно добавлен",
+    "Road Cycling": "Шоссейный велосипед",
+    "Download segment as FIT": "Скачать сегмент как FIT"
 }
