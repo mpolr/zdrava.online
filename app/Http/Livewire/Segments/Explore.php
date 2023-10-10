@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Segments;
 
 use App\Classes\GpxTools;
 use App\Classes\Polyline;
+use App\Http\Livewire\Components\SegmentMap;
 use App\Models\Segment;
 use Fit\Data;
 use Fit\Exception;
@@ -23,24 +24,53 @@ use Zend_Io_Exception;
 class Explore extends Component
 {
     private $segments;
+    private int $totalSegmentsCount = 0;
+    public string $activityType = 'Ride';
+    public string $search = '';
+    private int $limit = 11;
+
+    public function setActivityType(string $type = 'Ride'): void
+    {
+        $this->activityType = $type;
+    }
+
+    public function search(): \Illuminate\Contracts\View\View|\Illuminate\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\Foundation\Application
+    {
+        $this->segments = Segment::where('name', 'LIKE', "%{$this->search}%")
+            ->where('activity_type', $this->activityType)
+            ->limit($this->limit)
+            ->get();
+
+        return view('livewire.segments.explore', [
+            'segments' => $this->segments,
+            'segmentsTotalCount' => $this->totalSegmentsCount,
+        ]);
+    }
 
     public function mount(Request $request): void
     {
-        $pagination = 11;
         if ($request->get('show') === 'max') {
-            $pagination = 9999;
+            $this->limit = 9999;
         }
 
         $this->segments = Segment::select(['id', 'name', 'distance', 'total_elevation_gain', 'polyline', 'start_latlng'])
             ->where('name', '!=', null)
             ->where('private', '!=', 1)
-            ->paginate($pagination);
+            ->limit($this->limit)
+            ->get();
     }
 
     public function render(): \Illuminate\Contracts\View\View|\Illuminate\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\Foundation\Application
     {
+        $this->segments = Segment::where('name', 'LIKE', "%{$this->search}%")
+            ->where('activity_type', $this->activityType)
+            ->where('private', '!=', 1)
+            ->limit($this->limit)
+            ->get();
+
         return view('livewire.segments.explore', [
             'segments' => $this->segments,
+            'segmentsTotalCount' => $this->totalSegmentsCount,
         ]);
     }
 

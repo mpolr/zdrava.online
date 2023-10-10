@@ -15,7 +15,7 @@
             </h4>
             <form>
                 <div class="flex mt-6">
-                    <label for="segment-search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Your Email</label>
+                    <label for="segment-search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">{{ __('Search') }}</label>
                     <button wire:model="activityType" id="dropdown-button-segments" data-dropdown-toggle="dropdown-search-segment" class="flex-shrink-0 z-10 inline-flex items-center py-2.5 px-4 text-sm font-medium text-center text-gray-500 bg-gray-100 border border-gray-300 rounded-l-lg hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:text-white dark:border-gray-600" type="button">
                         @if ($activityType == 'Ride')
                             <svg aria-hidden="true" class="h-3 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
