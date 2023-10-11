@@ -5,7 +5,7 @@
         <div class="flex">
             <div class="w-full">
                 <!-- Контент -->
-                <h2 class="mb-2 mt-0 text-4xl font-medium leading-tight text-black">
+                <h2 class="mb-2 mt-0 text-4xl font-medium leading-tight text-black dark:text-gray-100">
                     {{ __(':user - subscribers', ['user' => $user->getFullName()]) }}
                 </h2>
                 {{-- TODO: Поиск--}}
