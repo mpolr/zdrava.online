@@ -56,16 +56,18 @@ class ProcessGpxFile implements ShouldQueue, ShouldBeUnique
                     $point2 = $points[$i + 1];
 
                     // Проверяем, двигается ли точка
-                    if ($point1->extensions->trackPointExtension->speed > 0) {
-                        $movingTime = $point2->time - $point1->time;
-                        $totalMovingTime += $movingTime;
-                        if ($point1->extensions->trackPointExtension->speed > $maxSpeed) {
-                            $maxSpeed = $point1->extensions->trackPointExtension->speed;
+                    if (!empty($point1->extensions->trackPointExtension)) {
+                        if ($point1->extensions->trackPointExtension->speed > 0) {
+                            $movingTime = $point2->time - $point1->time;
+                            $totalMovingTime += $movingTime;
+                            if ($point1->extensions->trackPointExtension->speed > $maxSpeed) {
+                                $maxSpeed = $point1->extensions->trackPointExtension->speed;
+                            }
                         }
-                    }
 
-                    if ($point1->extensions->trackPointExtension->hr > $maxHearthRate) {
-                        $maxHearthRate = $point1->extensions->trackPointExtension->hr;
+                        if ($point1->extensions->trackPointExtension->hr > $maxHearthRate) {
+                            $maxHearthRate = $point1->extensions->trackPointExtension->hr;
+                        }
                     }
                 }
             }
