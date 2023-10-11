@@ -28,12 +28,22 @@
                                 </th>
                             </tr>
                         @else
-                            @foreach($user->subscriptions as $suser)
+                            @foreach($user->subscriptions()->where('confirmed', 1)->get() as $suser)
                                 <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                                     <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                         <a href="{{ route('athlete.profile', $suser->id) }}">
                                             {{ $suser->getFullName() }}
                                         </a>
+                                    </th>
+                                </tr>
+                            @endforeach
+                            @foreach($user->subscriptions()->where('confirmed', 0)->get() as $suser)
+                                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                        <a href="{{ route('athlete.profile', $suser->id) }}">
+                                            {{ $suser->getFullName() }}
+                                        </a>
+                                        <span class="ml-2 bg-yellow-100 text-yellow-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-yellow-900 dark:text-yellow-300">{{ __('Waiting for confirmation') }}</span>
                                     </th>
                                 </tr>
                             @endforeach

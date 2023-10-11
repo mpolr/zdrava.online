@@ -86,6 +86,8 @@
     "Successfully unsubscribed from \":user\"": "Вы успешно отписались от \":user\"",
     "Subscription requests": "Запросы на подписку",
     "Request sent: :datetime": "Запрос отправлен: :datetime",
+    "Waiting for confirmation": "Ожидание подтверждения",
+    "Before you start your search, you may know these people": "Пока вы не начали поиск, возможно вы знаете этих людей",
     "Accept": "Принять",
     "Decline": "Отклонить",
     ":user - subscriptions": ":user - подписки",

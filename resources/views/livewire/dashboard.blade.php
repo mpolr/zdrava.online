@@ -38,7 +38,7 @@
                 <div class="grid text-sm mt-4 grid-cols-3 gap-6 sm:grid-cols-3">
                     <a href="{{ route('athlete.subscriptions') }}">
                         <p class="mb-3 text-center text-gray-600 dark:text-gray-400">
-                            {{ __('Subscriptions') }}<br />{{ Auth::user()->subscriptions()->where('confirmed', 1)->count() }}
+                            {{ __('Subscriptions') }}<br />{{ Auth::user()->subscriptions()->count() }}
                         </p>
                     </a>
                     <a href="{{ route('athlete.subscribers') }}">

@@ -21,6 +21,24 @@
                 </h2>
             </div>
             <hr class="h-px mt-4 mb-8 bg-gray-200 border-0 dark:bg-gray-700">
+            <div class="grid text-sm mt-4 grid-cols-3 gap-6 sm:grid-cols-3">
+                <a href="{{ route('athlete.subscriptions.user', $user->id) }}">
+                    <p class="mb-3 text-center text-gray-600 dark:text-gray-400">
+                        {{ __('Subscriptions') }}<br />{{ $user->subscriptions()->count() }}
+                    </p>
+                </a>
+                <a href="{{ route('athlete.subscribers.user', $user->id) }}">
+                    <p class="mb-3 text-center text-gray-600 dark:text-gray-400">
+                        {{ __('Subscribers') }}<br />{{ $user->subscribers()->where('confirmed', 1)->count() }}
+                    </p>
+                </a>
+                <a href="{{ route('athlete.training') }}">
+                    <p class="mb-3 text-center text-gray-600 dark:text-gray-400">
+                        {{ __('Activities') }}<br />
+                        {{ $user->activities->count() ? $user->activities->count() : 0 }}
+                    </p>
+                </a>
+            </div>
         </div>
         <div class="w-full col-span-2">
             <div class="pl-4">

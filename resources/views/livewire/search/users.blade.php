@@ -23,61 +23,64 @@
                     </button>
                 </div>
                 <div>
+                    @if(empty($search))
+                        <h4 class="text-2xl mt-4 font-bold dark:text-white">{{ __('Before you start your search, you may know these people') }}</h4>
+                    @endif
                     <ul role="list" class="divide-y divide-gray-200">
                         @foreach($users as $user)
                             @if(Auth::user()->id !== $user->id)
-                            <li class="flex justify-between gap-x-6 py-5">
-                                <div class="flex gap-x-4">
-                                    @if($user->getPhoto())
-                                        <a href="{{ route('athlete.profile', $user->id) }}">
-                                            <img class="h-12 w-12 flex-none rounded-full bg-gray-50" src="{{ $request->user->getPhoto() }}" alt="">
-                                        </a>
-                                    @else
-                                        <a href="{{ route('athlete.profile', $user->id) }}">
-                                            <div class="relative inline-flex items-center justify-center w-12 h-12 overflow-hidden bg-gray-300 rounded-full dark:bg-gray-600">
-                                                <span class="font-medium text-gray-600 dark:text-gray-300">
-                                                    {{ $user->getInitials() }}
-                                                </span>
-                                            </div>
-                                        </a>
-                                    @endif
-                                    <div class="min-w-0 flex-auto">
-                                        <p class="text-sm font-semibold leading-6 text-gray-900">
+                                <li class="flex justify-between gap-x-6 py-5">
+                                    <div class="flex gap-x-4">
+                                        @if($user->getPhoto())
                                             <a href="{{ route('athlete.profile', $user->id) }}">
-                                                {{ $user->getFullName() }}
+                                                <img class="h-12 w-12 flex-none rounded-full bg-gray-50" src="{{ $request->user->getPhoto() }}" alt="">
                                             </a>
-                                        </p>
-                                        <p class="mt-1 truncate text-xs leading-5 text-gray-500">
+                                        @else
                                             <a href="{{ route('athlete.profile', $user->id) }}">
-                                                {{ $user->getNickname(true) }}
+                                                <div class="relative inline-flex items-center justify-center w-12 h-12 overflow-hidden bg-gray-300 rounded-full dark:bg-gray-600">
+                                            <span class="font-medium text-gray-600 dark:text-gray-300">
+                                                {{ $user->getInitials() }}
+                                            </span>
+                                                </div>
                                             </a>
-                                        </p>
+                                        @endif
+                                        <div class="min-w-0 flex-auto">
+                                            <p class="text-sm font-semibold leading-6 text-gray-900">
+                                                <a href="{{ route('athlete.profile', $user->id) }}">
+                                                    {{ $user->getFullName() }}
+                                                </a>
+                                            </p>
+                                            <p class="mt-1 truncate text-xs leading-5 text-gray-500">
+                                                <a href="{{ route('athlete.profile', $user->id) }}">
+                                                    {{ $user->getNickname(true) }}
+                                                </a>
+                                            </p>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="hidden sm:flex sm:flex-col sm:items-end">
-                                    @if(!in_array($user->id, $subscriptions))
-                                        @if (!in_array($user->id, $awaiting))
-                                            @if (!$user->private)
-                                                <button wire:click="subscribe({{ $user }})" type="button" class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
-                                                    {{ __('Subscribe') }}
-                                                </button>
+                                    <div class="hidden sm:flex sm:flex-col sm:items-end">
+                                        @if(!in_array($user->id, $subscriptions))
+                                            @if (!in_array($user->id, $awaiting))
+                                                @if (!$user->private)
+                                                    <button wire:click="subscribe({{ $user }})" type="button" class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
+                                                        {{ __('Subscribe') }}
+                                                    </button>
+                                                @else
+                                                    <button wire:click="subscribe({{ $user }})" type="button" class="focus:outline-none text-white bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:focus:ring-yellow-900">
+                                                        {{ __('Subscription request') }}
+                                                    </button>
+                                                @endif
                                             @else
-                                                <button wire:click="subscribe({{ $user }})" type="button" class="focus:outline-none text-white bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:focus:ring-yellow-900">
-                                                    {{ __('Subscription request') }}
+                                                <button wire:click="cancel({{ $user }})" type="button" class="focus:outline-none text-white bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:focus:ring-yellow-900">
+                                                    {{ __('Cancel subscription request') }}
                                                 </button>
                                             @endif
                                         @else
-                                            <button wire:click="cancel({{ $user }})" type="button" class="focus:outline-none text-white bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:focus:ring-yellow-900">
-                                                {{ __('Cancel subscription request') }}
+                                            <button wire:click="unsubscribe({{ $user }})" type="button" class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">
+                                                {{ __('Unsubscribe') }}
                                             </button>
                                         @endif
-                                    @else
-                                        <button wire:click="unsubscribe({{ $user }})" type="button" class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">
-                                            {{ __('Unsubscribe') }}
-                                        </button>
-                                    @endif
-                                </div>
-                            </li>
+                                    </div>
+                                </li>
                             @endif
                         @endforeach
                     </ul>

@@ -79,8 +79,8 @@ class User extends Authenticatable
         return $this->belongsToMany(
             User::class,
             'subscriptions',
+            'subscriber_id',
             'user_id',
-            'subscriber_id'
         );
     }
 
@@ -89,7 +89,7 @@ class User extends Authenticatable
         return $this->hasMany(Subscription::class);
     }
 
-    public function likes()
+    public function likes(): HasMany
     {
         return $this->hasMany(Like::class);
     }

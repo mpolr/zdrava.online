@@ -23,15 +23,21 @@ class Users extends Component
         'search' => 'string|min:2|max:64',
     ];
 
-    public function __construct()
-    {
-        parent::__construct();
-        $this->subscriptions = Auth::user()->subscriptions->where('confirmed', 1)->pluck('user_id')->toArray();
-        $this->awaiting = Auth::user()->subscriptions->where('confirmed', 0)->pluck('user_id')->toArray();
-    }
-
     public function render(): View|Application|Factory|\Illuminate\Contracts\Foundation\Application
     {
+        if (empty($this->search)) {
+            $this->users = User::inRandomOrder()->limit(10)->get();;
+        }
+
+        $this->subscriptions = Subscription::where('subscriber_id', auth()->id())
+            ->where('confirmed', 1)
+            ->pluck('user_id')
+            ->toArray();
+        $this->awaiting = Subscription::where('subscriber_id', auth()->id())
+            ->where('confirmed', 0)
+            ->pluck('user_id')
+            ->toArray();
+
         return view('livewire.search.users');
     }
 
@@ -49,7 +55,7 @@ class Users extends Component
         }
     }
 
-    public function subscribe(User $user): Redirector|RedirectResponse
+    public function subscribe(User $user): void
     {
         $subscription = new Subscription;
         $subscription->user_id = $user->id;
@@ -57,11 +63,9 @@ class Users extends Component
         $subscription->save();
 
         session()->flash('success', __('Subscription request sent'));
-
-        return redirect()->route('friends.find');
     }
 
-    public function unsubscribe(User $user): RedirectResponse
+    public function unsubscribe(User $user): void
     {
         $subscription = Subscription::where('user_id', $user->id)
             ->where('subscriber_id', Auth::user()->id)
@@ -71,11 +75,9 @@ class Users extends Component
         session()->flash('success', __('Successfully unsubscribed from ":user"', [
             'user' => $user->getFullName()
         ]));
-
-        return redirect()->route('friends.find');
     }
 
-    public function cancel(User $user): RedirectResponse
+    public function cancel(User $user): void
     {
         $subscription = Subscription::where('user_id', $user->id)
             ->where('subscriber_id', Auth::user()->id)
@@ -85,7 +87,5 @@ class Users extends Component
         session()->flash('success', __('Subscription request cancelled', [
             'user' => $user->getFullName()
         ]));
-
-        return redirect()->route('friends.find');
     }
 }
