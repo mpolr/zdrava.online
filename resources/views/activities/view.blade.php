@@ -68,13 +68,13 @@
                         </button>
                     </h2>
                     <div id="accordion-flush-body-overview" class="hidden" aria-labelledby="accordion-flush-heading-overview">
-                        <div class="flex flex-col items-start bg-white border border-gray-200 shadow md:flex-row max-w-full dark:border-gray-700 dark:bg-gray-800">
+                        <div class="flex flex-col items-start bg-white border border-gray-200 shadow md:flex-row max-w-full dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100">
                             <div class="flex flex-col justify-between p-4 leading-normal w-1/2">
                                 <p class="mb-2 text-sm text-gray-500 dark:text-gray-400">
                                     {{ $activity->getLongStartDate() }}
                                     @if($activity->locality) - {{ $activity->locality }}@endif, {{ $activity->getCountry() }}
                                 </p>
-                                <h4 class="mb-2 mt-0 text-3xl font-medium leading-tight text-black">
+                                <h4 class="mb-2 mt-0 text-3xl font-medium leading-tight text-black dark:text-gray-100">
                                     {{ $activity->name }}
                                 </h4>
                                 {{ $activity->description }}

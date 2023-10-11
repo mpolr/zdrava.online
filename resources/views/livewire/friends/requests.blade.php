@@ -2,7 +2,7 @@
 <main class="container mx-auto px-0 pt-12 max-w-screen-2xl">
     <div class="grid grid-cols-1 gap-4">
         <div class="w-full">
-            <h2 class="mb-2 mt-0 text-4xl font-medium leading-tight text-black">
+            <h2 class="mb-2 mt-0 text-4xl font-medium leading-tight text-black dark:text-gray-100">
                 {{ __('Subscription requests') }}
             </h2>
             <hr class="h-px mt-4 mb-8 bg-gray-200 border-0 dark:bg-gray-700">
@@ -30,7 +30,7 @@
                                         </a>
                                     @endif
                                     <div class="min-w-0 flex-auto">
-                                        <p class="text-sm font-semibold leading-6 text-gray-900">
+                                        <p class="text-sm font-semibold leading-6 text-gray-900 dark:text-gray-100">
                                             <a href="{{ route('athlete.profile', $request->user->id) }}">
                                                 {{ $request->user->getFullName() }}
                                             </a>

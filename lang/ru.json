@@ -147,5 +147,8 @@
     "Comment added successfully": "Комментарий успешно добавлен",
     "Road Cycling": "Шоссейный велосипед",
     "Download segment as FIT": "Скачать сегмент как FIT",
-    "Search for segment by name": "Поиск сегмента по имени"
+    "Search for segment by name": "Поиск сегмента по имени",
+    "Interface theme": "Тема интерфейса",
+    "Bright": "Светлая",
+    "Dark": "Тёмная"
 }

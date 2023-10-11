@@ -5,7 +5,7 @@
             @include('components.settings-menu')
         </div>
         <div class="w-full col-span-2">
-            <h2 class="mb-2 mt-0 text-4xl font-medium leading-tight text-black">
+            <h2 class="mb-2 mt-0 text-4xl font-medium leading-tight text-black dark:text-gray-100">
                 {{ __('My profile') }}
             </h2>
             <hr class="h-px mt-4 mb-8 bg-gray-200 border-0 dark:bg-gray-700">

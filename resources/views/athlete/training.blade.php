@@ -5,11 +5,11 @@
         <div class="flex">
             <div class="w-full">
                 <!-- Контент -->
-                <h2 class="mb-2 mt-0 text-4xl font-medium leading-tight text-black">
+                <h2 class="mb-2 mt-0 text-4xl font-medium leading-tight text-black dark:text-gray-100">
                     {{ __('My workouts') }}
                 </h2>
 {{--                // TODO: Поиск--}}
-                <h4 class="mb-2 mt-0 text-3xl font-medium leading-tight text-black">
+                <h4 class="mb-4 mt-0 text-3xl font-medium leading-tight text-black dark:text-gray-100">
                     {{ __('Workouts: :count', ['count' => count($activities)]) }}
                 </h4>
                 <div class="relative overflow-x-auto shadow-md sm:rounded-lg">

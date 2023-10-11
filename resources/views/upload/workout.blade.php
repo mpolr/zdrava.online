@@ -2,7 +2,7 @@
 @section('upload.content')
     <div class="w-full mt-4 lg:-mt-0 lg:w-3/4 lg:max-w-lg">
         <!-- Контент -->
-        <h2 class="mb-2 mt-0 text-4xl font-medium leading-tight text-black">
+        <h2 class="mb-2 mt-0 text-4xl font-medium leading-tight text-black dark:text-gray-100">
             {{ __('Upload and sync workouts') }}
         </h2>
         @if ($message = Session::get('success'))

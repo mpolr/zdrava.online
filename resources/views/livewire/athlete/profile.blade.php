@@ -16,7 +16,7 @@
                         </span>
                     </div>
                 @endif
-                <h2 class="mb-2 mt-0 ml-4 text-4xl font-medium leading-tight text-black">
+                <h2 class="mb-2 mt-0 ml-4 text-4xl font-medium leading-tight text-black dark:text-gray-100">
                     {{ $user->getFullName() }}
                 </h2>
             </div>
@@ -64,7 +64,7 @@
                                     </a>
                                     <div class="min-w-0 flex-auto">
                                         <a href="{{ route('athlete.profile', $activity->getUser()->id) }}">
-                                            <p class="text-sm font-semibold leading-6 text-gray-900">{{ $activity->getUser()->getFullName() }}</p>
+                                            <p class="text-sm font-semibold leading-6 text-gray-900 dark:text-gray-100">{{ $activity->getUser()->getFullName() }}</p>
                                         </a>
                                         <p class="mt-1 truncate text-xs leading-5 text-gray-500">
                                             {{ $activity->getLongStartDate() }} - {{ $activity->getCountry() }}@if($activity->locality), {{ $activity->locality }}@endif
@@ -80,15 +80,15 @@
                                         <div class="grid text-sm mt-4 grid-cols-1 gap-6 sm:grid-cols-3">
                                             <p class="mb-3 text-left text-gray-600 dark:text-gray-400">
                                                 {{ __('Distance') }}<br />
-                                                <span class="text-black text-lg font-semibold">{{ __(':distance km', ['distance' => $activity->getDistance()]) }}</span>
+                                                <span class="text-lg font-semibold">{{ __(':distance km', ['distance' => $activity->getDistance()]) }}</span>
                                             </p>
                                             <p class="mb-3 text-left text-gray-600 dark:text-gray-400">
                                                 {{ __('Elevation') }}<br />
-                                                <span class="text-black text-lg font-semibold">{{ __(':elevation m', ['elevation' => $activity->elevation_gain]) }}</span>
+                                                <span class="text-lg font-semibold">{{ __(':elevation m', ['elevation' => $activity->elevation_gain]) }}</span>
                                             </p>
                                             <p class="mb-3 text-left text-gray-600 dark:text-gray-400">
                                                 {{ __('Duration') }}<br />
-                                                <span class="text-black text-lg font-semibold">{{ $activity->getDuration() }}</span>
+                                                <span class="text-lg font-semibold">{{ $activity->getDuration() }}</span>
                                             </p>
                                         </div>
                                     </div>
