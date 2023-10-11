@@ -5,7 +5,7 @@ namespace App\Jobs;
 use adriangibbons\phpFITFileAnalysis;
 use App\Classes\GpxTools;
 use App\Models\Activities;
-use Carbon\Carbon;
+use Exception;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -14,12 +14,13 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Storage;
 
-class ProcessFitFile implements ShouldQueue
+class ProcessFitFile implements ShouldQueue, ShouldBeUnique
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     protected int $userId;
     protected string $fileName;
+    public int $timeout = 300;
 
     public function __construct(int $userId, string $fileName)
     {
@@ -28,13 +29,13 @@ class ProcessFitFile implements ShouldQueue
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     public function handle(): void
     {
         try {
             $fit = new phpFITFileAnalysis(Storage::path('temp/' . $this->fileName));
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->fail($e->getMessage());
         }
 
@@ -42,7 +43,7 @@ class ProcessFitFile implements ShouldQueue
         $activity->user_id = $this->userId;
         $activity->sport = $fit->data_mesgs['sport']['sport'];
         $activity->sub_sport = $fit->data_mesgs['sport']['sub_sport'];
-        $activity->name = !empty($fit->data_mesgs['sport']['name']) ? $fit->data_mesgs['sport']['name'] : __('Workout');
+        $activity->name = !empty($fit->data_mesgs['sport']['name']) ? __($fit->data_mesgs['sport']['name']) : __('Workout');
         $activity->creator = !empty($fit->data_mesgs['file_id']['manufacturer']) ? $fit->data_mesgs['file_id']['manufacturer'] : 'Zdrava';
         $activity->device_manufacturers_id = $fit->data_mesgs['file_id']['manufacturer'];
         $activity->distance = $fit->data_mesgs['session']['total_distance'];
@@ -81,6 +82,15 @@ class ProcessFitFile implements ShouldQueue
             $activity->image = $this->fileName . '.gpx.png';
         }
 
-        $activity->save();
+        $result = rename(
+            Storage::path('temp/' . $this->fileName),
+            Storage::path('public/activities/'. $this->userId .'/'. $this->fileName)
+        );
+
+        if (!$result) {
+            $this->fail('Cant move FIT file!');
+        } else {
+            $activity->save();
+        }
     }
 }

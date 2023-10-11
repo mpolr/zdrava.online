@@ -39,7 +39,7 @@ class ImportStravaSegments implements ShouldQueue
             return false;
         }
 
-        // TODO: ПРоверку оставляем тут
+        // TODO: Проверку оставляем тут
         if ($savedToken->expires_at < Carbon::now()->toDateTimeString()) {
             $refresh = Strava::refreshToken($savedToken->refresh_token);
             $savedToken->access_token = $refresh->access_token;
