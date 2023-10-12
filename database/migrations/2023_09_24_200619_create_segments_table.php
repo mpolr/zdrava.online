@@ -19,8 +19,8 @@ return new class extends Migration
             $table->float('total_elevation_gain')->nullable();
             $table->point('start_latlng')->nullable();
             $table->point('end_latlng')->nullable();
-            $table->time('kom')->nullable();
-            $table->time('qom')->nullable();
+            $table->integer('kom', false, true)->nullable();
+            $table->integer('qom', false, true)->nullable();
             $table->integer('private')->nullable();
             $table->integer('hazardous')->nullable();
             $table->text('polyline')->nullable();

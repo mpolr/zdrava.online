@@ -77,7 +77,7 @@
                 polyline.bindPopup(popupText, {closeButton: false});
 
                 polyline.id = item.id;
-                
+
                 let marker = L.circleMarker([item.start_latlng.coordinates[0], item.start_latlng.coordinates[1]], markerOptions)
                     .addTo(myFGMarker);
 

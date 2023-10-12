@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Classes\GpxTools;
 use App\Models\Segment;
 use App\Models\StravaToken;
 use ASanikovich\LaravelSpatial\Geometry\Point;
@@ -78,7 +79,12 @@ class ImportStravaSegments implements ShouldQueue
         }
 
         if (empty($segmentData)) {
-            $this->fail('Received empty Strava segment!');
+            $this->delete();
+            return false;
+        }
+
+        if (str_starts_with($segmentData->name, 'OLD VERSION')) {
+            $this->delete();
             return false;
         }
 
@@ -88,9 +94,19 @@ class ImportStravaSegments implements ShouldQueue
         $this->segment->total_elevation_gain = $segmentData->total_elevation_gain;
         $this->segment->start_latlng = new Point($segmentData->start_latlng[0], $segmentData->start_latlng[1]);
         $this->segment->end_latlng = new Point($segmentData->end_latlng[0], $segmentData->end_latlng[1]);
+        $this->segment->kom = GpxTools::stravaTimeToSeconds($segmentData->xoms->kom);
+        $this->segment->qom = GpxTools::stravaTimeToSeconds($segmentData->xoms->kom);
         $this->segment->private = $segmentData->private;
         $this->segment->hazardous = $segmentData->hazardous;
         $this->segment->polyline = $segmentData->map->polyline;
+        $this->segment->country = $segmentData->country;
+        $this->segment->state = $segmentData->state;
+        $this->segment->city = $segmentData->city;
+        $this->segment->climb_category = $segmentData->climb_category;
+        $this->segment->average_grade = $segmentData->average_grade;
+        $this->segment->maximum_grade = $segmentData->maximum_grade;
+        $this->segment->elevation_high = $segmentData->elevation_high;
+        $this->segment->elevation_low = $segmentData->elevation_low;
         $this->segment->created_at = $segmentData->created_at;
         $this->segment->updated_at = $segmentData->updated_at;
 
