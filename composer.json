@@ -7,6 +7,7 @@
     "require": {
         "php": "^8.1",
         "adriangibbons/php-fit-file-analysis": "^3.2",
+        "asanikovich/laravel-spatial": "^2.0",
         "codetoad/strava": "dev-master",
         "geocoder-php/nominatim-provider": "^5.7",
         "guzzlehttp/guzzle": "^7.2",

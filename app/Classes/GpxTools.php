@@ -102,4 +102,25 @@ class GpxTools {
         $scalingFactor = pow(2, 31) / 180.0; // Коэффициент масштабирования
         return (int)($coordinate * $scalingFactor);
     }
+
+    public static function stravaTimeToSeconds(string $time): float|int
+    {
+        $parts = explode(':', $time);
+        $seconds = 0;
+
+        if (count($parts) == 2) {
+            // Если время в формате "минуты:секунды"
+            $minutes = intval($parts[0]);
+            $seconds = intval($parts[1]);
+            $seconds += $minutes * 60;
+        } elseif (count($parts) == 3) {
+            // Если время в формате "часы:минуты:секунды"
+            $hours = intval($parts[0]);
+            $minutes = intval($parts[1]);
+            $seconds = intval($parts[2]);
+            $seconds += $hours * 3600 + $minutes * 60;
+        }
+
+        return $seconds;
+    }
 }

@@ -2,37 +2,46 @@
 
 namespace App\Models;
 
+use ASanikovich\LaravelSpatial\Eloquent\HasSpatial;
+use ASanikovich\LaravelSpatial\Geometry\Point;
 use Illuminate\Database\Eloquent\Model;
 
 class Segment extends Model
 {
-    protected $fillable = [
-        'user_id',
-        'strava_user_id',
-        'name',
-        'distance',
-        'total_elevation_gain',
-        'start_latlng',
-        'end_latlng',
-        'private',
-        'polyline',
-        'created_at',
-        'updated_at',
-    ];
+    use HasSpatial;
 
     protected $casts = [
         'distance' => 'float',
         'total_elevation_gain' => 'float',
         'private' => 'boolean',
+        'start_latlng' => Point::class,
+        'end_latlng' => Point::class,
     ];
 
-    public function getStartLatLng(): array
-    {
-        return explode(',', $this->start_latlng);
-    }
-
-    public function getEndLatLng(): array
-    {
-        return explode(',', $this->end_latlng);
-    }
+    protected $fillable = [
+        'user_id',
+        'strava_segment_id',
+        'activity_type',
+        'name',
+        'distance',
+        'total_elevation_gain',
+        'start_latlng',
+        'end_latlng',
+        'kom',
+        'qom',
+        'private',
+        'hazardous',
+        'polyline',
+        'star_count',
+        'country',
+        'state',
+        'city',
+        'climb_category',
+        'average_grade',
+        'maximum_grade',
+        'elevation_high',
+        'elevation_low',
+        'created_at',
+        'updated_at',
+    ];
 }
