@@ -129,10 +129,10 @@ class Explore extends Component
                 'nec_lat' => GpxTools::convertCoordinates($borderPoints['NE'][0]),
                 'nec_long' => GpxTools::convertCoordinates($borderPoints['NE'][1]),
                 'message_index' => 1,
-                'start_position_lat' => GpxTools::convertCoordinates($segment->getStartLatLng()[0]),
-                'start_position_long' => GpxTools::convertCoordinates($segment->getStartLatLng()[1]),
-                'end_position_lat' => GpxTools::convertCoordinates($segment->getEndLatLng()[0]),
-                'end_position_long' => GpxTools::convertCoordinates($segment->getEndLatLng()[1]),
+                'start_position_lat' => GpxTools::convertCoordinates($segment->start_latlng->latitude),
+                'start_position_long' => GpxTools::convertCoordinates($segment->start_latlng->longitude),
+                'end_position_lat' => GpxTools::convertCoordinates($segment->end_latlng->latitude),
+                'end_position_long' => GpxTools::convertCoordinates($segment->end_latlng->longitude),
             ]);
 
         $index = 0;

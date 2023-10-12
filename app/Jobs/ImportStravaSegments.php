@@ -4,6 +4,7 @@ namespace App\Jobs;
 
 use App\Models\Segment;
 use App\Models\StravaToken;
+use ASanikovich\LaravelSpatial\Geometry\Point;
 use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
@@ -85,8 +86,8 @@ class ImportStravaSegments implements ShouldQueue
         $this->segment->name = $segmentData->name;
         $this->segment->distance = $segmentData->distance;
         $this->segment->total_elevation_gain = $segmentData->total_elevation_gain;
-        $this->segment->start_latlng = implode(',', $segmentData->start_latlng);
-        $this->segment->end_latlng = implode(',', $segmentData->end_latlng);
+        $this->segment->start_latlng = new Point($segmentData->start_latlng[0], $segmentData->start_latlng[1]);
+        $this->segment->end_latlng = new Point($segmentData->end_latlng[0], $segmentData->end_latlng[1]);
         $this->segment->private = $segmentData->private;
         $this->segment->hazardous = $segmentData->hazardous;
         $this->segment->polyline = $segmentData->map->polyline;
