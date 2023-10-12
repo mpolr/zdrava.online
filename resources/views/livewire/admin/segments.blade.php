@@ -10,7 +10,7 @@
     <div class="grid grid-cols-1 gap-4">
         <div class="w-full">
             <!-- Контент -->
-            <h4 class="mb-2 mt-0 text-3xl font-medium leading-tight text-black">
+            <h4 class="mb-2 mt-0 text-3xl font-medium leading-tight text-black dark:text-gray-100">
                 {{ __('Segments: :count from :total processed', ['count' => $segments->total(), 'total' => $segmentsTotalCount]) }}
             </h4>
             <form>

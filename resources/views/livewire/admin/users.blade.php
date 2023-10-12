@@ -10,7 +10,7 @@
     <div class="grid grid-cols-1 gap-4">
         <div class="w-full">
             <!-- Контент -->
-            <h4 class="mb-2 mt-0 text-3xl font-medium leading-tight text-black">
+            <h4 class="mb-2 mt-0 text-3xl font-medium leading-tight text-black dark:text-gray-100">
                 {{ __('Users: :count', ['count' => count($users)]) }}
             </h4>
             <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
