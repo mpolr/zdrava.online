@@ -91,22 +91,45 @@ class ImportStravaSegments implements ShouldQueue
         $this->segment->activity_type = $segmentData->activity_type;
         $this->segment->name = $segmentData->name;
         $this->segment->distance = $segmentData->distance;
-        $this->segment->total_elevation_gain = $segmentData->total_elevation_gain;
+        if (!empty($segmentData->total_elevation_gain)) {
+            $this->segment->total_elevation_gain = $segmentData->total_elevation_gain;
+        }
         $this->segment->start_latlng = new Point($segmentData->start_latlng[0], $segmentData->start_latlng[1]);
         $this->segment->end_latlng = new Point($segmentData->end_latlng[0], $segmentData->end_latlng[1]);
-        $this->segment->kom = GpxTools::stravaTimeToSeconds($segmentData->xoms->kom);
-        $this->segment->qom = GpxTools::stravaTimeToSeconds($segmentData->xoms->kom);
+        if (!empty($segmentData->xoms->kom)) {
+            $this->segment->kom = GpxTools::stravaTimeToSeconds($segmentData->xoms->kom);
+        }
+        if (!empty($segmentData->xoms->qom)) {
+            $this->segment->qom = GpxTools::stravaTimeToSeconds($segmentData->xoms->qom);
+        }
         $this->segment->private = $segmentData->private;
         $this->segment->hazardous = $segmentData->hazardous;
         $this->segment->polyline = $segmentData->map->polyline;
-        $this->segment->country = $segmentData->country;
-        $this->segment->state = $segmentData->state;
-        $this->segment->city = $segmentData->city;
-        $this->segment->climb_category = $segmentData->climb_category;
-        $this->segment->average_grade = $segmentData->average_grade;
-        $this->segment->maximum_grade = $segmentData->maximum_grade;
-        $this->segment->elevation_high = $segmentData->elevation_high;
-        $this->segment->elevation_low = $segmentData->elevation_low;
+        $this->segment->star_count = $segmentData->star_count;
+        if (!empty($segmentData->country)) {
+            $this->segment->country = $segmentData->country;
+        }
+        if (!empty($segmentData->state)) {
+            $this->segment->state = $segmentData->state;
+        }
+        if (!empty($segmentData->city)) {
+            $this->segment->city = $segmentData->city;
+        }
+        if (!empty($segmentData->climb_category)) {
+            $this->segment->climb_category = $segmentData->climb_category;
+        }
+        if (!empty($segmentData->average_grade)) {
+            $this->segment->average_grade = $segmentData->average_grade;
+        }
+        if (!empty($segmentData->maximum_grade)) {
+            $this->segment->maximum_grade = $segmentData->maximum_grade;
+        }
+        if (!empty($segmentData->elevation_high)) {
+            $this->segment->elevation_high = $segmentData->elevation_high;
+        }
+        if (!empty($segmentData->elevation_low)) {
+            $this->segment->elevation_low = $segmentData->elevation_low;
+        }
         $this->segment->created_at = $segmentData->created_at;
         $this->segment->updated_at = $segmentData->updated_at;
 
