@@ -80,9 +80,7 @@ class Strava extends Component
     public function processStrava(): \Illuminate\Http\RedirectResponse|Redirector
     {
         $segments = Segment::where('strava_segment_id', 'IS NOT', null)
-            ->where('name', null)
-            ->where('created_at', null)
-            ->where('updated_at', null)
+            ->where('country', null)
             ->limit(1000)
             ->get();
 

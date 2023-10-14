@@ -14,13 +14,13 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Storage;
 use phpGPX\phpGPX;
 
-class ProcessGpxFile implements ShouldQueue, ShouldBeUnique
+class ProcessGpxFile implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     protected int $userId;
     protected string $fileName;
-    public int $timeout = 300;
+    public int $timeout = 180;
 
     public function __construct(int $userId, string $fileName)
     {
@@ -33,10 +33,10 @@ class ProcessGpxFile implements ShouldQueue, ShouldBeUnique
      */
     public function handle(): void
     {
-        $gpx = new phpGPX();
+        $gpxObj = new phpGPX();
 
         try {
-            $gpx = $gpx->parse(Storage::get('temp/' . $this->fileName));
+            $gpx = $gpxObj->load(Storage::path('temp/' . $this->fileName));
         } catch (Exception $e) {
             $this->fail($e->getMessage());
         }
@@ -111,7 +111,7 @@ class ProcessGpxFile implements ShouldQueue, ShouldBeUnique
         $activity->elevation_loss = $stat['cumulativeElevationLoss'];
         $activity->started_at = $stat['startedAt'];
         $activity->finished_at = $stat['finishedAt'];
-        $activity->duration = $totalMovingTime;
+        $activity->duration = intval($totalMovingTime);
         $activity->duration_total = $stat['duration'];
         // TODO: Сделать avg_heart_rate, avg_cadence, max_cadence, total_calories
         $activity->avg_heart_rate = 0;

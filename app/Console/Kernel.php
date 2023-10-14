@@ -18,6 +18,16 @@ class Kernel extends ConsoleKernel
             ->timezone('UTC')
             ->at('00:01');
 
+        $schedule->command('queue:work --queue=process-fit')
+            ->everySecond()
+            ->withoutOverlapping()
+            ->runInBackground();
+
+        $schedule->command('queue:work --queue=process-gpx')
+            ->everySecond()
+            ->withoutOverlapping()
+            ->runInBackground();
+
         /**
          * Run background import segments from Strava to avoid API limits, if not running
          */

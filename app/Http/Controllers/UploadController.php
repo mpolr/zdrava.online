@@ -11,17 +11,26 @@ use Illuminate\Support\Facades\Storage;
 
 class UploadController extends Controller
 {
-    public function workout(StoreWorkoutRequest $request): RedirectResponse|JsonResponse
+    public function upload(StoreWorkoutRequest $request): void
+    {
+        $this->workout($request, true);
+    }
+
+    public function workout(StoreWorkoutRequest $request, bool $formApp = false): RedirectResponse|JsonResponse
     {
         $result = false;
 
         try {
             $user = $request->user();
         } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'User not found'
-            ], 401);
+            if ($formApp) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'User not found'
+                ], 401);
+            } else {
+                abort(401);
+            }
         }
 
         foreach ($request->allFiles()['workout'] as $uploadedFile) {
@@ -64,7 +73,7 @@ class UploadController extends Controller
             session()->flash('error', __('Error occurred'));
         }
 
-        if ($request->ajax()) {
+        if ($formApp) {
             return response()->json([
                 'success' => true,
                 'message' => 'Upload success'
