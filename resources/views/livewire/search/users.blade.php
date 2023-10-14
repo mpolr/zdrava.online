@@ -33,7 +33,7 @@
                                     <div class="flex gap-x-4">
                                         @if($user->getPhoto())
                                             <a href="{{ route('athlete.profile', $user->id) }}">
-                                                <img class="h-12 w-12 flex-none rounded-full bg-gray-50" src="{{ $request->user->getPhoto() }}" alt="">
+                                                <img class="h-12 w-12 flex-none rounded-full bg-gray-50" src="{{ $user->getPhoto() }}" alt="">
                                             </a>
                                         @else
                                             <a href="{{ route('athlete.profile', $user->id) }}">
