@@ -32,12 +32,10 @@
                         {{ __('Subscribers') }}<br />{{ $user->subscribers()->where('confirmed', 1)->count() }}
                     </p>
                 </a>
-                <a href="{{ route('athlete.training') }}">
-                    <p class="mb-3 text-center text-gray-600 dark:text-gray-400">
-                        {{ __('Activities') }}<br />
-                        {{ $user->activities->count() ? $user->activities->count() : 0 }}
-                    </p>
-                </a>
+                <p class="mb-3 text-center text-gray-600 dark:text-gray-400">
+                    {{ __('Activities') }}<br />
+                    {{ $user->activities->count() ? $user->activities->count() : 0 }}
+                </p>
             </div>
         </div>
         <div class="w-full col-span-2">
