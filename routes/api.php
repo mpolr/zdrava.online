@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\ApiActivityController;
+use App\Http\Controllers\Api\ApiController;
 use App\Http\Controllers\Api\ApiFeedController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\LikeController;
@@ -23,6 +24,7 @@ Route::post('/login', [LoginController::class, 'authenticateApi']);
 Route::middleware('auth:sanctum')->get('/feed', [ApiFeedController::class, 'feed']);
 Route::middleware('auth:sanctum')->get('/activity/{id}/comments', [ApiActivityController::class, 'activityComments']);
 Route::middleware('auth:sanctum')->post('/upload', [UploadController::class, 'upload']);
+Route::middleware('auth:sanctum')->get('/athlete/{id}', [ApiController::class, 'athlete']);
 
 Route::group(['as' => 'api.', 'prefix' => 'activity', 'middleware' => 'auth:sanctum'], function () {
     Route::post('{id}/like', [ApiActivityController::class, 'like'])->name('like');
