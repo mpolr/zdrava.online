@@ -28,7 +28,7 @@ class ApiActivityController extends Controller
             ], 404);
         }
 
-        $comments = $activity->comments()->with('user', 'replies.user')->get();
+        $comments = $activity->comments()->with('user:id,nickname,photo,first_name,last_name', 'replies.user')->get();
 
         return response()->json(['comments' => $comments]);
     }
