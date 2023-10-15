@@ -41,7 +41,7 @@ class ApiFeedController extends Controller
 
             $feedItems[] = [
                 'id' => $activity->id,
-                'userId' => $activity->user_id,
+                'user' => $activity->getUser(),
                 'name' => $activity->name,
                 'description' => $activity->description,
                 'imageUrl' => $activity->getImage($activity->user_id, true),
@@ -50,6 +50,7 @@ class ApiFeedController extends Controller
                 'avgSpeed' => $activity->avg_speed,
                 'elevationGain' => $activity->elevation_gain,
                 'startedAt' => $activity->started_at,
+                'locality' => $activity->locality,
                 'comments' => [
                     'count' => count($comments),
                     'items' => $comments
