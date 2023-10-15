@@ -12,6 +12,7 @@
         <div class="w-full">
             <p><a href="{{ route('admin.users') }}">{{ __('Users') }}</a></p>
             <p><a href="{{ route('admin.segments') }}">{{ __('Segments') }}</a></p>
+            <p><a href="{{ route('admin.crashlogs') }}">{{ __('Android crash logs') }}</a></p>
         </div>
         <div class="w-fit">
             <a href="{{ route('admin.import.strava.csv') }}">{{ __('Strava import CSV') }}</a>
