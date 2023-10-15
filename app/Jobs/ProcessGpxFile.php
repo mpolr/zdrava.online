@@ -44,6 +44,7 @@ class ProcessGpxFile implements ShouldQueue
         $maxSpeed = 0;
         $maxHearthRate = 0;
         $totalMovingTime = 0;
+        $statsTrack = [];
 
         foreach ($gpx->tracks as $track) {
             $statsTrack[] = $track->stats->toArray();

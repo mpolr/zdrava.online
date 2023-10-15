@@ -25,6 +25,7 @@ Route::middleware('auth:sanctum')->get('/feed', [ApiFeedController::class, 'feed
 Route::middleware('auth:sanctum')->get('/activity/{id}/comments', [ApiActivityController::class, 'activityComments']);
 Route::middleware('auth:sanctum')->post('/upload', [UploadController::class, 'upload']);
 Route::middleware('auth:sanctum')->get('/athlete/{id}', [ApiController::class, 'athlete']);
+Route::middleware('auth:sanctum')->post('/report/crash', [ApiController::class, 'errorReporting']);
 
 Route::group(['as' => 'api.', 'prefix' => 'activity', 'middleware' => 'auth:sanctum'], function () {
     Route::post('{id}/like', [ApiActivityController::class, 'like'])->name('like');
