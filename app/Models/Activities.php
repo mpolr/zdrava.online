@@ -178,8 +178,8 @@ class Activities extends Model implements Likeable
         return $fullUrl ? asset(Storage::url($path)) : Storage::url($path);
     }
 
-    public function comments()
+    public function comments(string $orderBy = 'asc'): \Illuminate\Database\Eloquent\Relations\HasMany
     {
-        return $this->hasMany(Comment::class);
+        return $this->hasMany(Comment::class)->orderBy('created_at', $orderBy);
     }
 }

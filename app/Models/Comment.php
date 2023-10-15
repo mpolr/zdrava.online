@@ -19,6 +19,10 @@ class Comment extends Model implements Likeable
         'content',
     ];
 
+    protected $casts = [
+        'created_at'  => 'datetime:d-m-Y H:i',
+    ];
+
     public function activity(): BelongsTo
     {
         return $this->belongsTo(Activities::class);

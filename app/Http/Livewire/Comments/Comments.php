@@ -37,7 +37,7 @@ class Comments extends Component
                     'userId' => $comment->user->id,
                     'author' => $comment->user->getFullName(),
                     'photo' => $comment->user->getPhoto(),
-                    'date' => $comment->created_at->format('Y-m-d H:i:s'),
+                    'date' => $comment->created_at->format('d-m-Y H:i:s'),
                     'text' => $comment->content,
                     'replies' => [],
                 ];
@@ -51,7 +51,7 @@ class Comments extends Component
                     'userId' => $comment->user->id,
                     'author' => $comment->user->getFullName(),
                     'photo' => $comment->user->getPhoto(),
-                    'date' => $comment->created_at->format('Y-m-d H:i:s'),
+                    'date' => $comment->created_at->format('d-m-Y H:i:s'),
                     'text' => $comment->content,
                     'replies' => $comment->replies->map(function ($reply) {
                         return [
@@ -59,7 +59,7 @@ class Comments extends Component
                             'userId' => $reply->user->id,
                             'author' => $reply->user->getFullName(),
                             'photo' => $reply->user->getPhoto(),
-                            'date' => $reply->created_at->format('Y-m-d H:i:s'),
+                            'date' => $reply->created_at->format('d-m-Y H:i:s'),
                             'text' => $reply->content,
                         ];
                     }),
