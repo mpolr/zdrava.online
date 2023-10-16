@@ -7,6 +7,7 @@ use App\Models\AndroidAppCrashes;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Laravel\Sanctum\Sanctum;
 
 class ApiController extends Controller
 {
@@ -38,12 +39,21 @@ class ApiController extends Controller
         $data = $request->all();
         $issueId = $this->calculateIssueId($data['STACK_TRACE'], $data['PACKAGE_NAME']);
 
-        if(AndroidAppCrashes::where('issue_id', $issueId)->exists()){
-            exit();
+        if (AndroidAppCrashes::where('issue_id', $issueId)->exists()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Issue already exists'
+            ]);
+        }
+
+        $userId = null;
+        $authorization = $request->header('authorization');
+        if (!empty($authorization) && auth('sanctum')->check()) {
+            $userId = auth('sanctum')->id();
         }
 
         AndroidAppCrashes::create([
-            'user_id' => auth('sanctum')->id(),
+            'user_id' => $userId,
             'issue_id' => $issueId,
             'report_id' => $data['REPORT_ID'],
             'app_version_code' => $data['APP_VERSION_CODE'],

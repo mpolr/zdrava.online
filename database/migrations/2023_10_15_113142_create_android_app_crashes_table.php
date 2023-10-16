@@ -10,7 +10,7 @@ return new class extends Migration
     {
         Schema::create('android_app_crashes', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('user_id')->nullable();
             $table->string('issue_id', 32);
             $table->text('report_id');
             $table->text('app_version_code');
