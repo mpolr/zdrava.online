@@ -31,7 +31,10 @@ class ApiController extends Controller
             ], 404);
         }
 
-        return response()->json(['athlete' => $athlete]);
+        return response()->json([
+            'success' => true,
+            'athlete' => $athlete
+        ]);
     }
 
     protected function errorReporting(Request $request): JsonResponse

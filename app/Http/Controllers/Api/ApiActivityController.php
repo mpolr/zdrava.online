@@ -30,7 +30,10 @@ class ApiActivityController extends Controller
 
         $comments = $activity->comments()->with('user:id,nickname,photo,first_name,last_name', 'replies.user')->get();
 
-        return response()->json(['comments' => $comments]);
+        return response()->json([
+            'success' => true,
+            'comments' => $comments,
+        ]);
     }
 
     protected function like(int $id): JsonResponse
