@@ -6,7 +6,6 @@
     "license": "MIT",
     "require": {
         "php": "^8.1",
-        "adriangibbons/php-fit-file-analysis": "^3.2",
         "asanikovich/laravel-spatial": "^2.0",
         "codetoad/strava": "dev-master",
         "geocoder-php/nominatim-provider": "^5.7",
@@ -17,6 +16,7 @@
         "laravel/tinker": "^2.8",
         "livewire/livewire": "^2.12",
         "mpolr/fit-file-parser": "^1.0.0",
+        "mpolr/php-fit-file-analysis": "^1.0",
         "sibyx/phpgpx": "1.2.1",
         "spatie/laravel-google-fonts": "^1.2",
         "toin0u/geocoder-laravel": "^4.6",
@@ -85,6 +85,10 @@
         {
             "type": "vcs",
             "url": "https://github.com/mpolr/fit-file-parser.git"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/mpolr/php-fit-file-analysis.git"
         }
     ]
 }

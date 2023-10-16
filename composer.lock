@@ -4,46 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3cede330afa1e71a727a6eaa0935f4b5",
+    "content-hash": "d56d015bb4760460e018ab5d90e20e8f",
     "packages": [
-        {
-            "name": "adriangibbons/php-fit-file-analysis",
-            "version": "v3.2.4",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/adriangibbons/php-fit-file-analysis.git",
-                "reference": "8efd36b1b963f01c42dc5329626519c040dec664"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/adriangibbons/php-fit-file-analysis/zipball/8efd36b1b963f01c42dc5329626519c040dec664",
-                "reference": "8efd36b1b963f01c42dc5329626519c040dec664",
-                "shasum": ""
-            },
-            "require-dev": {
-                "phpunit/phpunit": "4.8.*",
-                "satooshi/php-coveralls": "^2.0",
-                "squizlabs/php_codesniffer": "2.*"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "adriangibbons\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "description": "A PHP class for analysing FIT files created by Garmin GPS devices",
-            "homepage": "https://github.com/adriangibbons/php-fit-file-analysis",
-            "keywords": [
-                "Fit",
-                "garmin"
-            ],
-            "support": {
-                "issues": "https://github.com/adriangibbons/php-fit-file-analysis/issues",
-                "source": "https://github.com/adriangibbons/php-fit-file-analysis/tree/master"
-            },
-            "time": "2019-11-20T06:58:56+00:00"
-        },
         {
             "name": "asanikovich/laravel-spatial",
             "version": "v2.0.1",
@@ -2832,6 +2794,51 @@
                 "source": "https://github.com/mpolr/fit-file-parser/tree/1.0.0"
             },
             "time": "2023-10-10T14:50:44+00:00"
+        },
+        {
+            "name": "mpolr/php-fit-file-analysis",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mpolr/php-fit-file-analysis.git",
+                "reference": "e2255a3e0b89ad2bac4e62c9fc610d340fc5ec48"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mpolr/php-fit-file-analysis/zipball/e2255a3e0b89ad2bac4e62c9fc610d340fc5ec48",
+                "reference": "e2255a3e0b89ad2bac4e62c9fc610d340fc5ec48",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "4.8.*",
+                "satooshi/php-coveralls": "^2.0",
+                "squizlabs/php_codesniffer": "2.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "adriangibbons\\": "src/"
+                }
+            },
+            "description": "A PHP class for analysing FIT files created by Garmin GPS devices",
+            "homepage": "https://github.com/adriangibbons/php-fit-file-analysis",
+            "keywords": [
+                "fit",
+                "garmin"
+            ],
+            "support": {
+                "source": "https://github.com/mpolr/php-fit-file-analysis/tree/1.0.0"
+            },
+            "funding": [
+                {
+                    "type": "github",
+                    "url": "https://github.com/adriangibbons"
+                }
+            ],
+            "time": "2023-10-16T16:35:57+00:00"
         },
         {
             "name": "nesbot/carbon",

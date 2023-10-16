@@ -34,7 +34,7 @@ class ProcessFitFile implements ShouldQueue, ShouldBeUnique
     public function handle(): void
     {
         try {
-            $fit = new phpFITFileAnalysis(Storage::path('temp/' . $this->fileName));
+            $fit = new phpFITFileAnalysis(Storage::path('temp/' . $this->fileName), ['fix_data']);
         } catch (Exception $e) {
             $this->fail($e->getMessage());
         }
@@ -47,8 +47,16 @@ class ProcessFitFile implements ShouldQueue, ShouldBeUnique
         $activity->creator = !empty($fit->data_mesgs['file_id']['manufacturer']) ? $fit->data_mesgs['file_id']['manufacturer'] : 'Zdrava';
         $activity->device_manufacturers_id = $fit->data_mesgs['file_id']['manufacturer'];
         $activity->distance = $fit->data_mesgs['session']['total_distance'];
-        $activity->avg_speed = $fit->data_mesgs['session']['avg_speed'];
-        $activity->max_speed = $fit->data_mesgs['session']['max_speed'];
+        if (isset($fit->data_mesgs['session']['avg_speed'])) {
+            $activity->avg_speed = $fit->data_mesgs['session']['avg_speed'];
+        } elseif (isset($fit->data_mesgs['session']['enhanced_avg_speed'])) {
+            $activity->avg_speed = $fit->data_mesgs['session']['enhanced_avg_speed'];
+        }
+        if (isset($fit->data_mesgs['session']['max_speed'])) {
+            $activity->max_speed = $fit->data_mesgs['session']['max_speed'];
+        } elseif (isset($fit->data_mesgs['session']['enhanced_max_speed'])) {
+            $activity->max_speed = $fit->data_mesgs['session']['enhanced_max_speed'];
+        }
         $activity->elevation_gain = $fit->data_mesgs['session']['total_ascent'];
         $activity->elevation_loss = $fit->data_mesgs['session']['total_descent'];
         $activity->started_at = $fit->data_mesgs['session']['start_time'];

@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Storage;
 use Throwable;
 
 class GpxTools {
-    public static function convertFitToGpx(phpFITFileAnalysis $fit, int $userId, string $filename): void
+    public static function convertFitToGpx(phpFITFileAnalysis $fit, int $userId, string $filename): bool
     {
         $rootNode = new \SimpleXMLElement('<?xml version="1.0" encoding="UTF-8" standalone="no"?>
             <gpx xmlns="http://www.topografix.com/GPX/1/1" version="1.1"></gpx>');
@@ -17,18 +17,21 @@ class GpxTools {
 
         try {
             foreach ($fit->data_mesgs['record']['timestamp'] as $timestamp) {
-                $trkptNode = $trksegNode->addChild('trkpt');
-                $trkptNode->addAttribute('lat', $fit->data_mesgs['record']['position_lat'][$timestamp]);
-                $trkptNode->addAttribute('lon', $fit->data_mesgs['record']['position_long'][$timestamp]);
-                if (!empty($fit->data_mesgs['record']['altitude'][$timestamp])) {
-                    $trkptNode->addChild('ele', $fit->data_mesgs['record']['altitude'][$timestamp]);
+                if (array_key_exists($timestamp, $fit->data_mesgs['record']['position_lat'])) {
+                    $trkptNode = $trksegNode->addChild('trkpt');
+                    $trkptNode->addAttribute('lat', $fit->data_mesgs['record']['position_lat'][$timestamp]);
+                    $trkptNode->addAttribute('lon', $fit->data_mesgs['record']['position_long'][$timestamp]);
+                    if (isset($fit->data_mesgs['record']['altitude'][$timestamp])) {
+                        $trkptNode->addChild('ele', $fit->data_mesgs['record']['altitude'][$timestamp]);
+                    }
+                    $trkptNode->addChild('time', date('Y-m-d\TH:i:s.000\Z', $timestamp));
                 }
-                $trkptNode->addChild('time', date('Y-m-d\TH:i:s.000\Z', $timestamp));
             }
-
-            Storage::write('public/activities/'. $userId .'/'. $filename .'.gpx', $rootNode->asXML());
         } catch (\Exception $e) {
             report($e);
+        } finally {
+            Storage::write('public/activities/'. $userId .'/'. $filename .'.gpx', $rootNode->asXML());
+            return true;
         }
     }
 

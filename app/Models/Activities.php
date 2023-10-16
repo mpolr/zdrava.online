@@ -102,7 +102,7 @@ class Activities extends Model implements Likeable
 
     public function getAverageSpeed(): string
     {
-        return $this->avg_speed ? $this->avg_speed : "-";
+        return $this->avg_speed ? (string)$this->avg_speed : "-";
     }
 
     public function getElevationGain(): string
@@ -112,7 +112,7 @@ class Activities extends Model implements Likeable
 
     public function getMaxSpeed(): string
     {
-        return $this->max_speed ? $this->max_speed : "-";
+        return $this->max_speed ? (string)$this->max_speed : "-";
     }
 
     public function getDuration(): bool|string
