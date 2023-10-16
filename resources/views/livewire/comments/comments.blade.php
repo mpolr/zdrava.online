@@ -6,9 +6,16 @@
             @foreach ($comments as $comment)
                 <div class="flex-col w-full py-4 bg-white border-b-2 border-r-2 border-gray-200 sm:px-4 sm:py-4 md:px-4 sm:rounded-lg sm:shadow-sm">
                     <div class="flex flex-row">
-                        <img class="object-cover w-12 h-12 border-2 border-gray-300 rounded-full"
-                             alt="{{ $comment['author'] }}'s avatar"
-                             src="{{ $comment['photo'] }}">
+                        @if ($comment['photo'])
+                            <img class="object-cover w-12 h-12 border-2 border-gray-300 rounded-full"
+                                 alt="{{ $comment['author'] }}'s avatar" src="{{ $comment['photo'] }}" loading="lazy">
+                        @else
+                            <div class="relative inline-flex items-center justify-center w-12 h-12 mb-3 overflow-hidden bg-gray-300 rounded-full dark:bg-gray-600">
+                                <span class="font-bold text-xl text-gray-600 dark:text-gray-300">
+                                    {{ $comment['userInitials'] }}
+                                </span>
+                            </div>
+                        @endif
                         <div class="flex-col mt-1">
                             <div class="flex items-center flex-1 px-4 font-bold leading-tight">
                                 <a href="{{ route('athlete.profile', $comment['userId']) }}">{{ $comment['author'] }}</a>
@@ -43,9 +50,16 @@
                         <!-- Цикл по массиву ответов -->
                         @foreach ($comment['replies'] as $reply)
                             <div class="flex flex-row">
-                                <img class="object-cover w-8 h-8 border-2 border-gray-300 rounded-full"
-                                     alt="{{ $reply['author'] }}'s avatar"
-                                     src="{{ $reply['photo'] }}">
+                                @if ($comment['photo'])
+                                    <img class="object-cover w-12 h-12 border-2 border-gray-300 rounded-full"
+                                         alt="{{ $reply['author'] }}'s avatar" src="{{ $reply['photo'] }}" loading="lazy">
+                                @else
+                                    <div class="relative inline-flex items-center justify-center w-12 h-12 mb-3 overflow-hidden bg-gray-300 rounded-full dark:bg-gray-600">
+                                        <span class="font-bold text-xl text-gray-600 dark:text-gray-300">
+                                            {{ $reply['userInitials'] }}
+                                        </span>
+                                    </div>
+                                @endif
                                 <div class="flex-col mt-1">
                                     <div class="flex items-center flex-1 px-2 font-medium leading-tight">
                                         <a href="{{ route('athlete.profile', $reply['userId']) }}">{{ $reply['author'] }}</a>

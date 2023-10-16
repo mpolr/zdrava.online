@@ -92,9 +92,9 @@
                                     <img class="h-12 w-12 flex-none rounded-full bg-gray-50" src="{{ $activity->getUser()->getPhoto() }}" alt="{{ $activity->getUser()->getFullName() }}">
                                 @else
                                     <div class="relative inline-flex items-center justify-center w-12 h-12 mb-3 overflow-hidden bg-gray-300 rounded-full dark:bg-gray-600">
-                                <span class="font-bold text-xl text-gray-600 dark:text-gray-300">
-                                    {{ $activity->getUser()->getInitials() }}
-                                </span>
+                                        <span class="font-bold text-xl text-gray-600 dark:text-gray-300">
+                                            {{ $activity->getUser()->getInitials() }}
+                                        </span>
                                     </div>
                                 @endif
                             </a>
