@@ -63,6 +63,9 @@ class ApiFeedController extends Controller
             ];
         }
 
-        return response()->json(['activities' => $feedItems]);
+        return response()->json([
+            'success' => true,
+            'activities' => $feedItems
+        ]);
     }
 }
