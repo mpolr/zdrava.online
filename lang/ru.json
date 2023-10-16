@@ -150,5 +150,8 @@
     "Search for segment by name": "Поиск сегмента по имени",
     "Interface theme": "Тема интерфейса",
     "Bright": "Светлая",
-    "Dark": "Тёмная"
+    "Dark": "Тёмная",
+    "Actions": "Действия",
+    "Android": "Андроид",
+    "Device": "Устройство"
 }

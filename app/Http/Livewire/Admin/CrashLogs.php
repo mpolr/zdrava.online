@@ -3,15 +3,27 @@
 namespace App\Http\Livewire\Admin;
 
 use App\Models\AndroidAppCrashes;
-use Illuminate\Support\Collection;
 use Livewire\Component;
+use Livewire\Redirector;
 
 class CrashLogs extends Component
 {
-    public Collection $reports;
+    public $reports;
+    public ?string $issueId;
 
-    public function mount(): void
+    public function mount(?string $issueId = null): void
     {
-        $this->reports = AndroidAppCrashes::all();
+        if (!empty($issueId)) {
+            $this->issueId = $issueId;
+            $this->reports = AndroidAppCrashes::where('issue_id', $issueId)->firstOrFail();
+        } else {
+            $this->reports = AndroidAppCrashes::all();
+        }
+    }
+
+    public function deleteReport(string $issueId): \Illuminate\Http\RedirectResponse|Redirector
+    {
+        AndroidAppCrashes::where('issue_id', $issueId)->first()->delete();
+        return redirect()->route('admin.crashlogs');
     }
 }
