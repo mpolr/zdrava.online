@@ -18,7 +18,6 @@ class Activities extends Model implements Likeable
         'sub_sport',
         'name',
         'description',
-        'creator',
         'device_manufacturers_id',
         'device_models_id',
         'device_software_version',
