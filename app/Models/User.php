@@ -131,4 +131,15 @@ class User extends Authenticatable
             fn($like) => $like->likeable_type == get_class($likeable) && $like->likeable_id == $likeable->id
         );
     }
+
+    public function isSubscriber(User $user): ?bool
+    {
+        if ($this->id === $user->id) {
+            return true;
+        }
+
+        return Subscription::where('subscriber_id', $this->id)
+            ->where('user_id', $user->id)
+            ->exists();
+    }
 }

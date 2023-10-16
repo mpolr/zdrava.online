@@ -10,8 +10,8 @@ return new class extends Migration
     {
         Schema::create('subscriptions', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('subscriber_id');
+            $table->unsignedBigInteger('user_id');
             $table->boolean('confirmed')->default(false);
             $table->timestamps();
 

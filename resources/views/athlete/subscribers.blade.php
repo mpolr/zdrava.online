@@ -19,7 +19,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @if (!count($user->subscribers))
+                        @if (!count($user->subscribers->where('confirmed', 1)))
                             <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                                 <th scope="row" colspan="9" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                     {!! __('Subscribers not found.') !!}
