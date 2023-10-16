@@ -150,9 +150,24 @@
                                 </div>
                                 <div class="w-full mt-3">
                                     <hr />
-                                    <p class="mb-3 mt-3 font-normal text-gray-700 dark:text-gray-400">
-                                        {{ $activity->getDeviceManufacturer() }}
-                                    </p>
+                                    <div class="mb-3 mt-3 font-normal text-gray-700 dark:text-gray-400">
+                                        <span class="bg-blue-100 text-blue-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300" data-tooltip-target="tooltip-device">
+                                            {{ $activity->getDeviceManufacturer() }}
+                                        </span>
+                                        @if(!empty($activity->device_software_version))
+                                            <span class="bg-gray-100 text-gray-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-300" data-tooltip-target="tooltip-firmware">
+                                                v{{ $activity->device_software_version }}
+                                            </span>
+                                        @endif
+                                        <div id="tooltip-device" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
+                                            {{ __('Device') }}
+                                            <div class="tooltip-arrow" data-popper-arrow></div>
+                                        </div>
+                                        <div id="tooltip-firmware" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
+                                            {{ __('Firmware') }}
+                                            <div class="tooltip-arrow" data-popper-arrow></div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>

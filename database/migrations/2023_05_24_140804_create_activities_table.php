@@ -16,7 +16,9 @@ return new class extends Migration
             $table->text('name')->nullable();
             $table->text('description')->nullable();
             $table->text('creator')->nullable();
-            $table->foreignId('device_manufacturers_id')->nullable()->constrained()->onDelete('cascade');
+            $table->foreignId('device_manufacturers_id')->nullable()->constrained();
+            $table->foreignId('device_models_id')->nullable()->constrained(null, 'model_id');
+            $table->string('device_software_version', 15)->nullable();
             $table->float('distance')->nullable();
             $table->decimal('avg_speed', 4, 1, true)->nullable();
             $table->decimal('max_speed', 4, 1, true)->nullable();

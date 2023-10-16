@@ -20,6 +20,8 @@ class Activities extends Model implements Likeable
         'description',
         'creator',
         'device_manufacturers_id',
+        'device_models_id',
+        'device_software_version',
         'distance',
         'avg_speed',
         'max_speed',
@@ -54,16 +56,26 @@ class Activities extends Model implements Likeable
 
     public function getDeviceManufacturer(): string
     {
+        $result = 'Zdrava android app';
+
         if (!empty($this->device_manufacturers_id)) {
-            return $this->deviceManufacturer->description;
-        } else {
-            return __('Zdrava android app');
+            $result = $this->deviceManufacturer->description;
         }
+        if (!empty($this->device_models_id)) {
+            $result .= ' ' . $this->deviceModel->description;
+        }
+
+        return $result;
     }
 
     public function deviceManufacturer(): \Illuminate\Database\Eloquent\Relations\HasOne
     {
         return $this->hasOne(DeviceManufacturers::class, 'id', 'device_manufacturers_id');
+    }
+
+    public function deviceModel(): \Illuminate\Database\Eloquent\Relations\HasOne
+    {
+        return $this->hasOne(DeviceModel::class, 'model_id', 'device_models_id');
     }
 
     public function getUser(): ?User

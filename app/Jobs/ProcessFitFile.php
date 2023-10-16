@@ -45,7 +45,11 @@ class ProcessFitFile implements ShouldQueue, ShouldBeUnique
         $activity->sub_sport = $fit->data_mesgs['sport']['sub_sport'];
         $activity->name = !empty($fit->data_mesgs['sport']['name']) ? __($fit->data_mesgs['sport']['name']) : __('Workout');
         $activity->creator = !empty($fit->data_mesgs['file_id']['manufacturer']) ? $fit->data_mesgs['file_id']['manufacturer'] : 'Zdrava';
-        $activity->device_manufacturers_id = $fit->data_mesgs['file_id']['manufacturer'];
+        $activity->device_manufacturers_id = $fit->data_mesgs['file_id']['manufacturer'] ?: null;
+        $activity->device_models_id = $fit->data_mesgs['file_id']['product'] ?: null;
+        if (isset($fit->data_mesgs['file_creator']['software_version'])) {
+            $activity->device_software_version = $fit->data_mesgs['file_creator']['software_version'] * 0.01;
+        }
         $activity->distance = $fit->data_mesgs['session']['total_distance'];
         if (isset($fit->data_mesgs['session']['avg_speed'])) {
             $activity->avg_speed = $fit->data_mesgs['session']['avg_speed'];
