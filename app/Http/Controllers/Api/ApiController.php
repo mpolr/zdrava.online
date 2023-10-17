@@ -31,6 +31,8 @@ class ApiController extends Controller
             ], 404);
         }
 
+        $athlete->isSubscribed = $user->isSubscriber($athlete);
+
         return response()->json([
             'success' => true,
             'athlete' => $athlete
