@@ -17,8 +17,6 @@ class UploadController extends Controller
 {
     public function upload(StoreWorkoutRequest $request): JsonResponse
     {
-        $result = false;
-
         try {
             $user = $request->user();
         } catch (\Exception $e) {
@@ -52,10 +50,11 @@ class UploadController extends Controller
                 ], 400);
             }
 
-            $maxSpeed = 0;
+            $maxSpeed = 0.0;
             $maxHearthRate = 0;
             $totalMovingTime = 0;
             $statsTrack = [];
+            $totalDistance = 0.0;
 
             foreach ($gpx->tracks as $track) {
                 $statsTrack[] = $track->stats->toArray();
@@ -80,6 +79,17 @@ class UploadController extends Controller
                             if ($point1->extensions->trackPointExtension->hr > $maxHearthRate) {
                                 $maxHearthRate = $point1->extensions->trackPointExtension->hr;
                             }
+                        } else {
+                            if (!empty($point1->distance)) {
+                                $totalDistance = $point1->distance;
+                            }
+                            $timeDifference = $point2->time->getTimestamp() - $point1->time->getTimestamp();
+                            if ($timeDifference > 0) {
+                                $speed = $point2->difference / $timeDifference;
+                                if ($speed > $maxSpeed) {
+                                    $maxSpeed = $speed;
+                                }
+                            }
                         }
                     }
                 }
@@ -102,7 +112,7 @@ class UploadController extends Controller
             $activity = new Activities();
             $activity->user_id = $user->id;
             $activity->name = !empty($gpx->tracks[0]->name) ? $gpx->tracks[0]->name : __('Workout');
-            $distance = explode('.', $stat['realDistance'])[0];
+            $distance = explode('.', $totalDistance)[0];
             $kilometers = floor($distance / 1000);
             $meters = substr(round($distance % 1000), 0, 2);
             $distance = floatval($kilometers . '.' . $meters);
@@ -110,6 +120,8 @@ class UploadController extends Controller
             $activity->avg_speed = $stat['avgSpeed'];
             if ($maxSpeed === 0) {
                 $maxSpeed = $stat['avgSpeed'] * 3.6;
+            } else {
+                $maxSpeed = $maxSpeed * 3.6;
             }
             $activity->max_speed = $maxSpeed;
             $activity->avg_pace = $stat['avgPace'];
@@ -148,13 +160,15 @@ class UploadController extends Controller
                 Storage::path('temp/' . $hashedFileName),
                 Storage::path('public/activities/'. $user->id .'/'. $hashedFileName)
             );
-        }
 
-        if (!$result) {
-            return response()->json([
-                'success' => false,
-                'message' => __('Upload error')
-            ], 400);
+            if (!$result) {
+                return response()->json([
+                    'success' => false,
+                    'message' => __('Upload error')
+                ], 400);
+            }
+
+            $activity->save();
         }
 
         return response()->json([
