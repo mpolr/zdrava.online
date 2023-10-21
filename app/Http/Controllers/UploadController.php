@@ -24,7 +24,7 @@ class UploadController extends Controller
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
-                'message' => 'User not found'
+                'message' => __('User not found')
             ], 401);
         }
 
@@ -48,7 +48,7 @@ class UploadController extends Controller
             } catch (Exception $e) {
                 return response()->json([
                     'success' => false,
-                    'message' => 'Upload error'
+                    'message' => __('Parsing error')
                 ], 400);
             }
 
@@ -153,13 +153,13 @@ class UploadController extends Controller
         if (!$result) {
             return response()->json([
                 'success' => false,
-                'message' => 'Upload error'
+                'message' => __('Upload error')
             ], 400);
         }
 
         return response()->json([
             'success' => true,
-            'message' => 'Upload success'
+            'message' => __('Upload success')
         ]);
     }
 
@@ -173,7 +173,7 @@ class UploadController extends Controller
             if ($formApp) {
                 return response()->json([
                     'success' => false,
-                    'message' => 'User not found'
+                    'message' => __('User not found')
                 ], 401);
             } else {
                 abort(401);
