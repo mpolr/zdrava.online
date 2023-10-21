@@ -17,7 +17,7 @@ class ApiFeedController extends Controller
         if (empty($user)) {
             return response()->json([
                 'success' => false,
-                'message' => 'User not found'
+                'message' => __('User not found')
             ], 401);
         }
 
@@ -31,7 +31,7 @@ class ApiFeedController extends Controller
         if (empty($activities)) {
             return response()->json([
                 'success' => false,
-                'message' => 'No activities found'
+                'message' => __('No activities found')
             ]);
         }
 

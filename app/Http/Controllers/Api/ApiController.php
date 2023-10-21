@@ -11,34 +11,6 @@ use Laravel\Sanctum\Sanctum;
 
 class ApiController extends Controller
 {
-    protected function athlete(int $id): JsonResponse
-    {
-        $user = auth('sanctum')->user();
-
-        if (empty($user)) {
-            return response()->json([
-                'success' => false,
-                'message' => 'User not found'
-            ], 401);
-        }
-
-        $athlete = User::findOrFail($id, ['id', 'nickname', 'photo', 'first_name', 'last_name', 'created_at']);
-
-        if (empty($athlete)) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Athlete not found'
-            ], 404);
-        }
-
-        $athlete->isSubscribed = $user->isSubscriber($athlete);
-
-        return response()->json([
-            'success' => true,
-            'athlete' => $athlete
-        ]);
-    }
-
     protected function errorReporting(Request $request): JsonResponse
     {
         $data = $request->all();
@@ -47,7 +19,7 @@ class ApiController extends Controller
         if (AndroidAppCrashes::where('issue_id', $issueId)->exists()) {
             return response()->json([
                 'success' => false,
-                'message' => 'Issue already exists'
+                'message' => __('Issue already exists')
             ]);
         }
 

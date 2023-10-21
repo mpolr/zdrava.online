@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\ApiActivityController;
+use App\Http\Controllers\Api\ApiAthleteController;
 use App\Http\Controllers\Api\ApiController;
 use App\Http\Controllers\Api\ApiFeedController;
 use App\Http\Controllers\Auth\LoginController;
@@ -25,9 +26,15 @@ Route::post('/report/crash', [ApiController::class, 'errorReporting']);
 Route::middleware('auth:sanctum')->get('/feed', [ApiFeedController::class, 'feed']);
 Route::middleware('auth:sanctum')->get('/activity/{id}/comments', [ApiActivityController::class, 'activityComments']);
 Route::middleware('auth:sanctum')->post('/upload', [UploadController::class, 'upload']);
-Route::middleware('auth:sanctum')->get('/athlete/{id}', [ApiController::class, 'athlete']);
 
+/* Activity */
 Route::group(['as' => 'api.', 'prefix' => 'activity', 'middleware' => 'auth:sanctum'], function () {
     Route::post('{id}/like', [ApiActivityController::class, 'like'])->name('like');
     Route::delete('{id}/like', [ApiActivityController::class, 'unlike'])->name('unlike');
+});
+/* Athlete */
+Route::group(['as' => 'api.', 'prefix' => 'athlete', 'middleware' => 'auth:sanctum'], function () {
+    Route::get('{id}', [ApiAthleteController::class, 'athlete'])->name('athlete');
+    Route::post('{id}/subscribe', [ApiAthleteController::class, 'subscribe'])->name('subscribe');
+    Route::delete('{id}/subscribe', [ApiAthleteController::class, 'unsubscribe'])->name('unsubscribe');
 });

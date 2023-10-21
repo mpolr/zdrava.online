@@ -15,7 +15,7 @@ class ApiActivityController extends Controller
         if (empty($user)) {
             return response()->json([
                 'success' => false,
-                'message' => 'User not found'
+                'message' => __('User not found')
             ], 401);
         }
 
@@ -24,7 +24,7 @@ class ApiActivityController extends Controller
         if (empty($activity)) {
             return response()->json([
                 'success' => false,
-                'message' => 'Activity not found'
+                'message' => __('Activity not found')
             ], 404);
         }
 
@@ -44,7 +44,7 @@ class ApiActivityController extends Controller
         if (empty($user)) {
             return response()->json([
                 'success' => false,
-                'message' => 'User not found'
+                'message' => __('User not found')
             ], 401);
         }
 
@@ -63,7 +63,7 @@ class ApiActivityController extends Controller
         if (empty($user)) {
             return response()->json([
                 'success' => false,
-                'message' => 'User not found'
+                'message' => __('User not found')
             ], 401);
         }
 
