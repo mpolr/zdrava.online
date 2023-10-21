@@ -17,7 +17,7 @@
         "livewire/livewire": "^2.12",
         "mpolr/fit-file-parser": "^1.0.0",
         "mpolr/php-fit-file-analysis": "^1.0",
-        "sibyx/phpgpx": "1.2.1",
+        "sibyx/phpgpx": "1.3.0",
         "spatie/laravel-google-fonts": "^1.2",
         "toin0u/geocoder-laravel": "^4.6",
         "vladimir-yuldashev/laravel-queue-rabbitmq": "^13.3"
