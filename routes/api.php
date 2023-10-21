@@ -31,6 +31,7 @@ Route::middleware('auth:sanctum')->post('/upload', [UploadController::class, 'up
 Route::group(['as' => 'api.', 'prefix' => 'activity', 'middleware' => 'auth:sanctum'], function () {
     Route::post('{id}/like', [ApiActivityController::class, 'like'])->name('like');
     Route::delete('{id}/like', [ApiActivityController::class, 'unlike'])->name('unlike');
+    Route::post('{id}/comment', [ApiActivityController::class, 'addComment'])->name('addComment');
 });
 /* Athlete */
 Route::group(['as' => 'api.', 'prefix' => 'athlete', 'middleware' => 'auth:sanctum'], function () {

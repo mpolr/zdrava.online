@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Activities;
+use App\Models\Comment;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 
 class ApiActivityController extends Controller
 {
@@ -71,6 +73,29 @@ class ApiActivityController extends Controller
         return response()->json([
             'success' => true,
             'count' => count($activity->likes),
+        ]);
+    }
+
+    protected function addComment(Request $request, int $id): JsonResponse
+    {
+        $activity = Activities::find($id);
+
+        $commentText = $request->get('text');
+        if (empty($commentText)) {
+            return response()->json([
+                'success' => false,
+                'message' => __('Empty comment'),
+            ]);
+        }
+
+        $comment = new Comment();
+        $comment->activities_id = $activity->id;
+        $comment->user_id = auth()->id();
+        $comment->content = $commentText;
+        $comment->save();
+
+        return response()->json([
+            'success' => true,
         ]);
     }
 }
