@@ -36,6 +36,7 @@ class Explore extends Component
 
     public function search(): \Illuminate\Contracts\View\View|\Illuminate\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\Foundation\Application
     {
+        // TODO: Поиск по strava_segment_id
         $this->segments = Segment::where('name', 'LIKE', "%{$this->search}%")
             ->where('activity_type', $this->activityType)
             ->limit($this->limit)
