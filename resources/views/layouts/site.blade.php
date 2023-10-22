@@ -223,5 +223,52 @@
             @endif
         </main>
     </div>
+    <footer class="bg-white dark:bg-gray-900">
+        <div class="mx-auto w-full max-w-screen-xl">
+            <div class="grid grid-cols-2 gap-8 px-4 py-6 lg:py-8 md:grid-cols-4">
+                <div>
+                    <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">{{ __('New items') }}</h2>
+                    <ul class="text-gray-500 dark:text-gray-400 font-medium">
+                        <li class="mb-4">
+                            <a href="{{ route('segments.explore') }}" class=" hover:underline">{{ __('Segments') }}</a>
+                        </li>
+                        <li class="mb-4">
+                            <a href="{{ route('friends.find') }}" class="hover:underline">{{ __('Find friends') }}</a>
+                        </li>
+                    </ul>
+                </div>
+                <div>
+                    <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">{{ __('Download') }}</h2>
+                    <ul class="text-gray-500 dark:text-gray-400 font-medium">
+                        <li class="mb-4">
+                            <a href="{{ route('app') }}" class="hover:underline">Android</a>
+                        </li>
+                    </ul>
+                </div>
+                <div>
+                    <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">{{ __('Links') }}</h2>
+                    <ul class="text-gray-500 dark:text-gray-400 font-medium">
+                        <li class="mb-4">
+                            <a href="https://vk.com/zdrava.online" class="hover:underline" target="_blank">VK</a>
+                        </li>
+                        <li class="mb-4">
+                            <a href="https://t.me/zdrava_online" class="hover:underline" target="_blank">Telegram</a>
+                        </li>
+                    </ul>
+                </div>
+                <div>
+                    <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">{{ __('Legal terms') }}</h2>
+                    <ul class="text-gray-500 dark:text-gray-400 font-medium">
+                        <li class="mb-4">
+                            <a href="{{ route('legal.privacy') }}" class="hover:underline">{{ __('Privacy Policy') }}</a>
+                        </li>
+                        <li class="mb-4">
+                            <a href="#" class="hover:underline">{{ __('Terms &amp; Conditions') }}</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
 </body>
 </html>
