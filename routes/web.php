@@ -93,6 +93,7 @@ Route::group(['prefix' => 'settings', 'middleware' => 'auth'], function () {
 
     Route::get('profile', \App\Http\Livewire\Settings\Profile::class)->name('settings.profile');
     Route::get('account', \App\Http\Livewire\Settings\Account::class)->name('settings.account');
+    Route::get('account/delete', \App\Http\Livewire\Settings\Account\Delete::class)->name('settings.account.delete');
     Route::get('privacy', \App\Http\Livewire\Settings\Privacy::class)->name('settings.privacy');
 });
 

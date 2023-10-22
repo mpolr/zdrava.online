@@ -35,6 +35,11 @@
             <p class="pt-4">
                 <button wire:click="save" type="button" class="px-4 py-2 bg-blue-500 hover:bg-blue-700 text-white font-bold rounded-full">{{ __('Save') }}</button>
             </p>
+            <div class="mt-16">
+                <a href="{{ route('settings.account.delete') }}">
+                    <button type="button" class="px-4 py-2 bg-red-500 hover:bg-red-700 text-white font-bold rounded-full">{{ __('Account deleting') }}</button>
+                </a>
+            </div>
         </div>
     </div>
 </main>
