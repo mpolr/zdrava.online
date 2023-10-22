@@ -191,7 +191,10 @@
                             });
 
                             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                                attribution: '© OpenStreetMap'
+                                attribution: '© OpenStreetMap',
+                                @if(session()->get('theme') == 'dark')
+                                className: 'map-tiles-dark',
+                                @endif
                             }).addTo(map);
 
                             L.Control.Button = L.Control.extend({
@@ -217,7 +220,7 @@
                                 },
                                 onRemove: function(map) {},
                             });
-                            var control = new L.Control.Button()
+                            let control = new L.Control.Button()
                             control.addTo(map);
 
                             let gpx = '{{ $activity->getGPXFile() }}';

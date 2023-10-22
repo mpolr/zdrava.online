@@ -36,7 +36,10 @@
             });
 
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                attribution: '© OpenStreetMap'
+                attribution: '© OpenStreetMap',
+                @if(session()->get('theme') == 'dark')
+                className: 'map-tiles-dark',
+                @endif
             }).addTo(map);
 
             let myFGMarker = new L.FeatureGroup({ chunkedLoading: true });
