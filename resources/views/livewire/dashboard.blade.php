@@ -156,6 +156,7 @@
                                     },
                                     dragging: false,
                                     scrollWheelZoom: false,
+                                    zoomControl: false,
                                 });
 
                                 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {

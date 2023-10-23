@@ -1,4 +1,8 @@
 @section('title', $user->getFullName() . ' | Zdrava')
+@section('js')
+    <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet-src.js" integrity="sha256-V8Wsw6bWrfTsX9YUzIjKtnIoiUhBdulszoxf177/XjU=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-gpx/1.7.0/gpx.min.js" integrity="sha256-zGq7H6kB1pGKYY53eZP3jer9hhjRveG1HcNSeEbnNc4=" crossorigin="anonymous"></script>
+@endsection
 <main class="container mx-auto px-0 pt-12 max-w-screen-2xl">
     @error('profile') @livewire('toast.errors') @enderror
     @if (Session::get('success'))
@@ -103,8 +107,53 @@
                             </div>
                             <div class="p-0">
                                 <a href="{{ route('activities.get', $activity->id) }}">
-                                    <img class="h-auto max-w-full" src="{{ $activity->getImage() }}" alt="" />
+                                    <div id="map_{{ $activity->id }}" class="w-full h-full" style="width: 100%; height: 400px;"></div>
                                 </a>
+                                <script>
+                                    let map_{{ $activity->id }} = [];
+                                    /* ----------------------------- Initialize Map ----------------------------- */
+                                    function initMap() {
+                                        map_{{ $activity->id }} = L.map('map_{{ $activity->id }}', {
+                                            center: {
+                                                lat: {{ $activity->getTrackCenter()['lat'] }},
+                                                lng: {{ $activity->getTrackCenter()['long'] }},
+                                            },
+                                            dragging: false,
+                                            scrollWheelZoom: false,
+                                            zoomControl: false,
+                                        });
+
+                                        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                                            attribution: '© OpenStreetMap',
+                                            @if(session()->get('theme') == 'dark')
+                                            className: 'map-tiles-dark',
+                                            @endif
+                                            reuseTiles: true,
+                                            unloadInvisibleTiles: true
+                                        }).addTo(map_{{ $activity->id }});
+
+                                        let gpx = '{{ $activity->getGPXFile() }}';
+                                        new L.GPX(gpx, {
+                                            async: true,
+                                            marker_options: {
+                                                iconSize: [0, 0],
+                                                iconAnchor: [0, 0],
+                                                startIconUrl: null,
+                                                endIconUrl: null,
+                                                shadowUrl: null
+                                            },
+                                            polyline_options: {
+                                                color: 'red',
+                                                opacity: 0.75,
+                                                weight: 3,
+                                                lineCap: 'round',
+                                            }
+                                        }).on('loaded', function(e) {
+                                            map_{{ $activity->id }}.fitBounds(e.target.getBounds(), { padding: [10, 10] });
+                                        }).addTo(map_{{ $activity->id }});
+                                    }
+                                    initMap();
+                                </script>
                             </div>
                             <div class="p-0">
                                 <div class="flex flex-wrap items-center justify-end gap-4" role="group">
