@@ -263,7 +263,7 @@
                             <a href="{{ route('legal.privacy') }}" class="hover:underline">{{ __('Privacy Policy') }}</a>
                         </li>
                         <li class="mb-4">
-                            <a href="#" class="hover:underline">{{ __('Terms &amp; Conditions') }}</a>
+                            <a href="{{ route('legal.terms') }}" class="hover:underline">{{ __('Terms &amp; Conditions') }}</a>
                         </li>
                     </ul>
                 </div>

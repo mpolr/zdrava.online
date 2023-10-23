@@ -22,9 +22,14 @@ Route::get('/', ['as' => 'index', function () {
     return view('index');
 }]);
 
-Route::get('legal/privacy', function () {
-    return view('legal.privacy');
-})->name('legal.privacy');
+
+
+/* Юридическая информация */
+Route::group(['prefix' => 'legal'], function () {
+    Route::get('privacy', function () { return view('legal.privacy'); })->name('legal.privacy');
+    Route::get('terms', function () { return view('legal.terms'); })->name('legal.terms');
+});
+
 Route::get('download-app', [DownloadAppController::class, 'index'])->name('app');
 Route::get('download-app/download/{version?}', [DownloadAppController::class, 'download'])->name('app.download');
 

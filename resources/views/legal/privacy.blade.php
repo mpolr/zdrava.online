@@ -5,7 +5,7 @@
             <div class="w-full">
                 <div class="block max-w-full p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
                     <h1 class="mb-4 text-xl font-bold leading-none tracking-tight text-gray-900 md:text-2xl lg:text-3xl dark:text-white">
-                        Политика конфиденциальности
+                        Политика конфиденциальности Zdrava
                     </h1>
                     <div class="font-normal text-gray-700 dark:text-gray-400">
                         <h3 class="text-xl font-bold dark:text-white">Политика конфиденциальности Экосистемы Zdrava.online</h3>
