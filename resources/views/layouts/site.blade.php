@@ -55,7 +55,7 @@
                         <svg aria-hidden="true" focusable="false" data-prefix="fas" class="w-5" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M16 132h416c8.837 0 16-7.163 16-16V76c0-8.837-7.163-16-16-16H16C7.163 60 0 67.163 0 76v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16z"></path></svg>
                     </button>
                     <a class="navbar-brand text-blue-600" href="{{ route('index') }}">
-                        <img src="{{ asset('favicon.svg') }}" width="24" height="24" alt="{{ __('Zdrava') }}">
+                        <img src="{{ asset('favicon.svg') }}" class="w-10 h-10" alt="{{ __('Zdrava') }}">
                     </a>
                     <div>
                         <a href="{{ route('index') }}" class="text-xl text-neutral-800 dark:text-neutral-200 ml-3">
