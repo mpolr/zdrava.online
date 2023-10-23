@@ -12,7 +12,7 @@
     <meta property="og:description" content="Социальная сеть для спортсменов">
     <meta property="og:image" content="{{ config('app.url') }}/zdrava.png">
 
-    <link rel="icon" href="{{ URL::asset('favicon.svg') }}">
+    <link rel="icon" href="{{ URL::asset('favicon.svg') }}" sizes="any" type="image/svg+xml">
     <title>@yield('title', 'Zdrava - ' . __('Social network for athletes'))</title>
 
     <!-- Fonts -->
