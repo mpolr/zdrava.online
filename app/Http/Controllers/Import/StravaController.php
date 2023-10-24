@@ -21,7 +21,7 @@ class StravaController extends Controller
     {
         return Strava::authenticate($scope = 'read_all,profile:read_all,activity:read_all', route('strava.token', [
             'uid' => auth()->user()->id,
-            'cs' => md5(auth()->user()->email),
+            'cs' => bcrypt(auth()->user()->email),
         ]));
     }
 
@@ -41,7 +41,7 @@ class StravaController extends Controller
 
         $user = User::where(['id' => $request->uid])->first();
 
-        if (empty($user) || $request->cs !== md5($user->email)) {
+        if (empty($user) || $request->cs !== bcrypt($user->email)) {
             session()->flash('error', 'Ошибка. Получены неверные данные');
             return redirect()->route('site.dashboard');
         }
