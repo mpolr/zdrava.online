@@ -38,7 +38,7 @@
                                         <p class="mt-1 truncate text-xs leading-5 text-gray-500">{{ __('Request sent: :datetime', ['datetime' => Carbon\Carbon::parse($request->created_at)->translatedFormat('D, d M Y H:i')]) }}</p>
                                     </div>
                                 </div>
-                                <div class="hidden sm:flex sm:flex-col sm:items-end">
+                                <div class="sm:flex sm:flex-col sm:items-end">
                                     <div class="inline-flex rounded-md shadow-sm" role="group">
                                         <button wire:click="accept({{ $request->user }})" type="button" class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
                                             {{ __('Accept') }}

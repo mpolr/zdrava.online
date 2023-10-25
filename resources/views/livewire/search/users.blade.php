@@ -57,7 +57,7 @@
                                             </p>
                                         </div>
                                     </div>
-                                    <div class="hidden sm:flex sm:flex-col sm:items-end">
+                                    <div class="sm:flex sm:flex-col sm:items-end">
                                         @if(!in_array($user->id, $subscriptions))
                                             @if (!in_array($user->id, $awaiting))
                                                 @if (!$user->private)
