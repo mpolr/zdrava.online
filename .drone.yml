@@ -6,7 +6,7 @@ services:
   - name: database
     # https://hub.docker.com/_/percona
     pull: if-not-exists
-    image: percona:5.5
+    image: mariadb:11.0
     ports:
       - 3306
     environment:

@@ -9,10 +9,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('device_manufacturers', function (Blueprint $table) {
-            $table->bigInteger('id');
+            $table->bigInteger('id')->unsigned();
             $table->string('manufacturer');
             $table->string('description');
             $table->timestamps();
+
+            $table->primary('id');
         });
     }
 

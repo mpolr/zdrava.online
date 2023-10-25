@@ -10,7 +10,7 @@ return new class extends Migration
     {
         Schema::create('device_models', function (Blueprint $table) {
             $table->foreignId('device_manufacturers_id')->constrained()->onDelete('cascade');
-            $table->bigInteger('model_id');
+            $table->bigInteger('model_id', false, true);
             $table->string('description');
             $table->timestamps();
 
