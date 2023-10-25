@@ -1,5 +1,5 @@
 <div>
-    <div class="container mx-auto mt-0 items-left">
+    <div class="mx-auto mt-0 items-left">
         <!-- Отображение комментариев -->
         <div class="space-y-4">
             <!-- Цикл по массиву комментариев -->

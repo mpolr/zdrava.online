@@ -5,31 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="description" content="Социальная сеть для спортсменов. Бег, велоспорт, сап борд и многое другое. Загружай тренировки, общайся, заводи новых друзей." />
-    <!-- Open gpaph -->
+    {{-- Open gpaph --}}
     <meta property="og:url" content="{{ config('app.url') }}">
     <meta property="og:type" content="website">
     <meta property="og:title" content="@yield('title', 'Zdrava - ' . __('Social network for athletes'))">
     <meta property="og:description" content="Социальная сеть для спортсменов">
     <meta property="og:image" content="{{ config('app.url') }}/zdrava.png">
-
     <link rel="icon" href="{{ URL::asset('favicon.svg') }}" sizes="any" type="image/svg+xml">
     <title>@yield('title', 'Zdrava - ' . __('Social network for athletes'))</title>
-
-    <!-- Fonts -->
+    {{-- Fonts --}}
     @googlefonts('ubuntu')
-
-    <!-- Styles -->
+    {{-- Styles --}}
     @vite('resources/css/app.css')
     @livewireStyles
-
-    <!-- Scripts -->
+    {{-- Scripts --}}
     @vite('resources/js/app.js')
     @livewireScripts
     @yield('js')
-    <!-- Matomo -->
+    {{-- Matomo --}}
     <script>
         var _paq = window._paq = window._paq || [];
-        /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
         @if(!empty(auth()->id()))
         _paq.push(['setUserId', '{{ auth()->user()->getFullName() }} (ID: {{ auth()->id() }})']);
         @endif
@@ -43,7 +38,7 @@
             g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
         })();
     </script>
-    <!-- End Matomo Code -->
+    {{-- End Matomo Code --}}
 </head>
 <body class="dark:bg-gray-900">
     <section>

@@ -7,9 +7,9 @@
 @endsection
 
 @section('content')
-    <main class="container mx-auto px-0 py-12">
-        <div class="flex">
-            <div class="w-1/4 px-4">
+    <div class="container mx-auto px-0 py-12">
+        <div class="w-full">
+            <div class="xs:px-1 md:px-2 mt-4 w-full md:w-1/2 lg:w-1/4">
                 <!-- Боковое меню -->
                 <div class="max-w-xs flex flex-col rounded-md shadow-sm">
                     <a href="#" type="button" class="py-3 px-4 inline-flex justify-left items-center gap-2 rounded-t-md border font-medium bg-white text-gray-700 align-middle hover:bg-gray-50 focus:z-10 focus:outline-none focus:ring-2 focus:ring-blue-600 transition-all text-sm dark:bg-gray-800 dark:hover:bg-slate-800 dark:border-gray-700 dark:text-gray-400">
@@ -53,7 +53,7 @@
                     </div>
                 </div>
             </div>
-            <div class="w-3/4">
+            <div class="xs:px-1 md:px-2 mt-4 w-full">
                 @error('search') @livewire('toast.errors') @enderror
                 @if (Session::get('success'))
                     @livewire('toast.success')
@@ -82,8 +82,8 @@
                                 </p>
                             </div>
                             <div class="flex flex-col justify-between p-4 leading-normal w-1/2">
-                                <div class="flex">
-                                    <div class="flex-1 mx-2 h-12">
+                                <div class="flex flex-wrap">
+                                    <div class="flex-1 mx-2 my-4 h-10">
                                         <h5 class="mb-0 text-lg font-normal tracking-tight text-gray-700 dark:text-white">
                                             {{ __(':distance km', ['distance' => $activity->getDistance()]) }}
                                         </h5>
@@ -91,7 +91,7 @@
                                             {{ __('Distance') }}
                                         </span>
                                     </div>
-                                    <div class="flex-1 mx-2 h-10">
+                                    <div class="flex-1 mx-2 my-4 h-10">
                                         <h5 class="mb-0 text-lg font-normal tracking-tight text-gray-700 dark:text-white">
                                             {{ $activity->getDuration() }}
                                         </h5>
@@ -99,7 +99,7 @@
                                             {{ __('Duration') }}
                                         </span>
                                     </div>
-                                    <div class="flex-1 mx-2 h-10">
+                                    <div class="flex-1 mx-2 my-4 h-10">
                                         <h5 class="mb-0 text-lg font-normal tracking-tight text-gray-700 dark:text-white">
                                             {{ $activity->getDurationTotal() }}
                                         </h5>
@@ -107,8 +107,8 @@
                                             {{ __('Duration total') }}
                                         </span>
                                     </div>
-                                    <div class="flex-1 mx-2 h-10">
-                                        <h5 class="mb-0 text-lg font-normal tracking-tight text-gray-700 dark:text-white">
+                                    <div class="flex-1 mx-2 my-4 h-10">
+                                        <h5 class="mb-0 text-lg font-normal tracking-tight text-gray-700 dark:text-white whitespace-nowrap">
                                             {{ __(':elevation m', ['elevation' => $activity->elevation_gain]) }}
                                         </h5>
                                         <span class="text-gray-500 whitespace-nowrap text-xs dark:text-gray-400">
@@ -116,8 +116,8 @@
                                         </span>
                                     </div>
                                 </div>
-                                <div class="flex my-4">
-                                    <div class="flex-1 mx-2 h-10">
+                                <div class="flex flex-wrap my-4">
+                                    <div class="flex-1 mx-2 my-4 h-10">
                                         <h5 class="mb-0 text-lg font-normal tracking-tight text-gray-700 dark:text-white">
                                             {{ __(':speed km/h', ['speed' => $activity->getAverageSpeed()]) }}
                                         </h5>
@@ -125,7 +125,7 @@
                                             {{ __('Avg. speed') }}
                                         </span>
                                     </div>
-                                    <div class="flex-1 mx-2 h-10">
+                                    <div class="flex-1 mx-2 my-4 h-10">
                                         <h5 class="mb-0 text-lg font-normal tracking-tight text-gray-700 dark:text-white">
                                             {{ __(':speed km/h', ['speed' => $activity->getMaxSpeed()]) }}
                                         </h5>
@@ -133,7 +133,7 @@
                                             {{ __('Max. speed') }}
                                         </span>
                                     </div>
-                                    <div class="flex-1 mx-2 h-10">
+                                    <div class="flex-1 mx-2 my-4 h-10">
                                         <h5 class="mb-0 text-lg font-normal tracking-tight text-gray-700 dark:text-white">
                                             {{ $activity->avg_heart_rate }}
                                         </h5>
@@ -141,7 +141,7 @@
                                             {{ __('Avg. HR') }}
                                         </span>
                                     </div>
-                                    <div class="flex-1 mx-2 h-10">
+                                    <div class="flex-1 mx-2 my-4 h-10">
                                         <h5 class="mb-0 text-lg font-normal tracking-tight text-gray-700 dark:text-white">
                                             {{ $activity->avg_cadence }}
                                         </h5>
@@ -249,5 +249,5 @@
                 @livewire('comments.comments', ['activityId' => $activity->id])
             </div>
         </div>
-    </main>
+    </div>
 @endsection
