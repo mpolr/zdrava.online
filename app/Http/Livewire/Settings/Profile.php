@@ -13,6 +13,7 @@ class Profile extends Component
 
     public User $user;
     public $photo;
+    public $filePhoto;
 
     protected array $rules = [
         'user.nickname' => 'string|max:20',
@@ -41,6 +42,8 @@ class Profile extends Component
             }
 
             $this->user->photo = $fileName;
+
+            $this->emit('fileUploaded', $this->user->getPhoto());
         }
 
         session()->flash('success', __('Profile successfully updated'));
