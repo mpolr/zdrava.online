@@ -15,6 +15,7 @@ return new class extends Migration
             $table->integer('sub_sport')->default(7);
             $table->text('name')->nullable();
             $table->text('description')->nullable();
+            $table->text('creator')->nullable();
             $table->foreignId('device_manufacturers_id')->nullable()->constrained();
             $table->bigInteger('device_models_id')->unsigned()->nullable();
             $table->foreign('device_models_id')->references('model_id')->on('device_models');

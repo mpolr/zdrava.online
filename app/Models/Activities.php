@@ -18,6 +18,7 @@ class Activities extends Model implements Likeable
         'sub_sport',
         'name',
         'description',
+        'creator',
         'device_manufacturers_id',
         'device_models_id',
         'device_software_version',
@@ -57,6 +58,9 @@ class Activities extends Model implements Likeable
     {
         $result = 'Zdrava android app';
 
+        if (!empty($this->creator) && empty($this->device_manufacturers_id) && empty($this->device_models_id)) {
+            $result = $this->creator;
+        }
         if (!empty($this->device_manufacturers_id)) {
             $result = $this->deviceManufacturer->description;
         }
