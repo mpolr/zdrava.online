@@ -69,7 +69,7 @@ class UploadController extends Controller
                         // Проверяем, двигается ли точка
                         if (!empty($point1->extensions->trackPointExtension)) {
                             if ($point1->extensions->trackPointExtension->speed > 0) {
-                                $movingTime = $point2->time - $point1->time;
+                                $movingTime = $point2->time->getTimestamp() - $point1->time->getTimestamp();
                                 $totalMovingTime += $movingTime;
                                 if ($point1->extensions->trackPointExtension->speed > $maxSpeed) {
                                     $maxSpeed = $point1->extensions->trackPointExtension->speed;

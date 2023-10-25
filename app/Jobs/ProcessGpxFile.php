@@ -41,10 +41,11 @@ class ProcessGpxFile implements ShouldQueue
             $this->fail($e->getMessage());
         }
 
-        $maxSpeed = 0;
+        $maxSpeed = 0.0;
         $maxHearthRate = 0;
         $totalMovingTime = 0;
         $statsTrack = [];
+        $totalDistance = 0.0;
 
         foreach ($gpx->tracks as $track) {
             $statsTrack[] = $track->stats->toArray();
@@ -59,7 +60,7 @@ class ProcessGpxFile implements ShouldQueue
                     // Проверяем, двигается ли точка
                     if (!empty($point1->extensions->trackPointExtension)) {
                         if ($point1->extensions->trackPointExtension->speed > 0) {
-                            $movingTime = $point2->time - $point1->time;
+                            $movingTime = $point2->time->getTimestamp() - $point1->time->getTimestamp();
                             $totalMovingTime += $movingTime;
                             if ($point1->extensions->trackPointExtension->speed > $maxSpeed) {
                                 $maxSpeed = $point1->extensions->trackPointExtension->speed;
@@ -68,6 +69,17 @@ class ProcessGpxFile implements ShouldQueue
 
                         if ($point1->extensions->trackPointExtension->hr > $maxHearthRate) {
                             $maxHearthRate = $point1->extensions->trackPointExtension->hr;
+                        }
+                    } else {
+                        if (!empty($point1->distance)) {
+                            $totalDistance = $point1->distance;
+                        }
+                        $timeDifference = $point2->time->getTimestamp() - $point1->time->getTimestamp();
+                        if ($timeDifference > 0) {
+                            $speed = $point2->difference / $timeDifference;
+                            if ($speed > $maxSpeed) {
+                                $maxSpeed = $speed;
+                            }
                         }
                     }
                 }
@@ -91,19 +103,17 @@ class ProcessGpxFile implements ShouldQueue
         $activity = new Activities();
         $activity->user_id = $this->userId;
         $activity->name = !empty($gpx->tracks[0]->name) ? $gpx->tracks[0]->name : __('Workout');
-
-        $distance = explode('.', $stat['realDistance'])[0];
+        $distance = explode('.', $totalDistance)[0];
         $kilometers = floor($distance / 1000);
         $meters = substr(round($distance % 1000), 0, 2);
-        $distance = $kilometers . '.' . $meters;
-
+        $distance = floatval($kilometers . '.' . $meters);
         $activity->distance = $distance;
         $activity->avg_speed = $stat['avgSpeed'];
-
         if ($maxSpeed === 0) {
             $maxSpeed = $stat['avgSpeed'] * 3.6;
+        } else {
+            $maxSpeed = $maxSpeed * 3.6;
         }
-
         $activity->max_speed = $maxSpeed;
         $activity->avg_pace = $stat['avgPace'];
         $activity->min_altitude = $stat['minAltitude'];
