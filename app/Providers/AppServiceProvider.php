@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Event;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
 
@@ -21,6 +22,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        // Fix DB error 'Syntax error or access violation'
+        // https://stackoverflow.com/questions/42244541/laravel-migration-error-syntax-error-or-access-violation-1071-specified-key-wa/49935285
+        Schema::defaultStringLength(191);
         Event::listen(
             \Illuminate\Auth\Events\Authenticated::class,
             function () {
