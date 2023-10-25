@@ -1,0 +1,68 @@
+kind: pipeline
+type: docker
+name: default
+
+services:
+  - name: database
+    # https://hub.docker.com/_/percona
+    pull: if-not-exists
+    image: percona:5.5
+    ports:
+      - 3306
+    environment:
+      TZ: Europe/Moscow
+      MYSQL_DATABASE: homestead
+      MYSQL_USER: homestead
+      MYSQL_PASSWORD: homestead
+      MYSQL_ROOT_PASSWORD: root
+
+  - name: docker
+    pull: if-not-exists
+    image: docker:dind
+    privileged: true
+    volumes:
+      - name: dockersock
+        path: /var/run
+
+clone:
+  git:
+    image: plugins/git:latest
+    recursive: false
+
+steps:
+  - name: frontend
+    pull: if-not-exists
+    image: node
+    commands:
+      - node -v
+      - npm -v
+      - yarn --version
+      - yarn config set cache-folder .yarn-cache
+      - yarn install
+      - yarn run build
+
+  - name: backend
+    pull: if-not-exists
+    # https://hub.docker.com/r/laradock/workspace/
+    image: laradock/workspace:master-8.2
+    commands:
+      - php -v
+      - composer --version
+      - mkdir ./bootstrap/cache
+      - chmod +w ./bootstrap/cache
+      - composer install --prefer-dist --no-ansi --no-interaction --no-progress --ignore-platform-reqs
+      - cp .env.testing .env
+      - php artisan key:generate
+      - cp .env .env.testing
+      - php artisan migrate
+      - nohup php artisan serve --host 0.0.0.0 --port 80 &
+      - ./vendor/bin/phpunit --configuration phpunit.xml
+
+  - name: code-sniffer
+    image: cytopia/phpcs
+    pull: always
+    commands:
+      - phpcs --version
+      - phpcs --standard=phpcs.xml --runtime-set ignore_warnings_on_exit 1
+    when:
+      event: push
