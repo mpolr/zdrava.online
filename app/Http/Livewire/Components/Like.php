@@ -3,7 +3,6 @@
 namespace App\Http\Livewire\Components;
 
 use App\Contracts\Likeable;
-use App\Models\User;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Model;
 use Livewire\Component;
@@ -11,7 +10,7 @@ use Livewire\Component;
 class Like extends Component
 {
     public Model $model;
-    public Model $likeable;
+    public Likeable $likeable;
     protected $listeners = ['refreshComponent' => '$refresh'];
 
     public function mount(Model $model): void
@@ -27,13 +26,13 @@ class Like extends Component
 
     public function like(int $id): void
     {
-        session()->user()->like($this->likeable);
+        auth()->user()->like($this->likeable);
         $this->emit('refreshComponent');
     }
 
     public function unlike(int $id): void
     {
-        session()->user()->unlike($this->likeable);
+        auth()->user()->unlike($this->likeable);
         $this->emit('refreshComponent');
     }
 }
