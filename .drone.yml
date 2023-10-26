@@ -55,7 +55,6 @@ steps:
       - cp .env .env.testing
       - php artisan migrate
       - nohup php artisan serve --host 0.0.0.0 --port 80 &
-      - ./vendor/bin/phpunit --configuration phpunit.xml
 
   - name: code-sniffer
     image: cytopia/phpcs
@@ -71,5 +70,13 @@ steps:
     commands:
       - ./vendor/bin/rector --version
       - ./vendor/bin/rector process --dry-run --no-progress-bar
+    when:
+      event: push
+
+  - name: phpunit
+    image: laradock/workspace:master-8.2
+    commands:
+      - ./vendor/bin/phpunit --version
+      - ./vendor/bin/phpunit --configuration phpunit.xml
     when:
       event: push
