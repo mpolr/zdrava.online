@@ -48,7 +48,6 @@ steps:
     commands:
       - php -v
       - composer --version
-      - mkdir ./bootstrap/cache
       - chmod +w ./bootstrap/cache
       - composer install --prefer-dist --no-ansi --no-interaction --no-progress --ignore-platform-reqs
       - cp .env.testing .env
@@ -64,5 +63,13 @@ steps:
     commands:
       - phpcs --version
       - phpcs --standard=phpcs.xml --runtime-set ignore_warnings_on_exit 1
+    when:
+      event: push
+
+  - name: rector
+    image: laradock/workspace:master-8.2
+    commands:
+      - ./vendor/bin/rector --version
+      - ./vendor/bin/rector process --dry-run --no-progress-bar
     when:
       event: push

@@ -21,7 +21,6 @@ yarn-error.log
 /storage/app/public
 *.log
 _ide_helper.php
-bootstrap/cache/
 .phpstorm.meta.php
 storage/app/temp/
 storage/app/livewire-tmp/

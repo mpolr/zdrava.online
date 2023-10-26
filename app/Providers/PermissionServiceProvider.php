@@ -13,7 +13,7 @@ class PermissionServiceProvider extends ServiceProvider
         //
     }
 
-    public function boot(): void
+    public function boot(): bool
     {
         try {
             Permission::get()->map(function ($permission) {
@@ -24,5 +24,6 @@ class PermissionServiceProvider extends ServiceProvider
         } catch (\Exception $e) {
             report($e);
         }
+        return false;
     }
 }

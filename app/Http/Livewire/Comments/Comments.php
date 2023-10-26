@@ -44,8 +44,8 @@ class Comments extends Component
                         'date' => $comment->created_at->format('d-m-Y H:i:s'),
                         'text' => $comment->content,
                         'replies' => [],
-                ];
-            });
+                    ];
+                });
         } else {
             $commentsArray = $activity->comments()
                 ->where('parent_id', null)
@@ -72,7 +72,7 @@ class Comments extends Component
                             ];
                         }),
                     ];
-            });
+                });
         }
 
         return view('livewire.comments.comments', ['comments' => $commentsArray]);
