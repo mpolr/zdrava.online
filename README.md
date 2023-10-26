@@ -1,4 +1,5 @@
 ## Zdrava.online readme
+[![Build Status](https://ci.mpolr.ru/api/badges/mpolr/zdrava.online/status.svg)](https://ci.mpolr.ru/mpolr/zdrava.online)
 
 Шаги которые нужно выполнить после разворачивания проекта:
 
