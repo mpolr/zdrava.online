@@ -55,7 +55,6 @@ class Polyline
      * 2) Float point arithmetic IS NOT real number arithmetic. PHP's internal
      *    float precision may contribute to undesired rounding.
      *
-     * @var int $precision
      */
     protected static int $precision = 5;
 

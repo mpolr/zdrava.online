@@ -20,6 +20,7 @@ use Rector\TypeDeclaration\Rector\ClassMethod\ReturnTypeFromStrictNativeCallRect
 use Rector\TypeDeclaration\Rector\ClassMethod\ReturnTypeFromStrictNewArrayRector;
 use Rector\TypeDeclaration\Rector\ClassMethod\ReturnTypeFromStrictParamRector;
 use Rector\TypeDeclaration\Rector\ClassMethod\ReturnTypeFromStrictScalarReturnExprRector;
+use Rector\TypeDeclaration\Rector\ClassMethod\ReturnTypeFromStrictTypedCallRector;
 use Rector\TypeDeclaration\Rector\ClassMethod\ReturnTypeFromStrictTypedPropertyRector;
 use RectorLaravel\Set\LaravelSetList;
 
@@ -28,6 +29,7 @@ return static function (RectorConfig $rectorConfig): void {
         __DIR__ . '/app',
         __DIR__ . '/database',
         __DIR__ . '/routes',
+        __DIR__ . '/tests',
     ]);
 
     $rectorConfig->cacheClass(FileCacheStorage::class);
@@ -53,8 +55,7 @@ return static function (RectorConfig $rectorConfig): void {
     $rectorConfig->rule(ReturnTypeFromStrictParamRector::class);
     $rectorConfig->rule(ReturnTypeFromStrictScalarReturnExprRector::class);
     $rectorConfig->rule(ReturnTypeFromStrictTernaryRector::class);
-    // FIXME Правило применено частично и выключено из-за странных типов возвращаемых Eloquent
-    //$rectorConfig->rule(ReturnTypeFromStrictTypedCallRector::class);
+    $rectorConfig->rule(ReturnTypeFromStrictTypedCallRector::class);
     $rectorConfig->rule(ReturnTypeFromStrictTypedPropertyRector::class);
 
     $rectorConfig->parallel();

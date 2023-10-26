@@ -30,43 +30,48 @@ class Comments extends Component
         $activity = Activities::findOrFail($this->activityId);
 
         if ($this->onlyLast) {
-            $comments = $activity->comments()->where('parent_id', null)->latest()->get();
-            $commentsArray = $comments->map(function ($comment) {
-                return [
-                    'id' => $comment->id,
-                    'userId' => $comment->user->id,
-                    'userInitials' => $comment->user->getInitials(),
-                    'author' => $comment->user->getFullName(),
-                    'photo' => $comment->user->getPhoto(),
-                    'date' => $comment->created_at->format('d-m-Y H:i:s'),
-                    'text' => $comment->content,
-                    'replies' => [],
+            $commentsArray = $activity->comments()
+                ->where('parent_id', null)
+                ->latest()
+                ->get()
+                ->map(function ($comment): array {
+                    return [
+                        'id' => $comment->id,
+                        'userId' => $comment->user->id,
+                        'userInitials' => $comment->user->getInitials(),
+                        'author' => $comment->user->getFullName(),
+                        'photo' => $comment->user->getPhoto(),
+                        'date' => $comment->created_at->format('d-m-Y H:i:s'),
+                        'text' => $comment->content,
+                        'replies' => [],
                 ];
             });
         } else {
-            $comments = $activity->comments()->where('parent_id', null)->with('user', 'replies.user')->get();
-            // Transform the comments and replies into an array for passing to the view
-            $commentsArray = $comments->map(function ($comment) {
-                return [
-                    'id' => $comment->id,
-                    'userId' => $comment->user->id,
-                    'userInitials' => $comment->user->getInitials(),
-                    'author' => $comment->user->getFullName(),
-                    'photo' => $comment->user->getPhoto(),
-                    'date' => $comment->created_at->format('d-m-Y H:i:s'),
-                    'text' => $comment->content,
-                    'replies' => $comment->replies->map(function ($reply) {
-                        return [
-                            'id' => $reply->id,
-                            'userId' => $reply->user->id,
-                            'userInitials' => $reply->user->getInitials(),
-                            'author' => $reply->user->getFullName(),
-                            'photo' => $reply->user->getPhoto(),
-                            'date' => $reply->created_at->format('d-m-Y H:i:s'),
-                            'text' => $reply->content,
-                        ];
-                    }),
-                ];
+            $commentsArray = $activity->comments()
+                ->where('parent_id', null)
+                ->with('user', 'replies.user')
+                ->get()
+                ->map(function ($comment): array {
+                    return [
+                        'id' => $comment->id,
+                        'userId' => $comment->user->id,
+                        'userInitials' => $comment->user->getInitials(),
+                        'author' => $comment->user->getFullName(),
+                        'photo' => $comment->user->getPhoto(),
+                        'date' => $comment->created_at->format('d-m-Y H:i:s'),
+                        'text' => $comment->content,
+                        'replies' => $comment->replies->map(function ($reply): array {
+                            return [
+                                'id' => $reply->id,
+                                'userId' => $reply->user->id,
+                                'userInitials' => $reply->user->getInitials(),
+                                'author' => $reply->user->getFullName(),
+                                'photo' => $reply->user->getPhoto(),
+                                'date' => $reply->created_at->format('d-m-Y H:i:s'),
+                                'text' => $reply->content,
+                            ];
+                        }),
+                    ];
             });
         }
 
