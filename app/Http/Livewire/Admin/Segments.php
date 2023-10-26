@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Admin;
 
 use App\Models\Segment;
+use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Livewire\Component;
@@ -28,7 +29,7 @@ class Segments extends Component
         $this->activityType = $type;
     }
 
-    public function search(): \Illuminate\Contracts\View\View|\Illuminate\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\Foundation\Application
+    public function search(): View|\Illuminate\View\View
     {
         $this->segments = Segment::where('name', 'LIKE', "%{$this->search}%")
             ->where('activity_type', $this->activityType)
@@ -40,7 +41,7 @@ class Segments extends Component
         ]);
     }
 
-    public function render(): \Illuminate\Contracts\View\View|\Illuminate\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\Foundation\Application
+    public function render(): View|\Illuminate\View\View
     {
         $this->segments = Segment::where('name', 'LIKE', "%{$this->search}%")
             ->where('activity_type', $this->activityType)

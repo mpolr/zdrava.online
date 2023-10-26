@@ -12,45 +12,58 @@
             @endif
             <div>
                 <div>
-                    <ul role="list" class="divide-y divide-gray-200">
-                        @foreach($requests as $request)
-                            <li class="flex justify-between gap-x-6 py-5">
-                                <div class="flex gap-x-4">
-                                    @if($request->user->getPhoto())
-                                        <a href="{{ route('athlete.profile', $request->user->id) }}">
-                                            <img class="h-12 w-12 flex-none rounded-full bg-gray-50" src="{{ $request->user->getPhoto() }}" alt="">
-                                        </a>
-                                    @else
-                                        <a href="{{ route('athlete.profile', $request->user->id) }}">
-                                            <div class="relative inline-flex items-center justify-center w-12 h-12 overflow-hidden bg-gray-300 rounded-full dark:bg-gray-600">
-                                                <span class="font-medium text-gray-600 dark:text-gray-300">
-                                                    {{ $request->user->getInitials() }}
-                                                </span>
-                                            </div>
-                                        </a>
-                                    @endif
-                                    <div class="min-w-0 flex-auto">
-                                        <p class="text-sm font-semibold leading-6 text-gray-900 dark:text-gray-100">
+                    @if(count($requests))
+                        <ul role="list" class="divide-y divide-gray-200">
+                            @foreach($requests as $request)
+                                <li class="flex justify-between gap-x-6 py-5">
+                                    <div class="flex gap-x-4">
+                                        @if($request->user->getPhoto())
                                             <a href="{{ route('athlete.profile', $request->user->id) }}">
-                                                {{ $request->user->getFullName() }}
+                                                <img class="h-12 w-12 flex-none rounded-full bg-gray-50" src="{{ $request->user->getPhoto() }}" alt="">
                                             </a>
-                                        </p>
-                                        <p class="mt-1 truncate text-xs leading-5 text-gray-500">{{ __('Request sent: :datetime', ['datetime' => Carbon\Carbon::parse($request->created_at)->translatedFormat('D, d M Y H:i')]) }}</p>
+                                        @else
+                                            <a href="{{ route('athlete.profile', $request->user->id) }}">
+                                                <div class="relative inline-flex items-center justify-center w-12 h-12 overflow-hidden bg-gray-300 rounded-full dark:bg-gray-600">
+                                                    <span class="font-medium text-gray-600 dark:text-gray-300">
+                                                        {{ $request->user->getInitials() }}
+                                                    </span>
+                                                </div>
+                                            </a>
+                                        @endif
+                                        <div class="min-w-0 flex-auto">
+                                            <p class="text-sm font-semibold leading-6 text-gray-900 dark:text-gray-100">
+                                                <a href="{{ route('athlete.profile', $request->user->id) }}">
+                                                    {{ $request->user->getFullName() }}
+                                                </a>
+                                            </p>
+                                            <p class="mt-1 truncate text-xs leading-5 text-gray-500">{{ __('Request sent: :datetime', ['datetime' => Carbon\Carbon::parse($request->created_at)->translatedFormat('D, d M Y H:i')]) }}</p>
+                                        </div>
+                                    </div>
+                                    <div class="sm:flex sm:flex-col sm:items-end">
+                                        <div class="inline-flex rounded-md shadow-sm" role="group">
+                                            <button wire:click="accept({{ $request->user }})" type="button" class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
+                                                {{ __('Accept') }}
+                                            </button>
+                                            <button wire:click="decline({{ $request->user }})" type="button" class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">
+                                                {{ __('Decline') }}
+                                            </button>
+                                        </div>
+                                    </div>
+                                </li>
+                            @endforeach
+                        </ul>
+                    @else
+                        {{-- Запросов нет :( --}}
+                        <div>
+                            <div class="w-full mb-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+                                <div class="flex flex-col p-4">
+                                    <div class="flex flex-col p-4">
+                                        <span class="text-sm text-gray-500 dark:text-gray-400">{{ __('No new requests') }}</span>
                                     </div>
                                 </div>
-                                <div class="sm:flex sm:flex-col sm:items-end">
-                                    <div class="inline-flex rounded-md shadow-sm" role="group">
-                                        <button wire:click="accept({{ $request->user }})" type="button" class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
-                                            {{ __('Accept') }}
-                                        </button>
-                                        <button wire:click="decline({{ $request->user }})" type="button" class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">
-                                            {{ __('Decline') }}
-                                        </button>
-                                    </div>
-                                </div>
-                            </li>
-                        @endforeach
-                    </ul>
+                            </div>
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>

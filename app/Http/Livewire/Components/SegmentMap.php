@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire\Components;
 
-use App\Models\Segment;
+use Illuminate\View\View;
 use Livewire\Component;
 
 class SegmentMap extends Component
@@ -14,7 +14,7 @@ class SegmentMap extends Component
         $this->segmentsJson = json_encode($segments->toJson());
     }
 
-    public function render(): \Illuminate\Contracts\View\View|\Illuminate\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\Foundation\Application
+    public function render(): \Illuminate\Contracts\View\View|View
     {
         return view('livewire.components.segment-map');
     }

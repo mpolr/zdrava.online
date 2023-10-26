@@ -3,6 +3,8 @@
 namespace App\Http\Livewire\Activity;
 
 use App\Models\Activities;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Redirector;
 use Livewire\Component;
 
@@ -20,12 +22,12 @@ class Edit extends Component
         $this->activity = Activities::find($id);
     }
 
-    public function render(): \Illuminate\Contracts\View\View|\Illuminate\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\Foundation\Application
+    public function render(): View|\Illuminate\View\View
     {
         return view('livewire.activity.edit');
     }
 
-    public function save(): \Illuminate\Http\RedirectResponse|Redirector
+    public function save(): RedirectResponse|Redirector
     {
         session()->flash('success', __('The changes were successfully saved'));
         $this->activity->save();

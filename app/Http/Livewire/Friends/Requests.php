@@ -4,7 +4,9 @@ namespace App\Http\Livewire\Friends;
 
 use App\Models\Subscription;
 use App\Models\User;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\View\View;
 use Livewire\Component;
 use Livewire\Redirector;
 
@@ -15,15 +17,15 @@ class Requests extends Component
     public function __construct()
     {
         parent::__construct();
-        $this->requests = Auth::user()->subscribers()->where('confirmed', 0)->get();
+        $this->requests = Auth::user()->subscribers->where('confirmed', 0)->all();
     }
 
-    public function render(): \Illuminate\Contracts\View\View|\Illuminate\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\Foundation\Application
+    public function render(): \Illuminate\Contracts\View\View|View
     {
         return view('livewire.friends.requests');
     }
 
-    public function accept(User $user): \Illuminate\Http\RedirectResponse|Redirector
+    public function accept(User $user): RedirectResponse|Redirector
     {
         $subscription = Subscription::where('user_id', Auth::user()->id)
             ->where('subscriber_id', $user->id)
@@ -38,7 +40,7 @@ class Requests extends Component
         return redirect()->route('friends.requests');
     }
 
-    public function decline(User $user): \Illuminate\Http\RedirectResponse|Redirector
+    public function decline(User $user): RedirectResponse|Redirector
     {
         $subscription = Subscription::where('user_id', Auth::user()->id)
             ->where('subscriber_id', $user->id)

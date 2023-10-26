@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Settings;
 
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -24,9 +25,11 @@ class Privacy extends Component
 
     public function save(): void
     {
-        auth()->user()->private = $this->private;
+        $user = User::find(auth()->id());
+        $user->private = $this->private;
+
         session()->flash('success', __('Privacy settings successfully updated'));
 
-        auth()->user()->save();
+        $user->save();
     }
 }

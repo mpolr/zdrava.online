@@ -23,7 +23,7 @@ class Users extends Component
         'search' => 'string|min:2|max:64',
     ];
 
-    public function render(): View|Application|Factory|\Illuminate\Contracts\Foundation\Application
+    public function render(): View|\Illuminate\View\View
     {
         if (empty($this->search)) {
             $this->users = User::inRandomOrder()->limit(10)->get();

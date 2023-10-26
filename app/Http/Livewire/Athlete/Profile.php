@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Athlete;
 
 use App\Models\User;
+use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
@@ -21,7 +22,7 @@ class Profile extends Component
         }
     }
 
-    public function render(): \Illuminate\Contracts\View\View|\Illuminate\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\Foundation\Application
+    public function render(): View|\Illuminate\View\View
     {
         return view('livewire.athlete.profile', [
             'user' => $this->user,

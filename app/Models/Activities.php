@@ -102,7 +102,7 @@ class Activities extends Model implements Likeable
         ];
     }
 
-    public function getGPXFile(bool $onlyFileName = false): string
+    public function getGPXFile(bool $onlyFileName = false): ?string
     {
         $gpxFile = $this->file;
         if (strpos($this->file, '.fit')) {

@@ -2,8 +2,6 @@
 
 namespace App\Http\Livewire\Settings\Account;
 
-use App\Models\Activities;
-use Carbon\Carbon;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
@@ -18,10 +16,10 @@ class Delete extends Component
         return view('livewire.settings.account.delete');
     }
 
-    public function delete(): Redirector|\Illuminate\Http\RedirectResponse
+    public function delete(): Redirector|RedirectResponse
     {
         // TODO: Email с запросом удаления
         //auth()->user()->delete();
-        //return redirect()->route('index');
+        return redirect()->route('settings.account');
     }
 }

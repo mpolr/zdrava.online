@@ -3,4 +3,4 @@
 set -e
 set -x
 
-exec ./vendor/bin/psalm --no-cache
+exec ./vendor/bin/psalm --no-cache --threads=8

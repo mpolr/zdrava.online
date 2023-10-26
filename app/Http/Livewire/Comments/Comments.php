@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Comments;
 
+use Illuminate\Contracts\View\View;
 use Livewire\Component;
 use App\Models\Comment;
 use App\Models\Activities;
@@ -24,7 +25,7 @@ class Comments extends Component
         $this->onlyLast = $onlyLast;
     }
 
-    public function render(): \Illuminate\Contracts\View\View|\Illuminate\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\Foundation\Application
+    public function render(): View|\Illuminate\View\View
     {
         $activity = Activities::findOrFail($this->activityId);
 

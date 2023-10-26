@@ -13,7 +13,7 @@ class GpxRecalculate extends Command
 
     public function handle(?int $userId): void
     {
-        if (!empty($user)) {
+        if (!empty($userId)) {
             $users = User::findOrFail($userId);
         } else {
             $users = User::all();

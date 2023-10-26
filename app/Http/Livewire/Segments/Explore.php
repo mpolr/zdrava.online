@@ -4,7 +4,6 @@ namespace App\Http\Livewire\Segments;
 
 use App\Classes\GpxTools;
 use App\Classes\Polyline;
-use App\Http\Livewire\Components\SegmentMap;
 use App\Models\Segment;
 use Fit\Data;
 use Fit\Exception;
@@ -14,10 +13,9 @@ use Fit\Manufacturer;
 use Fit\SelectionType;
 use Fit\Sport;
 use Fit\Writer;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
-use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\View\View;
 use Livewire\Component;
 use Zend_Io_Exception;
 
@@ -34,7 +32,7 @@ class Explore extends Component
         $this->activityType = $type;
     }
 
-    public function search(): \Illuminate\Contracts\View\View|\Illuminate\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\Foundation\Application
+    public function search(): \Illuminate\Contracts\View\View|View
     {
         // TODO: Поиск по strava_segment_id
         $this->segments = Segment::where('name', 'LIKE', "%{$this->search}%")
@@ -61,7 +59,7 @@ class Explore extends Component
             ->get();
     }
 
-    public function render(): \Illuminate\Contracts\View\View|\Illuminate\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\Foundation\Application
+    public function render(): \Illuminate\Contracts\View\View|View
     {
         $this->segments = Segment::where('name', 'LIKE', "%{$this->search}%")
             ->where('activity_type', $this->activityType)

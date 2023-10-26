@@ -4,6 +4,8 @@ namespace App\Http\Livewire\Admin\Import;
 
 use App\Models\Segment;
 use Database\Seeders\PermissionSeeder;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 use Livewire\Redirector;
@@ -21,12 +23,12 @@ class Strava extends Component
         parent::__construct($id);
     }
 
-    public function render(): \Illuminate\Contracts\View\View|\Illuminate\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\Foundation\Application
+    public function render(): View|\Illuminate\View\View
     {
         return view('livewire.admin.import.strava');
     }
 
-    public function upload(): \Illuminate\Http\RedirectResponse|Redirector
+    public function upload(): RedirectResponse|Redirector
     {
         $stravaIds = [];
 
@@ -77,7 +79,7 @@ class Strava extends Component
         return redirect()->route('admin.import.strava.csv');
     }
 
-    public function processStrava(): \Illuminate\Http\RedirectResponse|Redirector
+    public function processStrava(): RedirectResponse|Redirector
     {
         $segments = Segment::where('strava_segment_id', 'IS NOT', null)
             ->where('country', null)
