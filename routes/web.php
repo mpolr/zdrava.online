@@ -133,7 +133,6 @@ Route::group(['prefix' => 'segments', 'middleware' => 'auth'], function () {
     });
 
     Route::get('explore/{id?}', \App\Http\Livewire\Segments\Explore::class)->name('segments.explore');
-    Route::get('search', \App\Http\Livewire\Segments\Search::class)->name('segments.search');
 });
 
 /* Админка */
