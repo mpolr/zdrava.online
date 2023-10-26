@@ -4,7 +4,7 @@
         <div>
             @include('components.settings-menu')
         </div>
-        <div>
+        <div class="w-full">
             <h2 class="mb-2 mt-0 text-4xl font-medium leading-tight text-black dark:text-gray-100">
                 {{ __('My profile') }}
             </h2>
