@@ -1,0 +1,27 @@
+<?php
+
+namespace Illuminate\Database\Eloquent;
+
+use ArrayAccess;
+use JsonSerializable;
+use Illuminate\Contracts\Support\Jsonable;
+use Illuminate\Contracts\Support\Arrayable;
+use Illuminate\Contracts\Routing\UrlRoutable;
+use Illuminate\Contracts\Queue\QueueableEntity;
+
+abstract class Model implements ArrayAccess, Arrayable, Jsonable, JsonSerializable, QueueableEntity, UrlRoutable
+{
+    /**
+     * @psalm-return \Illuminate\Database\Eloquent\Builder<static>
+     */
+    public static function query() {}
+
+    /**
+     * @param array $attributes
+     * @param array $options
+     * @return bool
+     */
+    public function update(array $attributes = [], array $options = [])
+    {
+    }
+}

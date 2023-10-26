@@ -24,4 +24,13 @@ class PrimaryTest extends TestCase
         $response->assertViewIs('auth.login');
         $response->assertSeeText(__('Remember me'));
     }
+
+    public function testRegisterPageIsOk(): void
+    {
+        $response = $this->get(route('auth.register'));
+
+        $response->assertStatus(200);
+        $response->assertViewIs('auth.register');
+        $response->assertSeeText(__('Subscribe to our newsletter'));
+    }
 }

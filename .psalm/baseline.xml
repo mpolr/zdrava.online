@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<files psalm-version="5.15.0@5c774aca4746caf3d239d9c8cadb9f882ca29352">
+  <file src="app/Http/Livewire/Activity/Show.php">
+    <InvalidArgument>
+      <code><![CDATA[[
+                'name' => $activity->name
+            ]]]></code>
+    </InvalidArgument>
+  </file>
+  <file src="app/Http/Livewire/Comments/Comments.php">
+    <InvalidTemplateParam>
+      <code><![CDATA[$activity->comments()
+                ->where('parent_id', null)
+                ->latest()
+                ->get()
+                ->map(function ($comment): array {
+                    return [
+                        'id' => $comment->id,
+                        'userId' => $comment->user->id,
+                        'userInitials' => $comment->user->getInitials(),
+                        'author' => $comment->user->getFullName(),
+                        'photo' => $comment->user->getPhoto(),
+                        'date' => $comment->created_at->format('d-m-Y H:i:s'),
+                        'text' => $comment->content,
+                        'replies' => [],
+                    ];
+                })]]></code>
+      <code><![CDATA[$activity->comments()
+                ->where('parent_id', null)
+                ->with('user', 'replies.user')
+                ->get()
+                ->map(function ($comment): array {
+                    return [
+                        'id' => $comment->id,
+                        'userId' => $comment->user->id,
+                        'userInitials' => $comment->user->getInitials(),
+                        'author' => $comment->user->getFullName(),
+                        'photo' => $comment->user->getPhoto(),
+                        'date' => $comment->created_at->format('d-m-Y H:i:s'),
+                        'text' => $comment->content,
+                        'replies' => $comment->replies->map(function ($reply): array {
+                            return [
+                                'id' => $reply->id,
+                                'userId' => $reply->user->id,
+                                'userInitials' => $reply->user->getInitials(),
+                                'author' => $reply->user->getFullName(),
+                                'photo' => $reply->user->getPhoto(),
+                                'date' => $reply->created_at->format('d-m-Y H:i:s'),
+                                'text' => $reply->content,
+                            ];
+                        }),
+                    ];
+                })]]></code>
+    </InvalidTemplateParam>
+  </file>
+  <file src="app/Http/Livewire/Components/Like.php">
+    <InvalidPropertyAssignmentValue>
+      <code><![CDATA[$model::find($model->id)]]></code>
+    </InvalidPropertyAssignmentValue>
+  </file>
+  <file src="app/Http/Livewire/Segments/Explore.php">
+    <UndefinedPropertyFetch>
+      <code><![CDATA[$segment->end_latlng->latitude]]></code>
+      <code><![CDATA[$segment->end_latlng->longitude]]></code>
+      <code><![CDATA[$segment->start_latlng->latitude]]></code>
+      <code><![CDATA[$segment->start_latlng->longitude]]></code>
+    </UndefinedPropertyFetch>
+  </file>
+  <file src="app/Providers/PermissionServiceProvider.php">
+    <InvalidTemplateParam>
+      <code><![CDATA[Permission::get()->map(function ($permission) {
+                Gate::define($permission->slug, function ($user) use ($permission) {
+                    return $user->hasPermissionTo($permission);
+                });
+            })]]></code>
+    </InvalidTemplateParam>
+  </file>
+</files>

@@ -1,0 +1,18 @@
+<?php
+// phpcs:ignoreFile
+namespace League\Fractal\Resource;
+
+use League\Fractal\TransformerAbstract;
+
+abstract class ResourceAbstract implements ResourceInterface
+{
+    /**
+     * @param mixed $data
+     * @param TransformerAbstract|callable $transformer
+     * @param string $resourceKey
+     * @return void
+     */
+    public function __construct($data = null, $transformer = null, $resourceKey = null)
+    {
+    }
+}

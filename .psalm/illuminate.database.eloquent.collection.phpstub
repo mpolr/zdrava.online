@@ -1,0 +1,77 @@
+<?php
+// phpcs:ignoreFile
+namespace Illuminate\Database\Eloquent;
+
+use ArrayAccess;
+
+/**
+ * @template TKey as array-key
+ * @template TValue
+ * @template-implements ArrayAccess<TKey,TValue>
+ */
+class Collection implements \ArrayAccess, \Countable
+{
+    /**
+     * @var array<TKey,TValue>
+     */
+    protected $items;
+
+    /**
+     * @param TKey $key
+     * @param $default
+     * @return TValue|$default
+     */
+    public function get($key, $default = null)
+    {
+    }
+
+    /**
+     * @param array<TKey>|TKey $key
+     * @return bool
+     */
+    public function has($key)
+    {
+    }
+
+    /**
+     * @param TKey $groupBy
+     * @param bool $preserveKeys
+     * @return Collection<TKey,Collection<int,TValue>>
+     */
+    public function groupBy($groupBy, $preserveKeys = false)
+    {
+    }
+
+    /**
+     * @param TKey $key
+     * @return Collection<TKey,TValue>
+     */
+    public function keyBy($key)
+    {
+    }
+
+    /**
+     * @param TKey $key
+     * @return TValue
+     */
+    public function offsetGet($key)
+    {
+    }
+
+    /**
+     * @param TKey $key
+     * @param TValue $value
+     * @return void
+     */
+    public function offsetSet($key, $value)
+    {
+    }
+
+    /**
+     * @param TKey $key
+     * @return void
+     */
+    public function offsetUnset($key)
+    {
+    }
+}

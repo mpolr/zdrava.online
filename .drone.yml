@@ -72,6 +72,14 @@ steps:
     when:
       event: push
 
+  - name: psalm
+    image: laradock/workspace:master-8.2
+    commands:
+      - ./vendor/bin/psalm --version
+      - ./psalm.sh
+    when:
+      event: push
+
   - name: rector
     image: laradock/workspace:master-8.2
     commands:
