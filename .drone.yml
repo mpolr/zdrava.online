@@ -41,15 +41,22 @@ steps:
       - yarn install
       - yarn run build
 
-  - name: backend
-    pull: if-not-exists
-    # https://hub.docker.com/r/laradock/workspace/
+  - name: composer-install-dev
     image: laradock/workspace:master-8.2
     commands:
       - php -v
       - composer --version
       - chmod +w ./bootstrap/cache
       - composer install --prefer-dist --no-ansi --no-interaction --no-progress --ignore-platform-reqs
+    when:
+      event: push
+
+  - name: backend
+    pull: if-not-exists
+    # https://hub.docker.com/r/laradock/workspace/
+    image: laradock/workspace:master-8.2
+    commands:
+      - php -v
       - cp .env.testing .env
       - php artisan key:generate
       - cp .env .env.testing
