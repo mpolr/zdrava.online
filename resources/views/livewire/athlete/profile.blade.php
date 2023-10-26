@@ -108,7 +108,7 @@
                             </div>
                             <div class="p-0">
                                 <a href="{{ route('activities.get', $activity->id) }}">
-                                    <div id="map_{{ $activity->id }}" class="w-full h-full" style="width: 100%; height: 400px;"></div>
+                                    <div id="map_{{ $activity->id }}" class="w-full h-full z-0" style="width: 100%; height: 400px;"></div>
                                 </a>
                                 <script>
                                     let map_{{ $activity->id }} = [];

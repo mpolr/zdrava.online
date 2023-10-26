@@ -175,7 +175,7 @@
                 </div>
             </div>
             <div class="w-full pt-4">
-                <div id="map" class="center-block" style="width: 100%; height: 400px;"></div>
+                <div id="map" class="center-block z-0" style="width: 100%; height: 400px;"></div>
                 <script>
                     let map, markers = [];
                     /* ----------------------------- Initialize Map ----------------------------- */
