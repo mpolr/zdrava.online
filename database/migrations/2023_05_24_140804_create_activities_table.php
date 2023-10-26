@@ -18,7 +18,6 @@ return new class extends Migration
             $table->text('creator')->nullable();
             $table->foreignId('device_manufacturers_id')->nullable()->constrained();
             $table->bigInteger('device_models_id')->unsigned()->nullable();
-            $table->foreign('device_models_id')->references('model_id')->on('device_models');
             $table->string('device_software_version', 15)->nullable();
             $table->float('distance')->nullable();
             $table->decimal('avg_speed', 4, 1, true)->nullable();
