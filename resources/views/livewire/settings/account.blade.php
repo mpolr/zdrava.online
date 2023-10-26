@@ -1,10 +1,10 @@
 @section('title', __('My account') . ' | Zdrava')
-<main class="container mx-auto px-0 py-12 max-w-screen-lg">
-    <div class="grid grid-cols-3 gap-4">
-        <div class="w-full">
+<div class="container mx-auto px-0 py-12">
+    <div class="flex sm:flex-row md:flex-row flex-col gap-4">
+        <div>
             @include('components.settings-menu')
         </div>
-        <div class="w-full col-span-2">
+        <div class="w-full">
             <h2 class="mb-2 mt-0 text-4xl font-medium leading-tight text-black dark:text-gray-100">
                 {{ __('My account') }}
             </h2>
@@ -42,4 +42,4 @@
             </div>
         </div>
     </div>
-</main>
+</div>

@@ -1,11 +1,10 @@
 @section('title', __('My profile') . ' | Zdrava')
-
-<div class="container mx-auto px-0 py-12 max-w-screen-lg">
-    <div class="flex flex-col sm:flex-row gap-4">
-        <div class="w-full sm:w-1/4">
+<div class="container mx-auto px-0 py-12">
+    <div class="flex sm:flex-row md:flex-row flex-col gap-4">
+        <div>
             @include('components.settings-menu')
         </div>
-        <div class="w-full sm:w-3/4">
+        <div>
             <h2 class="mb-2 mt-0 text-4xl font-medium leading-tight text-black dark:text-gray-100">
                 {{ __('My profile') }}
             </h2>
