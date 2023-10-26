@@ -1,5 +1,6 @@
 @extends('layouts.site')
 @section('title', __('Login') . ' | Zdrava')
+@section('description', 'Вход на сайт Zdrava')
 @section('content')
     <div class="px-6 py-12 md:px-12 bg-gray-50 text-gray-800 text-center lg:text-left">
         <div class="container mx-auto xl:px-32">

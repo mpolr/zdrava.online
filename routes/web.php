@@ -8,7 +8,6 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\DownloadAppController;
 use App\Http\Controllers\Import\StravaController;
 use App\Http\Controllers\UploadController;
-use App\Http\Livewire\Activity\Edit;
 use App\Http\Middleware\Authenticate;
 use App\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Support\Facades\Password;
@@ -21,8 +20,6 @@ Route::get('/', ['as' => 'index', function () {
 
     return view('index');
 }]);
-
-
 
 /* Юридическая информация */
 Route::group(['prefix' => 'legal'], function () {
@@ -85,9 +82,9 @@ Route::group(['prefix' => 'activities', 'middleware' => 'auth'], function () {
         return redirect()->route('athlete.training');
     });
 
-    Route::get('/{id}', [ActivitiesController::class, 'get'])->name('activities.get');
-    Route::post('/{id}/delete', [ActivitiesController::class, 'delete'])->name('activities.delete');
-    Route::get('/{id}/edit', Edit::class)->name('activities.edit');
+    Route::get('/{id}', App\Http\Livewire\Activity\Show::class)->name('activities.get');
+    Route::post('/{id}/delete', [App\Http\Livewire\Activity\Show::class, 'delete'])->name('activities.delete');
+    Route::get('/{id}/edit', App\Http\Livewire\Activity\Edit::class)->name('activities.edit');
 });
 
 /* Настройки */

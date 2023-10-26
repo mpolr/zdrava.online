@@ -81,6 +81,7 @@ class Strava extends Component
     {
         $segments = Segment::where('strava_segment_id', 'IS NOT', null)
             ->where('country', null)
+            ->where('elevation_high', null)
             ->limit(1000)
             ->get();
 

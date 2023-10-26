@@ -4,12 +4,12 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <meta name="description" content="Социальная сеть для спортсменов. Бег, велоспорт, сап борд и многое другое. Загружай тренировки, общайся, заводи новых друзей." />
+    <meta name="description" content="@yield('description', 'Социальная сеть для спортсменов. Бег, велоспорт, сап борд и многое другое. Загружай тренировки, общайся, заводи новых друзей.')" />
     {{-- Open gpaph --}}
     <meta property="og:url" content="{{ config('app.url') }}">
     <meta property="og:type" content="website">
     <meta property="og:title" content="@yield('title', 'Zdrava - ' . __('Social network for athletes'))">
-    <meta property="og:description" content="Социальная сеть для спортсменов">
+    <meta property="og:description" content="@yield('description', 'Социальная сеть для спортсменов. Бег, велоспорт, сап борд и многое другое. Загружай тренировки, общайся, заводи новых друзей.')">
     <meta property="og:image" content="{{ config('app.url') }}/zdrava.png">
     <link rel="icon" href="{{ URL::asset('favicon.svg') }}" sizes="any" type="image/svg+xml">
     <title>@yield('title', 'Zdrava - ' . __('Social network for athletes'))</title>

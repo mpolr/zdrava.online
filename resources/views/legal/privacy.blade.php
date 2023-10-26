@@ -1,4 +1,6 @@
 @extends('layouts.site')
+@section('title', 'Политика конфиденциальности | Zdrava')
+@section('description', 'Политика конфиденциальности сервисов Zdrava')
 @section('content')
     <main class="container mx-auto px-0 py-12 max-w-screen-lg">
         <div class="grid grid-cols-1 gap-4">

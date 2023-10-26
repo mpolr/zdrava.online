@@ -14,8 +14,7 @@ class Privacy extends Component
 
     public function mount(): void
     {
-        // TODO: Добавить поле в БД
-        //$this->private = \Auth::user()->private;
+        $this->private = auth()->user()->private;
     }
 
     public function render(): \Illuminate\View\View|View|Application|Factory
@@ -25,6 +24,9 @@ class Privacy extends Component
 
     public function save(): void
     {
-        // TODO: Сохранение в БД
+        auth()->user()->private = $this->private;
+        session()->flash('success', __('Privacy settings successfully updated'));
+
+        auth()->user()->save();
     }
 }
