@@ -80,7 +80,7 @@
     "Subscribe": "Подписаться",
     "Unsubscribe": "Отписаться",
     "Subscription request": "Запрос на подписку",
-    "Cancel subscription request": "Отменить запрос на подписку",
+    "Cancel request": "Отменить запрос",
     "Subscription request sent": "Запрос на подписку отправлен",
     "Subscription request cancelled": "Запрос на подписку отменен",
     "Successfully unsubscribed from \":user\"": "Вы успешно отписались от \":user\"",

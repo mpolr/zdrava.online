@@ -71,7 +71,7 @@
                                                 @endif
                                             @else
                                                 <button wire:click="cancel({{ $user }})" type="button" class="focus:outline-none text-white bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:focus:ring-yellow-900">
-                                                    {{ __('Cancel subscription request') }}
+                                                    {{ __('Cancel request') }}
                                                 </button>
                                             @endif
                                         @else
