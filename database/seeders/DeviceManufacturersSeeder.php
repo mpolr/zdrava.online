@@ -9,7 +9,7 @@ class DeviceManufacturersSeeder extends Seeder
 {
     public function run(): void
     {
-        $csvFilePath = __DIR__.'/DeviceManufacturers.csv';
+        $csvFilePath = __DIR__ . '/DeviceManufacturers.csv';
 
         $file = fopen($csvFilePath, 'r');
 

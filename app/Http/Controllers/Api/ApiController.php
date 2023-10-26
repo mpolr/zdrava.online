@@ -65,19 +65,23 @@ class ApiController extends Controller
         ]);
     }
 
-    private function calculateIssueId(string $stackTrace, string $packageName): string {
+    private function calculateIssueId(string $stackTrace, string $packageName): string
+    {
         return md5($this->shortStackTrace($stackTrace, $packageName));
     }
 
-    private function shortStackTrace(string $stackTrace, string $packageName): string {
+    private function shortStackTrace(string $stackTrace, string $packageName): string
+    {
         $lines = explode("\n", $stackTrace);
-        if (in_array(": ", $lines) === FALSE && in_array($packageName, $lines) === FALSE) {
+        if (in_array(": ", $lines) === false && in_array($packageName, $lines) === false) {
             $value = $lines[0];
         } else {
             $value = "";
             foreach ($lines as $line) {
-                if (str_contains($line, ": ") || str_contains($line, $packageName)
-                    || str_contains($line, "Error") || str_contains($line, "Exception")) {
+                if (
+                    str_contains($line, ": ") || str_contains($line, $packageName)
+                    || str_contains($line, "Error") || str_contains($line, "Exception")
+                ) {
                     $value .= $line . "<br />";
                 }
             }

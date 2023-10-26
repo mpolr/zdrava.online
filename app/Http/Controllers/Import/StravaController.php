@@ -76,7 +76,8 @@ class StravaController extends Controller
         return redirect()->route('site.dashboard');
     }
 
-    private function refreshToken(): void {
+    private function refreshToken(): void
+    {
         if (strtotime(Carbon::now()->toDateTimeString()) > $this->expiresAt) {
             $refresh = Strava::refreshToken($this->refreshToken);
 

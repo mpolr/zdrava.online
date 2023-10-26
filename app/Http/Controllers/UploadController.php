@@ -164,7 +164,7 @@ class UploadController extends Controller
 
             $result = rename(
                 Storage::path('temp/' . $hashedFileName),
-                Storage::path('public/activities/'. $user->id .'/'. $hashedFileName)
+                Storage::path('public/activities/' . $user->id . '/' . $hashedFileName)
             );
 
             if (!$result) {

@@ -7,7 +7,8 @@ use Gpx2Png\Gpx2Png;
 use Illuminate\Support\Facades\Storage;
 use Throwable;
 
-class GpxTools {
+class GpxTools
+{
     public static function convertFitToGpx(phpFITFileAnalysis $fit, int $userId, string $filename): bool
     {
         $rootNode = new \SimpleXMLElement('<?xml version="1.0" encoding="UTF-8" standalone="no"?>
@@ -30,7 +31,7 @@ class GpxTools {
         } catch (\Exception $e) {
             report($e);
         } finally {
-            Storage::write('public/activities/'. $userId .'/'. $filename .'.gpx', $rootNode->asXML());
+            Storage::write('public/activities/' . $userId . '/' . $filename . '.gpx', $rootNode->asXML());
             return true;
         }
     }
@@ -38,9 +39,9 @@ class GpxTools {
     public static function generateImageFromGPX(string $file, int $userId, bool $tempPath = false): bool|string
     {
         if ($tempPath) {
-            $fullFilePath = \Storage::path('temp/'. $file);
+            $fullFilePath = \Storage::path('temp/' . $file);
         } else {
-            $fullFilePath = \Storage::path('public/activities/'. $userId .'/'. $file);
+            $fullFilePath = \Storage::path('public/activities/' . $userId . '/' . $file);
         }
 
         $gpx2png = new Gpx2Png();
@@ -53,7 +54,7 @@ class GpxTools {
 
         $res = $gpx2png->generateImage();
         $image = $res->data();
-        return Storage::put('public/activities/'. $userId .'/'. $file . '.png', $image);
+        return Storage::put('public/activities/' . $userId . '/' . $file . '.png', $image);
     }
 
     public static function geocode($latitude, $longitude): ?array

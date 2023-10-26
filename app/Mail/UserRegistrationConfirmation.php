@@ -12,7 +12,8 @@ use Illuminate\Queue\SerializesModels;
 
 class UserRegistrationConfirmation extends Mailable
 {
-    use Queueable, SerializesModels;
+    use Queueable;
+    use SerializesModels;
 
     public User $user;
     public function __construct(User $user)

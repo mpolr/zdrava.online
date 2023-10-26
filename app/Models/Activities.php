@@ -106,13 +106,13 @@ class Activities extends Model implements Likeable
     {
         $gpxFile = $this->file;
         if (strpos($this->file, '.fit')) {
-            $gpxFile = $this->file.'.gpx';
+            $gpxFile = $this->file . '.gpx';
         }
 
         if ($onlyFileName) {
             return $gpxFile;
         }
-        return Storage::url('public/activities/'. $this->user_id .'/'. $gpxFile);
+        return Storage::url('public/activities/' . $this->user_id . '/' . $gpxFile);
     }
 
     public function getAverageSpeed(): string

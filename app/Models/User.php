@@ -17,7 +17,11 @@ use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable, HasRolesAndPermissions, CanResetPassword;
+    use HasApiTokens;
+    use HasFactory;
+    use Notifiable;
+    use HasRolesAndPermissions;
+    use CanResetPassword;
 
     protected $fillable = [
         'first_name',
@@ -50,13 +54,13 @@ class User extends Authenticatable
         if (str_starts_with($this->photo, 'http')) {
             return $this->photo;
         } else {
-            return Storage::url('pictures/athletes/'. $this->id .'/'. $this->photo);
+            return Storage::url('pictures/athletes/' . $this->id . '/' . $this->photo);
         }
     }
 
     public function getNickname(bool $addAtSymbol = false): ?string
     {
-        return !empty($this->nickname) ? ($addAtSymbol ? '@'.$this->nickname : $this->nickname) : null;
+        return !empty($this->nickname) ? ($addAtSymbol ? '@' . $this->nickname : $this->nickname) : null;
     }
 
     public function getFullName(): string
@@ -66,7 +70,7 @@ class User extends Authenticatable
 
     public function getInitials(): string
     {
-        return strtoupper(Str::limit($this->first_name, 1, '').Str::limit($this->last_name, 1, ''));
+        return strtoupper(Str::limit($this->first_name, 1, '') . Str::limit($this->last_name, 1, ''));
     }
 
     public function activities(string $orderBy = 'DESC'): HasMany

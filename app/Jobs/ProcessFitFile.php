@@ -16,7 +16,10 @@ use Illuminate\Support\Facades\Storage;
 
 class ProcessFitFile implements ShouldQueue, ShouldBeUnique
 {
-    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+    use Dispatchable;
+    use InteractsWithQueue;
+    use Queueable;
+    use SerializesModels;
 
     protected int $userId;
     protected string $fileName;
@@ -95,7 +98,7 @@ class ProcessFitFile implements ShouldQueue, ShouldBeUnique
 
         $result = rename(
             Storage::path('temp/' . $this->fileName),
-            Storage::path('public/activities/'. $this->userId .'/'. $this->fileName)
+            Storage::path('public/activities/' . $this->userId . '/' . $this->fileName)
         );
 
         if (!$result) {

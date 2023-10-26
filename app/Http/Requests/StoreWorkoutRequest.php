@@ -27,7 +27,7 @@ class StoreWorkoutRequest extends FormRequest
             'workout.*' => [
                 'file',
                 'max:25000',
-                new WorkoutFileValidation
+                new WorkoutFileValidation()
             ],
         ];
     }

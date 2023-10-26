@@ -14,11 +14,11 @@ class RolesServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
-        Blade::directive('role', function ($role){
+        Blade::directive('role', function ($role) {
             return "<?php if(auth()->check() && auth()->user()->hasRole({$role})): ?>";
         });
 
-        Blade::directive('endrole', function ($role){
+        Blade::directive('endrole', function ($role) {
             return "<?php endif; ?>";
         });
     }

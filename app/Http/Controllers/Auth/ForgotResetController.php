@@ -29,7 +29,8 @@ class ForgotResetController extends Controller
             : redirect()->route('auth.password.request')->withErrors(['email' => __($status)]);
     }
 
-    public function showResetPassword(string $token) {
+    public function showResetPassword(string $token)
+    {
         return view('auth.reset-password', ['token' => $token]);
     }
 

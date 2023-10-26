@@ -16,7 +16,10 @@ use phpGPX\phpGPX;
 
 class ProcessGpxFile implements ShouldQueue
 {
-    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+    use Dispatchable;
+    use InteractsWithQueue;
+    use Queueable;
+    use SerializesModels;
 
     protected int $userId;
     protected string $fileName;
@@ -155,7 +158,7 @@ class ProcessGpxFile implements ShouldQueue
 
         $result = rename(
             Storage::path('temp/' . $this->fileName),
-            Storage::path('public/activities/'. $this->userId .'/'. $this->fileName)
+            Storage::path('public/activities/' . $this->userId . '/' . $this->fileName)
         );
 
         if (!$result) {

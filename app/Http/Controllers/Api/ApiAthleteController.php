@@ -39,7 +39,7 @@ class ApiAthleteController extends Controller
 
     protected function subscribe(int $id)
     {
-        $subscription = new Subscription;
+        $subscription = new Subscription();
         $subscription->user_id = $id;
         $subscription->subscriber_id = auth('sanctum')->id();
         $result = $subscription->save();

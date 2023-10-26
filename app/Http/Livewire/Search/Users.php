@@ -26,7 +26,8 @@ class Users extends Component
     public function render(): View|Application|Factory|\Illuminate\Contracts\Foundation\Application
     {
         if (empty($this->search)) {
-            $this->users = User::inRandomOrder()->limit(10)->get();;
+            $this->users = User::inRandomOrder()->limit(10)->get();
+            ;
         }
 
         $this->subscriptions = Subscription::where('subscriber_id', auth()->id())
@@ -57,7 +58,7 @@ class Users extends Component
 
     public function subscribe(User $user): void
     {
-        $subscription = new Subscription;
+        $subscription = new Subscription();
         $subscription->user_id = $user->id;
         $subscription->subscriber_id = Auth::user()->id;
         $subscription->save();

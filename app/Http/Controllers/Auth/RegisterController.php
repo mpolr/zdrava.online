@@ -18,7 +18,9 @@ use Illuminate\Validation\Rule;
 
 class RegisterController extends Controller
 {
-    use AuthorizesRequests, ValidatesRequests, ReservedUserNames;
+    use AuthorizesRequests;
+    use ValidatesRequests;
+    use ReservedUserNames;
 
     protected string $redirectTo = '/';
 

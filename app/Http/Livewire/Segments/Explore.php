@@ -88,8 +88,8 @@ class Explore extends Component
         $borderPoints = Polyline::findExtremeCoordinates($points);
 
         $date = !empty($segment->created_at) ? $segment->created_at->timestamp : time();
-        $timeCreated = $date - mktime(0,0,0,12,31,1989);
-        $data = new Data;
+        $timeCreated = $date - mktime(0, 0, 0, 12, 31, 1989);
+        $data = new Data();
         $data->setFile(FileType::segment);
         $data
             ->add('file_id', [
@@ -141,8 +141,8 @@ class Explore extends Component
         foreach ($points as $point) {
             if ($index !== 0) {
                 $distance += GpxTools::getDistanceBetweenPoints(
-                    $points[$index-1][0],
-                    $points[$index-1][1],
+                    $points[$index - 1][0],
+                    $points[$index - 1][1],
                     $point[0],
                     $point[1]
                 );
@@ -164,17 +164,17 @@ class Explore extends Component
         }
 
         $fitWriter = new Writer(false);
-        $filepath = $fitWriter->writeData($data, Storage::path('temp/'. $segment->id .'.fit'));
+        $filepath = $fitWriter->writeData($data, Storage::path('temp/' . $segment->id . '.fit'));
 
         $this->segments = Segment::select(['id', 'name', 'distance', 'total_elevation_gain', 'polyline', 'start_latlng'])
             ->where('name', '!=', null)
             ->where('private', '!=', 1)
             ->paginate(11);
 
-        $sanitized = preg_replace('/[^\w\-\._]/u','', $segment->name);
+        $sanitized = preg_replace('/[^\w\-\._]/u', '', $segment->name);
         return Storage::download(
-            'temp/'. $segment->id .'.fit',
-            html_entity_decode($sanitized).'.fit',
+            'temp/' . $segment->id . '.fit',
+            html_entity_decode($sanitized) . '.fit',
         );
 
         //unlink($filepath);

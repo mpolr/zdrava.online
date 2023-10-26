@@ -27,15 +27,15 @@ class Show extends Component
         if (auth()->user()->id === $activity->user_id || auth()->user()->hasRole('admin')) {
             $gpxFile = $activity->file;
             if (strpos($activity->file, '.fit')) {
-                $gpxFile = $activity->file.'.gpx';
+                $gpxFile = $activity->file . '.gpx';
             }
 
             if ($activity->file !== $gpxFile) {
-                Storage::delete('public/activities/'. $activity->user_id .'/'. $gpxFile);
+                Storage::delete('public/activities/' . $activity->user_id . '/' . $gpxFile);
             }
 
-            Storage::delete('public/activities/'. $activity->user_id .'/'. $activity->file);
-            Storage::delete('public/activities/'. $activity->user_id .'/'. $activity->image);
+            Storage::delete('public/activities/' . $activity->user_id . '/' . $activity->file);
+            Storage::delete('public/activities/' . $activity->user_id . '/' . $activity->image);
 
             session()->flash('success', __('Activity ":name" successfully deleted', [
                 'name' => $activity->name

@@ -9,6 +9,6 @@ class Role extends Model
 {
     public function permissions(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
-        return $this->belongsToMany(Permission::class,'roles_permissions');
+        return $this->belongsToMany(Permission::class, 'roles_permissions');
     }
 }

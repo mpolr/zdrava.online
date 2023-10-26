@@ -73,7 +73,7 @@ class Polyline
         $encodedString = '';
         $index = 0;
         $previous = array(0,0);
-        foreach ( $points as $number ) {
+        foreach ($points as $number) {
             $number = (float)($number);
             $number = (int)round($number * pow(10, static::$precision));
             $diff = $number - $previous[$index % 2];
@@ -82,7 +82,7 @@ class Polyline
             $index++;
             $number = ($number < 0) ? ~($number << 1) : ($number << 1);
             $chunk = '';
-            while ( $number >= 0x20 ) {
+            while ($number >= 0x20) {
                 $chunk .= chr((0x20 | ($number & 0x1f)) + 63);
                 $number >>= 5;
             }

@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Http\Livewire\Comments;
 
 use Livewire\Component;

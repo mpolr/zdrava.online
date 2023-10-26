@@ -95,7 +95,7 @@ class Strava extends Component
 
         $i = 1;
         foreach ($segments as $segment) {
-            if ($i%100 === 0) {
+            if ($i % 100 === 0) {
                 $delay += 960;
             }
             $delay += $delayDay;
