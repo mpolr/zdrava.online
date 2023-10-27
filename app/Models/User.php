@@ -58,6 +58,19 @@ class User extends Authenticatable
         }
     }
 
+    public function getPhotoUrl(): ?string
+    {
+        if (empty($this->photo)) {
+            return null;
+        }
+
+        if (str_starts_with($this->photo, 'http')) {
+            return $this->photo;
+        } else {
+            return url('storage/pictures/athletes/' . $this->id . '/' . $this->photo);
+        }
+    }
+
     public function getNickname(bool $addAtSymbol = false): ?string
     {
         return !empty($this->nickname) ? ($addAtSymbol ? '@' . $this->nickname : $this->nickname) : null;
