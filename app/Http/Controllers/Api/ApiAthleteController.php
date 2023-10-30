@@ -29,6 +29,9 @@ class ApiAthleteController extends Controller
             ], 404);
         }
 
+        $athlete->activities = $user->activities->count();
+        $athlete->subscriptions = $user->subscriptions->count();
+        $athlete->subscribers = $user->subscribers->count();
         $athlete->isSubscribed = $user->isSubscriber($athlete);
 
         return response()->json([
