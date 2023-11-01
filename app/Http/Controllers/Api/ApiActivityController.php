@@ -10,6 +10,16 @@ use Illuminate\Http\Request;
 
 class ApiActivityController extends Controller
 {
+    protected function get(int $id): JsonResponse
+    {
+        $activity = Activities::findOrFail($id);
+
+        return response()->json([
+            'success' => true,
+            'athlete' => $activity,
+        ]);
+    }
+
     protected function activityComments(int $id): JsonResponse
     {
         $user = auth('sanctum')->user();

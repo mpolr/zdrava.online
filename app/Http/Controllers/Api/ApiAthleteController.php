@@ -36,7 +36,7 @@ class ApiAthleteController extends Controller
 
         return response()->json([
             'success' => true,
-            'athlete' => $athlete
+            'athlete' => $athlete,
         ]);
     }
 
