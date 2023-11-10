@@ -33,4 +33,13 @@ class PrimaryTest extends TestCase
         $response->assertViewIs('auth.register');
         $response->assertSeeText(__('Subscribe to our newsletter'));
     }
+
+    public function testDownloadAppPageIsOk(): void
+    {
+        $response = $this->get(route('app'));
+
+        $response->assertStatus(200);
+        $response->assertViewIs('app.index');
+        $response->assertSeeText(__('Version history'));
+    }
 }

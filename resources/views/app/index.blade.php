@@ -2,16 +2,18 @@
 @section('title', __('Zdrava android app') . ' | Zdrava')
 @section('content')
     <div class="container my-12 px-6 mx-auto">
-        <p>
-            <a href="{{ route('app.download', $versions->first()->version) }}" type="button" class="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out" data-mdb-ripple="true" data-mdb-ripple-color="light">
-                {{ __('Download Zdrava :version for android', ['version' => $versions->first()->version]) }}
-            </a>
-        </p>
-        <br/>
-        <p class="text-gray-500 dark:text-gray-400">
-            Скачиваний: {{ $versions->first()->downloads }}
-        </p>
-        <br>
+        @if(!empty($versions))
+            <p>
+                <a href="{{ route('app.download', $versions->first()->version) }}" type="button" class="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out" data-mdb-ripple="true" data-mdb-ripple-color="light">
+                    {{ __('Download Zdrava :version for android', ['version' => $versions->first()->version]) }}
+                </a>
+            </p>
+            <br/>
+            <p class="text-gray-500 dark:text-gray-400">
+                Скачиваний: {{ $versions->first()->downloads }}
+            </p>
+            <br>
+        @endif
         <h1 class="text-4xl md:text-5xl xl:text-6xl font-bold tracking-tight mb-12">
             {{ __('Version history') }}
         </h1>
