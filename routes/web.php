@@ -43,29 +43,17 @@ Route::group(['prefix' => 'auth'], function () {
     });
 
     Route::get('logout', [LoginController::class, 'logout'])->name('auth.logout');
-    Route::get('login', ['as' => 'auth.login', function () {
-        if (Auth::user()) { // TODO: Сделать через middleware
-            return redirect()->route('site.dashboard');
-        }
 
-        return view('auth.login');
-    }]);
-    Route::get('register', ['as' => 'auth.register', function () {
-        if (Auth::user()) { // TODO: Сделать через middleware
-            return redirect()->route('site.dashboard');
-        }
+    Route::get('login', \App\Http\Livewire\Auth\Login::class)->name('auth.login');
+    Route::get('register', \App\Http\Livewire\Auth\Register::class)->name('auth.register');
 
-        return view('auth/register');
-    }]);
+    Route::get('verify-email/{token?}', [RegisterController::class, 'verifyEmail'])->name('auth.verify.email');
 
     Route::get('forgot-password', [ForgotResetController::class, 'forgot'])->name('auth.password.request');
     Route::post('forgot-password', [ForgotResetController::class, 'sendLink'])->middleware('guest')->name('auth.password.email');
 
     Route::get('reset-password/{token}', [ForgotResetController::class, 'showResetPassword'])->middleware('guest')->name('password.reset');
     Route::post('reset-password', [ForgotResetController::class, 'resetPassword'])->middleware('guest')->name('auth.password.reset');
-
-    Route::post('login', [LoginController::class, 'authenticate'])->name('auth.login.post');
-    Route::post('register', [RegisterController::class, 'register'])->name('auth.register.post');
 });
 
 /* Спортсмен */

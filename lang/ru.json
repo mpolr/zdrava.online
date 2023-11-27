@@ -167,5 +167,9 @@
     "Account deletion request": "Запрос на удаление аккаунта",
     "Privacy settings successfully updated": "Настройки конфиденциальности успешно обновлены",
     "Navigation": "Навигация",
-    "Notifications": "Уведомления"
+    "Notifications": "Уведомления",
+    "Email verification": "Подтверждение электронной почты",
+    "Verify email": "Подтвердить почту",
+    "Hello! Thank you for signing up.": "Привет! Спасибо за регистрацию.",
+    "To complete registration, confirm your email address by clicking the button below.": "Для завершения регистрации подтвердите свой адрес электронной почты, нажав кнопку ниже."
 }

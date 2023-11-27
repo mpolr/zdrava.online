@@ -8,29 +8,11 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
 
 class LoginController extends Controller
 {
-    public function authenticate(Request $request): RedirectResponse
-    {
-        $credentials = $request->validate([
-            'email' => ['required', 'email'],
-            'password' => ['required'],
-        ]);
-
-        $remember = $request->boolean('remember_me');
-
-        if (\Auth::attempt($credentials, $remember)) {
-            $request->session()->regenerate();
-            return redirect()->intended(route('site.dashboard'));
-        }
-
-        return redirect()->refresh()->withErrors([
-            'email' => __('Your provided credentials do not match in our records'),
-        ])->onlyInput('email');
-    }
-
     public function logout(Request $request): RedirectResponse
     {
         \Auth::logout();

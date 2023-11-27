@@ -2,39 +2,48 @@
 
 namespace App\Mail;
 
-use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
+use Illuminate\Mail\Mailables\Attachment;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class UserRegistrationConfirmation extends Mailable
+class VerifyEmail extends Mailable
 {
-    use Queueable;
-    use SerializesModels;
+    use Queueable, SerializesModels;
 
-    public User $user;
-    public function __construct(User $user)
+    public string $pin;
+
+    public function __construct(string $pin)
     {
-        $this->user = $user;
+        $this->pin = $pin;
+    }
+
+    public function build(): VerifyEmail
+    {
+        return $this
+            ->markdown('emails.verify');
     }
 
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'User Registration Confirmation',
+            subject: __('Email verification'),
         );
     }
 
     public function content(): Content
     {
         return new Content(
-            view: 'email.registration.confirm',
+            markdown: 'emails.verify',
         );
     }
 
+    /**
+     * @return array<int, Attachment>
+     */
     public function attachments(): array
     {
         return [];
