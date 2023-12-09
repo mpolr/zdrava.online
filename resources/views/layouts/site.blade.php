@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html @if(session()->get('theme') == 'dark') class="dark bg-gray-900" @endif lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html @if(session()->get('theme') === 'dark') class="dark" @endif lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -40,9 +40,9 @@
     </script>
     {{-- End Matomo Code --}}
 </head>
-<body class="dark:bg-gray-900">
+<body class="bg-gray-100">
     <div>
-        <nav class="fixed top-0 z-50 h-16 w-full bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700">
+        <nav class="fixed top-0 z-50 w-full bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700">
             <div class="px-3 py-2 lg:px-5 lg:pl-3">
                 <div class="flex items-center justify-between">
                     <div class="flex items-center justify-start">
@@ -321,7 +321,7 @@
             @endif
         </main>
     </div>
-    <footer class="bg-white dark:bg-gray-900 mt-10">
+    <footer class="mt-10">
         <div class="mx-auto w-full max-w-screen-xl">
             <div class="grid grid-cols-2 gap-8 px-4 py-6 lg:py-8 md:grid-cols-4">
                 <div>

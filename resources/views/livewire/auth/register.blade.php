@@ -1,6 +1,6 @@
 @section('title', __('Sign up') . ' | Zdrava')
 @section('description', 'Регистрация на сайте Zdrava')
-<div class="px-6 py-12 md:px-12 bg-gray-50 text-gray-800 text-center lg:text-left">
+<div class="px-6 py-12 md:px-12 text-gray-800 text-center lg:text-left">
     <div class="container mx-auto xl:px-32">
         <div class="grid lg:grid-cols-2 gap-12 items-center">
             <div class="mt-12 lg:mt-0">
@@ -26,6 +26,12 @@
                             </div>
                         </div>
                         <input wire:model="email" value="{{ old('email') }}" type="email" class="form-control block w-full px-3 py-1.5 mb-6 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" placeholder="{{ __('Email address') }}" required/>
+                        <div class="flex p-4 mb-4 text-sm text-red-800 border border-red-300 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400 dark:border-red-800" role="alert">
+                            <svg aria-hidden="true" class="flex-shrink-0 inline w-5 h-5 mr-3" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path></svg>
+                            <div>
+                                <span class="font-medium">В настоящее время есть проблема с регистрацией почтовых ящиков @mail.ru, пожалуйста, используйте другие почтовые ящики</span>
+                            </div>
+                        </div>
                         <input wire:model="password" type="password" autocomplete="password" class="form-control block w-full px-3 py-1.5 mb-6 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" placeholder="{{ __('Password') }}" required/>
                         <input wire:model="password_confirmation" type="password" class="form-control block w-full px-3 py-1.5 mb-6 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" placeholder="{{ __('Password confirmation') }}" required/>
                         <div class="form-check flex justify-center mb-6">

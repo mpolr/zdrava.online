@@ -1,6 +1,6 @@
 @section('title', __('Login') . ' | Zdrava')
 @section('description', 'Вход на сайт Zdrava')
-<div class="px-6 py-12 md:px-12 bg-gray-50 text-gray-800 text-center lg:text-left">
+<div class="px-6 py-12 md:px-12 text-gray-800 text-center lg:text-left">
     <div class="container mx-auto xl:px-32">
         <div class="grid lg:grid-cols-2 gap-12 items-center">
             <div class="mt-12 lg:mt-0">

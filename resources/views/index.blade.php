@@ -3,7 +3,7 @@
     <main class="container mx-auto px-0 py-12 max-w-screen-lg">
         <div class="grid grid-cols-1 gap-4">
             <div class="w-full">
-                <div class="text-center bg-gray-50 text-gray-800 py-24 px-6">
+                <div class="text-center text-gray-800 py-24 px-6">
                     <h1 class="text-5xl md:text-6xl xl:text-7xl font-bold tracking-tight mb-12">
                         <span class="text-blue-600">Zdrava</span><br />
                         {{ __('Social network for athletes') }}
