@@ -2,8 +2,7 @@
 
 namespace App\Http\Middleware;
 
-use App\Http\Controllers\Auth\RegisterController;
-use App\Http\Livewire\Auth\Login;
+use App\Http\Controllers\Auth\LoginController;
 use App\Models\User;
 use Closure;
 use Illuminate\Http\JsonResponse;
@@ -18,7 +17,7 @@ class VerifyEmail
 
         if ($user && Hash::check($request->all()['password'], $user->password)) {
             if (!$user->hasVerifiedEmail()) {
-                Login::resendPin($request);
+                LoginController::resendPin($request);
 
                 return new JsonResponse([
                     'success' => false,

@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Mail\UserRegistrationConfirmation;
 use App\Mail\VerifyEmail;
 use App\Models\User;
 use App\Http\Controllers\Controller;
@@ -131,6 +130,11 @@ class RegisterController extends Controller
                 'message' => "A verification mail has been resent"
             ], 200);
         }
+
+        return new JsonResponse([
+            'success' => false,
+            'message' => "Error occurred"
+        ], 500);
     }
 
     public function verifyEmail(?string $token): RedirectResponse
@@ -147,5 +151,7 @@ class RegisterController extends Controller
                 return redirect()->route('site.dashboard');
             }
         }
+
+        return redirect()->back();
     }
 }

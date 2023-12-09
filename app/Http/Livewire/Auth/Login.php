@@ -44,10 +44,12 @@ class Login extends Component
             if (!$user->hasVerifiedEmail()) {
                 $this->resendPin();
             } else {
-                if (\Auth::attempt([
+                if (
+                    \Auth::attempt([
                     'email' => $this->email,
                     'password' => $this->password
-                ], $this->rememberMe)) {
+                    ], $this->rememberMe)
+                ) {
                     $user = User::where('email', $this->email)->first();
                     $token = $user->createToken(config('app.name'))->plainTextToken;
 

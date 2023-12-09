@@ -21,7 +21,7 @@ class PrimaryTest extends TestCase
         $response = $this->get(route('auth.login'));
 
         $response->assertStatus(200);
-        $response->assertViewIs('auth.login');
+        $response->assertViewIs('livewire.auth.login');
         $response->assertSeeText(__('Remember me'));
     }
 
@@ -30,7 +30,7 @@ class PrimaryTest extends TestCase
         $response = $this->get(route('auth.register'));
 
         $response->assertStatus(200);
-        $response->assertViewIs('auth.register');
+        $response->assertViewIs('livewire.auth.register');
         $response->assertSeeText(__('Subscribe to our newsletter'));
     }
 

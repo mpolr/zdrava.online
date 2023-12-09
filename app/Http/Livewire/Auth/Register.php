@@ -95,5 +95,7 @@ class Register extends Component
                 return redirect()->route('site.dashboard');
             }
         }
+
+        return redirect()->back();
     }
 }
