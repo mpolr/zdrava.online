@@ -40,7 +40,7 @@
     </script>
     {{-- End Matomo Code --}}
 </head>
-<body class="bg-gray-100">
+<body class="bg-gray-100 dark:bg-gray-700">
     <div>
         <nav class="fixed top-0 z-50 w-full bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700">
             <div class="px-3 py-2 lg:px-5 lg:pl-3">
