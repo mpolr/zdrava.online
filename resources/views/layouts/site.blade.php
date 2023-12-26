@@ -2,6 +2,8 @@
 <html @if(session()->get('theme') === 'dark') class="dark" @endif lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <meta charset="utf-8">
+    <meta name="theme-color" content="#ff6600" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="#ff6600">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="description" content="@yield('description', 'Социальная сеть для спортсменов. Бег, велоспорт, сап борд и многое другое. Загружай тренировки, общайся, заводи новых друзей.')" />
