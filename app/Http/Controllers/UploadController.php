@@ -39,10 +39,8 @@ class UploadController extends Controller
                 'private'
             );
 
-            $gpxObj = new phpGPX();
-
             try {
-                $gpx = $gpxObj->load(Storage::path('temp/' . $hashedFileName));
+                $gpx = phpGPX::load(Storage::path('temp/' . $hashedFileName));
             } catch (Exception $e) {
                 return response()->json([
                     'success' => false,

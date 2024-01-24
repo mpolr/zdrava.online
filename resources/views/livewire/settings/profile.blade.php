@@ -15,7 +15,7 @@
             @endif
             <span class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ __('Photo') }}</span>
             <div class="flex items-center justify-center w-full" id="drop-zone">
-                <label for="filePhoto" class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
+                <label for="photo" class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
                     <div class="flex flex-col items-center justify-center pt-5 pb-6">
                         @if (auth()->user()->getPhoto())
                             <img src="{{ auth()->user()->getPhoto() }}"
@@ -28,7 +28,7 @@
                         <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span class="font-semibold">{{ __('Click to select file') }}</span> {{ __('or drag and drop') }}</p>
                         <p class="text-xs text-gray-500 dark:text-gray-400">PNG, JPG {{ __('or') }} GIF ({{ __('max.') }} 512x512px)</p>
                     </div>
-                    <input wire:model="photo" wire:change.debounce="save(true)" id="filePhoto" type="file" class="hidden" accept="image/*" />
+                    <input wire:model="photo" wire:change.debounce="save(true)" id="photo" name="photo" type="file" class="hidden" accept="image/*" />
                 </label>
             </div>
             <div class="grid pt-8 gap-6 sm:grid-cols-2">
@@ -59,26 +59,16 @@
     </div>
     <script>
         const dropZone = document.getElementById('drop-zone');
-        const fileInput = document.getElementById('filePhoto');
-
-        dropZone.addEventListener('dragover', (e) => {
-            e.preventDefault();
-            dropZone.classList.add('border-blue-500');
-        });
-
-        dropZone.addEventListener('dragleave', () => {
-            dropZone.classList.remove('border-blue-500');
-        });
+        const fileInput = document.querySelector('#drop-zone input');
 
         dropZone.addEventListener('drop', (e) => {
             e.preventDefault();
-            dropZone.classList.remove('border-blue-500');
 
             const file = e.dataTransfer.files[0];
             if (file) {
                 fileInput.files = e.dataTransfer.files;
-                const event = new Event('change', { bubbles: true });
-                fileInput.dispatchEvent(event);
+                //const event = new Event('change', { bubbles: true });
+                //fileInput.dispatchEvent(event);
             }
         });
 
