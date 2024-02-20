@@ -16,6 +16,7 @@
         "vite-plugin-manifest-sri": "^0.1.0"
     },
     "dependencies": {
+        "alpinejs": "^3.13.5",
         "chart.js": "^4.4.1",
         "flowbite": "^1.6.5",
         "leaflet": "^1.9.4",
