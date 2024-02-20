@@ -115,7 +115,7 @@ Route::group(['prefix' => 'friends', 'middleware' => 'auth'], function () {
 });
 
 /* Сегменты */
-Route::group(['prefix' => 'segments', 'middleware' => 'auth'], function () {
+Route::group(['prefix' => 'segments'], function () {
     Route::get('/', function () {
         return redirect()->route('site.dashboard');
     });

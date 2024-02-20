@@ -171,5 +171,6 @@
     "Email verification": "Подтверждение электронной почты",
     "Verify email": "Подтвердить почту",
     "Hello! Thank you for signing up.": "Привет! Спасибо за регистрацию.",
-    "To complete registration, confirm your email address by clicking the button below.": "Для завершения регистрации подтвердите свой адрес электронной почты, нажав кнопку ниже."
+    "To complete registration, confirm your email address by clicking the button below.": "Для завершения регистрации подтвердите свой адрес электронной почты, нажав кнопку ниже.",
+    "Not authorized": "Не авторизован"
 }

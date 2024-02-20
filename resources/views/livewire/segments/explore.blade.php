@@ -3,11 +3,11 @@
     <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet-src.js"></script>
     <script src="https://unpkg.com/polyline-encoded@0.0.9/Polyline.encoded.js"></script>
 @endsection
-<main class="container mx-auto px-0 py-12 max-w-screen-lg">
+<div class="container mx-auto px-0 py-12 max-w-screen-lg">
     <div class="grid grid-cols-1 gap-4">
         <div class="w-full">
             <h3 class="text-3xl font-bold dark:text-white">{{ __('Explore segments') }}</h3>
-            @error('admin') @livewire('toast.errors') @enderror
+            @error('segments') @livewire('toast.errors') @enderror
             @if (Session::get('success'))
                 @livewire('toast.success')
             @endif
@@ -99,4 +99,4 @@
             <livewire:components.segment-map :segments="$segments"></livewire:components.segment-map>
         </div>
     </div>
-</main>
+</div>

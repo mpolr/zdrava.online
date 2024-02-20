@@ -17,6 +17,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 use Livewire\Component;
+use Masmerise\Toaster\Toaster;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 use Zend_Io_Exception;
 
 class Explore extends Component
@@ -77,8 +79,13 @@ class Explore extends Component
      * @throws Exception
      * @throws Zend_Io_Exception
      */
-    public function segmentDownloadFIT(int $id): \Symfony\Component\HttpFoundation\StreamedResponse
+    public function segmentDownloadFIT(int $id): ?StreamedResponse
     {
+        if (!auth()->user()) {
+            Toaster::error(__('Not authorized'));
+            return null;
+        }
+
         $segment = Segment::find($id);
 
         $points = Polyline::decode($segment->polyline);

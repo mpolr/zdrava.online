@@ -370,5 +370,6 @@
             </div>
         </div>
     </footer>
+    <x-toaster-hub />
 </body>
 </html>
