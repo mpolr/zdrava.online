@@ -9,6 +9,7 @@
         "asanikovich/laravel-spatial": "^2.0",
         "codetoad/strava": "dev-master",
         "geocoder-php/nominatim-provider": "^5.7",
+        "grkamil/laravel-telegram-logging": "^1.11",
         "guzzlehttp/guzzle": "^7.2",
         "kravenor/gpx2png": "1.0.x-dev",
         "laravel/framework": "^10.10",
