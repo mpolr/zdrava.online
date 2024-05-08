@@ -19,6 +19,8 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
+use Log;
+use Psr\Log\LogLevel;
 
 class RegisterController extends Controller
 {
@@ -147,6 +149,7 @@ class RegisterController extends Controller
             if ($verify->exists()) {
                 $user = User::where(['email' => $verify->first()->email])->first();
                 $user->markEmailAsVerified();
+                Log::channel('telegram')->log(LogLevel::INFO, "New user registered: {$user->getFullName()} <{$user->email}>");
                 Auth::login($user, true);
                 return redirect()->route('site.dashboard');
             }
