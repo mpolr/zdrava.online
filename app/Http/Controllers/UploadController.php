@@ -48,6 +48,13 @@ class UploadController extends Controller
                 ], 400);
             }
 
+            if (empty($gpx->tracks) || count($gpx->tracks[0]->segments) === 0) {
+                return response()->json([
+                    'success' => false,
+                    'message' => __('Upload error. Empty GPX file')
+                ], 400);
+            }
+
             $maxSpeed = 0.0;
             $maxHearthRate = 0;
             $totalMovingTime = 0;
@@ -95,11 +102,11 @@ class UploadController extends Controller
 
             $stat = array_merge_recursive($statsTrack)[0];
 
-            if ($totalMovingTime == 0) {
+            if ($totalMovingTime === 0) {
                 $totalMovingTime = $stat['duration'];
             }
 
-            $segment = $track->segments[0];
+            $segment = $gpx->tracks[0]->segments[0];
             $startPoint = $segment->points[0];
             $endPoint = $segment->points[array_key_last($segment->points)];
             $startLatitude = $startPoint->latitude;
@@ -119,7 +126,7 @@ class UploadController extends Controller
             $distance = explode('.', $totalDistance)[0];
             $kilometers = floor($distance / 1000);
             $meters = substr(round($distance % 1000), 0, 2);
-            $distance = floatval($kilometers . '.' . $meters);
+            $distance = (float)($kilometers . '.' . $meters);
             $activity->distance = $distance;
             $activity->avg_speed = $stat['avgSpeed'];
             if ($maxSpeed === 0) {
@@ -135,7 +142,7 @@ class UploadController extends Controller
             $activity->elevation_loss = $stat['cumulativeElevationLoss'];
             $activity->started_at = $stat['startedAt'];
             $activity->finished_at = $stat['finishedAt'];
-            $activity->duration = intval($totalMovingTime);
+            $activity->duration = (int)$totalMovingTime;
             $activity->duration_total = $stat['duration'];
             // TODO: Сделать avg_heart_rate, avg_cadence, max_cadence, total_calories
             $activity->avg_heart_rate = 0;

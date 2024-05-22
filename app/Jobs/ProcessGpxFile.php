@@ -39,9 +39,13 @@ class ProcessGpxFile implements ShouldQueue
         $gpxObj = new phpGPX();
 
         try {
-            $gpx = $gpxObj->load(Storage::path('temp/' . $this->fileName));
+            $gpx = $gpxObj::load(Storage::path('temp/' . $this->fileName));
         } catch (Exception $e) {
             $this->fail($e->getMessage());
+        }
+
+        if (empty($gpx->tracks) || count($gpx->tracks[0]->segments) === 0) {
+            $this->fail('Empty GPX file!');
         }
 
         $maxSpeed = 0.0;
@@ -91,11 +95,11 @@ class ProcessGpxFile implements ShouldQueue
 
         $stat = array_merge_recursive($statsTrack)[0];
 
-        if ($totalMovingTime == 0) {
+        if ($totalMovingTime === 0) {
             $totalMovingTime = $stat['duration'];
         }
 
-        $segment = $track->segments[0];
+        $segment = $gpx->tracks[0]->segments[0];
         $startPoint = $segment->points[0];
         $endPoint = $segment->points[array_key_last($segment->points)];
         $startLatitude = $startPoint->latitude;
@@ -115,7 +119,7 @@ class ProcessGpxFile implements ShouldQueue
         $distance = explode('.', $totalDistance)[0];
         $kilometers = floor($distance / 1000);
         $meters = substr(round($distance % 1000), 0, 2);
-        $distance = floatval($kilometers . '.' . $meters);
+        $distance = (float)($kilometers . '.' . $meters);
         $activity->distance = $distance;
         $activity->avg_speed = $stat['avgSpeed'];
         if ($maxSpeed === 0) {
@@ -131,7 +135,7 @@ class ProcessGpxFile implements ShouldQueue
         $activity->elevation_loss = $stat['cumulativeElevationLoss'];
         $activity->started_at = $stat['startedAt'];
         $activity->finished_at = $stat['finishedAt'];
-        $activity->duration = intval($totalMovingTime);
+        $activity->duration = (int)$totalMovingTime;
         $activity->duration_total = $stat['duration'];
         // TODO: Сделать avg_heart_rate, avg_cadence, max_cadence, total_calories
         $activity->avg_heart_rate = 0;
