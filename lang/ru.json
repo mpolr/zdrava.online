@@ -163,8 +163,8 @@
     "Privacy Policy": "Политика конфиденциальности",
     "Terms &amp; Conditions": "Условия использования",
     "Links": "Ссылки",
-    "Account deleting": "Удаление аккаунта",
-    "Account deletion request": "Запрос на удаление аккаунта",
+    "Zdrava account deleting": "Удаление аккаунта Zdrava",
+    "Request account deletion": "Запрос на удаление аккаунта",
     "Privacy settings successfully updated": "Настройки конфиденциальности успешно обновлены",
     "Navigation": "Навигация",
     "Notifications": "Уведомления",
@@ -172,5 +172,13 @@
     "Verify email": "Подтвердить почту",
     "Hello! Thank you for signing up.": "Привет! Спасибо за регистрацию.",
     "To complete registration, confirm your email address by clicking the button below.": "Для завершения регистрации подтвердите свой адрес электронной почты, нажав кнопку ниже.",
-    "Not authorized": "Не авторизован"
+    "Not authorized": "Не авторизован",
+    "Announcements": "Анонсы",
+    "No announcements yet": "Анонсов пока нет",
+    "What does it mean": "Что это значит",
+    "On this page you can delete your account. It is not possible to undo account deletion. Your account and its data (including from the activity map, tasks and ratings) will be deleted forever and you will be excluded from all clubs. Zdrava may store content you create, such as information about open areas or routes.": "На этой странице вы можете удалить свой аккаунт. Отменить удаление аккаунта невозможно. Ваш аккаунт и его данные (в том числе с карты активности, из задач и рейтингов) будут удалены навсегда и вы будете исключены из всех клубов. В Zdrava может сохраниться созданный вами контент, например, информация по открытым участкам или маршрутам.",
+    "Removal request": "Запрос на удаление",
+    "To prevent anyone other than you from deleting your account, you must confirm your request by email. We will send notification of the final step to": "Чтобы никто, кроме вас, не мог удалить ваш аккаунт, необходимо подтвердить запрос по электронной почте. Мы отправим уведомление о последнем этапе по адресу",
+    "Your account will not be deleted until you follow the instructions in the email.": "Ваш аккаунт не будет удален, пока вы не выполните инструкции из письма.",
+    "The account and all data are deleted forever. They cannot be downloaded or restored.": "Аккаунт и все данные удаляются навсегда. Их нельзя будет скачать или восстановить."
 }

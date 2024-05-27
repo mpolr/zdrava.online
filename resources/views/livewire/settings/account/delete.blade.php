@@ -6,7 +6,7 @@
         </div>
         <div class="w-full col-span-2">
             <h2 class="mb-2 mt-0 text-4xl font-medium leading-tight text-black dark:text-gray-100">
-                {{ __('Account deleting') }}
+                {{ __('Zdrava account deleting') }}
             </h2>
             <hr class="h-px mt-4 mb-8 bg-gray-200 border-0 dark:bg-gray-700">
             @error('profile') @livewire('toast.errors') @enderror
@@ -15,23 +15,20 @@
             @endif
             <div class="block mt-8 p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
                 <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-                    Что это значит
+                    {{ __('What does it mean') }}
                 </h5>
                 <p class="font-normal text-gray-700 dark:text-gray-400">
-                    На этой странице вы можете удалить свой аккаунт. Отменить удаление аккаунта невозможно.
-                    Ваш аккаунт и его данные (в том числе с карты активности, из задач и рейтингов) будут удалены навсегда и вы будете исключены из всех клубов.
-                    В Zdrava может сохраниться созданный вами контент, например, информация по открытым участкам или маршрутам.
+                    {{ __('On this page you can delete your account. It is not possible to undo account deletion. Your account and its data (including from the activity map, tasks and ratings) will be deleted forever and you will be excluded from all clubs. Zdrava may store content you create, such as information about open areas or routes.') }}
                 </p>
             </div>
             <div class="block mt-8 p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
                 <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-                    Запрос на удаление
+                    {{ __('Removal request') }}
                 </h5>
                 <p class="font-normal text-gray-700 dark:text-gray-400">
-                    Чтобы никто, кроме вас, не мог удалить ваш аккаунт, необходимо подтвердить запрос по электронной почте.
-                    Мы отправим уведомление о последнем этапе по адресу <strong>{{ auth()->user()->email }}</strong>.
+                    {{ __('To prevent anyone other than you from deleting your account, you must confirm your request by email. We will send notification of the final step to') }} <strong>{{ auth()->user()->email }}</strong>.
                     <br><br>
-                    Ваш аккаунт не будет удален, пока вы не выполните инструкции из письма.
+                    {{ __('Your account will not be deleted until you follow the instructions in the email.') }}
                 </p>
                 <div class="flex items-center p-4 my-4 text-sm text-red-800 border border-red-300 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400 dark:border-red-800" role="alert">
                     <svg class="flex-shrink-0 inline w-4 h-4 mr-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
@@ -39,12 +36,12 @@
                     </svg>
                     <span class="sr-only">Info</span>
                     <div>
-                        Аккаунт и все данные удаляются навсегда. Их нельзя будет скачать или восстановить.
+                        {{ __('The account and all data are deleted forever. They cannot be downloaded or restored.') }}
                     </div>
                 </div>
             </div>
             <p class="pt-4">
-                <button wire:click="delete" type="button" class="px-4 py-2 bg-red-500 hover:bg-red-700 text-white font-bold rounded-full">{{ __('Account deletion request') }}</button>
+                <button wire:click="delete" type="button" class="px-4 py-2 bg-red-500 hover:bg-red-700 text-white font-bold rounded-full">{{ __('Request account deletion') }}</button>
             </p>
         </div>
     </div>
