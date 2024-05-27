@@ -1,9 +1,11 @@
-@section('title', __('My account') . ' | Zdrava')
+@section('title', __('Zdrava account deleting') . ' | Zdrava')
 <main class="container mx-auto px-0 py-12 max-w-screen-lg">
     <div class="grid grid-cols-3 gap-4">
+        @auth()
         <div class="w-full">
             @include('components.settings-menu')
         </div>
+        @endauth
         <div class="w-full col-span-2">
             <h2 class="mb-2 mt-0 text-4xl font-medium leading-tight text-black dark:text-gray-100">
                 {{ __('Zdrava account deleting') }}
@@ -26,7 +28,9 @@
                     {{ __('Removal request') }}
                 </h5>
                 <p class="font-normal text-gray-700 dark:text-gray-400">
-                    {{ __('To prevent anyone other than you from deleting your account, you must confirm your request by email. We will send notification of the final step to') }} <strong>{{ auth()->user()->email }}</strong>.
+                    {{ __('To prevent anyone other than you from deleting your account, you must confirm your request by email. We will send notification of the final step to') }}
+                    @auth() <strong>{{ auth()->user()->email }}</strong>. @endauth
+                    @guest() email @endguest
                     <br><br>
                     {{ __('Your account will not be deleted until you follow the instructions in the email.') }}
                 </p>
@@ -41,7 +45,12 @@
                 </div>
             </div>
             <p class="pt-4">
-                <button wire:click="delete" type="button" class="px-4 py-2 bg-red-500 hover:bg-red-700 text-white font-bold rounded-full">{{ __('Request account deletion') }}</button>
+                @auth()
+                    <button wire:click="delete" type="button" class="px-4 py-2 bg-red-500 hover:bg-red-700 text-white font-bold rounded-full">{{ __('Request account deletion') }}</button>
+                @endauth
+                @guest()
+                    <a href="{{ route('settings.account.delete') }}" type="button" class="px-4 py-2 bg-red-500 hover:bg-red-700 text-white font-bold rounded-full">{{ __('Login') }} & {{ __('Request account deletion') }}</a>
+                @endguest
             </p>
         </div>
     </div>

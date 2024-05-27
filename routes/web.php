@@ -29,6 +29,9 @@ Route::group(['prefix' => 'legal'], function () {
     Route::get('terms', function () {
         return view('legal.terms');
     })->name('legal.terms');
+    Route::get('account-deletion', function () {
+        return view('legal.account-deletion');
+    })->name('legal.account-deletion');
 });
 
 Route::get('download-app', [DownloadAppController::class, 'index'])->name('app');
