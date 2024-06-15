@@ -11,8 +11,10 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use phpGPX\phpGPX;
+use Psr\Log\LogLevel;
 
 class ProcessGpxFile implements ShouldQueue
 {
@@ -41,6 +43,7 @@ class ProcessGpxFile implements ShouldQueue
         try {
             $gpx = $gpxObj::load(Storage::path('temp/' . $this->fileName));
         } catch (Exception $e) {
+            Log::channel('telegram')->log(LogLevel::ERROR, "User: {$this->userId}; {$e->getMessage()}");
             $this->fail($e->getMessage());
         }
 

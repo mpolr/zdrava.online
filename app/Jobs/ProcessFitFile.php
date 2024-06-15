@@ -12,7 +12,9 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
+use Psr\Log\LogLevel;
 
 class ProcessFitFile implements ShouldQueue, ShouldBeUnique
 {
@@ -39,6 +41,7 @@ class ProcessFitFile implements ShouldQueue, ShouldBeUnique
         try {
             $fit = new phpFITFileAnalysis(Storage::path('temp/' . $this->fileName), ['fix_data']);
         } catch (Exception $e) {
+            Log::channel('telegram')->log(LogLevel::ERROR, "User: {$this->userId}; {$e->getMessage()}");
             $this->fail($e->getMessage());
         }
 
