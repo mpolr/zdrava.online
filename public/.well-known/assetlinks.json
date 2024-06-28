@@ -1,0 +1,9 @@
+[{
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+        "namespace": "android_app",
+        "package_name": "online.zdrava",
+        "sha256_cert_fingerprints":
+        ["7E:36:25:98:D7:04:67:8B:84:02:45:27:06:C2:FC:21:3B:F7:AE:59:CF:9F:A2:21:26:FE:AE:2F:53:A3:2C:74"]
+    }
+}]
