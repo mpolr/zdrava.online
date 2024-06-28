@@ -12,7 +12,7 @@ class Show extends Component
 
     public function mount(int $id): void
     {
-        $this->activity = Activities::find($id);
+        $this->activity = Activities::findOrFail($id);
     }
 
     public function render()
