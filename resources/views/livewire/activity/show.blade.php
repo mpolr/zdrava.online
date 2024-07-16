@@ -113,7 +113,7 @@
                                 </div>
                                 <div class="flex-1 mx-2 my-4 h-10">
                                     <h5 class="mb-0 text-lg font-normal tracking-tight text-gray-700 dark:text-white whitespace-nowrap">
-                                        {{ __(':elevation m', ['elevation' => $activity->elevation_gain]) }}
+                                        {{ __(':elevation m', ['elevation' => $activity->elevation_gain ?: "-"]) }}
                                     </h5>
                                     <span class="text-gray-500 whitespace-nowrap text-xs dark:text-gray-400">
                                         {{ __('Elevation') }}
@@ -139,7 +139,7 @@
                                 </div>
                                 <div class="flex-1 mx-2 my-4 h-10">
                                     <h5 class="mb-0 text-lg font-normal tracking-tight text-gray-700 dark:text-white">
-                                        {{ $activity->avg_heart_rate }}
+                                        {{ $activity->avg_heart_rate ?: "-" }}
                                     </h5>
                                     <span class="text-gray-500 whitespace-nowrap text-xs dark:text-gray-400">
                                         {{ __('Avg. HR') }}
@@ -147,7 +147,7 @@
                                 </div>
                                 <div class="flex-1 mx-2 my-4 h-10">
                                     <h5 class="mb-0 text-lg font-normal tracking-tight text-gray-700 dark:text-white">
-                                        {{ $activity->avg_cadence }}
+                                        {{ $activity->avg_cadence ?: "-" }}
                                     </h5>
                                     <span class="text-gray-500 whitespace-nowrap text-xs dark:text-gray-400">
                                         {{ __('Avg. cadence') }}
