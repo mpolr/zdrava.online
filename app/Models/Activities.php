@@ -102,6 +102,19 @@ class Activities extends Model implements Likeable
         ];
     }
 
+    public function getFITFile(bool $onlyFileName = false): ?string
+    {
+        $fitFile = $this->file;
+        if (!strpos($this->file, '.fit')) {
+            return null;
+        }
+
+        if ($onlyFileName) {
+            return $fitFile;
+        }
+        return Storage::url('public/activities/' . $this->user_id . '/' . $fitFile);
+    }
+
     public function getGPXFile(bool $onlyFileName = false): ?string
     {
         $gpxFile = $this->file;
