@@ -14,7 +14,7 @@ Route::post('/report/crash', [ApiController::class, 'errorReporting']);
 
 Route::middleware('auth:sanctum')->get('/feed', [ApiFeedController::class, 'feed']);
 Route::middleware('auth:sanctum')->get('/activity/{id}/comments', [ApiActivityController::class, 'activityComments']);
-Route::middleware('auth:sanctum')->post('/upload', [UploadController::class, 'upload']);
+Route::middleware('auth:sanctum')->post('/upload', [UploadController::class, 'workout', ['fromApp' => true]]);
 
 /* Activity */
 Route::group(['as' => 'api.', 'prefix' => 'activity', 'middleware' => 'auth:sanctum'], function () {
