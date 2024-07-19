@@ -6,10 +6,12 @@ use App\Http\Controllers\Api\ApiController;
 use App\Http\Controllers\Api\ApiFeedController;
 use App\Http\Controllers\Api\ApiUpload;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\UploadController;
 use Illuminate\Support\Facades\Route;
 
 Route::post('/login', [LoginController::class, 'authenticateApi']);
+Route::post('/register', [RegisterController::class, 'registerApi']);
 Route::post('/report/crash', [ApiController::class, 'errorReporting']);
 
 Route::middleware('auth:sanctum')->get('/feed', [ApiFeedController::class, 'feed']);

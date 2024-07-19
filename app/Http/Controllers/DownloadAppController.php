@@ -15,6 +15,11 @@ class DownloadAppController extends Controller
         return view('app.index', ['versions' => $appVersions]);
     }
 
+    public function mobile(): \Illuminate\View\View|View
+    {
+        return view('app.mobile');
+    }
+
     public function download(?string $version = null): StreamedResponse
     {
         $app = null;
