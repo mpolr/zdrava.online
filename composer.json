@@ -26,12 +26,11 @@
         "vladimir-yuldashev/laravel-queue-rabbitmq": "^13.3"
     },
     "require-dev": {
-        "roave/security-advisories": "dev-latest"
-        ,
         "barryvdh/laravel-debugbar": "^3.8",
         "barryvdh/laravel-ide-helper": "^2.13",
         "driftingly/rector-laravel": "^0.26.2",
         "fakerphp/faker": "^1.22",
+        "laravel-lang/common": "^6.3",
         "laravel/pint": "^1.0",
         "laravel/sail": "^1.18",
         "mockery/mockery": "^1.4.4",
@@ -39,6 +38,7 @@
         "phpunit/phpunit": "^10.1",
         "psalm/plugin-laravel": "^2.8",
         "rector/rector": "^0.18.6",
+        "roave/security-advisories": "dev-latest",
         "spatie/laravel-ignition": "^2.0",
         "vimeo/psalm": "^5.11"
     },
@@ -61,6 +61,7 @@
         ],
         "post-update-cmd": [
             "@php artisan vendor:publish --tag=laravel-assets --ansi --force",
+            "@php artisan lang:update",
             "Illuminate\\Foundation\\ComposerScripts::postUpdate",
             "@php artisan ide-helper:generate",
             "@php artisan ide-helper:meta"
