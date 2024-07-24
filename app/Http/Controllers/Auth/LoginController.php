@@ -9,12 +9,12 @@ use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
-use Illuminate\Validation\ValidationException;
 
 class LoginController extends Controller
 {
@@ -28,24 +28,36 @@ class LoginController extends Controller
 
     public function authenticateApi(Request $request): JsonResponse
     {
+        $preferredLocale = $request->getPreferredLanguage();
+        if ($preferredLocale !== null) {
+            App::setLocale($preferredLocale);
+        }
+
         $credentials = $request->validate([
             'email' => ['required', 'email'],
             'password' => ['required'],
             'deviceName' => 'required',
         ]);
 
-        $user = User::where('email', $request->email)->first();
-        if (! $user || ! Hash::check($request->password, $user->password)) {
+        $user = User::where('email', $credentials['email'])->first();
+        if (!$user || !Hash::check($credentials['password'], $user->password)) {
             return response()->json([
                 'success' => false,
-                'message' => 'User does not exist'
-            ], 401);
+                'message' => __('Your provided credentials do not match in our records')
+            ]);
         }
 
-        $token = $user->createToken($request->deviceName)->plainTextToken;
+        if ($user->hasVerifiedEmail() === false) {
+            return response()->json([
+                'success' => false,
+                'message' => __('Please verify your email address')
+            ]);
+        }
+
+        $token = $user->createToken($credentials['deviceName'])->plainTextToken;
         return response()->json([
             'success' => true,
-            'message' => 'Login success',
+            'message' => __('Logged in successfully'),
             'token' => $token,
             'userId' => $user->id,
         ]);

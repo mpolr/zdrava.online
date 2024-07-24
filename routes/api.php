@@ -10,9 +10,9 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\UploadController;
 use Illuminate\Support\Facades\Route;
 
-Route::post('/login', [LoginController::class, 'authenticateApi']);
-Route::post('/register', [RegisterController::class, 'register']);
-Route::post('/report/crash', [ApiController::class, 'errorReporting']);
+Route::middleware('throttle:6,1')->post('/login', [LoginController::class, 'authenticateApi']);
+Route::middleware('throttle:6,1')->post('/register', [RegisterController::class, 'register']);
+Route::middleware('throttle:6,1')->post('/report/crash', [ApiController::class, 'errorReporting']);
 
 Route::middleware('auth:sanctum')->get('/feed', [ApiFeedController::class, 'feed']);
 Route::middleware('auth:sanctum')->get('/activity/{id}/comments', [ApiActivityController::class, 'activityComments']);
