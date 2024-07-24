@@ -94,7 +94,7 @@ class RegisterController extends Controller
 
             return new JsonResponse([
                 'success' => true,
-                'message' => 'Successful created user. Please check your email for a 6-digit pin to verify your email.',
+                'message' => __('Successful created user. Please check inbox and confirm your email.'),
                 'token' => $token
             ], 201);
         }
