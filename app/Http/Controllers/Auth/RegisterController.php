@@ -12,6 +12,7 @@ use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -39,20 +40,35 @@ class RegisterController extends Controller
 
     protected function register(Request $request): JsonResponse
     {
-        $request->validate([
+        $preferredLocale = $request->getPreferredLanguage();
+        if ($preferredLocale !== null) {
+            App::setLocale($preferredLocale);
+        }
+
+        $validator = Validator::make($request->all(), [
             'first_name' => ['required', 'string' , 'max:250', Rule::notIn(self::rules())],
             'last_name' => ['required', 'string', 'max:250', Rule::notIn(self::rules())],
             'email' => 'required|email|max:250|unique:users',
             'password' => 'required|min:8|confirmed',
             'subscribe_news' => 'boolean',
+            'deviceName' => 'string',
         ]);
 
+        if ($validator->fails()) {
+            return new JsonResponse([
+                'success' => false,
+                'message' => $validator->errors()->first(),
+            ], 200);
+        }
+
+        $validated = $validator->validated();
+
         $user = User::create([
-            'first_name' => $request->first_name,
-            'last_name' => $request->last_name,
-            'email' => $request->email,
-            'subscribe_news' => $request->subscribe_news ? 1 : 0,
-            'password' => Hash::make($request->password)
+            'first_name' => $validated['first_name'],
+            'last_name' => $validated['last_name'],
+            'email' => $validated['email'],
+            'subscribe_news' => $validated['subscribe_news'] ? 1 : 0,
+            'password' => Hash::make($validated['password'])
         ]);
 
         if ($user) {
@@ -81,12 +97,12 @@ class RegisterController extends Controller
                 'message' => 'Successful created user. Please check your email for a 6-digit pin to verify your email.',
                 'token' => $token
             ], 201);
-        } else {
-            return new JsonResponse([
-                'success' => false,
-                'message' => 'Failed creating user.',
-            ], 200);
         }
+
+        return new JsonResponse([
+            'success' => false,
+            'message' => 'Failed creating user.',
+        ], 200);
 
 //        $credentials = $request->only(['email', 'password']);
 //        Auth::attempt($credentials);
