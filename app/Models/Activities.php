@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 use App\Contracts\Likeable;
 use App\Models\Concerns\Likes;
+use Log;
+use Psr\Log\LogLevel;
 
 class Activities extends Model implements Likeable
 {
@@ -62,10 +64,19 @@ class Activities extends Model implements Likeable
             $result = $this->creator;
         }
         if (!empty($this->device_manufacturers_id)) {
-            $result = $this->deviceManufacturer->description;
+            try {
+                $result = $this->deviceManufacturer->description;
+            } catch (\Exception $e) {
+                Log::channel('telegram')->log(LogLevel::ERROR, auth()->user()->getFullName() . "Unknown device_manufacturers_description: ID: {$this->device_manufacturers_id}");
+            }
         }
         if (!empty($this->device_models_id)) {
-            $result .= ' ' . $this->deviceModel->description;
+            try {
+                $result .= ' ' . $this->deviceModel->description;
+            } catch (\Exception $e) {
+                Log::channel('telegram')->log(LogLevel::ERROR, auth()->user()->getFullName() . " Unknown device_model_description: ID: {$this->device_models_id}");
+            }
+
         }
 
         return $result;
