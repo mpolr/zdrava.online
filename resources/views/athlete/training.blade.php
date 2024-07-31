@@ -65,7 +65,7 @@
                                 <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                                     <th scope="row" colspan="9" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                         {!! __('Workouts not found. Record one using :zdrava-app or :upload manually', [
-                                                'zdrava-app' => '<a href="' . route('app') . '" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">' . __('Zdrava android app') . '</a>',
+                                                'zdrava-app' => '<a href="' . route('mobile') . '" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">' . __('Zdrava android app') . '</a>',
                                                 'upload' => '<a href="' . route('upload.workout') . '" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">' . __('upload files') . ' GPX, FIT, TCX</a>'
                                         ])!!}
                                     </th>

@@ -35,8 +35,6 @@ Route::group(['prefix' => 'legal'], function () {
 });
 
 Route::get('mobile', [DownloadAppController::class, 'mobile'])->name('mobile');
-Route::get('download-app', [DownloadAppController::class, 'index'])->name('app');
-Route::get('download-app/download/{version?}', [DownloadAppController::class, 'download'])->name('app.download');
 
 Route::middleware(Authenticate::class)->get('dashboard', \App\Http\Livewire\Dashboard::class)->name('site.dashboard');
 

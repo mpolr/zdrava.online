@@ -341,7 +341,7 @@
                     <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">{{ __('Download') }}</h2>
                     <ul class="text-gray-500 dark:text-gray-400 font-medium">
                         <li class="mb-4">
-                            <a href="{{ route('app') }}" class="hover:underline">Android</a>
+                            <a href="{{ route('mobile') }}" class="hover:underline">Android</a>
                         </li>
                     </ul>
                 </div>
