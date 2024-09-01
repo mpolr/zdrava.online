@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Storage;
 
 class ApiUpload
 {
-    public function avatar(Request $request)
+    public function avatar(Request $request): \Illuminate\Http\JsonResponse
     {
         if (empty($request->file('avatar'))) {
             return response()->json([
