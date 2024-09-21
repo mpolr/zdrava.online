@@ -20,7 +20,15 @@ class ApiAthleteController extends Controller
             ], 401);
         }
 
-        $athlete = User::findOrFail($id, ['id', 'nickname', 'photo', 'first_name', 'last_name', 'created_at']);
+        $user = User::findOrFail($id, ['id', 'nickname', 'photo', 'first_name', 'last_name', 'created_at']);
+        $athlete = [
+            'id' => $user->id,
+            'nickname' => $user->getNickname(),
+            'photo' => $user->photo,
+            'firstName' => $user->first_name,
+            'lastName' => $user->last_name,
+            'createdAt' => $user->created_at,
+        ];
 
         if (empty($athlete)) {
             return response()->json([
@@ -29,10 +37,10 @@ class ApiAthleteController extends Controller
             ], 404);
         }
 
-        $athlete->activities = $user->activities->count();
-        $athlete->subscriptions = $user->subscriptions->count();
-        $athlete->subscribers = $user->subscribers->count();
-        $athlete->isSubscribed = $user->isSubscriber($athlete);
+        $athlete['activities'] = $user->activities->count();
+        $athlete['subscriptions'] = $user->subscriptions->count();
+        $athlete['subscribers'] = $user->subscribers->count();
+        $athlete['isSubscribed'] = $user->isSubscriber($user);
 
         return response()->json([
             'success' => true,
@@ -40,7 +48,7 @@ class ApiAthleteController extends Controller
         ]);
     }
 
-    protected function subscribe(int $id)
+    protected function subscribe(int $id): JsonResponse
     {
         $subscription = new Subscription();
         $subscription->user_id = $id;

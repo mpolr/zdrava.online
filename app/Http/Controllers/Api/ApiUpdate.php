@@ -11,7 +11,7 @@ class ApiUpdate
     public function check(Request $request): \Illuminate\Http\JsonResponse
     {
         $version = $request->string('version');
-        $latestVersion = '0.3';
+        $latestVersion = '0.3.1';
 
         if ($version === null) {
             return response()->json([

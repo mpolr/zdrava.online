@@ -39,9 +39,18 @@ class ApiFeedController extends Controller
         foreach ($activities as $activity) {
             $comments = $activity->comments;
 
+            $user = $activity->getUser();
+
             $feedItems[] = [
                 'id' => $activity->id,
-                'user' => $activity->getUser(),
+                'user' => [
+                    'id' => $user->id,
+                    'nickname' => $user->getNickname(),
+                    'photo' => $user->photo,
+                    'firstName' => $user->first_name,
+                    'lastName' => $user->last_name,
+                    'createdAt' => $user->created_at,
+                ],
                 'name' => $activity->name,
                 'description' => $activity->description,
                 'imageUrl' => $activity->getImage($activity->user_id, true),
