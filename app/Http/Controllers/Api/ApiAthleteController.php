@@ -13,7 +13,7 @@ class ApiAthleteController extends Controller
     {
         $user = auth('sanctum')->user();
 
-        if (empty($user)) {
+        if ($user === null) {
             return response()->json([
                 'success' => false,
                 'message' => __('User not found')

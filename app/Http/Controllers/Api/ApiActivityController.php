@@ -24,7 +24,7 @@ class ApiActivityController extends Controller
     {
         $user = auth('sanctum')->user();
 
-        if (empty($user)) {
+        if ($user === null) {
             return response()->json([
                 'success' => false,
                 'message' => __('User not found')
@@ -40,7 +40,10 @@ class ApiActivityController extends Controller
             ], 404);
         }
 
-        $comments = $activity->comments()->with('user:id,nickname,photo,first_name,last_name,created_at', 'replies.user')->get();
+        $comments = $activity
+            ->comments()
+            ->with('user:id,nickname,photo,first_name,last_name,created_at', 'replies.user')
+            ->get();
 
         return response()->json([
             'success' => true,
@@ -53,7 +56,7 @@ class ApiActivityController extends Controller
         $activity = Activities::find($id);
         $user = auth('sanctum')->user();
 
-        if (empty($user)) {
+        if ($user === null) {
             return response()->json([
                 'success' => false,
                 'message' => __('User not found')
@@ -72,7 +75,7 @@ class ApiActivityController extends Controller
         $activity = Activities::find($id);
         $user = auth('sanctum')->user();
 
-        if (empty($user)) {
+        if ($user === null) {
             return response()->json([
                 'success' => false,
                 'message' => __('User not found')

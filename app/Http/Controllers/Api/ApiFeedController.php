@@ -35,46 +35,9 @@ class ApiFeedController extends Controller
             ]);
         }
 
-        $feedItems = [];
-        foreach ($activities as $activity) {
-            $comments = $activity->comments;
-
-            $user = $activity->getUser();
-
-            $feedItems[] = [
-                'id' => $activity->id,
-                'user' => [
-                    'id' => $user->id,
-                    'nickname' => $user->getNickname(),
-                    'photo' => $user->photo,
-                    'firstName' => $user->first_name,
-                    'lastName' => $user->last_name,
-                    'createdAt' => $user->created_at,
-                ],
-                'name' => $activity->name,
-                'description' => $activity->description,
-                'imageUrl' => $activity->getImage($activity->user_id, true),
-                'userName' => $activity->getUser()->getFullName(),
-                'distance' => $activity->distance,
-                'avgSpeed' => $activity->avg_speed,
-                'elevationGain' => $activity->elevation_gain,
-                'startedAt' => $activity->started_at,
-                'locality' => $activity->locality,
-                'comments' => [
-                    'count' => count($comments),
-                    'items' => $comments
-                ],
-                'likes' => [
-                    'count' => count($activity->likes),
-                    'likedByMe' => $user->hasLiked($activity),
-                ],
-                'sharesCount' => 0,
-            ];
-        }
-
         return response()->json([
             'success' => true,
-            'activities' => $feedItems,
+            'activities' => $activities,
         ]);
     }
 }

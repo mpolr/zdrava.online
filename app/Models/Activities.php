@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Facades\Storage;
 use App\Contracts\Likeable;
 use App\Models\Concerns\Likes;
@@ -95,6 +96,11 @@ class Activities extends Model implements Likeable
     public function getUser(): ?User
     {
         return User::find($this->user_id);
+    }
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
     }
 
     public function getTrackCenter(): array
@@ -220,5 +226,32 @@ class Activities extends Model implements Likeable
     public function comments(string $orderBy = 'asc'): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(Comment::class)->orderBy('created_at', $orderBy);
+    }
+
+    // Метод для преобразования модели в массив с кастомными ключами
+    public function toArray(): array
+    {
+        return [
+            'id' => $this->id,
+            'user' => $this->user,
+            'name' => $this->name,
+            'description' => $this->description,
+            'imageUrl' => $this->getImage($this->user_id, true),
+            'userName' => $this->user->getFullName(),
+            'distance' => $this->distance,
+            'avgSpeed' => $this->avg_speed,
+            'elevationGain' => $this->elevation_gain,
+            'startedAt' => $this->started_at,
+            'locality' => $this->locality,
+            'comments' => [
+                'count' => count($this->comments),
+                'items' => $this->comments
+            ],
+            'likes' => [
+                'count' => count($this->likes),
+                'likedByMe' => $this->user->hasLiked($this),
+            ],
+            'sharesCount' => 0,
+        ];
     }
 }

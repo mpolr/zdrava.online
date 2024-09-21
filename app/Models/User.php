@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Contracts\Likeable;
 use App\Traits\HasRolesAndPermissions;
@@ -53,9 +54,9 @@ class User extends Authenticatable implements MustVerifyEmail
 
         if (str_starts_with($this->photo, 'http')) {
             return $this->photo;
-        } else {
-            return Storage::url('pictures/athletes/' . $this->id . '/' . $this->photo);
         }
+
+        return Storage::url('pictures/athletes/' . $this->id . '/' . $this->photo);
     }
 
     public function getPhotoUrl(): ?string
@@ -66,9 +67,9 @@ class User extends Authenticatable implements MustVerifyEmail
 
         if (str_starts_with($this->photo, 'http')) {
             return $this->photo;
-        } else {
-            return url('storage/pictures/athletes/' . $this->id . '/' . $this->photo);
         }
+
+        return url('storage/pictures/athletes/' . $this->id . '/' . $this->photo);
     }
 
     public function getNickname(bool $addAtSymbol = false): ?string
@@ -94,7 +95,7 @@ class User extends Authenticatable implements MustVerifyEmail
     public function subscriptions(): BelongsToMany
     {
         return $this->belongsToMany(
-            User::class,
+            __CLASS__,
             'subscriptions',
             'subscriber_id',
             'user_id',
@@ -158,5 +159,18 @@ class User extends Authenticatable implements MustVerifyEmail
         return Subscription::where('subscriber_id', $this->id)
             ->where('user_id', $user->id)
             ->exists();
+    }
+
+    // Метод для преобразования модели в массив с кастомными ключами
+    public function toArray(): array
+    {
+        return [
+            'id' => $this->id,
+            'nickname' => $this->getNickname(),
+            'photo' => $this->photo,
+            'firstName' => $this->first_name,
+            'lastName' => $this->last_name,
+            'createdAt' => $this->created_at,
+        ];
     }
 }
