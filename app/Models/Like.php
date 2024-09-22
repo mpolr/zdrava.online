@@ -25,6 +25,7 @@ class Like extends Model
         return [
             'id' => $this->id,
             'user' => $this->user,
+            'likeableId' => $this->likeable->id,
             'createdAt' => $this->created_at,
         ];
     }
