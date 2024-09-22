@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\ApiActivityController;
 use App\Http\Controllers\Api\ApiAthleteController;
 use App\Http\Controllers\Api\ApiController;
 use App\Http\Controllers\Api\ApiFeedController;
+use App\Http\Controllers\Api\ApiSearchController;
 use App\Http\Controllers\Api\ApiUpdate;
 use App\Http\Controllers\Api\ApiUpload;
 use App\Http\Controllers\Auth\LoginController;
@@ -32,6 +33,10 @@ Route::group(['as' => 'api.', 'prefix' => 'athlete', 'middleware' => 'auth:sanct
     Route::get('{id}', [ApiAthleteController::class, 'athlete'])->name('athlete');
     Route::post('{id}/subscribe', [ApiAthleteController::class, 'subscribe'])->name('subscribe');
     Route::delete('{id}/subscribe', [ApiAthleteController::class, 'unsubscribe'])->name('unsubscribe');
+});
+/* Search */
+Route::group(['as' => 'api.', 'prefix' => 'search', 'middleware' => 'auth:sanctum'], static function () {
+    Route::post('/athletes', [ApiSearchController::class, 'athletes'])->name('athletes');
 });
 /* Upload */
 Route::group(['as' => 'api.', 'prefix' => 'upload', 'middleware' => 'auth:sanctum'], static function () {

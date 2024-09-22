@@ -27,7 +27,6 @@ class Users extends Component
     {
         if (empty($this->search)) {
             $this->users = User::inRandomOrder()->limit(10)->get();
-            ;
         }
 
         $this->subscriptions = Subscription::where('subscriber_id', auth()->id())
