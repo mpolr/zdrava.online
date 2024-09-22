@@ -17,6 +17,8 @@ class Localization
             $locale = Session::get('locale');
             Carbon::setLocale($locale);
             App::setLocale($locale);
+        } elseif ($request->getPreferredLanguage() !== null && $request->isJson()) {
+            App::setLocale($request->getPreferredLanguage());
         }
         return $next($request);
     }
