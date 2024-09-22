@@ -300,6 +300,7 @@
     "Subscription requests": "Запросы на подписку",
     "Subscription requests: :count": "Запросы на подписку: :count",
     "Subscriptions": "Подписки",
+    "Successfully subscribed to \":user\"": "Вы подписались на \":user\"",
     "Successfully unsubscribed from \":user\"": "Вы успешно отписались от \":user\"",
     "Support the developer": "Поддержите разработчика",
     "Switch": "Переключить",

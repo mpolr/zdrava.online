@@ -74,12 +74,18 @@ class ApiAthleteController extends Controller
         $subscription = new Subscription();
         $subscription->user_id = $id;
         $subscription->subscriber_id = auth('sanctum')->id();
+        $subscription->confirmed = !$user->private;
         $result = $subscription->save();
 
         if ($result) {
+            match ($user->private) {
+                true => $message = __('Subscription request sent'),
+                false => $message = __('Successfully subscribed to ":user"', ['user' => $user->getFullName()])
+            };
+
             return response()->json([
                 'success' => true,
-                'message' => __('Subscription request sent'),
+                'message' => $message,
             ]);
         }
 
