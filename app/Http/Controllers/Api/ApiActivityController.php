@@ -12,7 +12,14 @@ class ApiActivityController extends Controller
 {
     protected function get(int $id): JsonResponse
     {
-        $activity = Activities::findOrFail($id);
+        $activity = Activities::find($id);
+
+        if (empty($activity)) {
+            return response()->json([
+                'success' => false,
+                'message' => __('Activity not found')
+            ], 404);
+        }
 
         return response()->json([
             'success' => true,
@@ -31,7 +38,7 @@ class ApiActivityController extends Controller
             ], 401);
         }
 
-        $activity = Activities::findOrFail($id);
+        $activity = Activities::find($id);
 
         if (empty($activity)) {
             return response()->json([
@@ -51,9 +58,47 @@ class ApiActivityController extends Controller
         ]);
     }
 
+    protected function activityLikes(int $id): JsonResponse
+    {
+        $user = auth('sanctum')->user();
+
+        if ($user === null) {
+            return response()->json([
+                'success' => false,
+                'message' => __('User not found')
+            ], 401);
+        }
+
+        $activity = Activities::find($id);
+
+        if (empty($activity)) {
+            return response()->json([
+                'success' => false,
+                'message' => __('Activity not found')
+            ], 404);
+        }
+
+        $likes = $activity
+            ->likes()
+            ->get();
+
+        return response()->json([
+            'success' => true,
+            'likes' => $likes,
+        ]);
+    }
+
     protected function like(int $id): JsonResponse
     {
         $activity = Activities::find($id);
+
+        if (empty($activity)) {
+            return response()->json([
+                'success' => false,
+                'message' => __('Activity not found')
+            ], 404);
+        }
+
         $user = auth('sanctum')->user();
 
         if ($user === null) {
@@ -73,6 +118,14 @@ class ApiActivityController extends Controller
     protected function unlike(int $id): JsonResponse
     {
         $activity = Activities::find($id);
+
+        if (empty($activity)) {
+            return response()->json([
+                'success' => false,
+                'message' => __('Activity not found')
+            ], 404);
+        }
+
         $user = auth('sanctum')->user();
 
         if ($user === null) {
@@ -92,6 +145,13 @@ class ApiActivityController extends Controller
     protected function addComment(Request $request, int $id): JsonResponse
     {
         $activity = Activities::find($id);
+
+        if (empty($activity)) {
+            return response()->json([
+                'success' => false,
+                'message' => __('Activity not found')
+            ], 404);
+        }
 
         $commentText = $request->get('text');
         if (empty($commentText)) {

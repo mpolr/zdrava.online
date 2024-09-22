@@ -16,7 +16,6 @@ Route::middleware('throttle:6,1')->post('/register', [RegisterController::class,
 Route::middleware('throttle:6,1')->post('/report/crash', [ApiController::class, 'errorReporting']);
 
 Route::middleware('auth:sanctum')->get('/feed', [ApiFeedController::class, 'feed']);
-Route::middleware('auth:sanctum')->get('/activity/{id}/comments', [ApiActivityController::class, 'activityComments']);
 Route::middleware('auth:sanctum')->post('/upload', [UploadController::class, 'workout', ['fromApp' => true]]);
 
 /* Activity */
@@ -25,6 +24,8 @@ Route::group(['as' => 'api.', 'prefix' => 'activity', 'middleware' => 'auth:sanc
     Route::post('{id}/like', [ApiActivityController::class, 'like'])->name('like');
     Route::delete('{id}/like', [ApiActivityController::class, 'unlike'])->name('unlike');
     Route::post('{id}/comment', [ApiActivityController::class, 'addComment'])->name('addComment');
+    Route::get('{id}/comments', [ApiActivityController::class, 'activityComments'])->name('activityComments');
+    Route::get('{id}/likes', [ApiActivityController::class, 'activityLikes'])->name('activityLikes');
 });
 /* Athlete */
 Route::group(['as' => 'api.', 'prefix' => 'athlete', 'middleware' => 'auth:sanctum'], static function () {

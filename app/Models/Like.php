@@ -18,4 +18,14 @@ class Like extends Model
     {
         return $this->morphTo();
     }
+
+    // Метод для преобразования модели в массив с кастомными ключами
+    public function toArray(): array
+    {
+        return [
+            'id' => $this->id,
+            'user' => $this->user,
+            'createdAt' => $this->created_at,
+        ];
+    }
 }
