@@ -382,5 +382,6 @@
     "Your tasks": "Ваши задачи",
     "Zdrava account deleting": "Удаление аккаунта Zdrava",
     "Zdrava android app": "Zdrava для android",
-    "Successful created user. Please check inbox and confirm your email.": "Пользователь успешно создан. Пожалуйста, проверьте почтовый ящик и подтвердите свой адрес электронной почты."
+    "Successful created user. Please check inbox and confirm your email.": "Пользователь успешно создан. Пожалуйста, проверьте почтовый ящик и подтвердите свой адрес электронной почты.",
+    "The user must confirm your subscription request.": "Пользователь должен подтвердить ваш запрос на подписку."
 }

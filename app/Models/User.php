@@ -164,6 +164,12 @@ class User extends Authenticatable implements MustVerifyEmail
     // Метод для преобразования модели в массив с кастомными ключами
     public function toArray(): array
     {
+        $isSubscribed = false;
+
+        if (auth()->user()) {
+            $isSubscribed = $this->isSubscriber(auth()->user());
+        }
+
         return [
             'id' => $this->id,
             'nickname' => $this->getNickname(),
@@ -171,6 +177,7 @@ class User extends Authenticatable implements MustVerifyEmail
             'firstName' => $this->first_name,
             'lastName' => $this->last_name,
             'createdAt' => $this->created_at,
+            'isSubscribed' => $isSubscribed,
         ];
     }
 }

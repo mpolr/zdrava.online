@@ -50,6 +50,27 @@ class ApiAthleteController extends Controller
 
     protected function subscribe(int $id): JsonResponse
     {
+        $check = Subscription::where(['user_id' => $id, 'subscriber_id' => auth()->id()])->first();
+        if ($check !== null) {
+            match ($check->confirmed) {
+                false => $message = __('The user must confirm your subscription request.'),
+                true => $message = __('Already subscribed'),
+            };
+
+            return response()->json([
+                'success' => false,
+                'message' => $message
+            ]);
+        }
+
+        $user = User::find($id);
+        if ($user === null) {
+            return response()->json([
+                'success' => false,
+                'message' => __('User not found')
+            ]);
+        }
+
         $subscription = new Subscription();
         $subscription->user_id = $id;
         $subscription->subscriber_id = auth('sanctum')->id();
