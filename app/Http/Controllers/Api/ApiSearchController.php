@@ -26,13 +26,13 @@ class ApiSearchController extends Controller
             ->orWhere('last_name', 'LIKE', "%{$query}%")
             ->orWhere('nickname', 'LIKE', "%{$query}%")
             ->orWhere('email', 'LIKE', "%{$query}%")
-            ->limit(100)
-            ->get();
+            ->limit(50)
+            ->get()->toArray();
 
-        if ($searchResults->isEmpty()) {
+        if (count($searchResults) === 0) {
             return response()->json([
                 'success' => false,
-                'message' => "No results found for {$query}",
+                'message' => __("No results found for ':query'", ['query' => $query]),
             ]);
         }
 

@@ -161,13 +161,35 @@ class User extends Authenticatable implements MustVerifyEmail
             ->exists();
     }
 
+    /**
+     * @throws \Exception
+     */
+    public function isSubscriptionConfirmed(User $subscriber): bool
+    {
+        if ($this->id === $subscriber->id) {
+            return true;
+        }
+
+        $check = Subscription::where('subscriber_id', $subscriber->id)
+            ->where('user_id', $this->id)
+            ->first(['confirmed']);
+
+        match ($check->confirmed) {
+            true => $result = true,
+            false => $result = false,
+            default => throw new \Exception('Unexpected match value')
+        };
+
+        return $result;
+    }
+
     // Метод для преобразования модели в массив с кастомными ключами
     public function toArray(): array
     {
         $isSubscribed = false;
 
         if (auth()->user()) {
-            $isSubscribed = $this->isSubscriber(auth()->user());
+            $isSubscribed = auth()->user()->isSubscriber($this);
         }
 
         return [
