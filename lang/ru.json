@@ -223,6 +223,7 @@
     "Permanent Redirect": "Постоянное перенаправление",
     "Photo": "Фотография",
     "Please click the button below to verify your email address.": "Пожалуйста, нажмите кнопку ниже, чтобы подтвердить свой адрес электронной почты.",
+    "Please verify your email address": "Пожалуйста подтвердите ваш адрес электронной почты",
     "Precondition Failed": "Условие ложно",
     "Precondition Required": "Требуется предусловие",
     "Preview": "Предпросмотр",
@@ -300,6 +301,7 @@
     "Subscription requests": "Запросы на подписку",
     "Subscription requests: :count": "Запросы на подписку: :count",
     "Subscriptions": "Подписки",
+    "Successful created user. Please check inbox and confirm your email.": "Пользователь успешно создан. Пожалуйста, проверьте почтовый ящик и подтвердите свой адрес электронной почты.",
     "Successfully subscribed to \":user\"": "Вы подписались на \":user\"",
     "Successfully unsubscribed from \":user\"": "Вы успешно отписались от \":user\"",
     "Support the developer": "Поддержите разработчика",
@@ -318,6 +320,7 @@
     "The given data was invalid.": "Указанные данные недействительны.",
     "The response is not a streamed response.": "Ответ не является потоковым.",
     "The response is not a view.": "Ответ не является представлением.",
+    "The user must confirm your subscription request.": "Пользователь должен подтвердить ваш запрос на подписку.",
     "This action is unauthorized.": "Действие не авторизовано.",
     "This athlete has no training yet": "У этого спортсмена пока нет тренировок",
     "This password reset link will expire in :count minutes.": "Срок действия ссылки для сброса пароля истекает через :count минут.",
@@ -357,7 +360,6 @@
     "Variant Also Negotiates": "Вариант тоже проводит согласование",
     "Verify email": "Подтвердить почту",
     "Verify Email Address": "Подтвердить адрес электронной почты",
-    "Please verify your email address": "Пожалуйста подтвердите ваш адрес электронной почты",
     "Version history": "История версий",
     "View": "Просмотр",
     "View :name": "Посмотреть :name",
@@ -382,7 +384,5 @@
     "Your provided credentials do not match in our records": "Предоставленные вами учетные данные не совпадают с нашими записями",
     "Your tasks": "Ваши задачи",
     "Zdrava account deleting": "Удаление аккаунта Zdrava",
-    "Zdrava android app": "Zdrava для android",
-    "Successful created user. Please check inbox and confirm your email.": "Пользователь успешно создан. Пожалуйста, проверьте почтовый ящик и подтвердите свой адрес электронной почты.",
-    "The user must confirm your subscription request.": "Пользователь должен подтвердить ваш запрос на подписку."
+    "Zdrava android app": "Zdrava для android"
 }
