@@ -296,6 +296,8 @@
     "Subscribers": "Подписчики",
     "Subscription request": "Запрос на подписку",
     "Subscription request cancelled": "Запрос на подписку отменен",
+    "User ':user' has subscribed to you": "Пользователь ':user' подписался на вас",
+    "Subscription request from ':user'": "Запрос на подписку от ':user'",
     "Subscription request from \":user\" declined": "Запрос на подписку от \":user\" отклонён",
     "Subscription request sent": "Запрос на подписку отправлен",
     "Subscription requests": "Запросы на подписку",

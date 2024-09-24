@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\ApiActivityController;
 use App\Http\Controllers\Api\ApiAthleteController;
 use App\Http\Controllers\Api\ApiController;
 use App\Http\Controllers\Api\ApiFeedController;
+use App\Http\Controllers\Api\ApiNotificationController;
 use App\Http\Controllers\Api\ApiSearchController;
 use App\Http\Controllers\Api\ApiUpdate;
 use App\Http\Controllers\Api\ApiUpload;
@@ -37,6 +38,10 @@ Route::group(['as' => 'api.', 'prefix' => 'athlete', 'middleware' => 'auth:sanct
 /* Search */
 Route::group(['as' => 'api.', 'prefix' => 'search', 'middleware' => 'auth:sanctum'], static function () {
     Route::post('/athletes', [ApiSearchController::class, 'athletes'])->name('athletes');
+});
+/* Notifications */
+Route::group(['as' => 'api.', 'prefix' => 'notification', 'middleware' => 'auth:sanctum'], static function () {
+    Route::get('/get', [ApiNotificationController::class, 'get'])->name('getNotifications');
 });
 /* Upload */
 Route::group(['as' => 'api.', 'prefix' => 'upload', 'middleware' => 'auth:sanctum'], static function () {

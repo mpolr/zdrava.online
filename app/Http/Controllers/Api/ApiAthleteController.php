@@ -86,11 +86,11 @@ class ApiAthleteController extends Controller
             switch ($user->private) {
                 case true:
                     $message = __("Subscription request sent");
-                    $user->notify(new \App\Notifications\NewSubscriptionRequest(auth()->user()->id));
+                    $user->notify(new \App\Notifications\NewSubscriptionRequest(auth('sanctum')->user()));
                     break;
                 case false:
                     $message = __("Successfully subscribed to ':user'", ['user' => $user->getFullName()]);
-                    $user->notify(new \App\Notifications\NewSubscriber);
+                    $user->notify(new \App\Notifications\NewSubscriber(auth('sanctum')->user()));
                     break;
             }
 
