@@ -25,9 +25,9 @@ class ApiAthleteController extends Controller
             'id' => $user->id,
             'nickname' => $user->getNickname(),
             'photo' => $user->photo,
-            'firstName' => $user->first_name,
-            'lastName' => $user->last_name,
-            'createdAt' => $user->created_at,
+            'first_name' => $user->first_name,
+            'last_name' => $user->last_name,
+            'created_at' => $user->created_at,
         ];
 
         if (empty($athlete)) {
@@ -40,7 +40,7 @@ class ApiAthleteController extends Controller
         $athlete['activities'] = $user->activities->count();
         $athlete['subscriptions'] = $user->subscriptions->count();
         $athlete['subscribers'] = $user->subscribers->count();
-        $athlete['isSubscribed'] = $user->isSubscriber($user);
+        $athlete['is_subscribed'] = $user->isSubscriber($user);
 
         return response()->json([
             'success' => true,

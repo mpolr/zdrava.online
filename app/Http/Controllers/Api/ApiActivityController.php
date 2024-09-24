@@ -49,7 +49,7 @@ class ApiActivityController extends Controller
 
         $comments = $activity
             ->comments()
-            ->with('user:id,nickname,photo,first_name,last_name,created_at', 'replies.user')
+            ->with('user', 'replies.user')
             ->get();
 
         return response()->json([

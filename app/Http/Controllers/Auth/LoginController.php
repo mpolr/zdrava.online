@@ -9,7 +9,6 @@ use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
@@ -28,11 +27,6 @@ class LoginController extends Controller
 
     public function authenticateApi(Request $request): JsonResponse
     {
-        $preferredLocale = $request->getPreferredLanguage();
-        if ($preferredLocale !== null) {
-            App::setLocale($preferredLocale);
-        }
-
         $credentials = $request->validate([
             'email' => ['required', 'email'],
             'password' => ['required'],
@@ -59,7 +53,7 @@ class LoginController extends Controller
             'success' => true,
             'message' => __('Logged in successfully'),
             'token' => $token,
-            'userId' => $user->id,
+            'user_id' => $user->id,
         ]);
     }
 

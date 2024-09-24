@@ -61,22 +61,26 @@ class Comment extends Model implements Likeable
     // Метод для преобразования модели в массив с кастомными ключами
     public function toArray(): array
     {
+        if (!request()?->expectsJson()) {
+            return parent::toArray();
+        }
+
         return [
             'id' => $this->id,
-            'activitiesId' => $this->activity->id,
+            'activities_id' => $this->activity->id,
             'userId' => $this->user->id,
             'parentId' => $this->parent_id,
             'content' => $this->content,
-            'createdAt' => $this->created_at,
-            'updatedAt' => $this->updated_at,
-            'repliesCount' => $this->replies_count, // Включаем аксессор replies_count
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
+            'replies_count' => $this->replies_count, // Включаем аксессор replies_count
             'user' => $this->user,
             'replies' => $this->replies->map(function ($reply) {
                 return [
                     'id' => $reply->id,
                     'content' => $reply->content,
                     'user' => $reply->user,
-                    'createdAt' => $reply->created_at,
+                    'created_at' => $reply->created_at,
                 ];
             }),
         ];

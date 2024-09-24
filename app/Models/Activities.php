@@ -5,6 +5,7 @@ namespace App\Models;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Storage;
 use App\Contracts\Likeable;
 use App\Models\Concerns\Likes;
@@ -14,6 +15,7 @@ use Psr\Log\LogLevel;
 class Activities extends Model implements Likeable
 {
     use Likes;
+    use Notifiable;
 
     protected $fillable = [
         'user_id',
@@ -231,27 +233,26 @@ class Activities extends Model implements Likeable
     // Метод для преобразования модели в массив с кастомными ключами
     public function toArray(): array
     {
+        if (!request()?->expectsJson()) {
+            return parent::toArray();
+        }
+
         return [
             'id' => $this->id,
-            'user' => $this->user,
             'name' => $this->name,
             'description' => $this->description,
-            'imageUrl' => $this->getImage($this->user_id, true),
-            'userName' => $this->user->getFullName(),
+            'image_url' => $this->getImage($this->user_id, true),
+            'user_name' => $this->user->getFullName(),
             'distance' => $this->distance,
-            'avgSpeed' => $this->avg_speed,
-            'elevationGain' => $this->elevation_gain,
-            'startedAt' => $this->started_at,
+            'avg_speed' => $this->avg_speed,
+            'elevation_gain' => $this->elevation_gain,
+            'started_at' => $this->started_at,
             'locality' => $this->locality,
-            'comments' => [
-                'count' => count($this->comments),
-                'items' => $this->comments
-            ],
-            'likes' => [
-                'count' => count($this->likes),
-                'likedByMe' => $this->user->hasLiked($this),
-            ],
-            'sharesCount' => 0,
+            'user' => $this->user,
+            'comments' => $this->comments,
+            'likes' => $this->likes,
+            'liked_by_me' => auth('sanctum')->user()->hasLiked($this),
+            'shares_count' => 0,
         ];
     }
 }

@@ -22,11 +22,15 @@ class Like extends Model
     // Метод для преобразования модели в массив с кастомными ключами
     public function toArray(): array
     {
+        if (!request()?->expectsJson()) {
+            return parent::toArray();
+        }
+
         return [
             'id' => $this->id,
             'user' => $this->user,
-            'likeableId' => $this->likeable->id,
-            'createdAt' => $this->created_at,
+            'likeable_id' => $this->likeable_id,
+            'created_at' => $this->created_at,
         ];
     }
 }

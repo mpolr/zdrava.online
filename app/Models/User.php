@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Carbon\Carbon;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Contracts\Likeable;
 use App\Traits\HasRolesAndPermissions;
@@ -186,20 +185,18 @@ class User extends Authenticatable implements MustVerifyEmail
     // Метод для преобразования модели в массив с кастомными ключами
     public function toArray(): array
     {
-        $isSubscribed = false;
-
-        if (auth()->user()) {
-            $isSubscribed = auth()->user()->isSubscriber($this);
+        if (!request()?->expectsJson()) {
+            return parent::toArray();
         }
 
         return [
             'id' => $this->id,
             'nickname' => $this->getNickname(),
             'photo' => $this->photo,
-            'firstName' => $this->first_name,
-            'lastName' => $this->last_name,
-            'createdAt' => $this->created_at,
-            'isSubscribed' => $isSubscribed,
+            'first_name' => $this->first_name,
+            'last_name' => $this->last_name,
+            'created_at' => $this->created_at,
+            'is_subscribed' => auth('sanctum')->user()->isSubscriber($this),
         ];
     }
 }
