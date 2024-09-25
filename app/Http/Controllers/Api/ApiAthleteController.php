@@ -6,10 +6,11 @@ use App\Http\Controllers\Controller;
 use App\Models\Subscription;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 
 class ApiAthleteController extends Controller
 {
-    protected function athlete(int $id): JsonResponse
+    protected function athlete(int $id, Request $request): JsonResponse
     {
         $user = auth('sanctum')->user();
 
@@ -40,7 +41,7 @@ class ApiAthleteController extends Controller
         $athlete['activities'] = $user->activities->count();
         $athlete['subscriptions'] = $user->subscriptions->count();
         $athlete['subscribers'] = $user->subscribers->count();
-        $athlete['is_subscribed'] = $user->isSubscriber($user);
+        $athlete['is_subscribed'] = $request->user()->isSubscriber($user);
 
         return response()->json([
             'success' => true,
