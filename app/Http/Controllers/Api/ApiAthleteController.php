@@ -106,4 +106,57 @@ class ApiAthleteController extends Controller
             'message' => __('Subscription failed'),
         ]);
     }
+
+    protected function subscribeConfirm(int $id, Request $request): JsonResponse {
+        $user = User::find($id);
+        if ($user === null) {
+            return response()->json([
+                'success' => false,
+                'message' => __('User not found')
+            ]);
+        }
+
+        $subscription = $request->user()->subscribers()->where('subscriber_id', '=', $id)->first();
+
+        if ($subscription === null) {
+            return response()->json([
+                'success' => false,
+            ]);
+        }
+
+        $subscription->confirmed = true;
+        $result = $subscription->save();
+
+        if ($result) {
+            return response()->json([
+                'success' => true,
+            ]);
+        }
+    }
+
+    protected function subscribeDecline(int $id, Request $request): JsonResponse {
+        $user = User::find($id);
+        if ($user === null) {
+            return response()->json([
+                'success' => false,
+                'message' => __('User not found')
+            ]);
+        }
+
+        $subscription = $request->user()->subscribers()->where('subscriber_id', '=', $id)->first();
+
+        if ($subscription === null) {
+            return response()->json([
+                'success' => false,
+            ]);
+        }
+
+        $result = $subscription->delete();
+
+        if ($result) {
+            return response()->json([
+                'success' => true,
+            ]);
+        }
+    }
 }
