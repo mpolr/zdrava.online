@@ -182,6 +182,21 @@ class User extends Authenticatable implements MustVerifyEmail
         return $result;
     }
 
+    public function markAsRead(string $notificationId): bool
+    {
+        $userUnreadNotification = $this
+            ->unreadNotifications
+            ->where('id', $notificationId)
+            ->first();
+
+        if($userUnreadNotification === null) {
+            return false;
+        }
+
+        $userUnreadNotification->markAsRead();
+        return true;
+    }
+
     // Метод для преобразования модели в массив с кастомными ключами
     public function toArray(): array
     {

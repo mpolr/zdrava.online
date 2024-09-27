@@ -36,18 +36,14 @@ class ApiNotificationController extends Controller
     {
         $notificationId = $request->string('notificationId');
 
-        $userUnreadNotification = $request->user()
-            ->unreadNotifications
-            ->where('id', $notificationId)
-            ->first();
-
-        if($userUnreadNotification) {
+        if ($notificationId === null) {
             return response()->json([
                 'success' => false,
             ]);
         }
 
-        $userUnreadNotification->markAsRead();
+        $request->user()->markAsRead($notificationId);
+
         return response()->json([
             'success' => true,
         ]);

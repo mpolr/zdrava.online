@@ -127,6 +127,10 @@ class ApiAthleteController extends Controller
         $subscription->confirmed = true;
         $result = $subscription->save();
 
+        if ($notificationId = $request->string('notificationId')) {
+            $request->user()->markAsRead($notificationId);
+        }
+
         if ($result) {
             return response()->json([
                 'success' => true,
@@ -152,6 +156,10 @@ class ApiAthleteController extends Controller
         }
 
         $result = $subscription->delete();
+
+        if ($notificationId = $request->string('notificationId')) {
+            $request->user()->markAsRead($notificationId);
+        }
 
         if ($result) {
             return response()->json([
