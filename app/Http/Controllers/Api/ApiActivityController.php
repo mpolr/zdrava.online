@@ -163,9 +163,13 @@ class ApiActivityController extends Controller
 
         $comment = new Comment();
         $comment->activities_id = $activity->id;
-        $comment->user_id = auth()->id();
+        $comment->user_id = $request->user()->id;
         $comment->content = $commentText;
         $comment->save();
+
+        if ($request->user()->id !== $activity->user_id) {
+            $activity->user->notify(new \App\Notifications\NewComment($request->user(), $activity));
+        }
 
         return response()->json([
             'success' => true,

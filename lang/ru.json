@@ -388,5 +388,6 @@
     "Zdrava account deleting": "Удаление аккаунта Zdrava",
     "Zdrava android app": "Zdrava для android",
     "No results found for ':query'": "Нет результатов для запроса ':query'",
-    "You already subscribed to this user": "Вы уже подписаны на этого пользователя"
+    "You already subscribed to this user": "Вы уже подписаны на этого пользователя",
+    ":user comments on discussion :activity": ":user комментирует обсуждение :activity"
 }
