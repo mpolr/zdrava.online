@@ -42,7 +42,6 @@ class ProcessFitFile implements ShouldQueue, ShouldBeUnique
             $fit = new phpFITFileAnalysis(Storage::path('temp/' . $this->fileName), ['fix_data']);
 
 //            $fit2 = new \Fit\Reader(Storage::path('temp/' . $this->fileName));
-//            $fit2->parseFile();
 //            $a = $fit2->parseFile();
 
             $activity = new Activities();
@@ -83,7 +82,13 @@ class ProcessFitFile implements ShouldQueue, ShouldBeUnique
             }
             if (isset($fit->data_mesgs['session']['total_ascent'])) {
                 $activity->elevation_gain = $fit->data_mesgs['session']['total_ascent'];
+            } else {
+                $activity->elevation_gain = $this->calculateElevationGain($fit->data_mesgs['record']['enhanced_altitude']);
+            }
+            if (isset($fit->data_mesgs['session']['total_descent'])) {
                 $activity->elevation_loss = $fit->data_mesgs['session']['total_descent'];
+            } else {
+                $activity->elevation_loss = $this->calculateElevationLoss($fit->data_mesgs['record']['enhanced_altitude']);
             }
             if (isset($fit->data_mesgs['session']['start_time'])) {
                 $activity->started_at = $fit->data_mesgs['session']['start_time'];
@@ -124,6 +129,10 @@ class ProcessFitFile implements ShouldQueue, ShouldBeUnique
                 $activity->end_position_lat = $fit->data_mesgs['session']['end_position_lat'];
                 $activity->end_position_long = $fit->data_mesgs['session']['end_position_long'];
             } else {
+                if (!is_array($fit->data_mesgs['record']['timestamp']) || count($fit->data_mesgs['record']['timestamp']) <= 10) {
+                    // Всего одна запись, скорее всего нам такое не нужно
+                    $this->fail('Very small FIT file!');
+                }
                 $activity->end_position_lat = end($fit->data_mesgs['record']['position_lat']);
                 $activity->end_position_long = end($fit->data_mesgs['record']['position_long']);
             }
@@ -163,6 +172,75 @@ class ProcessFitFile implements ShouldQueue, ShouldBeUnique
             $this->fail($e->getMessage());
         }
     }
+
+    private function calculateElevationGain(array $elevationData = [], bool $hasBarometricData = false): float
+    {
+        if (empty($elevationData)) {
+            throw new Exception('No elevation data found in the FIT file.');
+        }
+
+        $totalGain = 0;
+        $previousElevation = null;
+        $elevationThreshold = $hasBarometricData ? 2 : 10; // 2 м с барометрией, 10 м без
+
+        // Промежуточное накопление высоты для проверки порога
+        $elevationAccumulator = 0;
+
+        foreach ($elevationData as $currentElevation) {
+            if ($previousElevation !== null && $currentElevation > $previousElevation) {
+                // Накопление высоты
+                $elevationAccumulator += ($currentElevation - $previousElevation);
+
+                // Если накопленный подъём превышает порог, добавляем в общий набор высоты
+                if ($elevationAccumulator >= $elevationThreshold) {
+                    $totalGain += $elevationAccumulator;
+                    $elevationAccumulator = 0; // Сбрасываем накопление после учёта
+                }
+            } else {
+                // Сбрасываем накопление, если высота перестала увеличиваться
+                $elevationAccumulator = 0;
+            }
+
+            $previousElevation = $currentElevation;
+        }
+
+        return $totalGain;
+    }
+
+    public function calculateElevationLoss(array $elevationData = [], bool $hasBarometricData = false): float
+    {
+        if (empty($elevationData)) {
+            throw new Exception('No elevation data found in the FIT file.');
+        }
+
+        $totalLoss = 0;
+        $previousElevation = null;
+        $elevationThreshold = $hasBarometricData ? 2 : 10; // 2 м с барометрией, 10 м без
+
+        // Промежуточное накопление высоты для проверки порога
+        $elevationAccumulator = 0;
+
+        foreach ($elevationData as $currentElevation) {
+            if ($previousElevation !== null && $currentElevation < $previousElevation) {
+                // Накопление высоты
+                $elevationAccumulator += ($previousElevation - $currentElevation);
+
+                // Если накопленный спуск превышает порог, добавляем в общий набор высоты
+                if ($elevationAccumulator >= $elevationThreshold) {
+                    $totalLoss += $elevationAccumulator;
+                    $elevationAccumulator = 0; // Сбрасываем накопление после учёта
+                }
+            } else {
+                // Сбрасываем накопление, если высота перестала уменьшаться
+                $elevationAccumulator = 0;
+            }
+
+            $previousElevation = $currentElevation;
+        }
+
+        return $totalLoss;
+    }
+
 
     private function byteArrayToString(array $byteArray): string
     {

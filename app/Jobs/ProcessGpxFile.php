@@ -11,6 +11,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use phpGPX\phpGPX;
@@ -39,6 +40,11 @@ class ProcessGpxFile implements ShouldQueue
     public function handle(): void
     {
         $gpxObj = new phpGPX();
+        $gpxObj::$APPLY_ELEVATION_SMOOTHING = true;
+        $gpxObj::$ELEVATION_SMOOTHING_THRESHOLD = 1;
+        $gpxObj::$ELEVATION_SMOOTHING_SPIKES_THRESHOLD = 16;
+//        $gpxObj::$APPLY_DISTANCE_SMOOTHING = true;
+        $gpxObj::$DISTANCE_SMOOTHING_THRESHOLD = 3;
 
         try {
             $gpx = $gpxObj::load(Storage::path('temp/' . $this->fileName));
@@ -56,6 +62,7 @@ class ProcessGpxFile implements ShouldQueue
         $totalMovingTime = 0;
         $statsTrack = [];
         $totalDistance = 0.0;
+        $locations['locations'] = [];
 
         foreach ($gpx->tracks as $track) {
             $statsTrack[] = $track->stats->toArray();
@@ -66,6 +73,11 @@ class ProcessGpxFile implements ShouldQueue
                 for ($i = 0; $i < count($points) - 1; $i++) {
                     $point1 = $points[$i];
                     $point2 = $points[$i + 1];
+
+                    $locations['locations'][] = [
+                        'latitude' => $point1->latitude,
+                        'longitude' => $point1->longitude
+                    ];
 
                     // Проверяем, двигается ли точка
                     if (!empty($point1->extensions->trackPointExtension)) {
@@ -96,6 +108,31 @@ class ProcessGpxFile implements ShouldQueue
             }
         }
 
+        $locationsJSON = json_encode($locations, JSON_THROW_ON_ERROR);
+        $response = Http::withBody($locationsJSON)
+            ->post('http://openelevation/api/v1/lookup');
+
+        if ($response->successful() && $response->status() === 200) {
+            $results = $response->json()['results'];
+
+            $i = 0;
+            foreach ($gpx->tracks as $track) {
+                foreach ($track->segments as $segment) {
+                    foreach ($segment->points as $point) {
+                        if (array_key_exists($i, $results)) {
+                            $point->elevation = $results[$i]['elevation'];
+                            $i++;
+                        }
+                    }
+                }
+
+                $track->recalculateStats();
+            }
+        } else {
+            Log::channel('telegram')->log(LogLevel::ERROR, auth()->user()->getFullName() . " - Open elevation API: Error {$response->status()} '{$response->reason()}'");
+        }
+
+        $statsTrack[0] = $track->segments[0]->stats->toArray();
         $stat = array_merge_recursive($statsTrack)[0];
 
         if ($totalMovingTime === 0) {
@@ -128,7 +165,7 @@ class ProcessGpxFile implements ShouldQueue
         if ($maxSpeed === 0) {
             $maxSpeed = $stat['avgSpeed'] * 3.6;
         } else {
-            $maxSpeed = $maxSpeed * 3.6;
+            $maxSpeed *= 3.6;
         }
         $activity->max_speed = $maxSpeed;
         $activity->avg_pace = $stat['avgPace'];
