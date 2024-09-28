@@ -389,5 +389,7 @@
     "Zdrava android app": "Zdrava для android",
     "No results found for ':query'": "Нет результатов для запроса ':query'",
     "You already subscribed to this user": "Вы уже подписаны на этого пользователя",
-    ":user comments on discussion :activity": ":user комментирует обсуждение :activity"
+    ":user comments on discussion :activity": ":user комментирует обсуждение :activity",
+    ":activity: athlete :athlete liked you": ":activity: спортсмен :athlete поставил вам зачёт",
+    ":activity: athlete :athlete and :count others liked you": ":activity: спортсмен :athlete и ещё :count поставили вам зачёт"
 }

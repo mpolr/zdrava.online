@@ -88,7 +88,7 @@ class ApiActivityController extends Controller
         ]);
     }
 
-    protected function like(int $id): JsonResponse
+    protected function like(int $id, Request $request): JsonResponse
     {
         $activity = Activities::find($id);
 
@@ -108,7 +108,12 @@ class ApiActivityController extends Controller
             ], 401);
         }
 
+        if ($request->user()->id !== $activity->user_id) {
+            $activity->user->notify(new \App\Notifications\NewLike($request->user(), $activity));
+        }
+
         $user->like($activity);
+
         return response()->json([
             'success' => true,
             'count' => count($activity->likes),
