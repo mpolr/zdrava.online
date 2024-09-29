@@ -19,7 +19,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @if (!count($user->subscriptions))
+                        @if (!count($user->confirmedSubscriptions()))
                             <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                                 <th scope="row" colspan="9" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                     {!! __('Subscriptions not found. :friend.find', [
@@ -28,7 +28,7 @@
                                 </th>
                             </tr>
                         @else
-                            @foreach($user->subscriptions()->where('confirmed', 1)->get() as $suser)
+                            @foreach($user->confirmedSubscriptions() as $suser)
                                 <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                                     <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                         <a href="{{ route('athlete.profile', $suser->id) }}">

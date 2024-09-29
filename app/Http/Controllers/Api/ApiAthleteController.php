@@ -39,8 +39,8 @@ class ApiAthleteController extends Controller
         }
 
         $athlete['activities'] = $user->activities->count();
-        $athlete['subscriptions'] = $user->subscriptions->count();
-        $athlete['subscribers'] = $user->subscribers->count();
+        $athlete['subscriptions'] = $user->confirmedSubscriptions()->count();
+        $athlete['subscribers'] = $user->confirmedSubscribers()->count();
         $athlete['is_subscribed'] = $request->user()->isSubscriber($user);
 
         return response()->json([
@@ -166,5 +166,37 @@ class ApiAthleteController extends Controller
                 'success' => true,
             ]);
         }
+    }
+
+    protected function getSubscribers(int $id, Request $request): JsonResponse
+    {
+        $user = User::find($id);
+        if ($user === null) {
+            return response()->json([
+                'success' => false,
+                'message' => __('User not found')
+            ]);
+        }
+
+        return response()->json([
+            'success' => true,
+            'athletes' => $user->confirmedSubscribers()
+        ]);
+    }
+
+    protected function getSubscriptions(int $id, Request $request): JsonResponse
+    {
+        $user = User::find($id);
+        if ($user === null) {
+            return response()->json([
+                'success' => false,
+                'message' => __('User not found')
+            ]);
+        }
+
+        return response()->json([
+            'success' => true,
+            'athletes' => $user->confirmedSubscriptions(),
+        ]);
     }
 }

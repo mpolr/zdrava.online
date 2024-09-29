@@ -35,6 +35,8 @@ Route::group(['as' => 'api.', 'prefix' => 'athlete', 'middleware' => 'auth:sanct
     Route::post('{id}/subscribe', [ApiAthleteController::class, 'subscribe'])->name('subscribe');
     Route::patch('{id}/subscribe', [ApiAthleteController::class, 'subscribeConfirm'])->name('subscribeConfirm');
     Route::delete('{id}/subscribe', [ApiAthleteController::class, 'subscribeDecline'])->name('unsubscribeOrDecline');
+    Route::get('{id}/subscribers', [ApiAthleteController::class, 'getSubscribers'])->name('getSubscribers');
+    Route::get('{id}/subscriptions', [ApiAthleteController::class, 'getSubscriptions'])->name('getSubscriptions');
 });
 /* Search */
 Route::group(['as' => 'api.', 'prefix' => 'search', 'middleware' => 'auth:sanctum'], static function () {

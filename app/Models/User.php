@@ -101,10 +101,26 @@ class User extends Authenticatable implements MustVerifyEmail
         );
     }
 
-    public function subscribers(): HasMany
+    public function subscribers(): BelongsToMany
     {
-        return $this->hasMany(Subscription::class);
+        return $this->belongsToMany(
+            __CLASS__,
+            'subscriptions',
+            'user_id',
+            'subscriber_id'
+        );
     }
+
+    public function confirmedSubscriptions(): \Illuminate\Database\Eloquent\Collection
+    {
+        return $this->subscriptions()->where('confirmed', 1)->get();
+    }
+
+    public function confirmedSubscribers(): \Illuminate\Database\Eloquent\Collection
+    {
+        return $this->subscribers()->where('confirmed', 1)->get();
+    }
+
 
     public function likes(): HasMany
     {
