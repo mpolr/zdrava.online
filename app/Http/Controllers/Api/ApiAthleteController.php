@@ -150,7 +150,10 @@ class ApiAthleteController extends Controller
             ]);
         }
 
-        $subscription = $request->user()->subscribers()->where('subscriber_id', '=', $id)->first();
+        $subscription = Subscription::where([
+            'subscriber_id' => $id,
+            'user_id' => $request->user()->id,
+        ])->first();
 
         if ($subscription === null) {
             return response()->json([
