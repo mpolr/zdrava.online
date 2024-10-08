@@ -9,14 +9,9 @@
         <br>
         <br>
         <p class="content-center">
-            <a href="https://play.google.com/apps/test/online.zdrava/7" target="_blank">
-                <img src="https://d3nn82uaxijpm6.cloudfront.net/assets/i18n/ru-RU/marketing/btn-google-play-491d5ac8feeeb218e88f5f6175fe4308a616b133d7a07c03fbf4736e82e9bc3d.svg" alt="Zdrava on Google play">
+            <a href="https://www.rustore.ru/catalog/app/online.zdrava" target="_blank">
+                <img src="https://zdrava.online/rustore-logo-monochrome-dark.svg" width="188" height="63" alt="Скачать Здрава из RuStore">
             </a>
         </p>
-        <br>
-        <br>
-        <div class="content-center">
-            <img src="https://zdrava.online/zdrava_01.jpg" alt="Zdrava" width="320">
-        </div>
     </div>
 @endsection
