@@ -45,6 +45,7 @@ Route::group(['as' => 'api.', 'prefix' => 'search', 'middleware' => 'auth:sanctu
 /* Notifications */
 Route::group(['as' => 'api.', 'prefix' => 'notification', 'middleware' => 'auth:sanctum'], static function () {
     Route::get('/get', [ApiNotificationController::class, 'get'])->name('getNotifications');
+    Route::post('/markAsRead', [ApiNotificationController::class, 'markAsRead'])->name('markAsRead');
 });
 /* Upload */
 Route::group(['as' => 'api.', 'prefix' => 'upload', 'middleware' => 'auth:sanctum'], static function () {

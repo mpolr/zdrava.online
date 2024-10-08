@@ -198,18 +198,28 @@ class User extends Authenticatable implements MustVerifyEmail
         return $result;
     }
 
-    public function markAsRead(string $notificationId): bool
+    public function markAsRead(string|array $id): bool
     {
-        $userUnreadNotification = $this
-            ->unreadNotifications
-            ->where('id', $notificationId)
-            ->first();
+        if (is_array($id)) {
+            $userUnreadNotification = $this
+                ->unreadNotifications
+                ->whereIn('id', $id)
+                ->all();
+        } else {
+            $userUnreadNotification = $this
+                ->unreadNotifications
+                ->where('id', $id)
+                ->all();
+        }
 
         if($userUnreadNotification === null) {
             return false;
         }
 
-        $userUnreadNotification->markAsRead();
+        foreach ($userUnreadNotification as $item) {
+            $item->markAsRead();
+        }
+
         return true;
     }
 

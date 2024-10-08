@@ -30,17 +30,28 @@ class ApiNotificationController extends Controller
         ]);
     }
 
+    /**
+     * @throws \JsonException
+     */
     public function markAsRead(Request $request): JsonResponse
     {
-        $notificationId = $request->string('notificationId');
+        $json = $request->getPayload()->get('json');
 
-        if ($notificationId === null) {
+        if ($json === null) {
             return response()->json([
                 'success' => false,
             ]);
         }
 
-        $request->user()->markAsRead($notificationId);
+        $notifications = json_decode($json, true, 512, JSON_THROW_ON_ERROR);
+
+        if (!is_array($notifications)) {
+            return response()->json([
+                'success' => false,
+            ]);
+        }
+
+        $request->user()->markAsRead($notifications);
 
         return response()->json([
             'success' => true,
