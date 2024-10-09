@@ -23,7 +23,7 @@ class ApiActivityController extends Controller
 
         return response()->json([
             'success' => true,
-            'athlete' => $activity,
+            'activity' => $activity,
         ]);
     }
 
