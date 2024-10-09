@@ -4,6 +4,7 @@ namespace App\Jobs;
 
 use adriangibbons\phpFITFileAnalysis;
 use App\Classes\GpxTools;
+use App\Classes\Polyline;
 use App\Models\Activities;
 use Exception;
 use Illuminate\Bus\Queueable;
@@ -39,10 +40,14 @@ class ProcessFitFile implements ShouldQueue, ShouldBeUnique
     public function handle(): void
     {
         try {
-            $fit = new phpFITFileAnalysis(Storage::path('temp/' . $this->fileName), ['fix_data']);
+            $fit = new phpFITFileAnalysis(Storage::path('temp/' . $this->fileName));
 
 //            $fit2 = new \Fit\Reader(Storage::path('temp/' . $this->fileName));
 //            $a = $fit2->parseFile();
+
+            if (!isset($fit->data_mesgs['record'])) {
+                throw new \RuntimeException('No records found in FIT file');
+            }
 
             $activity = new Activities();
             $activity->user_id = $this->userId;
@@ -136,6 +141,8 @@ class ProcessFitFile implements ShouldQueue, ShouldBeUnique
                 $activity->end_position_lat = end($fit->data_mesgs['record']['position_lat']);
                 $activity->end_position_long = end($fit->data_mesgs['record']['position_long']);
             }
+
+            $activity->polyline = Polyline::convertFitLocationToPolyline($fit->data_mesgs['record']);
 
             $geo = GpxTools::geocode($activity->start_position_lat, $activity->start_position_long);
             if ($geo) {
@@ -240,7 +247,6 @@ class ProcessFitFile implements ShouldQueue, ShouldBeUnique
 
         return $totalLoss;
     }
-
 
     private function byteArrayToString(array $byteArray): string
     {
