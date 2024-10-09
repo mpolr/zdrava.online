@@ -1,4 +1,4 @@
-<main class="container mx-auto px-0 py-12 max-w-screen-lg">
+<main class="container mx-auto px-0 py-12 max-w-screen-2xl">
     <div class="grid grid-cols-1 gap-4">
         <div class="w-full">
             @error('admin') @livewire('toast.errors') @enderror
@@ -20,36 +20,54 @@
                         <th scope="col" class="px-6 py-3">
                             {{ __('ID') }}
                         </th>
-                        <th scope="col" class="px-6 py-3">
+                        <th scope="col" class="px-2 py-3">
                             <div class="flex items-center">
                                 {{ __('Avatar') }}
                             </div>
                         </th>
-                        <th scope="col" class="px-6 py-3">
+                        <th scope="col" class="px-2 py-3">
                             <div class="flex items-center">
                                 {{ __('Name') }}
                                 <a href="#"><svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 ml-1" aria-hidden="true" fill="currentColor" viewBox="0 0 320 512"><path d="M27.66 224h264.7c24.6 0 36.89-29.78 19.54-47.12l-132.3-136.8c-5.406-5.406-12.47-8.107-19.53-8.107c-7.055 0-14.09 2.701-19.45 8.107L8.119 176.9C-9.229 194.2 3.055 224 27.66 224zM292.3 288H27.66c-24.6 0-36.89 29.77-19.54 47.12l132.5 136.8C145.9 477.3 152.1 480 160 480c7.053 0 14.12-2.703 19.53-8.109l132.3-136.8C329.2 317.8 316.9 288 292.3 288z"/></svg></a>
                             </div>
                         </th>
-                        <th scope="col" class="px-6 py-3">
+                        <th scope="col" class="px-2 py-3">
                             <div class="flex items-center">
                                 {{ __('Nickname') }}
                                 <a href="#"><svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 ml-1" aria-hidden="true" fill="currentColor" viewBox="0 0 320 512"><path d="M27.66 224h264.7c24.6 0 36.89-29.78 19.54-47.12l-132.3-136.8c-5.406-5.406-12.47-8.107-19.53-8.107c-7.055 0-14.09 2.701-19.45 8.107L8.119 176.9C-9.229 194.2 3.055 224 27.66 224zM292.3 288H27.66c-24.6 0-36.89 29.77-19.54 47.12l132.5 136.8C145.9 477.3 152.1 480 160 480c7.053 0 14.12-2.703 19.53-8.109l132.3-136.8C329.2 317.8 316.9 288 292.3 288z"/></svg></a>
                             </div>
                         </th>
-                        <th scope="col" class="px-6 py-3">
+                        <th scope="col" class="px-2 py-3">
                             <div class="flex items-center">
                                 {{ __('Email') }}
                                 <a href="#"><svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 ml-1" aria-hidden="true" fill="currentColor" viewBox="0 0 320 512"><path d="M27.66 224h264.7c24.6 0 36.89-29.78 19.54-47.12l-132.3-136.8c-5.406-5.406-12.47-8.107-19.53-8.107c-7.055 0-14.09 2.701-19.45 8.107L8.119 176.9C-9.229 194.2 3.055 224 27.66 224zM292.3 288H27.66c-24.6 0-36.89 29.77-19.54 47.12l132.5 136.8C145.9 477.3 152.1 480 160 480c7.053 0 14.12-2.703 19.53-8.109l132.3-136.8C329.2 317.8 316.9 288 292.3 288z"/></svg></a>
                             </div>
                         </th>
-                        <th scope="col" class="px-6 py-3">
+                        <th scope="col" class="px-2 py-3">
+                            <div class="flex items-center">
+                                {{ __('Workout') }}
+                                <a href="#"><svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 ml-1" aria-hidden="true" fill="currentColor" viewBox="0 0 320 512"><path d="M27.66 224h264.7c24.6 0 36.89-29.78 19.54-47.12l-132.3-136.8c-5.406-5.406-12.47-8.107-19.53-8.107c-7.055 0-14.09 2.701-19.45 8.107L8.119 176.9C-9.229 194.2 3.055 224 27.66 224zM292.3 288H27.66c-24.6 0-36.89 29.77-19.54 47.12l132.5 136.8C145.9 477.3 152.1 480 160 480c7.053 0 14.12-2.703 19.53-8.109l132.3-136.8C329.2 317.8 316.9 288 292.3 288z"/></svg></a>
+                            </div>
+                        </th>
+                        <th scope="col" class="px-2 py-3">
+                            <div class="flex items-center">
+                                {{ __('Subscriptions') }}
+                                <a href="#"><svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 ml-1" aria-hidden="true" fill="currentColor" viewBox="0 0 320 512"><path d="M27.66 224h264.7c24.6 0 36.89-29.78 19.54-47.12l-132.3-136.8c-5.406-5.406-12.47-8.107-19.53-8.107c-7.055 0-14.09 2.701-19.45 8.107L8.119 176.9C-9.229 194.2 3.055 224 27.66 224zM292.3 288H27.66c-24.6 0-36.89 29.77-19.54 47.12l132.5 136.8C145.9 477.3 152.1 480 160 480c7.053 0 14.12-2.703 19.53-8.109l132.3-136.8C329.2 317.8 316.9 288 292.3 288z"/></svg></a>
+                            </div>
+                        </th>
+                        <th scope="col" class="px-2 py-3">
+                            <div class="flex items-center">
+                                {{ __('Subscribers') }}
+                                <a href="#"><svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 ml-1" aria-hidden="true" fill="currentColor" viewBox="0 0 320 512"><path d="M27.66 224h264.7c24.6 0 36.89-29.78 19.54-47.12l-132.3-136.8c-5.406-5.406-12.47-8.107-19.53-8.107c-7.055 0-14.09 2.701-19.45 8.107L8.119 176.9C-9.229 194.2 3.055 224 27.66 224zM292.3 288H27.66c-24.6 0-36.89 29.77-19.54 47.12l132.5 136.8C145.9 477.3 152.1 480 160 480c7.053 0 14.12-2.703 19.53-8.109l132.3-136.8C329.2 317.8 316.9 288 292.3 288z"/></svg></a>
+                            </div>
+                        </th>
+                        <th scope="col" class="px-2 py-3">
                             <div class="flex items-center">
                                 {{ __('Private profile') }}
                                 <a href="#"><svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 ml-1" aria-hidden="true" fill="currentColor" viewBox="0 0 320 512"><path d="M27.66 224h264.7c24.6 0 36.89-29.78 19.54-47.12l-132.3-136.8c-5.406-5.406-12.47-8.107-19.53-8.107c-7.055 0-14.09 2.701-19.45 8.107L8.119 176.9C-9.229 194.2 3.055 224 27.66 224zM292.3 288H27.66c-24.6 0-36.89 29.77-19.54 47.12l132.5 136.8C145.9 477.3 152.1 480 160 480c7.053 0 14.12-2.703 19.53-8.109l132.3-136.8C329.2 317.8 316.9 288 292.3 288z"/></svg></a>
                             </div>
                         </th>
-                        <th scope="col" class="px-6 py-3">
+                        <th scope="col" class="px-2 py-3">
                             <div class="flex items-center">
                                 {{ __('Created') }}
                                 <a href="#"><svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 ml-1" aria-hidden="true" fill="currentColor" viewBox="0 0 320 512"><path d="M27.66 224h264.7c24.6 0 36.89-29.78 19.54-47.12l-132.3-136.8c-5.406-5.406-12.47-8.107-19.53-8.107c-7.055 0-14.09 2.701-19.45 8.107L8.119 176.9C-9.229 194.2 3.055 224 27.66 224zM292.3 288H27.66c-24.6 0-36.89 29.77-19.54 47.12l132.5 136.8C145.9 477.3 152.1 480 160 480c7.053 0 14.12-2.703 19.53-8.109l132.3-136.8C329.2 317.8 316.9 288 292.3 288z"/></svg></a>
@@ -64,7 +82,7 @@
                                 <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                     {{ $user->id }}
                                 </th>
-                                <td class="px-6 py-4">
+                                <td class="px-2 py-4">
                                     @if($user->getPhoto())
                                         <img class="h-12 w-12 flex-none rounded-full" src="{{ $user->getPhoto() }}" alt="">
                                     @else
@@ -75,23 +93,42 @@
                                         </div>
                                     @endif
                                 </td>
-                                <td class="px-6 py-4">
-                                    {{ $user->getFullName() }}
+                                <td class="px-2 py-4">
+                                    <a href="{{ route('athlete.profile', $user->id) }}" target="_blank">
+                                        {{ $user->getFullName() }}
+                                    </a>
                                 </td>
-                                <td class="px-6 py-4">
+                                <td class="px-2 py-4">
                                     {{ $user->nickname }}
                                 </td>
-                                <td class="px-6 py-4">
-                                    {{ $user->email }}
+                                <td class="px-2 py-4">
+                                    @if($user->email_verified_at)
+                                        <span class="font-medium text-green-600 dark:text-green-300">
+                                            {{ $user->email }}
+                                        </span>
+                                    @else
+                                        <span class="font-medium text-red-600 dark:text-red-300">
+                                            {{ $user->email }}
+                                        </span>
+                                    @endif
                                 </td>
-                                <td class="px-6 py-4">
+                                <td class="px-2 py-4">
+                                    {{ $user->activities->count() }}
+                                </td>
+                                <td class="px-2 py-4">
+                                    {{ $user->confirmedSubscriptions()->count() }} ({{ $user->subscriptions->count() }})
+                                </td>
+                                <td class="px-2 py-4">
+                                    {{ $user->confirmedSubscribers()->count() }} ({{ $user->subscribers->count() }})
+                                </td>
+                                <td class="px-2 py-4">
                                     @if($user->private)
-                                        Private
+                                        {{ __('Yes') }}
                                     @else
                                         {{ __('No') }}
                                     @endif
                                 </td>
-                                <td class="px-6 py-4">
+                                <td class="px-2 py-4">
                                     {{ $user->created_at }}
                                 </td>
                             </tr>
