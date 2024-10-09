@@ -38,6 +38,7 @@ return new class extends Migration
             $table->integer('total_calories')->nullable();
             $table->text('file')->nullable();
             $table->text('image')->nullable();
+            $table->text('polyline')->nullable();
             $table->float('start_position_lat')->nullable();
             $table->float('start_position_long')->nullable();
             $table->float('end_position_lat')->nullable();
