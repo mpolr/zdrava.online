@@ -246,6 +246,7 @@ class Activities extends Model implements Likeable
             'polyline' => $this->polyline,
             'user_name' => $this->user->getFullName(),
             'distance' => $this->distance,
+            'sport' => $this->sport,
             'avg_speed' => $this->avg_speed,
             'elevation_gain' => $this->elevation_gain,
             'started_at' => $this->started_at,
