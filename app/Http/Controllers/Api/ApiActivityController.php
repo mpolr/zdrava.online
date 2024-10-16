@@ -27,6 +27,38 @@ class ApiActivityController extends Controller
         ]);
     }
 
+    protected function update(int $id, Request $request): JsonResponse
+    {
+        $activity = Activities::find($id);
+
+        if (empty($activity)) {
+            return response()->json([
+                'success' => false,
+                'message' => __('Activity not found')
+            ], 404);
+        }
+
+        if ($request->user()->id !== $activity->user_id) {
+            return response()->json([
+                'success' => false,
+                'message' => __('Not authorized'),
+            ]);
+        }
+
+        $data = $request->validate([
+            'name' => 'string|min:1|max:64',
+            'description' => 'string|max:2048',
+        ]);
+
+        $activity->name = $data['name'];
+        $activity->description = $data['description'];
+        $result = $activity->save();
+
+        return response()->json([
+            'success' => $result,
+        ]);
+    }
+
     protected function activityComments(int $id): JsonResponse
     {
         $user = auth('sanctum')->user();
