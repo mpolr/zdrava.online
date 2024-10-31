@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Activities;
 use App\Models\Subscription;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
@@ -46,6 +47,31 @@ class ApiAthleteController extends Controller
         return response()->json([
             'success' => true,
             'athlete' => $athlete,
+        ]);
+    }
+
+    protected function activities(int $id): JsonResponse
+    {
+        $user = User::find($id);
+        if ($user === null) {
+            return response()->json([
+                'success' => false,
+                'message' => __('User not found')
+            ]);
+        }
+
+        $activity = Activities::find($id);
+
+        if (empty($activity)) {
+            return response()->json([
+                'success' => false,
+                'message' => __('Activity not found')
+            ], 404);
+        }
+
+        return response()->json([
+            'success' => true,
+            'activity' => $activity,
         ]);
     }
 
