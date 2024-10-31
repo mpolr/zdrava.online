@@ -60,7 +60,7 @@ class ApiAthleteController extends Controller
             ]);
         }
 
-        $activity = Activities::find($id);
+        $activity = $user->activities()->get();
 
         if (empty($activity)) {
             return response()->json([
@@ -71,7 +71,7 @@ class ApiAthleteController extends Controller
 
         return response()->json([
             'success' => true,
-            'activity' => $activity,
+            'activities' => $activity,
         ]);
     }
 
