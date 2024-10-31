@@ -264,6 +264,7 @@ class Activities extends Model implements Likeable
             'likes' => $this->likes,
             'liked_by_me' => auth('sanctum')->user()->hasLiked($this),
             'shares_count' => 0,
+            'created_at' => $this->created_at,
         ];
     }
 }

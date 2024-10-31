@@ -8,18 +8,51 @@
             @endif
         </div>
     </div>
-    <div class="grid grid-cols-3 gap-4 dark:text-gray-100">
-        <div class="w-full">
-            <p><a href="{{ route('admin.users') }}">{{ __('Users') }}</a></p>
-            <p><a href="{{ route('admin.segments') }}">{{ __('Segments') }}</a></p>
-            <p><a href="{{ route('admin.crashlogs') }}">{{ __('Android crash logs') }}</a></p>
+    <div class="grid grid-cols-2 gap-8 px-4 py-6 lg:py-8 md:grid-cols-3">
+        <div>
+            <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">Управление</h2>
+            <ul class="text-gray-500 dark:text-gray-400 font-medium">
+                <li class="mb-4">
+                    <a href="{{ route('admin.users') }}">{{ __('Users') }}</a>
+                </li>
+                <li class="mb-4">
+                    <a href="{{ route('admin.crashlogs') }}">{{ __('Android crash logs') }}</a>
+                </li>
+                <li class="mb-4">
+                    <a href="{{ route('admin.segments') }}">{{ __('Segments') }}</a>
+                </li>
+            </ul>
         </div>
-        <div class="w-fit">
-            <a href="{{ route('admin.import.strava.csv') }}">{{ __('Strava import CSV') }}</a>
+        <div>
+            <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">Интеграции</h2>
+            <ul class="text-gray-500 dark:text-gray-400 font-medium">
+                <li class="mb-4">
+                    <a href="{{ route('admin.import.strava.csv') }}">{{ __('Strava import CSV') }}</a>
+                </li>
+            </ul>
         </div>
-        <div class="w-fit">
-            <p><a href="https://search.google.com/search-console?resource_id=sc-domain%3Azdrava.online&hl=ru" target="_blank">Google Search Console</a></p>
-            <p><a href="https://webmaster.yandex.ru/site/https:zdrava.online:443/dashboard/" target="_blank">Yandex Webmaster</a></p>
+        <div>
+            <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">Внешние сервисы</h2>
+            <ul class="text-gray-500 dark:text-gray-400 font-medium">
+                <li class="mb-4">
+                    <a href="https://console.rustore.ru/apps/2063492362/versions" target="_blank">RuStore Console</a>
+                </li>
+                <li class="mb-4">
+                    <a href="https://search.google.com/search-console?resource_id=sc-domain%3Azdrava.online&hl=ru" target="_blank">Google Search Console</a>
+                </li>
+                <li class="mb-4">
+                    <a href="https://webmaster.yandex.ru/site/https:zdrava.online:443/dashboard/" target="_blank">Yandex Webmaster</a>
+                </li>
+                <li class="mb-4">
+                    <a href="https://smtp.bz/panel/" target="_blank">SMTP.bz</a>
+                </li>
+                <li class="mb-4">
+                    <a href="https://www.svgrepo.com/" target="_blank">Поиск SVG</a>
+                </li>
+                <li class="mb-4">
+                    <a href="https://svgomg.net/" target="_blank">Оптимизация SVG</a>
+                </li>
+            </ul>
         </div>
     </div>
 </main>
