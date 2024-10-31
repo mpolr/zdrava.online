@@ -84,6 +84,11 @@
                                             </div>
                                         @endif
                                     </a>
+                                    <img
+                                        class="w-6 h-6 fill-gray-700 stroke-gray-700 dark:fill-gray-400 dark:stroke-gray-400"
+                                        src="@php echo \App\Models\Activities::getSportSvgIcon($activity->sport) @endphp"
+                                        alt=""
+                                    >
                                     <div class="min-w-0 flex-auto">
                                         <a href="{{ route('athlete.profile', $activity->getUser()->id) }}">
                                             <p class="text-sm font-semibold leading-6 text-gray-900 dark:text-gray-100">{{ $activity->getUser()->getFullName() }}</p>

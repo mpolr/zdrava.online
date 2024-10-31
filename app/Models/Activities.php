@@ -238,6 +238,16 @@ class Activities extends Model implements Likeable
         return $this->hasMany(Comment::class)->orderBy('created_at', $orderBy);
     }
 
+    public static function getSportSvgIcon(int $id): string
+    {
+        return match ($id) {
+            1 => asset('images/sport/run.svg'),
+            2 => asset('images/sport/ride.svg'),
+            11 => asset('images/sport/walk.svg'),
+            default => ''
+        };
+    }
+
     // Метод для преобразования модели в массив с кастомными ключами
     public function toArray(): array
     {
