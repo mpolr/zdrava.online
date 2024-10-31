@@ -42,7 +42,7 @@
     </script>
     {{-- End Matomo Code --}}
 </head>
-<body class="bg-gray-100 dark:bg-gray-700">
+<body class="bg-gray-100 dark:bg-gray-700 min-h-screen flex flex-col">
     <div>
         <nav class="fixed top-0 z-50 w-full bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700">
             <div class="px-3 py-2 lg:px-5 lg:pl-3">
@@ -51,8 +51,8 @@
                         @if(!empty(auth()->user()))
                         <button data-drawer-target="zdrava-sidebar" data-drawer-toggle="zdrava-sidebar" aria-controls="zdrava-sidebar" type="button" class="inline-flex items-center p-2 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600">
                             <span class="sr-only">Open sidebar</span>
-                            <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                <path clip-rule="evenodd" fill-rule="evenodd" d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"></path>
+                            <svg fill="currentColor" aria-hidden="true" class="w-6 h-6" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M2 4.75A.75.75 0 0 1 2.75 4h14.5a.75.75 0 0 1 0 1.5H2.75A.75.75 0 0 1 2 4.75zm0 10.5a.75.75 0 0 1 .75-.75h7.5a.75.75 0 0 1 0 1.5h-7.5a.75.75 0 0 1-.75-.75zM2 10a.75.75 0 0 1 .75-.75h14.5a.75.75 0 0 1 0 1.5H2.75A.75.75 0 0 1 2 10z" clip-rule="evenodd"/>
                             </svg>
                         </button>
                         @endif
@@ -67,7 +67,7 @@
                                 <ul class="flex flex-col font-medium p-4 md:p-0 mt-4 rounded-lg md:flex-row md:space-x-8 md:mt-0 md:border-0 bg-white border-b border-gray-200 dark:bg-gray-800">
                                     <li>
                                         <button id="buttonWorkouts" data-dropdown-toggle="buttonWorkoutsDropdownNavbar" class="flex items-center justify-between w-full py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 md:w-auto dark:text-white md:dark:hover:text-blue-500 dark:focus:text-white dark:border-gray-700 dark:hover:bg-gray-700 md:dark:hover:bg-transparent">
-                                            {{ __('Workout') }} <svg class="w-5 h-5 ml-1" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                                            {{ __('Workout') }} <svg fill="currentColor" aria-hidden="true" class="w-5 h-5 ml-1" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 0 1 1.414 0L10 10.586l3.293-3.293a1 1 0 1 1 1.414 1.414l-4 4a1 1 0 0 1-1.414 0l-4-4a1 1 0 0 1 0-1.414z" clip-rule="evenodd"/></svg>
                                         </button>
                                         <div id="buttonWorkoutsDropdownNavbar" class="z-10 hidden font-normal bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600">
                                             <ul class="py-2 text-sm text-gray-700 dark:text-gray-400" aria-labelledby="dropdownLargeButton">
@@ -314,7 +314,7 @@
         </div>
         @endif
     </div>
-    <div class="mt-8 mx-auto text-grey-darkest">
+    <div class="mt-8 mx-auto text-grey-darkest flex-grow">
         <main class="w-full flex flex-wrap px-2 mx-auto lg:px-8 justify-center">
             @if(empty($slot))
                 @yield('content')
