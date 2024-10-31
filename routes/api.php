@@ -23,6 +23,7 @@ Route::middleware('auth:sanctum')->post('/upload', [UploadController::class, 'wo
 /* Activity */
 Route::group(['as' => 'api.', 'prefix' => 'activity', 'middleware' => 'auth:sanctum'], static function () {
     Route::get('{id}', [ApiActivityController::class, 'get'])->name('get');
+    Route::delete('{id}', [ApiActivityController::class, 'delete'])->name('delete');
     Route::patch('{id}', [ApiActivityController::class, 'update'])->name('update');
     Route::post('{id}/like', [ApiActivityController::class, 'like'])->name('like');
     Route::delete('{id}/like', [ApiActivityController::class, 'unlike'])->name('unlike');
