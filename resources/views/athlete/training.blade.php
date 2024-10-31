@@ -1,5 +1,13 @@
 @extends('layouts.site')
 @section('title', __('My workouts') . ' | Zdrava')
+@section('js')
+    <script type="text/javascript">
+        function shareActivity(id) {
+            var url = document.getElementById("activity-" + id).getAttribute("href");
+            navigator.clipboard.writeText(url);
+        }
+    </script>
+@endsection
 @section('content')
     <main class="container mx-auto px-0 py-12">
         <div class="flex">
@@ -74,19 +82,18 @@
                                 @foreach($activities as $activity)
                                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                                         <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                            @if($activity->sport === 2)
-                                                <svg stroke="currentColor" class="w-6 h-6 stroke-gray-700" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                                    <title>{{ __('Ride') }}</title>
-                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M5.5 19.675a5.166 5.166 0 005.105-4.485h1.105l3.28-6.52.76 1.46a5.044 5.044 0 101.22-.57l-2.03-3.89H17a.333.333 0 01.33.33v.57h1.34V6A1.674 1.674 0 0017 4.32h-4.29l1.57 3.01H8.542L7.66 5.67h1.45l-.72-1.35H4.17l.72 1.35h1.241l1.26 2.37v.01l-.76 1.41a5.2 5.2 0 00-1.13-.135 5.175 5.175 0 100 10.35zm12.79-4.695h1.52l-2.2-4.2c.291-.073.59-.11.89-.11a3.83 3.83 0 11-3.83 3.83 3.877 3.877 0 011.7-3.19l1.92 3.67zm-4.82-6.31l-2.046 4.082-2.17-4.082h4.216zm-5.32.8l2.323 4.371H5.8l2.35-4.37zM5.5 10.675c.151.005.302.019.451.041l-1.58 2.944.79 1.53h4.1a3.822 3.822 0 11-3.76-4.515z" fill=""></path>
-                                                </svg>
-                                            @endif
+                                            <img
+                                                class="w-6 h-6 fill-gray-700 stroke-gray-700 dark:fill-gray-400 dark:stroke-gray-400"
+                                                src="@php echo \App\Models\Activities::getSportSvgIcon($activity->sport) @endphp"
+                                                alt=""
+                                            >
                                         </th>
                                         <td class="px-6 py-4">
                                             {{ $activity->getShortStartDate() }}
                                         </td>
                                         <td class="px-6 py-4">
-                                            <a href="{{ route('activities.get', $activity->id) }}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">
-                                                {{ $activity->name }}
+                                            <a id="activity-{{ $activity->id }}" href="{{ route('activities.get', $activity->id) }}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">
+                                                {{ Str::limit($activity->name, 80) }}
                                             </a>
                                         </td>
                                         <td class="px-6 py-4">
@@ -98,14 +105,14 @@
                                         <td class="px-6 py-4">
                                             {{ __(':elevation m', ['elevation' => $activity->elevation_gain]) }}
                                         </td>
-                                        <td class="px-0 py-4 text-right">
+                                        <td class="px-3 py-4 text-right">
                                             <a href="{{ route('activities.edit', $activity->id) }}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">{{ __('Edit') }}</a>
                                         </td>
-                                        <td class="px-0 py-4 text-right">
+                                        <td class="px-3 py-4 text-right">
                                             <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">{{ __('Delete') }}</a>
                                         </td>
                                         <td class="px-6 py-4 text-right">
-                                            <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">{{ __('Share') }}</a>
+                                            <a href="#" onclick="shareActivity({{ $activity->id }});" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">{{ __('Share') }}</a>
                                         </td>
                                     </tr>
                                 @endforeach
