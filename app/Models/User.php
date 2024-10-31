@@ -238,6 +238,7 @@ class User extends Authenticatable implements MustVerifyEmail
             'last_name' => $this->last_name,
             'created_at' => $this->created_at,
             'is_subscribed' => auth('sanctum')->user()->isSubscriber($this),
+            'private' => $this->private,
         ];
     }
 }
