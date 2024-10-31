@@ -21,14 +21,18 @@ class ApiFeedController extends Controller
             ], 401);
         }
 
+        $subscriptions = Subscription::select('user_id')
+            ->where('subscriber_id', $user->id)
+            ->where('confirmed', 1)
+            ->pluck('user_id');
+
         $activities = Activities::where('user_id', $user->id)
-            ->orWhereIn('user_id', Subscription::select(['user_id'])
-                ->where('subscriber_id', $user->id)
-                ->where('confirmed', 1))
+            ->orWhereIn('user_id', $subscriptions)
+            ->with('user')
             ->orderBy('created_at', 'DESC')
             ->get();
 
-        if (empty($activities)) {
+        if ($activities->isEmpty()) {
             return response()->json([
                 'success' => false,
                 'message' => __('No activities found')

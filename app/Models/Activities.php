@@ -5,6 +5,8 @@ namespace App\Models;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Storage;
 use App\Contracts\Likeable;
@@ -86,12 +88,12 @@ class Activities extends Model implements Likeable
         return $result;
     }
 
-    public function deviceManufacturer(): \Illuminate\Database\Eloquent\Relations\HasOne
+    public function deviceManufacturer(): HasOne
     {
         return $this->hasOne(DeviceManufacturers::class, 'id', 'device_manufacturers_id');
     }
 
-    public function deviceModel(): \Illuminate\Database\Eloquent\Relations\HasOne
+    public function deviceModel(): HasOne
     {
         return $this->hasOne(DeviceModel::class, 'model_id', 'device_models_id');
     }
@@ -104,6 +106,11 @@ class Activities extends Model implements Likeable
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function photos(): HasMany
+    {
+        return $this->hasMany(Photo::class);
     }
 
     public function getTrackCenter(): array
@@ -226,7 +233,7 @@ class Activities extends Model implements Likeable
         return $fullUrl ? asset(Storage::url($path)) : Storage::url($path);
     }
 
-    public function comments(string $orderBy = 'asc'): \Illuminate\Database\Eloquent\Relations\HasMany
+    public function comments(string $orderBy = 'asc'): HasMany
     {
         return $this->hasMany(Comment::class)->orderBy('created_at', $orderBy);
     }
@@ -243,9 +250,11 @@ class Activities extends Model implements Likeable
             'name' => $this->name,
             'description' => $this->description,
             'image_url' => $this->getImage($this->user_id, true),
+            'photos' => $this->photos,
             'polyline' => $this->polyline,
             'user_name' => $this->user->getFullName(),
             'distance' => $this->distance,
+            'sport' => $this->sport,
             'avg_speed' => $this->avg_speed,
             'elevation_gain' => $this->elevation_gain,
             'started_at' => $this->started_at,
