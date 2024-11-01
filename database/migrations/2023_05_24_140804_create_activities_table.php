@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Activities;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -11,8 +12,8 @@ return new class extends Migration
         Schema::create('activities', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('user_id')->unsigned();
-            $table->integer('sport')->default(2);
-            $table->integer('sub_sport')->default(7);
+            $table->integer('sport')->nullable();
+            $table->integer('sub_sport')->nullable();
             $table->text('name')->nullable();
             $table->text('description')->nullable();
             $table->text('creator')->nullable();
@@ -45,6 +46,10 @@ return new class extends Migration
             $table->float('end_position_long')->nullable();
             $table->string('country', 255)->nullable();
             $table->string('locality', 255)->nullable();
+            $table->enum('status', [
+                Activities::PENDING,
+                Activities::DONE
+            ])->default(Activities::PENDING);
             $table->timestamps();
         });
     }

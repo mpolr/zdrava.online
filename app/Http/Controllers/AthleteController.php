@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Activities;
 use App\Models\User;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Auth;
@@ -11,7 +12,12 @@ class AthleteController extends Controller
     public function training(): \Illuminate\View\View|View
     {
         return view('athlete.training', [
-            'activities' => Auth::user()->activities()->orderBy('created_at', 'desc')->limit(100)->get()
+            'activities' => Auth::user()
+                ->activities()
+                ->where('status', Activities::DONE)
+                ->orderBy('created_at', 'desc')
+                ->limit(100)
+                ->get()
         ]);
     }
 

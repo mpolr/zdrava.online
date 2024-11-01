@@ -7,6 +7,7 @@ use App\Http\Requests\StoreWorkoutRequest;
 use App\Jobs\ProcessFitFile;
 use App\Jobs\ProcessGpxFile;
 use App\Models\Activities;
+use App\Models\Photo;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
@@ -30,50 +31,86 @@ class UploadController extends Controller
                     'success' => false,
                     'message' => __('User not found')
                 ], 401);
-            } else {
-                abort(401);
+            }
+
+            abort(401);
+        }
+
+        $activityId = $request->get('activity_id');
+        $activity = Activities::find($activityId);
+        if (!$activityId || !$activity) {
+            $activity = new Activities();
+            $activity->user_id = $user->id;
+            $activity->status = Activities::PENDING;
+        }
+
+        if ($request->files->all('workout')) {
+            $activity->save();
+            foreach ($request->allFiles()['workout'] as $uploadedFile) {
+                $name = $uploadedFile->hashName();
+                $name = str_replace(['.xml', '.bin'], '', $name);
+                $extension = $uploadedFile->getClientOriginalExtension();
+
+                $hashedFileName = "{$name}.{$extension}";
+
+                $file = Storage::putFileAs(
+                    'temp',
+                    $uploadedFile,
+                    $hashedFileName,
+                    'private'
+                );
+
+                if (!empty($file)) {
+                    switch ($extension) {
+                        case 'gpx':
+                            ProcessGpxFile::dispatch($user->id, $hashedFileName, $activity->id)->onQueue('process-gpx');
+                            Artisan::call('queue:work', [
+                                '--queue' => 'process-gpx',
+                                '--stop-when-empty' => true,
+                            ]);
+                            $result = true;
+                            break;
+                        case 'fit':
+                            ProcessFitFile::dispatch($activity, $hashedFileName)->onQueue('process-fit');
+                            Artisan::call('queue:work', [
+                                '--queue' => 'process-fit',
+                                '--stop-when-empty' => true,
+                            ]);
+                            $result = true;
+                            break;
+                        case 'tcx':
+                            $result = $this->processTCX($file, $request, $hashedFileName);
+                            break;
+                        default:
+                            $activity->delete();
+                            session()->flash('error', __('Unsupported file!'));
+                            return redirect()->refresh();
+                    }
+                }
             }
         }
 
-        foreach ($request->allFiles()['workout'] as $uploadedFile) {
-            $name = $uploadedFile->hashName();
-            $name = str_replace(['.xml', '.bin'], '', $name);
-            $extension = $uploadedFile->getClientOriginalExtension();
+        if ($request->files->all('image')) {
+            $activity->save();
+            foreach ($request->allFiles()['image'] as $imageFile) {
+                $name = $imageFile->hashName();
 
-            $hashedFileName = "{$name}.{$extension}";
+                $file = Storage::putFileAs(
+                    'activities/' . $activity->user_id . '/images',
+                    $imageFile,
+                    $name,
+                    'public'
+                );
 
-            $file = Storage::putFileAs(
-                'temp',
-                $uploadedFile,
-                $hashedFileName,
-                'private'
-            );
-
-            if (!empty($file)) {
-                switch ($extension) {
-                    case 'gpx':
-                        ProcessGpxFile::dispatch($user->id, $hashedFileName)->onQueue('process-gpx');
-                        Artisan::call('queue:work', [
-                            '--queue' => 'process-gpx',
-                            '--stop-when-empty' => true,
-                        ]);
-                        $result = true;
-                        break;
-                    case 'fit':
-                        ProcessFitFile::dispatch($user->id, $hashedFileName)->onQueue('process-fit');
-                        Artisan::call('queue:work', [
-                            '--queue' => 'process-fit',
-                            '--stop-when-empty' => true,
-                        ]);
-                        $result = true;
-                        break;
-                    case 'tcx':
-                        $result = $this->processTCX($file, $request, $hashedFileName);
-                        break;
-                    default:
-                        session()->flash('error', __('Unsupported file!'));
-                        return redirect()->refresh();
+                if (!empty($file)) {
+                    $photo = new Photo();
+                    $photo->activities_id = $activity->id;
+                    $photo->users_id = $user->id;
+                    $photo->url = $name;
+                    $photo->save();
                 }
+
+                $result = true;
             }
         }
 
@@ -88,9 +125,9 @@ class UploadController extends Controller
                 'success' => true,
                 'message' => 'Upload success'
             ]);
-        } else {
-            return redirect()->refresh();
         }
+
+        return redirect()->refresh();
     }
 
     private function processTCX(string $file, StoreWorkoutRequest $request, string $filename): bool

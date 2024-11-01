@@ -3,12 +3,13 @@
 namespace App\Http\Controllers\Api;
 
 use App\Models\User;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
 class ApiUpload
 {
-    public function avatar(Request $request): \Illuminate\Http\JsonResponse
+    public function avatar(Request $request): JsonResponse
     {
         if (empty($request->file('avatar'))) {
             return response()->json([

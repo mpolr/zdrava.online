@@ -26,7 +26,10 @@ class ApiFeedController extends Controller
             ->where('confirmed', 1)
             ->pluck('user_id');
 
-        $activities = Activities::where('user_id', $user->id)
+        $activities = Activities::where(static function ($query) use ($user) {
+            $query->where('user_id', $user->id)
+                ->where('status', Activities::DONE);
+        })
             ->orWhereIn('user_id', $subscriptions)
             ->with('user')
             ->orderBy('created_at', 'DESC')

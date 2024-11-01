@@ -19,6 +19,13 @@ class Activities extends Model implements Likeable
     use Likes;
     use Notifiable;
 
+    public const PENDING = 'pending';
+    public const DONE = 'done';
+    protected const STATUS = [
+        self::PENDING,
+        self::DONE
+    ];
+
     protected $fillable = [
         'user_id',
         'sport',
@@ -55,6 +62,7 @@ class Activities extends Model implements Likeable
         'end_position_long',
         'country',
         'locality',
+        'status'
     ];
 
     protected $casts = [
