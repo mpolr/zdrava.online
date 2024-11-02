@@ -96,7 +96,7 @@ class UploadController extends Controller
                 $name = $imageFile->hashName();
 
                 $file = Storage::putFileAs(
-                    'activities/' . $activity->user_id . '/images',
+                    'public/activities/' . $activity->user_id . '/images',
                     $imageFile,
                     $name,
                     'public'
