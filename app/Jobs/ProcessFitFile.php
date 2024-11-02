@@ -161,6 +161,7 @@ class ProcessFitFile implements ShouldQueue, ShouldBeUnique
             if (!$result) {
                 $this->fail('Cant move FIT file!');
             } else {
+                $this->activity->status = Activities::DONE;
                 $this->activity->save();
             }
         } catch (Exception $e) {

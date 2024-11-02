@@ -64,8 +64,8 @@
                 @if (Session::get('success'))
                     @livewire('toast.success')
                 @endif
-                @if(count($user->activities) >= 1)
-                    @foreach($user->activities as $activity)
+                @if(count($user->activities->where('status', \App\Models\Activities::DONE)) >= 1)
+                    @foreach($user->activities->where('status', \App\Models\Activities::DONE) as $activity)
                         <div
                             class="max-w-full mb-3 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
                             <div class="p-4">

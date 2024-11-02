@@ -14,7 +14,7 @@ class Profile extends Component
     public function mount(?int $id = null): void
     {
         // TODO: Если профиль закрытый и не в друзьях - выводим минимум
-        if (empty($id)) {
+        if ($id === null) {
             $this->user = Auth::user();
         } else {
             $user = User::findOrFail($id);

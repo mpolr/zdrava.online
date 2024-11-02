@@ -13,10 +13,19 @@ class Dashboard extends Component
 
     public function mount(): void
     {
-        $this->activities = Activities::where('user_id', auth()->user()->id)
-            ->orWhereIn('user_id', Subscription::select(['user_id'])
-                ->where('subscriber_id', auth()->user()->id)
-                ->where('confirmed', 1))
+        $subscriptions = Subscription::select('user_id')
+            ->where('subscriber_id', auth()->user()->id)
+            ->where('confirmed', 1)
+            ->pluck('user_id');
+
+        $user = auth()->user();
+
+        $this->activities = Activities::where(static function ($query) use ($user) {
+            $query->where('user_id', $user->id)
+                ->where('status', Activities::DONE);
+        })
+            ->orWhereIn('user_id', $subscriptions)
+            ->with('user')
             ->orderBy('created_at', 'DESC')
             ->get();
     }
