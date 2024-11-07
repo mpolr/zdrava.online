@@ -49,6 +49,8 @@ class GpxTools
         $gpx2png->imageParams->max_height = 1280;
         $gpx2png->imageParams->padding = 20;
         $gpx2png->drawParams->autoCropToBounds = 0;
+        $gpx2png->drawParams->track->width = 12;
+        $gpx2png->drawParams->track->color = '#ff6a00';
         $gpx2png->drawParams->track->distanceLabelsFrequency = 0;
         $gpx2png->loadFile($fullFilePath);
 
