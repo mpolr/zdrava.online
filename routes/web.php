@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\ActivitiesController;
 use App\Http\Controllers\AthleteController;
 use App\Http\Controllers\Auth\ForgotResetController;
 use App\Http\Controllers\Auth\LoginController;
@@ -61,6 +60,7 @@ Route::group(['prefix' => 'auth'], function () {
 /* Спортсмен */
 Route::group(['prefix' => 'athlete', 'middleware' => 'auth'], function () {
     Route::get('training', [AthleteController::class, 'training'])->name('athlete.training');
+    Route::get('calendar/{year?}', \App\Http\Livewire\Athlete\Calendar::class)->name('athlete.calendar');
     // Подписчики пользователя
     Route::get('subscribers', [AthleteController::class, 'subscribers'])->name('athlete.subscribers');
     Route::get('{id}/subscribers', [AthleteController::class, 'subscribers'])->name('athlete.subscribers.user');
