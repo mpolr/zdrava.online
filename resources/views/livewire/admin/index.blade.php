@@ -35,6 +35,9 @@
             <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">Внешние сервисы</h2>
             <ul class="text-gray-500 dark:text-gray-400 font-medium">
                 <li class="mb-4">
+                    <a href="https://glitchtip.mpolr.ru/zdrava/issues" target="_blank">Zdrava - проблемы с сайтом</a>
+                </li>
+                <li class="mb-4">
                     <a href="https://console.rustore.ru/apps/2063492362/versions" target="_blank">RuStore Console</a>
                 </li>
                 <li class="mb-4">

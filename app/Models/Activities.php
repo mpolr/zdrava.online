@@ -246,7 +246,7 @@ class Activities extends Model implements Likeable
         return $this->hasMany(Comment::class)->orderBy('created_at', $orderBy);
     }
 
-    public static function getSportSvgIcon(int $id): string
+    public static function getSportSvgIcon(?int $id): string
     {
         return match ($id) {
             1 => asset('images/sport/run.svg'),
