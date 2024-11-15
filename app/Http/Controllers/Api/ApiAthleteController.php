@@ -60,9 +60,12 @@ class ApiAthleteController extends Controller
             ]);
         }
 
-        $activity = $user->activities()->get();
+        $activities = Activities::where(static function ($query) use ($user) {
+            $query->where('user_id', $user->id)
+                ->where('status', Activities::DONE);
+        })->orderBy('created_at', 'DESC')->get();
 
-        if (empty($activity)) {
+        if (empty($activities)) {
             return response()->json([
                 'success' => false,
                 'message' => __('Activity not found')
@@ -71,7 +74,7 @@ class ApiAthleteController extends Controller
 
         return response()->json([
             'success' => true,
-            'activities' => $activity,
+            'activities' => $activities,
         ]);
     }
 
