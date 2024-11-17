@@ -252,6 +252,7 @@ class Activities extends Model implements Likeable
             1 => asset('images/sport/run.svg'),
             2 => asset('images/sport/ride.svg'),
             11 => asset('images/sport/walk.svg'),
+            37 => asset('images/sport/sup.svg'),
             default => ''
         };
     }
