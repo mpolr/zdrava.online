@@ -11,7 +11,7 @@ class ApiNotificationController extends Controller
     public function get(Request $request): JsonResponse
     {
         $user = $request->user();
-        $notifications = $user->notifications()->get();
+        $notifications = $user->notifications()->limit(50)->get();
 
         return response()->json([
             'success' => true,
