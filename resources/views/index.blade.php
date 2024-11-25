@@ -3,18 +3,18 @@
     <main class="container mx-auto px-0 py-12 max-w-screen-lg">
         <div class="grid grid-cols-1 gap-4">
             <div class="w-full">
-                <div class="text-center text-gray-800 py-24 px-6">
+                <div class="text-center text-gray-800 dark:text-gray-400 py-24 px-6">
                     <h1 class="text-5xl md:text-6xl xl:text-7xl font-bold tracking-tight mb-12">
-                        <span class="text-blue-600">Zdrava</span><br />
+                        <span class="text-blue-600 dark:text-orange-600">{{ __('Zdrava') }}</span><br />
                         {{ __('Social network for athletes') }}
                     </h1>
-                    <a href="{{ route('mobile') }}" class="inline-block px-7 py-3 bg-transparent text-blue-600 font-medium text-sm leading-snug uppercase rounded hover:text-blue-700 hover:bg-gray-100 focus:bg-gray-100 focus:outline-none focus:ring-0 active:bg-gray-200 transition duration-150 ease-in-out" data-mdb-ripple="true" data-mdb-ripple-color="light" role="button">
+                    <a href="{{ route('mobile') }}" class="inline-block px-7 py-3 bg-transparent text-blue-600 dark:text-white font-medium text-sm leading-snug uppercase rounded hover:text-blue-700 dark:hover:text-black hover:bg-gray-100 focus:bg-gray-100 focus:outline-none focus:ring-0 active:bg-gray-200 transition duration-150 ease-in-out" data-mdb-ripple="true" data-mdb-ripple-color="light" role="button">
                         {{ __('Zdrava android app') }}
                     </a>
-                    <a href="https://t.me/zdrava_online" target="_blank" class="inline-block px-7 py-3 bg-transparent text-blue-600 font-medium text-sm leading-snug uppercase rounded hover:text-blue-700 hover:bg-gray-100 focus:bg-gray-100 focus:outline-none focus:ring-0 active:bg-gray-200 transition duration-150 ease-in-out" data-mdb-ripple="true" data-mdb-ripple-color="light" role="button" rel="nofollow">
+                    <a href="https://t.me/zdrava_online" target="_blank" class="inline-block px-7 py-3 bg-transparent text-blue-600 dark:text-white font-medium text-sm leading-snug uppercase rounded hover:text-blue-700 dark:hover:text-black hover:bg-gray-100 focus:bg-gray-100 focus:outline-none focus:ring-0 active:bg-gray-200 transition duration-150 ease-in-out" data-mdb-ripple="true" data-mdb-ripple-color="light" role="button" rel="nofollow">
                         {{ __('Telegram') }}
                     </a>
-                    <a href="https://vk.com/zdrava.online" target="_blank" class="inline-block px-7 py-3 bg-transparent text-blue-600 font-medium text-sm leading-snug uppercase rounded hover:text-blue-700 hover:bg-gray-100 focus:bg-gray-100 focus:outline-none focus:ring-0 active:bg-gray-200 transition duration-150 ease-in-out" data-mdb-ripple="true" data-mdb-ripple-color="light" role="button" rel="nofollow">
+                    <a href="https://vk.com/zdrava.online" target="_blank" class="inline-block px-7 py-3 bg-transparent text-blue-600 dark:text-white font-medium text-sm leading-snug uppercase rounded hover:text-blue-700 dark:hover:text-black hover:bg-gray-100 focus:bg-gray-100 focus:outline-none focus:ring-0 active:bg-gray-200 transition duration-150 ease-in-out" data-mdb-ripple="true" data-mdb-ripple-color="light" role="button" rel="nofollow">
                         {{ __('VK') }}
                     </a>
                 </div>

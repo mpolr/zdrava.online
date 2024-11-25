@@ -1,6 +1,20 @@
 <!DOCTYPE html>
-<html @if(session()->get('theme') === 'dark') class="dark" @endif lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+
+<html
+    @if(session()->get('theme') === 'dark')
+        class="dark"
+    @endif
+    lang="{{ str_replace('_', '-', app()->getLocale()) }}"
+>
 <head>
+    @if (session()->get('theme') !== 'dark' || session()->get('theme') !== 'light')
+        <script type="text/javascript">
+            const getPreferredScheme = () => window?.matchMedia?.('(prefers-color-scheme:dark)')?.matches ? 'dark' : 'light';
+            if (getPreferredScheme() === 'dark') {
+                document.querySelector('html').classList.add("dark");
+            }
+        </script>
+    @endif
     <meta charset="utf-8">
     <meta name="theme-color" content="#ff6600" />
     <meta name="apple-mobile-web-app-status-bar-style" content="#ff6600">
@@ -58,7 +72,7 @@
                         @endif
                         <a href="{{ route('index') }}" class="flex ml-2 md:mr-24">
                             <img src="{{ asset('favicon.svg') }}" class="h-8 mr-3" alt="{{ __('Zdrava') }}" />
-                            <span class="self-center text-xl font-semibold xs:text-xl sm:text-2xl whitespace-nowrap dark:text-white">{{ __('Zdrava') }}</span>
+                            <span class="self-center text-xl font-semibold xs:text-xl sm:text-2xl whitespace-nowrap text-orange-600 dark:text-white">{{ __('Zdrava') }}</span>
                         </a>
                     </div>
                     @auth

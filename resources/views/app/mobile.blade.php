@@ -1,8 +1,8 @@
 @extends('layouts.site')
 @section('title', __('Zdrava android app') . ' | Zdrava')
 @section('content')
-    <div class="container my-12 px-6 mx-auto">
-        <h1 class="text-4xl md:text-5xl xl:text-6xl font-bold tracking-tight mb-12">
+    <div class="container my-12 px-6 mx-auto dark:text-gray-400">
+        <h1 class="text-4xl md:text-5xl xl:text-6xl font-bold tracking-tight mb-12 dark:text-white">
             {{ __('GPS app for runners and cyclists Zdrava') }}
         </h1>
         <p>{{ __('With Zdrava, you can track your runs and rides via GPS, complete fun challenges, share training photos, and make new friends.') }}</p>

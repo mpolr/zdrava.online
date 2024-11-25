@@ -10,4 +10,5 @@ return [
     |[5,20]:count часов
     |[21,24]:count часа
     |[25,*]:count часов',
+    'people' => ':count человек|:count человека|:count человек',
 ];

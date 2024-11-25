@@ -2,16 +2,16 @@
 @section('description', 'Регистрация на сайте Zdrava')
 <div class="px-6 py-12 md:px-12 text-gray-800 text-center lg:text-left">
     <div class="container mx-auto xl:px-32">
-        <div class="grid lg:grid-cols-2 gap-12 items-center">
+        <div class="grid lg:grid-cols-2 gap-12 items-start">
             <div class="mt-12 lg:mt-0">
                 <h1 class="text-5xl md:text-6xl xl:text-7xl font-bold tracking-tight mb-12">
-                    <span class="text-blue-600">{{ __('Zdrava') }}</span>
+                    <span class="text-blue-600 dark:text-orange-600">{{ __('Zdrava') }}</span>
                 </h1>
-                <p class="text-gray-600">
-                    {{ __('Try Zdrava.') }} ({{ __('alpha test') }})<br />
+                <p class="text-gray-600 dark:text-gray-300">
+                    {{ __('Try Zdrava.') }}<br />
                     {{--                        Register today and start tracking your progress.<br />--}}
                     {{--                        Discover new peoples and places.<br />--}}
-                    {{ __('We already have :count people', ['count' => \App\Models\User::count()]) }}
+                    {{ __('We already have :count', ['count' => trans_choice('plurals.people', \App\Models\User::count())]) }}
                 </p>
             </div>
             <div class="mb-12 lg:mb-0">
