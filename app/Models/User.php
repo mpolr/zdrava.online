@@ -121,6 +121,10 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->subscribers()->where('confirmed', 1)->get();
     }
 
+    public function unconfirmedSubscribers(): HasMany
+    {
+        return $this->hasMany(Subscription::class)->where('confirmed', 0);
+    }
 
     public function likes(): HasMany
     {

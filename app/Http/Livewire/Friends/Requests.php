@@ -17,7 +17,7 @@ class Requests extends Component
     public function __construct()
     {
         parent::__construct();
-        $this->requests = Auth::user()->subscribers->where('confirmed', 0)->all();
+        $this->requests = Auth::user()->unconfirmedSubscribers;
     }
 
     public function render(): \Illuminate\Contracts\View\View|View
