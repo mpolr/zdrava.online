@@ -129,7 +129,11 @@ class ProcessFitFile implements ShouldQueue, ShouldBeUnique
                 $this->activity->end_position_lat = $fit->data_mesgs['session']['end_position_lat'];
                 $this->activity->end_position_long = $fit->data_mesgs['session']['end_position_long'];
             } else {
-                if (!is_array($fit->data_mesgs['record']['timestamp']) || count($fit->data_mesgs['record']['timestamp']) <= 10) {
+                if (
+                    !is_array($fit->data_mesgs['record']['timestamp']) ||
+                    !is_array($fit->data_mesgs['record']['position_lat']) ||
+                    count($fit->data_mesgs['record']['timestamp']) <= 10
+                ) {
                     // Всего одна запись, скорее всего нам такое не нужно
                     $this->fail('Very small FIT file!');
                 }
