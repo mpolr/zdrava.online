@@ -15,3 +15,6 @@
 
 - [FIT File Viewer](https://www.fitfileviewer.com/) для отладки FIT-файлов
 - [Don't kill my app!](https://dontkillmyapp.com/) руководство как отключить энергосбережение в Android
+
+### License
+```Apache License, Version 2.0 and the Commons Clause Restriction```
