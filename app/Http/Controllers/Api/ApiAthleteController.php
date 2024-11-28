@@ -22,7 +22,7 @@ class ApiAthleteController extends Controller
             ], 401);
         }
 
-        $user = User::findOrFail($id, ['id', 'nickname', 'photo', 'first_name', 'last_name', 'created_at']);
+        $user = User::findOrFail($id, ['id', 'nickname', 'photo', 'first_name', 'last_name', 'created_at', 'private']);
         $athlete = [
             'id' => $user->id,
             'nickname' => $user->getNickname(),
@@ -30,6 +30,7 @@ class ApiAthleteController extends Controller
             'first_name' => $user->first_name,
             'last_name' => $user->last_name,
             'created_at' => $user->created_at,
+            'private' => $user->private,
         ];
 
         if (empty($athlete)) {

@@ -275,6 +275,7 @@ class Activities extends Model implements Likeable
             'distance' => $this->distance,
             'sport' => $this->sport,
             'avg_speed' => $this->avg_speed,
+            'steps' => 0,
             'elevation_gain' => $this->elevation_gain,
             'started_at' => $this->started_at,
             'locality' => $this->locality,

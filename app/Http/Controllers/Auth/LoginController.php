@@ -27,14 +27,24 @@ class LoginController extends Controller
 
     public function authenticateApi(Request $request): JsonResponse
     {
-        $credentials = $request->validate([
+        $user = null;
+
+        $validator = Validator::make($request->all(), [
             'email' => ['required', 'email'],
             'password' => ['required'],
             'deviceName' => 'required',
         ]);
 
-        $user = User::where('email', $credentials['email'])->first();
-        if (!$user || !Hash::check($credentials['password'], $user->password)) {
+        if ($validator->fails()) {
+            return new JsonResponse([
+                'success' => false,
+                'message' => $validator->errors()
+            ], 422);
+        }
+
+        $user = User::where('email', $request->email)->first();
+
+        if (!$user || !Hash::check($request->password, $user->password)) {
             return response()->json([
                 'success' => false,
                 'message' => __('Your provided credentials do not match in our records')
@@ -48,7 +58,7 @@ class LoginController extends Controller
             ]);
         }
 
-        $token = $user->createToken($credentials['deviceName'])->plainTextToken;
+        $token = $user->createToken($request->deviceName)->plainTextToken;
         return response()->json([
             'success' => true,
             'message' => __('Logged in successfully'),
