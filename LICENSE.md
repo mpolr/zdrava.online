@@ -26,5 +26,5 @@ or the functionality of the Software. Any license notice or attribution required
 by the License must also include this Commons Cause License Condition notice.
 
 For purposes of the clause above, the “Licensor” is Monakhov P.R., the
-“License” is the Apache License, Version 2.0, and the Software is the Hybula
+“License” is the Apache License, Version 2.0, and the Software is the zdrava.online
 software provided with this notice.
