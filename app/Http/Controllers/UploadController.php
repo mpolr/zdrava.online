@@ -36,9 +36,9 @@ class UploadController extends Controller
             abort(401);
         }
 
-        $activityId = $request->get('activity_id');
-        $activity = Activities::find($activityId);
-        if (!$activityId || !$activity) {
+        if ($activityId = $request->get('activity_id')) {
+            $activity = Activities::findOrFail($activityId);
+        } else {
             $activity = new Activities();
             $activity->user_id = $user->id;
             $activity->status = Activities::PENDING;

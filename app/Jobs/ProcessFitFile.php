@@ -104,6 +104,17 @@ class ProcessFitFile implements ShouldQueue, ShouldBeUnique
             $this->activity->duration = $fit->data_mesgs['session']['total_timer_time'];
             $this->activity->duration_total = $fit->data_mesgs['session']['total_elapsed_time'];
 
+            $exist = Activities::where('user_id', $this->activity->user_id)
+                ->where('started_at', $this->activity->started_at)
+                ->where('finished_at', $this->activity->finished_at)
+                ->where('duration', $this->activity->duration)
+                ->first('id');
+
+            if ($exist !== null) {
+                // Такая тренировка уже есть
+                $this->fail('Activity already exists.');
+            }
+
             if (isset($fit->data_mesgs['session']['avg_heart_rate'])) {
                 $this->activity->avg_heart_rate = $fit->data_mesgs['session']['avg_heart_rate'];
                 $this->activity->max_heart_rate = $fit->data_mesgs['session']['max_heart_rate'];
