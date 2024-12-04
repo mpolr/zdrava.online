@@ -51,7 +51,7 @@ class ProcessFitFile implements ShouldQueue, ShouldBeUnique
                 $this->activity->sub_sport = $fit->data_mesgs['sport']['sub_sport'];
             }
             $this->activity->name = !empty($fit->data_mesgs['sport']['name']) ? __($fit->data_mesgs['sport']['name']) : __('Workout');
-            if ($fit->data_mesgs['device_info']['manufacturer'] === 255 && !empty($fit->data_mesgs['developer_data_id']) && !empty($fit->data_mesgs['developer_data_id']['application_id'])) {
+            if (!empty($fit->data_mesgs['developer_data_id']) && !empty($fit->data_mesgs['developer_data_id']['application_id'])) {
                 $this->activity->creator = $this->byteArrayToString($fit->data_mesgs['developer_data_id']['application_id']);
             } else {
                 $this->activity->device_manufacturers_id = $fit->data_mesgs['file_id']['manufacturer'] ?: null;
@@ -83,12 +83,12 @@ class ProcessFitFile implements ShouldQueue, ShouldBeUnique
             if (isset($fit->data_mesgs['session']['total_ascent'])) {
                 $this->activity->elevation_gain = $fit->data_mesgs['session']['total_ascent'];
             } else {
-                $this->activity->elevation_gain = $this->calculateElevationGain($fit->data_mesgs['record']['enhanced_altitude']);
+                $this->activity->elevation_gain = 0;
             }
             if (isset($fit->data_mesgs['session']['total_descent'])) {
                 $this->activity->elevation_loss = $fit->data_mesgs['session']['total_descent'];
             } else {
-                $this->activity->elevation_loss = $this->calculateElevationLoss($fit->data_mesgs['record']['enhanced_altitude']);
+                $this->activity->elevation_loss = 0;
             }
             if (isset($fit->data_mesgs['session']['start_time'])) {
                 $this->activity->started_at = $fit->data_mesgs['session']['start_time'];
