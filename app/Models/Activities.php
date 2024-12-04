@@ -76,7 +76,11 @@ class Activities extends Model implements Likeable
 
         if (!empty($this->creator) && empty($this->device_manufacturers_id) && empty($this->device_models_id)) {
             $result = $this->creator;
+            if (array_key_exists($this->creator, DeviceManufacturers::DEVICE_MANUFACTURERS)) {
+                $result = DeviceManufacturers::DEVICE_MANUFACTURERS[$this->creator];
+            }
         }
+
         if (!empty($this->device_manufacturers_id)) {
             try {
                 $result = $this->deviceManufacturer->description;

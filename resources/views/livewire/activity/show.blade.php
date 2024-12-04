@@ -154,11 +154,12 @@
                                     </span>
                                 </div>
                             </div>
+                            @if($manufacturer = $activity->getDeviceManufacturer())
                             <div class="w-full mt-3">
                                 <hr />
                                 <div class="mb-3 mt-3 font-normal text-gray-700 dark:text-gray-400">
                                     <span class="bg-blue-100 text-blue-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300" data-tooltip-target="tooltip-device">
-                                        {{ $activity->getDeviceManufacturer() }}
+                                        {{ $manufacturer }}
                                     </span>
                                     @if(!empty($activity->device_software_version))
                                         <span class="bg-gray-100 text-gray-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-300" data-tooltip-target="tooltip-firmware">
@@ -175,6 +176,7 @@
                                     </div>
                                 </div>
                             </div>
+                            @endif
                         </div>
                     </div>
                 </div>

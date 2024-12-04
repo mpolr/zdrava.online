@@ -6,6 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class DeviceManufacturers extends Model
 {
+    public const DEVICE_MANUFACTURERS = [
+        'mywhoosh.whooshg' => 'MyWhoosh',
+    ];
+
     public $incrementing = false;
 
     protected $fillable = [
