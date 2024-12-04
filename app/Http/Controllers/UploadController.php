@@ -114,17 +114,24 @@ class UploadController extends Controller
             }
         }
 
-        if ($result) {
-            session()->flash('success', __('File Upload successfully'));
-        } else {
-            session()->flash('error', __('Error occurred'));
-        }
-
         if ($formApp) {
+            if ($result === false) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Upload error'
+                ]);
+            }
+
             return response()->json([
                 'success' => true,
                 'message' => 'Upload success'
             ]);
+        }
+
+        if ($result) {
+            session()->flash('success', __('File Upload successfully'));
+        } else {
+            session()->flash('error', __('Error occurred'));
         }
 
         return redirect()->refresh();

@@ -8,7 +8,7 @@
 <div class="container mx-auto px-0 py-12">
     <div class="flex sm:flex-row md:flex-row flex-col gap-4">
         {{-- Левый контейнер --}}
-        <div>
+        <div class="w-full md:w-1/3">
             <div class="w-full">
                 <div
                     class="w-full bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
@@ -256,7 +256,7 @@
             </div>
         </div>
         {{-- Правый контейнер --}}
-        <div>
+        <div class="w-full md:w-1/3">
             <div class="w-full">
                 <div
                     class="w-full mb-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
