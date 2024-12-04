@@ -154,10 +154,12 @@ class ProcessFitFile implements ShouldQueue, ShouldBeUnique
 
             $this->activity->polyline = Polyline::convertFitLocationToPolyline($fit->data_mesgs['record']);
 
-            $geo = GpxTools::geocode($this->activity->start_position_lat, $this->activity->start_position_long);
-            if ($geo) {
-                $this->activity->country = $geo['country'];
-                $this->activity->locality = $geo['locality'];
+            if ($this->activity->start_position_lat !== 0.0 || $this->activity->start_position_long !== 0.0) {
+                $geo = GpxTools::geocode($this->activity->start_position_lat, $this->activity->start_position_long);
+                if ($geo) {
+                    $this->activity->country = $geo['country'];
+                    $this->activity->locality = $geo['locality'];
+                }
             }
 
             $gpx = GpxTools::convertFitToGpx($fit, $this->activity->user_id, $this->fileName);

@@ -83,11 +83,14 @@ class Activities extends Model implements Likeable
 
         if (!empty($this->device_manufacturers_id)) {
             try {
-                $result = $this->deviceManufacturer->description;
+                $result = !empty($this->deviceManufacturer->description)
+                    ? $this->deviceManufacturer->description
+                    : $this->deviceManufacturer->manufacturer;
             } catch (\Exception $e) {
                 Log::channel('telegram')->log(LogLevel::ERROR, auth()->user()->getFullName() . " Unknown device_manufacturers_description: ID: {$this->device_manufacturers_id}");
             }
         }
+
         if (!empty($this->device_models_id)) {
             try {
                 $result .= ' ' . $this->deviceModel->description;
