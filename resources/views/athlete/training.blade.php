@@ -84,7 +84,7 @@
                                         <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                             <img
                                                 class="w-6 h-6 fill-gray-700 stroke-gray-700 dark:fill-gray-400 dark:stroke-gray-400"
-                                                src="@php echo \App\Models\Activities::getSportSvgIcon($activity->sport) @endphp"
+                                                src="@php echo \App\Models\Activities::getSportSvgIcon($activity->sport, $activity->sub_sport) @endphp"
                                                 alt=""
                                             >
                                         </th>

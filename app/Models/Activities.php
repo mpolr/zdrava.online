@@ -253,14 +253,15 @@ class Activities extends Model implements Likeable
         return $this->hasMany(Comment::class)->orderBy('created_at', $orderBy);
     }
 
-    public static function getSportSvgIcon(?int $id): string
+    public static function getSportSvgIcon(?int $sport = null, ?int $subSport = null): string
     {
-        return match ($id) {
-            1 => asset('images/sport/run.svg'),
-            2 => asset('images/sport/ride.svg'),
-            11 => asset('images/sport/walk.svg'),
-            37 => asset('images/sport/sup.svg'),
-            default => ''
+        return match (true) {
+            $sport === 2 && $subSport === 58 => asset('images/sport/vr.svg'),
+            $sport === 1 => asset('images/sport/run.svg'),
+            $sport === 2 => asset('images/sport/ride.svg'),
+            $sport === 11 => asset('images/sport/walk.svg'),
+            $sport === 37 => asset('images/sport/sup.svg'),
+            default => asset('images/sport/unknown.svg'),
         };
     }
 

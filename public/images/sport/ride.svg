@@ -1,1 +1,7 @@
-<?xml version="1.0" ?><svg class="icon icon-tabler icon-tabler-bike" fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0z" fill="none" stroke="none"/><circle cx="5" cy="18" r="3"/><circle cx="19" cy="18" r="3"/><polyline points="12 19 12 15 9 12 14 8 16 11 19 11"/><circle cx="17" cy="5" r="1"/></svg>
+<svg fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="24" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0 0h24v24H0z" stroke="none"/>
+    <circle cx="5" cy="18" r="3"/>
+    <circle cx="19" cy="18" r="3"/>
+    <path d="M12 19v-4l-3-3 5-4 2 3h3"/>
+    <circle cx="17" cy="5" r="1"/>
+</svg>
