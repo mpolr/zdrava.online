@@ -12,45 +12,60 @@
         {{-- Левый контейнер --}}
         <div class="w-48">
             <div class="max-w-xs flex flex-col rounded-md shadow-sm">
-                <a href="#" type="button" class="py-3 px-4 inline-flex justify-left items-center gap-2 rounded-t-md border font-medium bg-white text-gray-700 align-middle hover:bg-gray-50 focus:z-10 focus:outline-none focus:ring-2 focus:ring-blue-600 transition-all text-sm dark:bg-gray-800 dark:hover:bg-slate-800 dark:border-gray-700 dark:text-gray-400">
+                <a href="#" type="button"
+                   class="py-3 px-4 inline-flex justify-left items-center gap-2 rounded-t-md border font-medium bg-white text-gray-700 align-middle hover:bg-gray-50 focus:z-10 focus:outline-none focus:ring-2 focus:ring-blue-600 transition-all text-sm dark:bg-gray-800 dark:hover:bg-slate-800 dark:border-gray-700 dark:text-gray-400">
                     {{ __('Overview') }}
                 </a>
-                <a href="#" type="button" class="-mt-px py-3 px-4 inline-flex justify-left items-center gap-2 border font-medium bg-white text-gray-700 align-middle hover:bg-gray-50 focus:z-10 focus:outline-none focus:ring-2 focus:ring-blue-600 transition-all text-sm dark:bg-gray-800 dark:hover:bg-slate-800 dark:border-gray-700 dark:text-gray-400">
+                <a href="#" type="button"
+                   class="-mt-px py-3 px-4 inline-flex justify-left items-center gap-2 border font-medium bg-white text-gray-700 align-middle hover:bg-gray-50 focus:z-10 focus:outline-none focus:ring-2 focus:ring-blue-600 transition-all text-sm dark:bg-gray-800 dark:hover:bg-slate-800 dark:border-gray-700 dark:text-gray-400">
                     {{ __('Analysis') }}
                 </a>
             </div>
             <div class="flex pt-4">
-                <button id="dropdownButton" data-dropdown-toggle="dropdown" class="inline-block text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:ring-4 focus:outline-none focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-1.5" type="button">
+                <button id="dropdownButton" data-dropdown-toggle="dropdown"
+                        class="inline-block text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:ring-4 focus:outline-none focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-1.5"
+                        type="button">
                     <span class="sr-only">Open dropdown</span>
-                    <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z"></path></svg>
+                    <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
+                         xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z"></path>
+                    </svg>
                 </button>
                 <!-- Dropdown menu -->
-                <div id="dropdown" class="z-10 hidden text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
+                <div id="dropdown"
+                     class="z-10 hidden text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
                     <ul class="py-2" aria-labelledby="dropdownButton">
                         @if ($activity->getUser()->id == auth()->user()->id || auth()->user()->hasRole('admin'))
                             <li>
-                                <a href="{{ route('activities.edit', $activity->id) }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
+                                <a href="{{ route('activities.edit', $activity->id) }}"
+                                   class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
                                     {{ __('Edit activity') }}
                                 </a>
                             </li>
                         @endif
                         @if ($activity->getFITFile())
-                                <a href="{{ $activity->getFITFile() }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
-                                    {{ __('Download :file', ['file' => 'FIT']) }}
-                                </a>
+                            <a href="{{ $activity->getFITFile() }}"
+                               class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
+                                {{ __('Download :file', ['file' => 'FIT']) }}
+                            </a>
                         @endif
                         <li>
-                            <a href="{{ $activity->getGPXFile() }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
+                            <a href="{{ $activity->getGPXFile() }}"
+                               class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
                                 {{ __('Download :file', ['file' => 'GPX']) }}
                             </a>
                         </li>
                     </ul>
                     @if ($activity->getUser()->id == auth()->user()->id || auth()->user()->hasRole('admin'))
                         <div class="py-2">
-                            <a href="#" onclick="event.preventDefault(); document.getElementById('activity-delete-form').submit();" class="block px-4 py-2 text-sm text-red-600 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
+                            <a href="#"
+                               onclick="event.preventDefault(); document.getElementById('activity-delete-form').submit();"
+                               class="block px-4 py-2 text-sm text-red-600 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
                                 {{ __('Delete') }}
                             </a>
-                            <form id="activity-delete-form" action="{{ route('activities.delete', $activity->id) }}" method="POST" style="display: none;">
+                            <form id="activity-delete-form" action="{{ route('activities.delete', $activity->id) }}"
+                                  method="POST" class="invisible">
                                 {{ csrf_field() }}
                             </form>
                         </div>
@@ -64,21 +79,36 @@
             @if (session()->get('success'))
                 @livewire('toast.success')
             @endif
-            <div id="accordion-flush" data-accordion="collapse" data-active-classes="bg-white dark:bg-gray-900 text-gray-900 dark:text-white" data-inactive-classes="text-gray-500 dark:text-gray-400">
+            <div id="accordion-flush" data-accordion="collapse"
+                 data-active-classes="bg-white dark:bg-gray-900 text-gray-900 dark:text-white"
+                 data-inactive-classes="text-gray-500 dark:text-gray-400">
                 <h2 id="accordion-flush-heading-overview">
-                    <button type="button" class="flex items-center justify-between w-full px-4 py-5 font-medium text-left text-gray-500 border-b border-gray-200 dark:border-gray-700 dark:text-gray-400" data-accordion-target="#accordion-flush-body-overview" aria-expanded="true" aria-controls="accordion-flush-body-overview">
+                    <button type="button"
+                            class="flex items-center justify-between w-full px-4 py-5 font-medium text-left text-gray-500 border-b border-gray-200 dark:border-gray-700 dark:text-gray-400"
+                            data-accordion-target="#accordion-flush-body-overview" aria-expanded="true"
+                            aria-controls="accordion-flush-body-overview">
                         <span>
-                            <a href="{{ route('athlete.profile', $activity->getUser()->id) }}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">{{ $activity->getUser()->getFullName() }}</a> - Заезд
+                            <a href="{{ route('athlete.profile', $activity->getUser()->id) }}"
+                               class="font-medium text-blue-600 dark:text-blue-500 hover:underline">{{ $activity->getUser()->getFullName() }}</a> - Заезд
                         </span>
-                        <svg data-accordion-icon class="w-6 h-6 rotate-180 shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                        <svg data-accordion-icon class="w-6 h-6 rotate-180 shrink-0" fill="currentColor"
+                             viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd"
+                                  d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                  clip-rule="evenodd"></path>
+                        </svg>
                     </button>
                 </h2>
-                <div id="accordion-flush-body-overview" class="hidden" aria-labelledby="accordion-flush-heading-overview">
-                    <div class="flex flex-col items-start bg-white border border-gray-200 shadow md:flex-row max-w-full dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100">
+                <div id="accordion-flush-body-overview" class="hidden"
+                     aria-labelledby="accordion-flush-heading-overview">
+                    <div
+                        class="flex flex-col items-start bg-white border border-gray-200 shadow md:flex-row max-w-full dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100">
                         <div class="flex flex-col justify-between p-4 leading-normal w-1/2">
                             <p class="mb-2 text-xs text-gray-500 dark:text-gray-400">
                                 {{ $activity->getLongStartDate() }}
-                                @if($activity->locality) - {{ $activity->locality }}@endif, {{ $activity->getCountry() }}
+                                @if($activity->locality)
+                                    - {{ $activity->locality }}
+                                @endif, {{ $activity->getCountry() }}
                             </p>
                             <h4 class="mb-2 mt-0 text-2xl font-medium leading-tight text-gray-900 dark:text-gray-100">
                                 {{ $activity->name }}
@@ -157,102 +187,48 @@
                                 </div>
                             </div>
                             @if($manufacturer = $activity->getDeviceManufacturer())
-                            <div class="w-full mt-3">
-                                <hr />
-                                <div class="mb-3 mt-3 font-normal text-gray-700 dark:text-gray-400">
-                                    <span class="bg-blue-100 text-blue-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300" data-tooltip-target="tooltip-device">
+                                <div class="w-full mt-3">
+                                    <hr/>
+                                    <div class="mb-3 mt-3 font-normal text-gray-700 dark:text-gray-400">
+                                    <span
+                                        class="bg-blue-100 text-blue-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300"
+                                        data-tooltip-target="tooltip-device">
                                         {{ $manufacturer }}
                                     </span>
-                                    @if(!empty($activity->device_software_version))
-                                        <span class="bg-gray-100 text-gray-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-300" data-tooltip-target="tooltip-firmware">
+                                        @if(!empty($activity->device_software_version))
+                                            <span
+                                                class="bg-gray-100 text-gray-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-300"
+                                                data-tooltip-target="tooltip-firmware">
                                             v{{ $activity->device_software_version }}
                                         </span>
-                                    @endif
-                                    <div id="tooltip-device" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
-                                        {{ __('Device / Application') }}
-                                        <div class="tooltip-arrow" data-popper-arrow></div>
-                                    </div>
-                                    <div id="tooltip-firmware" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
-                                        {{ __('Firmware') }}
-                                        <div class="tooltip-arrow" data-popper-arrow></div>
+                                        @endif
+                                        <div id="tooltip-device" role="tooltip"
+                                             class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
+                                            {{ __('Device / Application') }}
+                                            <div class="tooltip-arrow" data-popper-arrow></div>
+                                        </div>
+                                        <div id="tooltip-firmware" role="tooltip"
+                                             class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
+                                            {{ __('Firmware') }}
+                                            <div class="tooltip-arrow" data-popper-arrow></div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
                             @endif
                         </div>
                     </div>
                 </div>
             </div>
             <div class="w-full pt-4">
-                <div id="map" class="center-block z-0" style="width: 100%; height: 400px;"></div>
-                <script>
-                    let map, markers = [];
-                    /* ----------------------------- Initialize Map ----------------------------- */
-                    function initMap() {
-
-                        map = L.map('map', {
-                            center: {
-                                lat: {{ $activity->getTrackCenter()['lat'] }},
-                                lng: {{ $activity->getTrackCenter()['long'] }},
-                            },
-                            zoom: 12
-                        });
-
-                        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                            attribution: '© OpenStreetMap',
-                            @if(session()->get('theme') == 'dark')
-                            className: 'map-tiles-dark',
-                            @endif
-                        }).addTo(map);
-
-                        L.Control.Button = L.Control.extend({
-                            options: {
-                                position: 'topright'
-                            },
-                            onAdd: function (map) {
-                                var container = L.DomUtil.create('div', 'leaflet-control text-center content-center flex justify-center items-center');
-                                var button = L.DomUtil.create('div', 'leaflet-control-button border-2 border-black text-black bg-white', container);
-                                button.innerHTML = '<button class="mt-1"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" /></svg></button>';
-                                container.title = "{{ __('Download :file', ['file' => 'GPX']) }}";
-                                L.DomEvent.disableClickPropagation(button);
-                                L.DomEvent.on(button, 'click', function(){
-                                    var fileUrl = '{{ $activity->getGPXFile() }}';
-                                    var fileName = '{{ $activity->getGPXFile(true) }}';
-                                    var link = document.createElement('a');
-                                    link.href = fileUrl;
-                                    link.download = fileName;
-                                    link.click();
-                                });
-
-                                return container;
-                            },
-                            onRemove: function(map) {},
-                        });
-                        let control = new L.Control.Button()
-                        control.addTo(map);
-
-                        let gpx = '{{ $activity->getGPXFile() }}';
-                        new L.GPX(gpx, {
-                            async: true,
-                            marker_options: {
-                                iconSize: [24, 24],
-                                iconAnchor: [12, 12],
-                                startIconUrl: '/storage/images/pin-start.png',
-                                endIconUrl: '/storage/images/pin-finish.png',
-                                shadowUrl: null
-                            },
-                            polyline_options: {
-                                color: 'red',
-                                opacity: 0.75,
-                                weight: 5,
-                                lineCap: 'round',
-                            }
-                        }).on('loaded', function(e) {
-                            map.fitBounds(e.target.getBounds());
-                        }).addTo(map);
-                    }
-                    initMap();
-                </script>
+                <div id="map" x-data="mapComponent({
+                    lat: {{ $activity->getTrackCenter()['lat'] }},
+                    lng: {{ $activity->getTrackCenter()['long'] }},
+                    zoom: 12,
+                    polyline: '{{ $activity->polyline }}',
+                    gpxFile: '{{ $activity->getGPXFile() }}',
+                    gpxStartIcon: '/storage/images/pin-start.png',
+                    gpxEndIcon: '/storage/images/pin-finish.png',
+                })" class="w-full h-[400px]" x-init="init"></div>
             </div>
             @livewire('comments.comments', ['activityId' => $activity->id])
         </div>

@@ -336,6 +336,7 @@
     "Toggle navigation": "Переключить навигацию",
     "Too Early": "Слишком рано",
     "Too Many Requests": "Слишком много запросов",
+    "Training calendar": "Календарь тренировок",
     "Translate": "Перевод",
     "Translate It": "Перевести",
     "Try Zdrava.": "Попробуйте Zdrava.",
@@ -391,6 +392,5 @@
     "Your provided credentials do not match in our records": "Предоставленные вами учетные данные не совпадают с нашими записями",
     "Your tasks": "Ваши задачи",
     "Zdrava account deleting": "Удаление аккаунта Zdrava",
-    "Zdrava android app": "Zdrava для android",
-    "Training calendar": "Календарь тренировок"
+    "Zdrava android app": "Zdrava для android"
 }

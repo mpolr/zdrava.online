@@ -21,13 +21,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="description" content="@yield('description', 'Социальная сеть для спортсменов. Бег, велоспорт, сап борд и многое другое. Загружай тренировки, общайся, заводи новых друзей.')" />
-    {{-- Open gpaph --}}
+    {{-- Open graph --}}
     <meta property="og:url" content="{{ config('app.url') }}">
     <meta property="og:type" content="website">
     <meta property="og:title" content="@yield('title', 'Zdrava - ' . __('Social network for athletes'))">
     <meta property="og:description" content="@yield('description', 'Социальная сеть для спортсменов. Бег, велоспорт, сап борд и многое другое. Загружай тренировки, общайся, заводи новых друзей.')">
     <meta property="og:image" content="{{ config('app.url') }}/zdrava.png">
-    <link rel="icon" href="{{ URL::asset('favicon.svg') }}" sizes="any" type="image/svg+xml">
+    {{-- Telegram InstaView --}}
+    <meta property="telegram:channel" content="@zdrava_online">
+    <meta property="tg:site_verification" content="g7j8/rPFXfhyrq5q0QQV7EsYWv4=">
+    <link rel="icon" href="{{ asset('favicon.svg') }}" sizes="any" type="image/svg+xml">
     <title>@yield('title', 'Zdrava - ' . __('Social network for athletes'))</title>
     {{-- Fonts --}}
     @googlefonts('ubuntu')
@@ -139,7 +142,7 @@
                                         </span>
                                     </div>
                                     <div class="invisible absolute z-50 flex right-0 w-56 flex-col bg-gray-100 dark:bg-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white py-1 px-4 text-gray-800 shadow-xl group-hover:visible" onClick="">
-                                        <a href="{{ route('upload.workout') }}" class="my-2 py-1 text-gray-500 hover:text-black dark:hover:text-white md:mx-2">
+                                        <a href="{{ route('upload.workout') }}" class="my-2 py-1 text-gray-500 hover:text-black dark:text-white dark:hover:text-white md:mx-2">
                                             {{ __('Upload workout') }}
                                         </a>
                                     </div>
@@ -343,10 +346,10 @@
             @endif
         </main>
     </div>
-    <footer class="mt-10">
+    <footer class="mt-10 entry-footer">
         <div class="mx-auto w-full max-w-screen-xl">
             <div class="grid grid-cols-2 gap-8 px-4 py-6 lg:py-8 md:grid-cols-4">
-                <div>
+                <div class="cat-links">
                     <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">{{ __('New items') }}</h2>
                     <ul class="text-gray-500 dark:text-gray-400 font-medium">
                         <li class="mb-4">
@@ -357,7 +360,7 @@
                         </li>
                     </ul>
                 </div>
-                <div>
+                <div class="cat-links">
                     <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">{{ __('Download') }}</h2>
                     <ul class="text-gray-500 dark:text-gray-400 font-medium">
                         <li class="mb-4">
@@ -365,7 +368,7 @@
                         </li>
                     </ul>
                 </div>
-                <div>
+                <div class="cat-links">
                     <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">{{ __('Links') }}</h2>
                     <ul class="text-gray-500 dark:text-gray-400 font-medium">
                         <li class="mb-4">
@@ -376,7 +379,7 @@
                         </li>
                     </ul>
                 </div>
-                <div>
+                <div class="cat-links">
                     <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">{{ __('Legal terms') }}</h2>
                     <ul class="text-gray-500 dark:text-gray-400 font-medium">
                         <li class="mb-4">
