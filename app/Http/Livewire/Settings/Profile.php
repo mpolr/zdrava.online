@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 use Livewire\WithFileUploads;
+use Toaster;
 
 class Profile extends Component
 {
@@ -46,7 +47,10 @@ class Profile extends Component
             $this->emit('fileUploaded', $this->user->getPhoto());
         }
 
-        session()->flash('success', __('Profile successfully updated'));
-        $this->user->save();
+        $result = $this->user->save();
+
+        if ($result) {
+            Toaster::success(__('Profile successfully updated'));
+        }
     }
 }

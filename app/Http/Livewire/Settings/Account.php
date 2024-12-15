@@ -29,7 +29,7 @@ class Account extends Component
 
     public function save(): Redirector|\Illuminate\Http\RedirectResponse
     {
-        if (!in_array($this->locale, config('app.available_locales'))) {
+        if (!in_array($this->locale, config('app.available_locales'), true)) {
             abort(400);
         }
 

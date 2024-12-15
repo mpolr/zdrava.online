@@ -223,9 +223,7 @@
                 <div id="map" x-data="mapComponent({
                     lat: {{ $activity->getTrackCenter()['lat'] }},
                     lng: {{ $activity->getTrackCenter()['long'] }},
-                    zoom: 12,
                     polyline: '{{ $activity->polyline }}',
-                    gpxFile: '{{ $activity->getGPXFile() }}',
                     gpxStartIcon: '/storage/images/pin-start.png',
                     gpxEndIcon: '/storage/images/pin-finish.png',
                 })" class="w-full h-[400px]" x-init="init"></div>

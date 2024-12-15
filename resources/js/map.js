@@ -1,7 +1,7 @@
 import polyUtil from "polyline-encoded";
 
 document.addEventListener('alpine:init', () => {
-    Alpine.data('mapComponent', ({ lat, lng, zoom = 12, polyline, gpxFile, gpxStartIcon, gpxEndIcon }) => ({
+    Alpine.data('mapComponent', ({ lat, lng, zoom = 12, polyline, gpxStartIcon, gpxEndIcon }) => ({
         map: null,
         init() {
             const getPreferredScheme = () => window?.matchMedia?.('(prefers-color-scheme:dark)')?.matches ? 'dark' : 'light';

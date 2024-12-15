@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Activity;
 use App\Models\Activities;
 use Livewire\Component;
 use Storage;
+use Toaster;
 
 class Show extends Component
 {
@@ -15,7 +16,7 @@ class Show extends Component
         $this->activity = Activities::findOrFail($id);
     }
 
-    public function render()
+    public function render(): \Illuminate\Contracts\View\Factory|\Illuminate\Foundation\Application|\Illuminate\Contracts\View\View|\Illuminate\View\View|\Illuminate\Contracts\Foundation\Application
     {
         return view('livewire.activity.show');
     }
@@ -37,13 +38,13 @@ class Show extends Component
             Storage::delete('public/activities/' . $activity->user_id . '/' . $activity->file);
             Storage::delete('public/activities/' . $activity->user_id . '/' . $activity->image);
 
-            session()->flash('success', __('Activity ":name" successfully deleted', [
-                'name' => $activity->name
-            ]));
-
             Activities::destroy($id);
 
-            return redirect()->route('site.dashboard');
+            return redirect()->route('site.dashboard')->success(
+                __('Activity ":name" successfully deleted', [
+                    'name' => $activity->name
+                ])
+            );
         }
 
         return redirect()->refresh();
