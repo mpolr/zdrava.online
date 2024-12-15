@@ -1,29 +1,12 @@
 @section('title', $user->getFullName() . ' | Zdrava')
 @section('description', 'Профиль пользователя ' . $user->getFullName() . ' в Zdrava')
-@section('js')
-    <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet-src.js" nonce="{{ csp_nonce() }}"
-            integrity="sha256-V8Wsw6bWrfTsX9YUzIjKtnIoiUhBdulszoxf177/XjU=" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-gpx/1.7.0/gpx.min.js" nonce="{{ csp_nonce() }}"
-            integrity="sha256-zGq7H6kB1pGKYY53eZP3jer9hhjRveG1HcNSeEbnNc4=" crossorigin="anonymous"></script>
-@endsection
 <div class="container mx-auto px-0 py-12">
     <div class="flex sm:flex-row md:flex-row flex-col gap-4">
         {{-- Левый контейнер --}}
         <div>
             <div class="w-full">
                 <div class="flex items-center justify-center w-full">
-                    @if ($user->getPhoto())
-                        <img src="{{ $user->getPhoto() }}" alt="{{ $user->getFullName() }}"
-                             class="w-32 h-32 mb-3 p-1 rounded-full ring-2 ring-gray-300 dark:ring-gray-500"
-                             loading="lazy"/>
-                    @else
-                        <div
-                            class="relative inline-flex items-center justify-center w-24 h-24 mb-3 overflow-hidden bg-gray-300 rounded-full dark:bg-gray-600">
-                            <span class="font-bold text-3xl text-gray-600 dark:text-gray-300">
-                                {{ $user->getInitials() }}
-                            </span>
-                        </div>
-                    @endif
+                    <x-avatar image="{{ $user->getPhoto() }}" name="{{ $user->getFullName() }}" class="w-24 h-24" />
                     <h2 class="mb-2 mt-0 ml-4 text-4xl font-medium leading-tight text-black dark:text-gray-100">
                         {{ $user->getFullName() }}
                     </h2>
@@ -129,54 +112,12 @@
                             </div>
                             <div class="p-0">
                                 <a href="{{ route('activities.get', $activity->id) }}">
-                                    <div id="map_{{ $activity->id }}" class="w-full z-0 h-[400px]"></div>
+                                    <div id="map_{{ $activity->id }}" x-data="mapComponent({
+                                        lat: {{ $activity->getTrackCenter()['lat'] }},
+                                        lng: {{ $activity->getTrackCenter()['long'] }},
+                                        polyline: '{{ $activity->polyline }}',
+                                    })" class="w-full h-[400px] z-0" x-init="init"></div>
                                 </a>
-                                <script>
-                                    let map_{{ $activity->id }} = [];
-
-                                    function initMap() {
-                                        map_{{ $activity->id }} = L.map('map_{{ $activity->id }}', {
-                                            center: {
-                                                lat: {{ $activity->getTrackCenter()['lat'] }},
-                                                lng: {{ $activity->getTrackCenter()['long'] }},
-                                            },
-                                            dragging: false,
-                                            scrollWheelZoom: false,
-                                            zoomControl: false,
-                                        });
-
-                                        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                                            attribution: '© OpenStreetMap',
-                                            @if(session()->get('theme') === 'dark')
-                                            className: 'map-tiles-dark',
-                                            @endif
-                                            reuseTiles: true,
-                                            unloadInvisibleTiles: true
-                                        }).addTo(map_{{ $activity->id }});
-
-                                        let gpx = '{{ $activity->getGPXFile() }}';
-                                        new L.GPX(gpx, {
-                                            async: true,
-                                            marker_options: {
-                                                iconSize: [0, 0],
-                                                iconAnchor: [0, 0],
-                                                startIconUrl: null,
-                                                endIconUrl: null,
-                                                shadowUrl: null
-                                            },
-                                            polyline_options: {
-                                                color: 'red',
-                                                opacity: 0.75,
-                                                weight: 3,
-                                                lineCap: 'round',
-                                            }
-                                        }).on('loaded', function (e) {
-                                            map_{{ $activity->id }}.fitBounds(e.target.getBounds(), {padding: [10, 10]});
-                                        }).addTo(map_{{ $activity->id }});
-                                    }
-
-                                    initMap();
-                                </script>
                             </div>
                             <div class="p-0">
                                 <div class="flex flex-wrap items-center justify-end gap-4" role="group">

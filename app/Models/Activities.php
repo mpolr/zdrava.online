@@ -265,6 +265,18 @@ class Activities extends Model implements Likeable
         };
     }
 
+    public function getActivityType(): string
+    {
+        return match (true) {
+            $this->sport === 2 && $this->sub_sport === 58 => __('Virtual ride'),
+            $this->sport === 1 => __('Run'),
+            $this->sport === 2 => __('Ride'),
+            $this->sport === 11 => __('Walking'),
+            $this->sport === 37 => __('Sup boarding'),
+            default => __('Unknown'),
+        };
+    }
+
     // Метод для преобразования модели в массив с кастомными ключами
     public function toArray(): array
     {

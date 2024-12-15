@@ -33,20 +33,7 @@
                         </div>
                     @endif
                     <div class="flex flex-col items-center pb-10">
-                        @if (Auth::user()->getPhoto())
-                            <img class="w-32 h-32 mb-3 p-1 rounded-full ring-2 ring-gray-300 dark:ring-gray-500"
-                                 src="{{ Auth::user()->getPhoto() }}" alt="{{ Auth::user()->getFullName() }}"
-                                 loading="lazy"/>
-                        @else
-                            <a href="{{ route('settings.profile') }}">
-                                <div
-                                    class="relative inline-flex items-center justify-center w-24 h-24 mb-3 overflow-hidden bg-gray-300 rounded-full dark:bg-gray-600">
-                                <span class="font-bold text-3xl text-gray-600 dark:text-gray-300">
-                                    {{ Auth::user()->getInitials() }}
-                                </span>
-                                </div>
-                            </a>
-                        @endif
+                        <x-avatar image="{{ Auth::user()->getPhoto() }}" name="{{ Auth::user()->getFullName() }}" class="w-32 h-32" />
                         <h5 class="mb-1 text-xl font-medium text-gray-900 dark:text-white">{{ Auth::user()->first_name }} {{ Auth::user()->last_name }}</h5>
                         @if(auth()->user()->nickname)
                             <span
@@ -108,19 +95,8 @@
                             class="max-w-full mb-3 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
                             <div class="p-4">
                                 <div class="flex gap-x-4">
-                                    <a href="{{ route('athlete.profile', $activity->getUser()->id) }}">
-                                        @if($activity->getUser()->getPhoto())
-                                            <img class="h-12 w-12 flex-none rounded-full bg-gray-50"
-                                                 src="{{ $activity->getUser()->getPhoto() }}"
-                                                 alt="{{ $activity->getUser()->getFullName() }}">
-                                        @else
-                                            <div
-                                                class="relative inline-flex items-center justify-center w-12 h-12 mb-3 overflow-hidden bg-gray-300 rounded-full dark:bg-gray-600">
-                                                <span class="font-bold text-xl text-gray-600 dark:text-gray-300">
-                                                    {{ $activity->getUser()->getInitials() }}
-                                                </span>
-                                            </div>
-                                        @endif
+                                    <a href="{{ route('athlete.profile', $activity->user->id) }}">
+                                        <x-avatar image="{{ $activity->user->getPhoto() }}" name="{{ $activity->user->getFullName() }}" class="w-12 h-12" />
                                     </a>
                                     <img
                                         class="w-6 h-6 fill-gray-700 stroke-gray-700 dark:fill-gray-400 dark:stroke-gray-400"
@@ -128,8 +104,8 @@
                                         alt=""
                                     >
                                     <div class="min-w-0 flex-auto">
-                                        <a href="{{ route('athlete.profile', $activity->getUser()->id) }}">
-                                            <p class="text-sm font-semibold leading-6 text-gray-900 dark:text-gray-100">{{ $activity->getUser()->getFullName() }}</p>
+                                        <a href="{{ route('athlete.profile', $activity->user->id) }}">
+                                            <p class="text-sm font-semibold leading-6 text-gray-900 dark:text-gray-100">{{ $activity->user->getFullName() }}</p>
                                         </a>
                                         <p class="mt-1 truncate text-xs leading-5 text-gray-500">
                                             {{ $activity->getLongStartDate() }}
@@ -170,8 +146,6 @@
                                             lat: {{ $activity->getTrackCenter()['lat'] }},
                                             lng: {{ $activity->getTrackCenter()['long'] }},
                                             polyline: '{{ $activity->polyline }}',
-                                            gpxStartIcon: '/storage/images/pin-start.png',
-                                            gpxEndIcon: '/storage/images/pin-finish.png',
                                         })" class="w-full h-[400px] z-0" x-init="init"></div>
                                 </a>
                             </div>

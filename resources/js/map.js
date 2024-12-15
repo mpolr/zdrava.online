@@ -2,7 +2,7 @@ import L from "leaflet";
 import polyUtil from "polyline-encoded";
 
 document.addEventListener('alpine:init', () => {
-    Alpine.data('mapComponent', ({ lat, lng, zoom = 12, polyline, gpxStartIcon, gpxEndIcon }) => ({
+    Alpine.data('mapComponent', ({ lat, lng, zoom = 12, polyline }) => ({
         map: null,
         init() {
             const getPreferredScheme = () => window?.matchMedia?.('(prefers-color-scheme:dark)')?.matches ? 'dark' : 'light';
@@ -38,7 +38,7 @@ document.addEventListener('alpine:init', () => {
 
             L.marker(coords[0], {
                 icon: L.icon({
-                    iconUrl: gpxStartIcon,
+                    iconUrl: '/images/pin-start.svg',
                     iconSize: [24, 24],
                     iconAnchor: [12, 12],
                 }),
@@ -46,7 +46,7 @@ document.addEventListener('alpine:init', () => {
 
             L.marker(coords[coords.length - 1], {
                 icon: L.icon({
-                    iconUrl: gpxEndIcon,
+                    iconUrl: '/images/pin-finish.svg',
                     iconSize: [24, 24],
                     iconAnchor: [12, 12],
                 }),

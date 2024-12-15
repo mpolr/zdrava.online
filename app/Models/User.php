@@ -81,6 +81,12 @@ class User extends Authenticatable implements MustVerifyEmail
         return "{$this->first_name} {$this->last_name}";
     }
 
+    public static function getUserInitials($name): string
+    {
+        $initials = explode(' ', $name);
+        return strtoupper(Str::limit($initials[0], 1, '') . Str::limit($initials[1], 1, ''));
+    }
+
     public function getInitials(): string
     {
         return strtoupper(Str::limit($this->first_name, 1, '') . Str::limit($this->last_name, 1, ''));

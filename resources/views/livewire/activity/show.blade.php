@@ -85,7 +85,7 @@
                             aria-controls="accordion-flush-body-overview">
                         <span>
                             <a href="{{ route('athlete.profile', $activity->getUser()->id) }}"
-                               class="font-medium text-blue-600 dark:text-blue-500 hover:underline">{{ $activity->getUser()->getFullName() }}</a> - Заезд
+                               class="font-medium text-blue-600 dark:text-blue-500 hover:underline">{{ $activity->getUser()->getFullName() }}</a> - {{ $activity->getActivityType() }}
                         </span>
                         <svg data-accordion-icon class="w-6 h-6 rotate-180 shrink-0" fill="currentColor"
                              viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
@@ -220,8 +220,6 @@
                     lat: {{ $activity->getTrackCenter()['lat'] }},
                     lng: {{ $activity->getTrackCenter()['long'] }},
                     polyline: '{{ $activity->polyline }}',
-                    gpxStartIcon: '/storage/images/pin-start.png',
-                    gpxEndIcon: '/storage/images/pin-finish.png',
                 })" class="w-full h-[400px]" x-init="init"></div>
             </div>
             @livewire('comments.comments', ['activityId' => $activity->id])
