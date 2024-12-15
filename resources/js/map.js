@@ -1,3 +1,4 @@
+import L from "leaflet";
 import polyUtil from "polyline-encoded";
 
 document.addEventListener('alpine:init', () => {

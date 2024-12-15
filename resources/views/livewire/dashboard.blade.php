@@ -1,10 +1,4 @@
 @section('title', __('Dashboard') . ' | Zdrava')
-@section('js')
-    <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet-src.js" nonce="{{ csp_nonce() }}"
-            integrity="sha256-V8Wsw6bWrfTsX9YUzIjKtnIoiUhBdulszoxf177/XjU=" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-gpx/1.7.0/gpx.min.js" nonce="{{ csp_nonce() }}"
-            integrity="sha256-zGq7H6kB1pGKYY53eZP3jer9hhjRveG1HcNSeEbnNc4=" crossorigin="anonymous"></script>
-@endsection
 <div class="container mx-auto px-0 py-12">
     <div class="flex sm:flex-row md:flex-row flex-col gap-4">
         {{-- Левый контейнер --}}
@@ -172,54 +166,14 @@
                             </div>
                             <div class="p-0">
                                 <a href="{{ route('activities.get', $activity->id) }}">
-                                    <div id="map_{{ $activity->id }}" class="w-full h-[400px] z-0"></div>
+                                    <div id="map_{{ $activity->id }}" x-data="mapComponent({
+                                            lat: {{ $activity->getTrackCenter()['lat'] }},
+                                            lng: {{ $activity->getTrackCenter()['long'] }},
+                                            polyline: '{{ $activity->polyline }}',
+                                            gpxStartIcon: '/storage/images/pin-start.png',
+                                            gpxEndIcon: '/storage/images/pin-finish.png',
+                                        })" class="w-full h-[400px] z-0" x-init="init"></div>
                                 </a>
-                                <script nonce="{{ csp_nonce() }}">
-                                    let map_{{ $activity->id }} = [];
-
-                                    function initMap() {
-                                        map_{{ $activity->id }} = L.map('map_{{ $activity->id }}', {
-                                            center: {
-                                                lat: {{ $activity->getTrackCenter()['lat'] }},
-                                                lng: {{ $activity->getTrackCenter()['long'] }},
-                                            },
-                                            dragging: false,
-                                            scrollWheelZoom: false,
-                                            zoomControl: false,
-                                        });
-
-                                        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                                            attribution: '© OpenStreetMap',
-                                            @if(session()->get('theme') === 'dark')
-                                            className: 'map-tiles-dark',
-                                            @endif
-                                            reuseTiles: true,
-                                            unloadInvisibleTiles: true
-                                        }).addTo(map_{{ $activity->id }});
-
-                                        let gpx = '{{ $activity->getGPXFile() }}';
-                                        new L.GPX(gpx, {
-                                            async: true,
-                                            marker_options: {
-                                                iconSize: [0, 0],
-                                                iconAnchor: [0, 0],
-                                                startIconUrl: null,
-                                                endIconUrl: null,
-                                                shadowUrl: null
-                                            },
-                                            polyline_options: {
-                                                color: 'red',
-                                                opacity: 0.75,
-                                                weight: 3,
-                                                lineCap: 'round',
-                                            }
-                                        }).on('loaded', function (e) {
-                                            map_{{ $activity->id }}.fitBounds(e.target.getBounds(), {padding: [10, 10]});
-                                        }).addTo(map_{{ $activity->id }});
-                                    }
-
-                                    initMap();
-                                </script>
                             </div>
                             <div class="p-0">
                                 <div class="flex flex-wrap items-center justify-end gap-4" role="group">
