@@ -4,8 +4,7 @@
         {{-- Левый контейнер --}}
         <div class="w-full md:w-1/3">
             <div class="w-full">
-                <div
-                    class="w-full bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+                <div class="w-full bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
                     @if(auth()->user()->hasRole('admin'))
                         <div class="flex justify-end px-4 pt-2">
                             <button id="dropdownButton" data-dropdown-toggle="dropdown"

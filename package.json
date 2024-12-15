@@ -18,7 +18,7 @@
     "dependencies": {
         "@sentry/browser": "^8.45.0",
         "alpinejs": "^3.13.5",
-        "chart.js": "^4.4.1",
+        "chart.js": "^4.4.7",
         "flowbite": "^1.6.5",
         "leaflet": "^1.9.4",
         "leaflet-gpx": "^1.7.0",
