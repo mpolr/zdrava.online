@@ -98,11 +98,9 @@
                                     <a href="{{ route('athlete.profile', $activity->user->id) }}">
                                         <x-avatar image="{{ $activity->user->getPhoto() }}" name="{{ $activity->user->getFullName() }}" class="w-12 h-12" />
                                     </a>
-                                    <img
-                                        class="w-6 h-6 fill-gray-700 stroke-gray-700 dark:fill-gray-400 dark:stroke-gray-400"
-                                        src="@php echo \App\Models\Activities::getSportSvgIcon($activity->sport, $activity->sub_sport) @endphp"
-                                        alt=""
-                                    >
+                                    <svg class="w-6 h-6 text-black dark:text-gray-300 dark:stroke-gray-300">
+                                        {!! File::get($activity::getSportSvgIcon($activity->sport, $activity->sub_sport)) !!}
+                                    </svg>
                                     <div class="min-w-0 flex-auto">
                                         <a href="{{ route('athlete.profile', $activity->user->id) }}">
                                             <p class="text-sm font-semibold leading-6 text-gray-900 dark:text-gray-100">{{ $activity->user->getFullName() }}</p>

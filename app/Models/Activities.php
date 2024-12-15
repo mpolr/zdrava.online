@@ -256,12 +256,12 @@ class Activities extends Model implements Likeable
     public static function getSportSvgIcon(?int $sport = null, ?int $subSport = null): string
     {
         return match (true) {
-            $sport === 2 && $subSport === 58 => asset('images/sport/vr.svg'),
-            $sport === 1 => asset('images/sport/run.svg'),
-            $sport === 2 => asset('images/sport/ride.svg'),
-            $sport === 11 => asset('images/sport/walk.svg'),
-            $sport === 37 => asset('images/sport/sup.svg'),
-            default => asset('images/sport/unknown.svg'),
+            $sport === 2 && $subSport === 58 => 'images/sport/vr.svg',
+            $sport === 1 => 'images/sport/run.svg',
+            $sport === 2 => 'images/sport/ride.svg',
+            $sport === 11 => 'images/sport/walk.svg',
+            $sport === 37 => 'images/sport/sup.svg',
+            default => 'images/sport/unknown.svg',
         };
     }
 

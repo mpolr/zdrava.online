@@ -3,8 +3,9 @@
 @section('js')
     <script type="text/javascript" nonce="{{ csp_nonce() }}">
         function shareActivity(id) {
-            var url = document.getElementById("activity-" + id).getAttribute("href");
+            let url = document.getElementById("activity-" + id).getAttribute("href");
             navigator.clipboard.writeText(url);
+            Toaster.success('{{ __('Link copied to clipboard!') }}');
         }
     </script>
 @endsection
@@ -58,13 +59,7 @@
                                     </div>
                                 </th>
                                 <th scope="col" class="px-0 py-3">
-                                    <span class="sr-only">{{ __('Edit') }}</span>
-                                </th>
-                                <th scope="col" class="px-0 py-3">
-                                    <span class="sr-only">{{ __('Delete') }}</span>
-                                </th>
-                                <th scope="col" class="px-0 py-3">
-                                    <span class="sr-only">{{ __('Share') }}</span>
+                                    {{ __('Actions') }}
                                 </th>
                             </tr>
                         </thead>
@@ -81,18 +76,16 @@
                             @else
                                 @foreach($activities as $activity)
                                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                            <img
-                                                class="w-6 h-6 fill-gray-700 stroke-gray-700 dark:fill-gray-400 dark:stroke-gray-400"
-                                                src="@php echo \App\Models\Activities::getSportSvgIcon($activity->sport, $activity->sub_sport) @endphp"
-                                                alt=""
-                                            >
-                                        </th>
+                                        <td class="px-6 py-4">
+                                            <svg class="w-6 h-6 text-black dark:text-gray-300 dark:stroke-gray-300">
+                                                {!! File::get($activity::getSportSvgIcon($activity->sport, $activity->sub_sport)) !!}
+                                            </svg>
+                                        </td>
                                         <td class="px-6 py-4">
                                             {{ $activity->getShortStartDate() }}
                                         </td>
                                         <td class="px-6 py-4">
-                                            <a id="activity-{{ $activity->id }}" href="{{ route('activities.get', $activity->id) }}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">
+                                            <a id="activity-{{ $activity->id }}" href="{{ route('activities.get', $activity->id) }}" class="font-medium text-blue-600 dark:text-white hover:underline">
                                                 {{ Str::limit($activity->name, 80) }}
                                             </a>
                                         </td>
@@ -105,14 +98,22 @@
                                         <td class="px-6 py-4">
                                             {{ __(':elevation m', ['elevation' => $activity->elevation_gain]) }}
                                         </td>
-                                        <td class="px-3 py-4 text-right">
-                                            <a href="{{ route('activities.edit', $activity->id) }}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">{{ __('Edit') }}</a>
-                                        </td>
-                                        <td class="px-3 py-4 text-right">
-                                            <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">{{ __('Delete') }}</a>
-                                        </td>
-                                        <td class="px-6 py-4 text-right">
-                                            <a href="#" onclick="shareActivity({{ $activity->id }});" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">{{ __('Share') }}</a>
+                                        <td class="px-3 py-4 flex gap-2">
+                                            <a href="{{ route('activities.edit', $activity->id) }}" title="{{ __('Edit') }}">
+                                                <svg class="w-6 h-6 text-black dark:text-gray-300">
+                                                    {!! File::get('images/edit.svg') !!}
+                                                </svg>
+                                            </a>
+                                            <a href="#" title="{{ __('Share') }}" onclick="shareActivity({{ $activity->id }});">
+                                                <svg class="w-6 h-6 text-black dark:text-gray-300">
+                                                    {!! File::get('images/share.svg') !!}
+                                                </svg>
+                                            </a>
+                                            <a href="#" title="{{ __('Delete') }}">
+                                                <svg class="w-6 h-6 text-black dark:text-red-700">
+                                                    {!! File::get('images/delete.svg') !!}
+                                                </svg>
+                                            </a>
                                         </td>
                                     </tr>
                                 @endforeach

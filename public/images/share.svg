@@ -1,1 +1,7 @@
-<?xml version="1.0" ?><svg class="icon icon-tabler icon-tabler-share" fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0z" fill="none" stroke="none"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="6" r="3"/><circle cx="18" cy="18" r="3"/><line x1="8.7" x2="15.3" y1="10.7" y2="7.3"/><line x1="8.7" x2="15.3" y1="13.3" y2="16.7"/></svg>
+<svg fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="24" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0 0h24v24H0z" stroke="none"/>
+    <circle cx="6" cy="12" r="3"/>
+    <circle cx="18" cy="6" r="3"/>
+    <circle cx="18" cy="18" r="3"/>
+    <path d="m8.7 10.7 6.6-3.4M8.7 13.3l6.6 3.4"/>
+</svg>
