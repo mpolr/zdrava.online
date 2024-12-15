@@ -8,7 +8,7 @@
 >
 <head>
     @if (session()->get('theme') !== 'dark' || session()->get('theme') !== 'light')
-        <script type="text/javascript">
+        <script type="text/javascript" nonce="{{ csp_nonce() }}">
             const getPreferredScheme = () => window?.matchMedia?.('(prefers-color-scheme:dark)')?.matches ? 'dark' : 'light';
             if (getPreferredScheme() === 'dark') {
                 document.querySelector('html').classList.add("dark");
@@ -33,13 +33,14 @@
     @googlefonts('ubuntu')
     {{-- Styles --}}
     @vite('resources/css/app.css')
-    @livewireStyles
+    @livewireStyles(['nonce' => csp_nonce()])
     {{-- Scripts --}}
     @vite('resources/js/app.js')
-    @livewireScripts
+    @livewireScripts(['nonce' => csp_nonce()])
     @yield('js')
     {{-- Matomo --}}
-    <script>
+    <script nonce="{{ csp_nonce() }}">
+        window.user_id = {!! auth()->check()?auth()->user()->id:'null' !!};
         var _paq = window._paq = window._paq || [];
         @if(!empty(auth()->id()))
         _paq.push(['setUserId', '{{ auth()->user()->getFullName() }} (ID: {{ auth()->id() }})']);

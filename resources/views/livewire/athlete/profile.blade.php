@@ -1,9 +1,9 @@
 @section('title', $user->getFullName() . ' | Zdrava')
 @section('description', 'Профиль пользователя ' . $user->getFullName() . ' в Zdrava')
 @section('js')
-    <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet-src.js"
+    <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet-src.js" nonce="{{ csp_nonce() }}"
             integrity="sha256-V8Wsw6bWrfTsX9YUzIjKtnIoiUhBdulszoxf177/XjU=" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-gpx/1.7.0/gpx.min.js"
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-gpx/1.7.0/gpx.min.js" nonce="{{ csp_nonce() }}"
             integrity="sha256-zGq7H6kB1pGKYY53eZP3jer9hhjRveG1HcNSeEbnNc4=" crossorigin="anonymous"></script>
 @endsection
 <div class="container mx-auto px-0 py-12">
@@ -129,8 +129,7 @@
                             </div>
                             <div class="p-0">
                                 <a href="{{ route('activities.get', $activity->id) }}">
-                                    <div id="map_{{ $activity->id }}" class="w-full h-full z-0"
-                                         style="width: 100%; height: 400px;"></div>
+                                    <div id="map_{{ $activity->id }}" class="w-full z-0 h-[400px]"></div>
                                 </a>
                                 <script>
                                     let map_{{ $activity->id }} = [];

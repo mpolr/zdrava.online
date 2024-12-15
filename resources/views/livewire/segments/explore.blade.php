@@ -1,7 +1,6 @@
 @section('title', __('Explore segments') . ' | Zdrava')
 @section('js')
-    <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet-src.js"></script>
-    <script src="https://unpkg.com/polyline-encoded@0.0.9/Polyline.encoded.js"></script>
+    <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet-src.js" nonce="{{ csp_nonce() }}"></script>
 @endsection
 <div class="container mx-auto px-0 py-12 max-w-screen-lg">
     <div class="grid grid-cols-1 gap-4">

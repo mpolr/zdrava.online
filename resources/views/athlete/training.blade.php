@@ -1,7 +1,7 @@
 @extends('layouts.site')
 @section('title', __('My workouts') . ' | Zdrava')
 @section('js')
-    <script type="text/javascript">
+    <script type="text/javascript" nonce="{{ csp_nonce() }}">
         function shareActivity(id) {
             var url = document.getElementById("activity-" + id).getAttribute("href");
             navigator.clipboard.writeText(url);

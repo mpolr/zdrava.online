@@ -1,6 +1,6 @@
 <div>
-    <div wire:model="position" id="map" class="center-block z-0 mt-2" style="width: 100%; height: 650px;"></div>
-    <script>
+    <div wire:model="position" id="map" class="center-block z-0 mt-2 w-full h-[650px]"></div>
+    <script nonce="{{ csp_nonce() }}">
         let map = [];
         let userLat = 0;
         let userLon = 0;

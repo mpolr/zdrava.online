@@ -57,7 +57,7 @@
             </div>
         </div>
     </div>
-    <script>
+    <script nonce="{{ csp_nonce() }}">
         const dropZone = document.getElementById('drop-zone');
         const fileInput = document.querySelector('#drop-zone input');
 
