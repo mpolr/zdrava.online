@@ -394,5 +394,6 @@
     "Zdrava account deleting": "Удаление аккаунта Zdrava",
     "Zdrava android app": "Zdrava для android",
     "Virtual ride": "Виртуальный заезд",
-    "Link copied to clipboard!": "Ссылка скопирована в буфер обмена!"
+    "Link copied to clipboard!": "Ссылка скопирована в буфер обмена!",
+    ":count from :total": ":count из :total"
 }
