@@ -28,7 +28,7 @@
             <div class="flex h-full w-full">
                 <div class="w-full border border-gray-300 dark:border-gray-500 p-4">
                     @if (!empty($monthlyStats))
-                        <canvas id="monthlyChart"></canvas>
+                        <canvas id="chart"></canvas>
                         <script type="application/json" id="chartData" nonce="{{ csp_nonce() }}">
                             {
                                 "labels": [

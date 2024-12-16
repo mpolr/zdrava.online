@@ -1,6 +1,8 @@
+@use(Carbon\Carbon)
 @section('title', $activity->name . ' | Zdrava')
 @section('js')
     {{--    <script src="https://unpkg.com/chart.js@4.4.0/dist/chart.umd.js" integrity="sha256-Mh46P6mNpKqpV9EL5Xy7UU3gmJ7tj51ya10FkCzQGQQ=" crossorigin="anonymous"></script>--}}
+    @vite('resources/js/chart.js')
 @endsection
 
 <div class="container mx-auto px-0 py-12">
@@ -215,12 +217,25 @@
                     </div>
                 </div>
             </div>
-            <div class="w-full pt-4">
+            <div class="w-full pt-4 pb-4">
                 <div id="map" x-data="mapComponent({
                     lat: {{ $activity->getTrackCenter()['lat'] }},
                     lng: {{ $activity->getTrackCenter()['long'] }},
                     polyline: '{{ $activity->polyline }}',
                 })" class="w-full h-[400px]" x-init="init"></div>
+            </div>
+            <div class="w-full border border-gray-300 dark:border-gray-500 dark:bg-gray-400 p-4 h-[400px]">
+                @if (!empty($speed) || !empty($accuracy) || !empty($altitude))
+                    <canvas id="chart"></canvas>
+                    <script type="application/json" id="chartData" nonce="{{ csp_nonce() }}">
+                        {!! $chartDataJson !!}
+                    </script>
+                    <script type="application/json" id="chartType" nonce="{{ csp_nonce() }}">
+                        "{{ $chartType ?? 'line' }}"
+                    </script>
+                @else
+                    <p class="text-gray-600 dark:text-gray-400">Нет данных для отображения.</p>
+                @endif
             </div>
             @livewire('comments.comments', ['activityId' => $activity->id])
         </div>
