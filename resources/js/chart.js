@@ -92,6 +92,15 @@ document.addEventListener("DOMContentLoaded", () => {
                         borderWidth: 0,
                     });
                 }
+                if (chartData.temperature) {
+                    datasets.push({
+                        label: "Температура",
+                        data: chartData.temperature,
+                        backgroundColor: "rgba(200, 160, 0, 0.4)",
+                        borderColor: "rgb(200,160,0)",
+                        borderWidth: 0,
+                    });
+                }
             }
 
             // Инициализация графика

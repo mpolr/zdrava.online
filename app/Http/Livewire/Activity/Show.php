@@ -11,14 +11,16 @@ use Toaster;
 class Show extends Component
 {
     public Activities $activity;
-    public array $speed = [];
-    public array $accuracy = [];
-    public array $altitude = [];
-    public array $power = [];
-    public array $cadence = [];
-    public array $heart_rate = [];
-    public array $distance = [];
+    private ?array $speed = null;
+    private ?array $accuracy = null;
+    private ?array $altitude = null;
+    private ?array $power = null;
+    private ?array $cadence = null;
+    private ?array $heart_rate = null;
+    private ?array $distance = null;
+    private ?array $temperature = null;
     public string $chartDataJson = '';
+    private array $axisX = [];
 
     /**
      * @throws \JsonException
@@ -27,6 +29,7 @@ class Show extends Component
     {
         $this->activity = Activities::findOrFail($id);
         $file = $this->activity->file;
+
         if (strpos($file, '.fit')) {
             $fit = new phpFITFileAnalysis(
                 \Illuminate\Support\Facades\Storage::path(
@@ -35,7 +38,6 @@ class Show extends Component
             );
 
             $records = $fit->data_mesgs['record'];
-//            dd($records);
 
             if (
                 !is_array($records['timestamp']) ||
@@ -44,32 +46,88 @@ class Show extends Component
             ) {
                 Toaster::error('Very small FIT file');
             } else {
-                if (!empty($records['enhanced_altitude'])) {
-                    $altitudeSource = $records['enhanced_altitude'];
-                } else {
-                    $altitudeSource = $records['altitude'];
-                }
-                foreach ($records['timestamp'] as $key => $timestamp) {
-                    $this->speed[] = $records['speed'][$timestamp] ?? 0;
-                    $this->accuracy[] = $records['gps_accuracy'][$timestamp] ?? 0;
-                    $this->altitude[] = ceil($altitudeSource[$timestamp]);
-                    $this->power[] = $records['power'][$timestamp];
-                    $this->cadence[] = $records['cadence'][$timestamp];
-                    $this->heart_rate[] = $records['heart_rate'][$timestamp];
-                    $this->distance[] = $records['distance'][$timestamp];
-                }
-            }
+                // Определяем источники данных
+                $speedSource = $records['enhanced_speed'] ?? $records['speed'];
+                $altitudeSource = $records['enhanced_altitude'] ?? $records['altitude'];
 
-            // Генерация JSON данных для графика
-            $this->chartDataJson = json_encode([
-                'labels' => array_keys($this->speed), // Используем индексы для меток
-                'speed' => $this->speed,
-                'accuracy' => $this->accuracy,
-                'altitude' => $this->altitude,
-                'power' => $this->power,
-                'cadence' => $this->cadence,
-                'heart_rate' => $this->heart_rate,
-            ], JSON_THROW_ON_ERROR);
+                // Массив для оси X (distance или timestamp)
+                $labels = [];
+                $distance = $records['distance'] ?? null;
+                $lastDistance = 0;
+                $kmMark = 0; // Счётчик километров
+                $minuteMark = 0; // Счётчик минут для времени
+
+                if ($distance) {
+                    $labels[] = '0 km';
+                }
+
+                if (isset($speedSource)) {
+                    $this->speed = array_values($speedSource);
+                }
+                if (isset($records['power'])) {
+                    $this->power = array_values($records['power']);
+                }
+                if (isset($records['heart_rate'])) {
+                    $this->heart_rate = array_values($records['heart_rate']);
+                }
+                if (isset($records['cadence'])) {
+                    $this->cadence = array_values($records['cadence']);
+                }
+                if (isset($records['gps_accuracy'])) {
+                    $this->accuracy = array_values($records['gps_accuracy']);
+                }
+                if (isset($records['temperature'])) {
+                    $this->temperature = array_values($records['temperature']);
+                }
+
+                foreach ($records['timestamp'] as $key => $timestamp) {
+                    // Если есть массив distance, используем его для оси X
+                    if ($distance) {
+                        $currentDistance = isset($records['distance'][$timestamp]) ? (int)($records['distance'][$timestamp] * 1000) : 0;
+
+                        if ($currentDistance - $lastDistance >= 1000) { // Каждые 1000 метров (1 км)
+                            $labels[] = number_format($currentDistance / 1000, 1) . ' km';
+                            $lastDistance = $currentDistance;
+                        } else {
+                            $labels[] = '';
+                        }
+                    } else {
+                        // Если нет массива distance, используем timestamp в формате часы:минуты
+                        $formattedTime = date('H:i', strtotime($timestamp));
+                        if ($minuteMark % 60 === 0) { // Добавляем метки через каждый час
+                            $labels[] = $formattedTime;
+                        }
+                        $minuteMark++;
+                    }
+
+                    $this->axisX[] = date('H:i', $timestamp);
+
+                    // Заполняем данные для графиков
+                    if (isset($altitudeSource)) {
+                        $this->altitude[] = ceil($altitudeSource[$timestamp] ?? null);
+                    }
+                    if (isset($records['distance'])) {
+                        $this->distance[] = $records['distance'][$timestamp] * 1000;
+                    }
+                }
+
+                if ($distance) {
+                    $labels[] = '';
+                }
+
+                // Генерация JSON данных для графика
+                $this->chartDataJson = json_encode([
+                    //'labels' => $labels, // Используем labels как ось X
+                    'labels' => array_values($this->axisX),
+                    'speed' => $this->speed,
+                    'accuracy' => $this->accuracy,
+                    'altitude' => $this->altitude,
+                    'power' => $this->power,
+                    'cadence' => $this->cadence,
+                    'heart_rate' => $this->heart_rate,
+                    'temperature' => $this->temperature,
+                ], JSON_THROW_ON_ERROR);
+            }
         }
     }
 

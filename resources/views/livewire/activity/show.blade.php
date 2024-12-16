@@ -224,8 +224,8 @@
                     polyline: '{{ $activity->polyline }}',
                 })" class="w-full h-[400px]" x-init="init"></div>
             </div>
-            <div class="w-full border border-gray-300 dark:border-gray-500 dark:bg-gray-400 p-4 h-[400px]">
-                @if (!empty($speed) || !empty($accuracy) || !empty($altitude))
+            <div class="w-full border border-gray-300 dark:border-gray-500 dark:bg-gray-300 p-4 h-[400px]">
+                @if (!empty($chartDataJson))
                     <canvas id="chart"></canvas>
                     <script type="application/json" id="chartData" nonce="{{ csp_nonce() }}">
                         {!! $chartDataJson !!}
