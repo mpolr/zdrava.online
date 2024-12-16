@@ -395,5 +395,9 @@
     "Zdrava android app": "Zdrava для android",
     "Virtual ride": "Виртуальный заезд",
     "Link copied to clipboard!": "Ссылка скопирована в буфер обмена!",
-    ":count from :total": ":count из :total"
+    ":count from :total": ":count из :total",
+    "Disconnect": "Отключить",
+    "HRM": "Пульсометр",
+    "Cadence": "Каденс",
+    "Power meter": "Мощемер"
 }

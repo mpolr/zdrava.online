@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AntController;
 use App\Http\Controllers\AthleteController;
 use App\Http\Controllers\Auth\ForgotResetController;
 use App\Http\Controllers\Auth\LoginController;
@@ -139,4 +140,13 @@ Route::group(['prefix' => 'import'], function () {
     /* Strava */
     Route::get('strava/auth', [StravaController::class, 'auth'])->name('strava.auth')->middleware('auth');
     Route::get('strava/token', [StravaController::class, 'getToken'])->name('strava.token');
+});
+
+/* Утилиты */
+Route::group(['prefix' => 'tools', 'middleware' => 'auth'], function () {
+    Route::get('/', function () {
+        return redirect()->route('site.dashboard');
+    });
+
+    Route::get('antplus', \App\Http\Livewire\Tools\AntController::class)->name('tools.antplus');
 });
