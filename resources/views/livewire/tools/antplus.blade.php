@@ -66,19 +66,17 @@
         </div>
         {{-- Правый контейнер --}}
         <div class="w-full md:w-1/3">
-
-                <div
-                    class="w-full mb-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+            <div
+                class="w-full mb-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+                <div class="flex flex-col p-4">
+                    <h3 class="mb-1 text-xl font-medium text-gray-900 dark:text-white">{{ __('Download') }}</h3>
                     <div class="flex flex-col p-4">
-                        <h3 class="mb-1 text-xl font-medium text-gray-900 dark:text-white">{{ __('Download') }}</h3>
-                        <div class="flex flex-col p-4">
-                            <span class="text-sm text-gray-500 dark:text-gray-400">
-                                Если ваш стик ANT+ не подключается, возможно необходимо заменить драйвер с помощью программы <a href="https://zadig.akeo.ie/" target="_blank">Zadig</a>
-                            </span>
-                        </div>
+                        <span class="text-sm text-gray-500 dark:text-gray-400">
+                            Если ваш стик ANT+ не подключается, возможно необходимо заменить драйвер с помощью программы <a href="https://zadig.akeo.ie/" target="_blank">Zadig</a>
+                        </span>
                     </div>
                 </div>
-
+            </div>
         </div>
     </div>
 </div>
