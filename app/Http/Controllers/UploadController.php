@@ -46,6 +46,7 @@ class UploadController extends Controller
 
         if ($request->files->all('workout')) {
             $activity->save();
+
             foreach ($request->allFiles()['workout'] as $uploadedFile) {
                 $name = $uploadedFile->hashName();
                 $name = str_replace(['.xml', '.bin'], '', $name);
@@ -92,6 +93,7 @@ class UploadController extends Controller
 
         if ($request->files->all('image')) {
             $activity->save();
+
             foreach ($request->allFiles()['image'] as $imageFile) {
                 $name = $imageFile->hashName();
 
@@ -109,13 +111,15 @@ class UploadController extends Controller
                     $photo->url = $name;
                     $photo->save();
                 }
-
-                $result = true;
             }
+
+            $result = true;
         }
 
         if ($formApp) {
             if ($result === false) {
+                $activity->delete();
+
                 return response()->json([
                     'success' => false,
                     'message' => 'Upload error'
@@ -131,6 +135,7 @@ class UploadController extends Controller
         if ($result) {
             session()->flash('success', __('File Upload successfully'));
         } else {
+            $activity->delete();
             session()->flash('error', __('Error occurred'));
         }
 
