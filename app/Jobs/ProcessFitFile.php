@@ -6,6 +6,7 @@ use adriangibbons\phpFITFileAnalysis;
 use App\Classes\GpxTools;
 use App\Classes\Polyline;
 use App\Models\Activities;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
@@ -41,15 +42,22 @@ class ProcessFitFile implements ShouldQueue, ShouldBeUnique
     {
         try {
             $fit = new phpFITFileAnalysis(Storage::path('temp/' . $this->fileName));
+            $this->validateFitFile($fit);
 
-            if (!isset($fit->data_mesgs['record'])) {
-                throw new \RuntimeException('No records found in FIT file');
+            if (
+                !is_array($fit->data_mesgs['record']['timestamp']) ||
+                !is_array($fit->data_mesgs['record']['position_lat']) ||
+                count($fit->data_mesgs['record']['timestamp']) <= 10
+            ) {
+                // Всего одна запись, скорее всего нам такое не нужно
+                $this->fail('Very small FIT file!');
             }
 
-            if (array_key_exists('sport', $fit->data_mesgs)) {
-                $this->activity->sport = $fit->data_mesgs['sport']['sport'];
-                $this->activity->sub_sport = $fit->data_mesgs['sport']['sub_sport'];
+            if (isset($fit->data_mesgs['sport'])) {
+                $this->activity->sport = $this->getFitData($fit->data_mesgs['sport'], 'sport');
+                $this->activity->sub_sport = $this->getFitData($fit->data_mesgs['sport'], 'sub_sport');
             }
+
             $this->activity->name = !empty($fit->data_mesgs['sport']['name']) ? __($fit->data_mesgs['sport']['name']) : __('Workout');
             if (!empty($fit->data_mesgs['developer_data_id']) && !empty($fit->data_mesgs['developer_data_id']['application_id'])) {
                 $this->activity->creator = $this->byteArrayToString($fit->data_mesgs['developer_data_id']['application_id']);
@@ -90,16 +98,8 @@ class ProcessFitFile implements ShouldQueue, ShouldBeUnique
             } else {
                 $this->activity->elevation_loss = 0;
             }
-            if (isset($fit->data_mesgs['session']['start_time'])) {
-                $this->activity->started_at = $fit->data_mesgs['session']['start_time'];
-                $this->activity->finished_at = $fit->data_mesgs['session']['start_time'] + $fit->data_mesgs['session']['total_elapsed_time'];
-            } elseif (isset($fit->data_mesgs['session']['timestamp'])) {
-                $this->activity->started_at = $fit->data_mesgs['session']['timestamp'];
-                $this->activity->finished_at = $fit->data_mesgs['session']['timestamp'] + $fit->data_mesgs['session']['total_elapsed_time'];
-            } elseif (isset($fit->data_mesgs['event']['timestamp'][0])) {
-                $this->activity->started_at = $fit->data_mesgs['event']['timestamp'][0];
-                $this->activity->finished_at = last($fit->data_mesgs['event']['timestamp']);
-            }
+
+            $this->extractTimestamps($fit);
 
             $this->activity->duration = $fit->data_mesgs['session']['total_timer_time'];
             $this->activity->duration_total = $fit->data_mesgs['session']['total_elapsed_time'];
@@ -130,25 +130,12 @@ class ProcessFitFile implements ShouldQueue, ShouldBeUnique
             }
 
             $this->activity->file = $this->fileName;
+            $this->extractCoordinates($fit);
 
-            if (isset($fit->data_mesgs['session']['start_position_lat'])) {
-                $this->activity->start_position_lat = $fit->data_mesgs['session']['start_position_lat'];
-                $this->activity->start_position_long = $fit->data_mesgs['session']['start_position_long'];
-            }
-
-            if (isset($fit->data_mesgs['session']['end_position_lat'])) {
-                $this->activity->end_position_lat = $fit->data_mesgs['session']['end_position_lat'];
-                $this->activity->end_position_long = $fit->data_mesgs['session']['end_position_long'];
-            } else {
-                if (
-                    !is_array($fit->data_mesgs['record']['timestamp']) ||
-                    !is_array($fit->data_mesgs['record']['position_lat']) ||
-                    count($fit->data_mesgs['record']['timestamp']) <= 10
-                ) {
-                    // Всего одна запись, скорее всего нам такое не нужно
-                    $this->fail('Very small FIT file!');
-                }
+            if ($this->activity->end_position_lat === 0.0) {
                 $this->activity->end_position_lat = end($fit->data_mesgs['record']['position_lat']);
+            }
+            if ($this->activity->end_position_long === 0.0) {
                 $this->activity->end_position_long = end($fit->data_mesgs['record']['position_long']);
             }
 
@@ -193,72 +180,45 @@ class ProcessFitFile implements ShouldQueue, ShouldBeUnique
         }
     }
 
-    private function calculateElevationGain(array $elevationData = [], bool $hasBarometricData = false): float
+    private function getFitData(array $data, string $key, $default = null)
     {
-        if (empty($elevationData)) {
-            throw new \RuntimeException('No elevation data found in the FIT file.');
-        }
-
-        $totalGain = 0;
-        $previousElevation = null;
-        $elevationThreshold = $hasBarometricData ? 2 : 10; // 2 м с барометрией, 10 м без
-
-        // Промежуточное накопление высоты для проверки порога
-        $elevationAccumulator = 0;
-
-        foreach ($elevationData as $currentElevation) {
-            if ($previousElevation !== null && $currentElevation > $previousElevation) {
-                // Накопление высоты
-                $elevationAccumulator += ($currentElevation - $previousElevation);
-
-                // Если накопленный подъём превышает порог, добавляем в общий набор высоты
-                if ($elevationAccumulator >= $elevationThreshold) {
-                    $totalGain += $elevationAccumulator;
-                    $elevationAccumulator = 0; // Сбрасываем накопление после учёта
-                }
-            } else {
-                // Сбрасываем накопление, если высота перестала увеличиваться
-                $elevationAccumulator = 0;
-            }
-
-            $previousElevation = $currentElevation;
-        }
-
-        return $totalGain;
+        return $data[$key] ?? $default;
     }
 
-    public function calculateElevationLoss(array $elevationData = [], bool $hasBarometricData = false): float
+    private function extractTimestamps($fit): void
     {
-        if (empty($elevationData)) {
-            throw new \RuntimeException('No elevation data found in the FIT file.');
+        $session = $fit->data_mesgs['session'] ?? [];
+        $this->activity->started_at = $this->getFitData($session, 'start_time')
+            ?? $this->getFitData($session, 'timestamp')
+            ?? $this->getFitData($fit->data_mesgs['event'], 'timestamp')[0] ?? null;
+
+        if ($this->activity->started_at !== null) {
+            // Убедимся, что started_at является экземпляром Carbon
+            $this->activity->started_at = Carbon::parse($this->activity->started_at);
+            $totalElapsedTime = $this->getFitData($session, 'total_elapsed_time', 0);
+
+            // Используем addSeconds для добавления времени
+            $this->activity->finished_at = $this->activity->started_at->copy()->addSeconds($totalElapsedTime);
         }
+    }
 
-        $totalLoss = 0;
-        $previousElevation = null;
-        $elevationThreshold = $hasBarometricData ? 2 : 10; // 2 м с барометрией, 10 м без
+    private function extractCoordinates($fit): void
+    {
+        $session = $fit->data_mesgs['session'] ?? [];
+        $this->activity->start_position_lat = $this->getFitData($session, 'start_position_lat', 0.0);
+        $this->activity->start_position_long = $this->getFitData($session, 'start_position_long', 0.0);
+        $this->activity->end_position_lat = $this->getFitData($session, 'end_position_lat', 0.0);
+        $this->activity->end_position_long = $this->getFitData($session, 'end_position_long', 0.0);
+    }
 
-        // Промежуточное накопление высоты для проверки порога
-        $elevationAccumulator = 0;
-
-        foreach ($elevationData as $currentElevation) {
-            if ($previousElevation !== null && $currentElevation < $previousElevation) {
-                // Накопление высоты
-                $elevationAccumulator += ($previousElevation - $currentElevation);
-
-                // Если накопленный спуск превышает порог, добавляем в общий набор высоты
-                if ($elevationAccumulator >= $elevationThreshold) {
-                    $totalLoss += $elevationAccumulator;
-                    $elevationAccumulator = 0; // Сбрасываем накопление после учёта
-                }
-            } else {
-                // Сбрасываем накопление, если высота перестала уменьшаться
-                $elevationAccumulator = 0;
-            }
-
-            $previousElevation = $currentElevation;
+    private function validateFitFile($fit): void
+    {
+        if (empty($fit->data_mesgs['record'])) {
+            throw new \RuntimeException('No records found in FIT file');
         }
-
-        return $totalLoss;
+        if (!isset($fit->data_mesgs['session'])) {
+            throw new \RuntimeException('No session data found in FIT file');
+        }
     }
 
     private function byteArrayToString(array $byteArray): string

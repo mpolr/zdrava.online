@@ -14,5 +14,6 @@ class DatabaseSeeder extends Seeder
         $this->call(PermissionSeeder::class);
         $this->call(SportSeeder::class);
         $this->call(SubSportSeeder::class);
+        $this->call(CountrySeeder::class);
     }
 }
