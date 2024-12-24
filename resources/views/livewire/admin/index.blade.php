@@ -8,7 +8,19 @@
             @endif
         </div>
     </div>
-    <div class="grid grid-cols-2 gap-8 px-4 py-6 lg:py-8 md:grid-cols-3">
+    <div class="grid grid-cols-1 gap-4">
+        <div class="w-full">
+            <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">Информация</h2>
+            <ul class="text-black dark:text-white font-medium">
+                <li class="mb-4">
+                    @if($lastActivity)
+                        Последняя тренировка: <a class="underline underline-offset-2" href="{{ route('activities.get', $lastActivity->id) }}" target="_blank">{{ $lastActivity->name }}</a> в {{ $lastActivity->created_at }} (<a class="underline underline-offset-2" href="{{ route('athlete.profile', $lastActivity->user_id) }}" target="_blank">{{ $lastActivity->user->getFullName() }}</a>)
+                    @endif
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="grid grid-cols-2 gap-8 px-4 py-6 lg:py-8 md:grid-cols-3 mt-6">
         <div>
             <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">Управление</h2>
             <ul class="text-gray-500 dark:text-gray-400 font-medium">
