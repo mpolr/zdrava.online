@@ -14,7 +14,7 @@ return new class extends Migration
             $table->string('nickname')->after('last_name')->nullable();
             $table->string('photo')->after('nickname')->nullable();
             $table->boolean('subscribe_news')->after('email');
-            $table->boolean('private')->after('password');
+            $table->boolean('private')->after('password')->default(true);
             $table->dropColumn('name');
         });
     }
