@@ -97,7 +97,6 @@ class Activities extends Model implements Likeable
             } catch (\Exception $e) {
                 Log::channel('telegram')->log(LogLevel::ERROR, auth()->user()->getFullName() . " Unknown device_model_description: ID: {$this->device_models_id}");
             }
-
         }
 
         return $result;
@@ -113,7 +112,7 @@ class Activities extends Model implements Likeable
         return $this->hasOne(DeviceModel::class, 'model_id', 'device_models_id');
     }
 
-    public function getUser(): ?User
+    public function getUser()
     {
         return User::find($this->user_id);
     }

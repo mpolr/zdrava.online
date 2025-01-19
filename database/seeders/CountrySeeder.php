@@ -19,7 +19,7 @@ class CountrySeeder extends Seeder
         foreach ($values as $item => $value) {
             $sport = Country::firstOrCreate([
                 'id' => $value['id']
-            ],[
+            ], [
                 'id' => $value['id'],
                 'name' => $value['name'],
             ]);

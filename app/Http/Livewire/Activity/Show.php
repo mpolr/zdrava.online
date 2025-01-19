@@ -17,13 +17,13 @@ class Show extends Component
     private ?array $power = null;
     private ?array $cadence = null;
     private ?array $heart_rate = null;
-    private ?array $distance = null;
     private ?array $temperature = null;
     public string $chartDataJson = '';
     private array $axisX = [];
 
     /**
      * @throws \JsonException
+     * @throws \Exception
      */
     public function mount(int $id): void
     {

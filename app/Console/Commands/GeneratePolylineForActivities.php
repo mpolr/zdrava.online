@@ -19,7 +19,7 @@ class GeneratePolylineForActivities extends Command
      */
     public function handle(): void
     {
-        $activities = Activities::where('polyline',null)->get();
+        $activities = Activities::where('polyline', null)->get();
 
         foreach ($activities as $activity) {
             if ($activity->file && str_ends_with($activity->file, '.fit')) {

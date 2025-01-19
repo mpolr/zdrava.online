@@ -30,17 +30,6 @@ clone:
     recursive: false
 
 steps:
-  - name: frontend
-    pull: if-not-exists
-    image: node
-    commands:
-      - node -v
-      - npm -v
-      - yarn --version
-      - yarn config set cache-folder .yarn-cache
-      - yarn install
-      - yarn run build
-
   - name: composer-install-dev
     image: laradock/workspace:master-8.2
     commands:
@@ -51,6 +40,16 @@ steps:
     when:
       event: push
 
+  - name: frontend
+    pull: if-not-exists
+    image: node
+    commands:
+      - node -v
+      - npm -v
+      - yarn --version
+      - yarn install
+      - yarn run build
+
   - name: backend
     pull: if-not-exists
     # https://hub.docker.com/r/laradock/workspace/
@@ -59,7 +58,6 @@ steps:
       - php -v
       - cp .env.testing .env
       - php artisan key:generate
-      - cp .env .env.testing
       - php artisan migrate
       - nohup php artisan serve --host 0.0.0.0 --port 80 &
 

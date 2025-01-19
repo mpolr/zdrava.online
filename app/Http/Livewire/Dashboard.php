@@ -9,7 +9,7 @@ use Livewire\Component;
 
 class Dashboard extends Component
 {
-    public Collection $activities;
+    public $activities;
 
     public function mount(): void
     {

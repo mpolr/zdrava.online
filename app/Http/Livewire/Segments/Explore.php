@@ -92,7 +92,7 @@ class Explore extends Component
         $points = Polyline::pair($points);
         $borderPoints = Polyline::findExtremeCoordinates($points);
 
-        $date = !empty($segment->created_at) ? $segment->created_at->timestamp : time();
+        $date = $segment->created_at->timestamp ?? time();
         $timeCreated = $date - mktime(0, 0, 0, 12, 31, 1989);
         $data = new Data();
         $data->setFile(FileType::segment);
@@ -129,7 +129,7 @@ class Explore extends Component
             ->add('segment_lap', [
                 'uuid' => 'lap' . $segment->id,
                 'total_distance' => $segment->distance / 1000,
-                'total_ascent' => !empty($segment->total_elevation_gain) ? intval($segment->total_elevation_gain) : 0,
+                'total_ascent' => !empty($segment->total_elevation_gain) ? (int)$segment->total_elevation_gain : 0,
                 'swc_lat' => GpxTools::convertCoordinates($borderPoints['SW'][0]),
                 'swc_long' => GpxTools::convertCoordinates($borderPoints['SW'][1]),
                 'nec_lat' => GpxTools::convertCoordinates($borderPoints['NE'][0]),

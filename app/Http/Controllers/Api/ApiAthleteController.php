@@ -137,7 +137,8 @@ class ApiAthleteController extends Controller
         ]);
     }
 
-    protected function subscribeConfirm(int $id, Request $request): JsonResponse {
+    protected function subscribeConfirm(int $id, Request $request): JsonResponse
+    {
         $user = User::find($id);
         if ($user === null) {
             return response()->json([
@@ -171,7 +172,8 @@ class ApiAthleteController extends Controller
         }
     }
 
-    protected function subscribeDecline(int $id, Request $request): JsonResponse {
+    protected function subscribeDecline(int $id, Request $request): JsonResponse
+    {
         $user = User::find($id);
         if ($user === null) {
             return response()->json([

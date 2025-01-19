@@ -4,6 +4,7 @@ namespace App\Traits;
 
 use App\Models\Role;
 use App\Models\Permission;
+use App\Models\User;
 
 trait HasRolesAndPermissions
 {
@@ -52,7 +53,7 @@ trait HasRolesAndPermissions
         return Permission::whereIn('slug', $permissions)->get();
     }
 
-    public function givePermissionsTo(...$permissions)
+    public function givePermissionsTo(...$permissions): User
     {
         $permissions = $this->getAllPermissions($permissions);
         if ($permissions === null) {
@@ -62,7 +63,7 @@ trait HasRolesAndPermissions
         return $this;
     }
 
-    public function deletePermissions(...$permissions)
+    public function deletePermissions(...$permissions): User
     {
         $permissions = $this->getAllPermissions($permissions);
         $this->permissions()->detach($permissions);

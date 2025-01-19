@@ -19,8 +19,8 @@ class EventServiceProvider extends ServiceProvider
      */
     protected $listen = [
         SocialiteWasCalled::class => [
-            YandexExtendSocialite::class.'@handle',
-            VKontakteExtendSocialite::class.'@handle',
+            YandexExtendSocialite::class . '@handle',
+            VKontakteExtendSocialite::class . '@handle',
         ],
         Registered::class => [
             SendEmailVerificationNotification::class,

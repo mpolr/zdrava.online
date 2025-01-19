@@ -6,6 +6,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Contracts\Likeable;
 use App\Traits\HasRolesAndPermissions;
 use Illuminate\Auth\Passwords\CanResetPassword;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -127,7 +128,10 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->subscribers()->where('confirmed', 1)->get();
     }
 
-    public function unconfirmedSubscribers(): HasMany
+    /**
+    +     * @psalm-return \Illuminate\Database\Eloquent\Builder<TRelatedModel>
+    +     */
+    public function unconfirmedSubscribers(): Builder|HasMany
     {
         return $this->hasMany(Subscription::class)->where('confirmed', 0);
     }
@@ -222,7 +226,7 @@ class User extends Authenticatable implements MustVerifyEmail
                 ->all();
         }
 
-        if($userUnreadNotification === null) {
+        if ($userUnreadNotification === null) {
             return false;
         }
 

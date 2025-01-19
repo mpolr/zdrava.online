@@ -1,12 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <files psalm-version="5.15.0@5c774aca4746caf3d239d9c8cadb9f882ca29352">
-  <file src="app/Http/Livewire/Activity/Show.php">
-    <InvalidArgument>
-      <code><![CDATA[[
-                'name' => $activity->name
-            ]]]></code>
-    </InvalidArgument>
-  </file>
   <file src="app/Http/Livewire/Comments/Comments.php">
     <InvalidTemplateParam>
       <code><![CDATA[$activity->comments()
@@ -57,14 +50,6 @@
     <InvalidPropertyAssignmentValue>
       <code><![CDATA[$model::find($model->id)]]></code>
     </InvalidPropertyAssignmentValue>
-  </file>
-  <file src="app/Http/Livewire/Segments/Explore.php">
-    <UndefinedPropertyFetch>
-      <code><![CDATA[$segment->end_latlng->latitude]]></code>
-      <code><![CDATA[$segment->end_latlng->longitude]]></code>
-      <code><![CDATA[$segment->start_latlng->latitude]]></code>
-      <code><![CDATA[$segment->start_latlng->longitude]]></code>
-    </UndefinedPropertyFetch>
   </file>
   <file src="app/Providers/PermissionServiceProvider.php">
     <InvalidTemplateParam>
