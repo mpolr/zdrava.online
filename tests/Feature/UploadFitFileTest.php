@@ -18,6 +18,8 @@ class UploadFitFileTest extends TestCase
 
     public function testFitFileUploadAndProcessing(): void
     {
+        $this->seed();
+
         // Имитируем файловую систему
         Storage::fake('local');
 
@@ -55,11 +57,9 @@ class UploadFitFileTest extends TestCase
         Queue::assertPushed(ProcessFitFile::class, static function ($job) use ($user, $realHashName) {
             $reflection = new \ReflectionClass($job);
             $activityProperty = $reflection->getProperty('activity');
-            $activityProperty->setAccessible(true);
             $activity = $activityProperty->getValue($job);
 
             $filenameProperty = $reflection->getProperty('fileName');
-            $filenameProperty->setAccessible(true);
             $filename = $filenameProperty->getValue($job);
 
             return $activity->user_id === $user->id && $filename === $realHashName;

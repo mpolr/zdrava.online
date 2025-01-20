@@ -3,7 +3,7 @@ type: docker
 name: default
 
 services:
-  - name: database
+  - name: mariadb
     # https://hub.docker.com/_/percona
     pull: if-not-exists
     image: mariadb:11.0
@@ -11,7 +11,7 @@ services:
       - 3306
     environment:
       TZ: Europe/Moscow
-      MYSQL_DATABASE: homestead
+      MYSQL_DATABASE: zdrava_testing
       MYSQL_USER: homestead
       MYSQL_PASSWORD: homestead
       MYSQL_ROOT_PASSWORD: root
@@ -90,7 +90,6 @@ steps:
     image: laradock/workspace:master-8.2
     commands:
       - ./vendor/bin/phpunit --version
-      - php artisan migrate
       - ./vendor/bin/phpunit --configuration phpunit.xml
     when:
       event: push
