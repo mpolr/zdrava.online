@@ -90,6 +90,7 @@ steps:
     image: laradock/workspace:master-8.2
     commands:
       - ./vendor/bin/phpunit --version
+      - php artisan migrate
       - ./vendor/bin/phpunit --configuration phpunit.xml
     when:
       event: push
