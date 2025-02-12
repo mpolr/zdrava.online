@@ -50,6 +50,9 @@
                     <a href="https://glitchtip.mpolr.ru/zdrava/issues" target="_blank">Zdrava - проблемы с сайтом</a>
                 </li>
                 <li class="mb-4">
+                    <a href="https://minio.mpolr.ru/buckets/zdrava/admin/summary" target="_blank">Хранилище Minio S3</a>
+                </li>
+                <li class="mb-4">
                     <a href="https://console.rustore.ru/apps/2063492362/versions" target="_blank">RuStore Console</a>
                 </li>
                 <li class="mb-4">
