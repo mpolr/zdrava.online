@@ -44,6 +44,10 @@ return [
             'driver' => 'sanctum',
             'provider' => 'users',
         ],
+        'graphql' => [
+            'driver' => 'graphql_guard',
+            'provider' => 'users',
+        ],
     ],
 
     /*

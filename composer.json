@@ -20,6 +20,7 @@
         "masmerise/livewire-toaster": "^1",
         "mpolr/fit-file-parser": "^1.0.0",
         "mpolr/php-fit-file-analysis": "^1.0",
+        "nuwave/lighthouse": "^6.49",
         "sentry/sentry-laravel": "^4.6",
         "sibyx/phpgpx": "1.3.0",
         "socialiteproviders/vkontakte": "^5.0",
