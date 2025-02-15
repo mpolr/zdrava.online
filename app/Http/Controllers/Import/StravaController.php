@@ -25,7 +25,7 @@ class StravaController extends Controller
         ]));
     }
 
-    public function getToken(Request $request)
+    public function getToken(Request $request): \Illuminate\Http\RedirectResponse
     {
         $token = Strava::token($request->code);
 
@@ -41,6 +41,7 @@ class StravaController extends Controller
 
         $user = User::where(['id' => $request->uid])->first();
 
+        // TODO: Check $request != bcrypt...
         if (empty($user) || $request->cs !== bcrypt($user->email)) {
             session()->flash('error', 'Ошибка. Получены неверные данные');
             return redirect()->route('site.dashboard');
