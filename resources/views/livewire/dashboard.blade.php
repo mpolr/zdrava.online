@@ -2,8 +2,8 @@
 <div class="container mx-auto px-0 py-12">
     <div class="flex sm:flex-row md:flex-row flex-col gap-4">
         {{-- Левый контейнер --}}
-        <div class="w-full md:w-1/3">
-            <div class="w-full">
+        <div class="w-auto">
+            <div class="w-full lg:w-max">
                 <div class="w-full bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
                     @if(auth()->user()->hasRole('admin'))
                         <div class="flex justify-end px-4 pt-2">
@@ -39,22 +39,22 @@
                                 class="text-sm text-gray-500 dark:text-gray-400">{{ '@' . auth()->user()->nickname }}</span>
                         @endif
                         <div class="grid text-sm mt-4 grid-cols-3 gap-6 sm:grid-cols-3">
-                            <a href="{{ route('athlete.subscriptions') }}">
-                                <p class="mb-3 text-center text-gray-600 dark:text-gray-400">
+                            <p class="mb-3 text-center text-gray-600 dark:text-gray-400">
+                                <a href="{{ route('athlete.subscriptions') }}">
                                     {{ __('Subscriptions') }}<br/>{{ Auth::user()->confirmedSubscriptions()->count() }}
-                                </p>
-                            </a>
-                            <a href="{{ route('athlete.subscribers') }}">
-                                <p class="mb-3 text-center text-gray-600 dark:text-gray-400">
+                                </a>
+                            </p>
+                            <p class="mb-3 text-center text-gray-600 dark:text-gray-400">
+                                <a href="{{ route('athlete.subscribers') }}">
                                     {{ __('Subscribers') }}<br/>{{ Auth::user()->confirmedSubscribers()->count() }}
-                                </p>
-                            </a>
-                            <a href="{{ route('athlete.training') }}">
-                                <p class="mb-3 text-center text-gray-600 dark:text-gray-400">
+                                </a>
+                            </p>
+                            <p class="mb-3 text-center text-gray-600 dark:text-gray-400">
+                                <a href="{{ route('athlete.training') }}">
                                     {{ __('Activities') }}<br/>
                                     {{ Auth::user()->activities->count() ?: 0 }}
-                                </p>
-                            </a>
+                                </a>
+                            </p>
                         </div>
                         <div class="text-sm mt-4 ml-4 mr-4">
                             <span class="text-sm text-gray-500 dark:text-gray-400">Последняя тренировка</span>
@@ -82,7 +82,7 @@
             </div>
         </div>
         {{-- Центральный контейнер --}}
-        <div>
+        <div class="w-full">
             <div class="w-full">
                 @error('search') @livewire('toast.errors') @enderror
                 @if (Session::get('success'))
@@ -180,7 +180,7 @@
             </div>
         </div>
         {{-- Правый контейнер --}}
-        <div class="w-full md:w-1/3">
+        <div class="w-1/4">
             <div class="w-full">
                 <div
                     class="w-full mb-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">

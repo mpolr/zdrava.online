@@ -338,7 +338,7 @@
         @endif
     </div>
     <div class="mt-8 mx-auto text-grey-darkest flex-grow">
-        <main class="w-full flex flex-wrap px-2 mx-auto lg:px-8 justify-center">
+        <main class="w-screen flex flex-wrap px-2 mx-auto lg:px-8 justify-center">
             @if(empty($slot))
                 @yield('content')
             @else
