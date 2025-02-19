@@ -105,7 +105,7 @@ class GpxTools
     // Функция для преобразования координат в значение Garmin FIT
     public static function convertCoordinates($coordinate): int
     {
-        $scalingFactor = pow(2, 31) / 180.0; // Коэффициент масштабирования
+        $scalingFactor = (2 ** 31) / 180.0; // Коэффициент масштабирования
         return (int)($coordinate * $scalingFactor);
     }
 

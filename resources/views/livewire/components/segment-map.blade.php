@@ -19,7 +19,9 @@
             console.error("Geolocation is not supported by this browser.");
         }
 
-        document.addEventListener("DOMContentLoaded", function(event) {
+        document.addEventListener("DOMContentLoaded", function (event) {
+            const getPreferredScheme = () => window?.matchMedia?.('(prefers-color-scheme:dark)')?.matches ? 'dark' : 'light';
+
             map = L.map('map', {
                 center: {
                     lat: userLat,
@@ -28,7 +30,7 @@
                 zoom: 14
             });
 
-            map.on('dragend',function(e){
+            map.on('dragend', function (e) {
                 //console.log("console.log", e);
                 //console.log(e.target.latLngToContainerPoint);
                 //console.log(map.getBounds());
@@ -37,12 +39,10 @@
 
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                 attribution: '© OpenStreetMap',
-                @if(session()->get('theme') == 'dark')
-                className: 'map-tiles-dark',
-                @endif
+                className: getPreferredScheme() === 'dark' ? 'map-tiles-dark' : '',
             }).addTo(map);
 
-            let myFGMarker = new L.FeatureGroup({ chunkedLoading: true });
+            let myFGMarker = new L.FeatureGroup({chunkedLoading: true});
             let dataSet = JSON.parse({!!$segmentsJson!!});
 
             const markerOptions = {
@@ -81,7 +81,7 @@
 
                 polyline.id = item.id;
 
-                let marker = L.circleMarker([item.start_latlng.coordinates[0], item.start_latlng.coordinates[1]], markerOptions)
+                let marker = L.circleMarker([item.start_latlng.coordinates[1], item.start_latlng.coordinates[0]], markerOptions)
                     .addTo(myFGMarker);
 
                 marker.bindPopup(popupText, {closeButton: false});
@@ -93,7 +93,7 @@
 
         function openPopup(id) {
             map.eachLayer(layer => {
-                if (layer instanceof L.Polyline){
+                if (layer instanceof L.Polyline) {
                     layer.setStyle({
                         opacity: 0.4,
                     });
