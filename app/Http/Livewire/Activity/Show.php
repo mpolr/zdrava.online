@@ -4,6 +4,8 @@ namespace App\Http\Livewire\Activity;
 
 use adriangibbons\phpFITFileAnalysis;
 use App\Models\Activities;
+use Exception;
+use JsonException;
 use Livewire\Component;
 use Storage;
 use Toaster;
@@ -18,12 +20,14 @@ class Show extends Component
     private ?array $cadence = null;
     private ?array $heart_rate = null;
     private ?array $temperature = null;
+    private ?array $distance = null;
+    public string $chartType = 'line';
     public string $chartDataJson = '';
     private array $axisX = [];
 
     /**
-     * @throws \JsonException
-     * @throws \Exception
+     * @throws JsonException
+     * @throws Exception
      */
     public function mount(int $id): void
     {
@@ -50,18 +54,11 @@ class Show extends Component
                 $speedSource = $records['enhanced_speed'] ?? $records['speed'];
                 $altitudeSource = $records['enhanced_altitude'] ?? $records['altitude'];
 
-                // Массив для оси X (distance или timestamp)
-                $labels = [];
-                $distance = $records['distance'] ?? null;
-                $lastDistance = 0;
-                $kmMark = 0; // Счётчик километров
-                $minuteMark = 0; // Счётчик минут для времени
-
-                if ($distance) {
-                    $labels[] = '0 km';
-                }
-
+                // Заполняем массивы данных для графиков
                 if (isset($speedSource)) {
+                    foreach ($speedSource as $item => $value) {
+                        $speedSource[$item] = number_format($value, 1, '.', '');
+                    }
                     $this->speed = array_values($speedSource);
                 }
                 if (isset($records['power'])) {
@@ -79,46 +76,46 @@ class Show extends Component
                 if (isset($records['temperature'])) {
                     $this->temperature = array_values($records['temperature']);
                 }
+                if (isset($records['distance'])) {
+                    // Ось X (метки расстояния)
+                    $this->axisX = [__(':distance km', ['distance' => 0])]; // Начинаем с 0 км
+                    $lastKm = 0; // Последний добавленный километр
+                    $maxDistance = 0;
 
-                foreach ($records['timestamp'] as $key => $timestamp) {
-                    // Если есть массив distance, используем его для оси X
-                    if ($distance) {
-                        $currentDistance = isset($records['distance'][$timestamp]) ? (int)($records['distance'][$timestamp] * 1000) : 0;
+                    foreach ($records['distance'] as $timestamp => $distance) {
+                        $maxDistance = max($maxDistance, $distance);
+                        $currentKm = (int)floor($distance); // Округляем вниз до целого километра
 
-                        if ($currentDistance - $lastDistance >= 1000) { // Каждые 1000 метров (1 км)
-                            $labels[] = number_format($currentDistance / 1000, 1) . ' km';
-                            $lastDistance = $currentDistance;
-                        } else {
-                            $labels[] = '';
+                        if ($currentKm > $lastKm) {
+                            $this->axisX[$timestamp] = __(':distance km', ['distance' => $currentKm]);
+                            $lastKm = $currentKm;
                         }
-                    } else {
-                        // Если нет массива distance, используем timestamp в формате часы:минуты
-                        $formattedTime = date('H:i', strtotime($timestamp));
-                        if ($minuteMark % 60 === 0) { // Добавляем метки через каждый час
-                            $labels[] = $formattedTime;
-                        }
-                        $minuteMark++;
                     }
 
-                    $this->axisX[] = date('H:i', $timestamp);
+                    // Добавляем финальную метку с точным пройденным расстоянием
+                    $finalLabel = __(':distance km', ['distance' => number_format($maxDistance, 2, '.', '')]);
+                    if (!in_array($finalLabel, $this->axisX, true)) {
+                        $this->axisX[max($records['timestamp'])] = $finalLabel;
+                    }
 
-                    // Заполняем данные для графиков
-                    if (isset($altitudeSource)) {
-                        $this->altitude[] = ceil($altitudeSource[$timestamp] ?? null);
-                    }
-                    if (isset($records['distance'])) {
-                        $this->distance[] = $records['distance'][$timestamp] * 1000;
-                    }
+                    $this->distance = array_values($records['distance']);
                 }
 
-                if ($distance) {
-                    $labels[] = '';
+                foreach ($records['timestamp'] as $key => $timestamp) {
+                    $this->axisX[] = date('H:i', $timestamp);
+
+                    if (isset($altitudeSource)) {
+                        $this->altitude[] = ceil($altitudeSource[$key] ?? null);
+                    }
+                    if (isset($records['distance'][$key])) {
+                        $this->distance[] = $records['distance'][$key] * 1000;
+                    }
                 }
 
                 // Генерация JSON данных для графика
                 $this->chartDataJson = json_encode([
-                    //'labels' => $labels, // Используем labels как ось X
                     'labels' => array_values($this->axisX),
+                    'distance' => $this->distance,
                     'speed' => $this->speed,
                     'accuracy' => $this->accuracy,
                     'altitude' => $this->altitude,

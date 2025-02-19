@@ -35,7 +35,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 chartData.heart_rate ||
                 chartData.cadence ||
                 chartData.altitude ||
-                chartData.accuracy
+                chartData.accuracy ||
+                chartData.distance
             ) {
                 // Для графиков с несколькими массивами данных
                 if (chartData.speed) {
@@ -45,6 +46,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         backgroundColor: "rgba(54, 162, 235, 0.4)",
                         borderColor: "rgba(54, 162, 235, 1)",
                         borderWidth: 0,
+                        tension: 0.4,
                     });
                 }
                 if (chartData.power) {
@@ -54,6 +56,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         backgroundColor: "rgba(100, 0, 100, 0.4)",
                         borderColor: "rgb(100,0,100)",
                         borderWidth: 1,
+                        tension: 0.4,
                     });
                 }
                 if (chartData.heart_rate) {
@@ -63,6 +66,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         backgroundColor: "rgba(255, 0, 0, 0.4)",
                         borderColor: "rgba(255, 0, 0, 1)",
                         borderWidth: 0,
+                        tension: 0.4,
                     });
                 }
                 if (chartData.cadence) {
@@ -72,6 +76,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         backgroundColor: "rgba(255, 0, 234, 0.4)",
                         borderColor: "rgb(255,0,234)",
                         borderWidth: 0,
+                        tension: 0.4,
                     });
                 }
                 if (chartData.altitude) {
@@ -81,6 +86,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         backgroundColor: "rgba(150, 150, 150, 0.4)",
                         borderColor: "rgb(150,150,150)",
                         borderWidth: 0,
+                        tension: 0.4,
                     });
                 }
                 if (chartData.accuracy) {
@@ -90,6 +96,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         backgroundColor: "rgba(0, 200, 0, 0.4)",
                         borderColor: "rgba(0, 200, 0, 1)",
                         borderWidth: 0,
+                        tension: 0.4,
                     });
                 }
                 if (chartData.temperature) {
@@ -99,6 +106,19 @@ document.addEventListener("DOMContentLoaded", () => {
                         backgroundColor: "rgba(200, 160, 0, 0.4)",
                         borderColor: "rgb(200,160,0)",
                         borderWidth: 0,
+                        tension: 0.4,
+                    });
+                }
+
+                if (chartData.distance) {
+                    chartData.labels = chartData.distance;
+                    datasets.push({
+                        label: "Дистанция",
+                        data: chartData.distance,
+                        backgroundColor: "rgba(67,67,67,0.67)",
+                        borderColor: "rgb(67,67,67)",
+                        borderWidth: 0,
+                        tension: 0.4,
                     });
                 }
             }
@@ -112,12 +132,39 @@ document.addEventListener("DOMContentLoaded", () => {
                 },
                 options: {
                     plugins: {
+                        tooltip: {
+                            enabled: true,
+                            mode: 'index',
+                            intersect: false,
+                            callbacks: {
+                                label: function(context) {
+                                    const datasetLabel = context.dataset.label || '';
+                                    const value = context.formattedValue || '';
+                                    return `${datasetLabel}: ${value}`;
+                                },
+                                afterLabel: function(context) {
+                                    return '';
+                                }
+                            }
+                        },
                         legend: {
                             display: true,
-                        },
+                            labels: {
+                                usePointStyle: true,
+                                boxWidth: 8,
+                            }
+                        }
                     },
                     responsive: true,
+                    maintainAspectRatio: false,
+                    interaction: {
+                        mode: 'index',
+                        intersect: false,
+                    },
                     scales: {
+                        x: {
+                            display: false,
+                        },
                         y: {
                             beginAtZero: true,
                         },
