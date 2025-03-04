@@ -1,2 +1,3 @@
 User-agent: *
 Disallow:
+Clean-param: hl

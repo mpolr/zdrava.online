@@ -96,6 +96,7 @@ return [
     'available_locales' => [
         'English' => 'en',
         'Русский' => 'ru',
+        'Беларускі' => 'be',
     ],
 
     /*

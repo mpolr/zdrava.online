@@ -13,7 +13,14 @@ class Localization
 {
     public function handle(Request $request, Closure $next): Response
     {
-        if (Session::has('locale')) {
+        $languageCode = $request->get('hl');
+
+        if ($languageCode && !Session::has('locale')) {
+            if (in_array($languageCode, config('app.available_locales'), true)) {
+                Carbon::setLocale($languageCode);
+                App::setLocale($languageCode);
+            }
+        } elseif (Session::has('locale')) {
             $locale = Session::get('locale');
             Carbon::setLocale($locale);
             App::setLocale($locale);
