@@ -143,7 +143,7 @@ Route::group(['prefix' => 'import'], function () {
 });
 
 /* Утилиты */
-Route::group(['prefix' => 'tools', 'middleware' => 'auth'], function () {
+Route::group(['prefix' => 'tools'], function () {
     Route::get('/', function () {
         return redirect()->route('site.dashboard');
     });

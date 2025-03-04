@@ -358,6 +358,9 @@
                         <li class="mb-4">
                             <a href="{{ route('friends.find') }}" class="hover:underline">{{ __('Find friends') }}</a>
                         </li>
+                        <li class="mb-4">
+                            <a href="{{ route('tools.antplus') }}" class="hover:underline">{{ __('ANT+ sensor test') }}</a>
+                        </li>
                     </ul>
                 </div>
                 <div class="cat-links">
