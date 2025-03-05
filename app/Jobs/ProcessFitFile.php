@@ -56,6 +56,9 @@ class ProcessFitFile implements ShouldQueue, ShouldBeUnique
             if (isset($fit->data_mesgs['sport'])) {
                 $this->activity->sport = $this->getFitData($fit->data_mesgs['sport'], 'sport');
                 $this->activity->sub_sport = $this->getFitData($fit->data_mesgs['sport'], 'sub_sport');
+            } elseif (isset($fit->data_mesgs['session'])) {
+                $this->activity->sport = $this->getFitData($fit->data_mesgs['session'], 'sport');
+                $this->activity->sub_sport = $this->getFitData($fit->data_mesgs['session'], 'sub_sport');
             }
 
             $this->activity->name = !empty($fit->data_mesgs['sport']['name']) ? __($fit->data_mesgs['sport']['name']) : __('Workout');
