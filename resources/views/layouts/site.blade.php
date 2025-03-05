@@ -41,24 +41,23 @@
     @vite('resources/js/app.js')
     @livewireScripts(['nonce' => csp_nonce()])
     @yield('js')
-    {{-- Matomo --}}
-    <script nonce="{{ csp_nonce() }}">
-        window.user_id = {!! auth()->check()?auth()->user()->id:'null' !!};
-        var _paq = window._paq = window._paq || [];
-        @if(!empty(auth()->id()))
-        _paq.push(['setUserId', '{{ auth()->user()->getFullName() }} (ID: {{ auth()->id() }})']);
-        @endif
-        _paq.push(['trackPageView']);
-        _paq.push(['enableLinkTracking']);
-        (function() {
-            var u="//stat.mpolr.ru/";
-            _paq.push(['setTrackerUrl', u+'matomo.php']);
-            _paq.push(['setSiteId', '1']);
-            var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
-            g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
-        })();
+    {{-- Yandex.Metrika counter --}}
+    <script type="text/javascript" nonce="{{ csp_nonce() }}">
+        (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+            m[i].l=1*new Date();
+            for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+            k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+        (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+        ym(100201082, "init", {
+            clickmap:true,
+            trackLinks:true,
+            accurateTrackBounce:true,
+            webvisor:false
+        });
     </script>
-    {{-- End Matomo Code --}}
+    <noscript><div><img src="https://mc.yandex.ru/watch/100201082" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+    {{-- /Yandex.Metrika counter --}}
 </head>
 <body class="bg-gray-100 dark:bg-gray-700 min-h-screen flex flex-col">
     <div>
