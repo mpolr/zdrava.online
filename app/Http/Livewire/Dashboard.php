@@ -4,7 +4,6 @@ namespace App\Http\Livewire;
 
 use App\Models\Activities;
 use App\Models\Subscription;
-use Illuminate\Database\Eloquent\Collection;
 use Livewire\Component;
 
 class Dashboard extends Component

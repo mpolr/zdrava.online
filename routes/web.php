@@ -22,16 +22,21 @@ Route::get('/', ['as' => 'index', function () {
 }]);
 
 /* Юридическая информация */
-Route::group(['prefix' => 'legal'], function () {
-    Route::get('privacy', function () {
+Route::group(['prefix' => 'legal'], static function () {
+    Route::get('privacy', static function () {
         return view('legal.privacy');
     })->name('legal.privacy');
-    Route::get('terms', function () {
+    Route::get('terms', static function () {
         return view('legal.terms');
     })->name('legal.terms');
-    Route::get('account-deletion', function () {
+    Route::get('account-deletion', static function () {
         return view('legal.account-deletion');
     })->name('legal.account-deletion');
+});
+
+/* Новости */
+Route::group(['prefix' => 'news'], static function () {
+    Route::get('/', \App\Http\Livewire\News::class)->name('news');
 });
 
 Route::get('mobile', [DownloadAppController::class, 'mobile'])->name('mobile');
@@ -39,8 +44,8 @@ Route::get('mobile', [DownloadAppController::class, 'mobile'])->name('mobile');
 Route::middleware(Authenticate::class)->get('dashboard', \App\Http\Livewire\Dashboard::class)->name('site.dashboard');
 
 /* Аутентификация */
-Route::group(['prefix' => 'auth'], function () {
-    Route::get('/', function () {
+Route::group(['prefix' => 'auth'], static function () {
+    Route::get('/', static function () {
         return redirect()->route('auth.login');
     });
 
@@ -59,7 +64,7 @@ Route::group(['prefix' => 'auth'], function () {
 });
 
 /* Спортсмен */
-Route::group(['prefix' => 'athlete', 'middleware' => 'auth'], function () {
+Route::group(['prefix' => 'athlete', 'middleware' => 'auth'], static function () {
     Route::get('training', [AthleteController::class, 'training'])->name('athlete.training');
     Route::get('calendar/{year?}', \App\Http\Livewire\Athlete\Calendar::class)->name('athlete.calendar');
     // Подписчики пользователя
@@ -72,8 +77,8 @@ Route::group(['prefix' => 'athlete', 'middleware' => 'auth'], function () {
 });
 
 /* Тренировки */
-Route::group(['prefix' => 'activities', 'middleware' => 'auth'], function () {
-    Route::get('/', function () {
+Route::group(['prefix' => 'activities', 'middleware' => 'auth'], static function () {
+    Route::get('/', static function () {
         return redirect()->route('athlete.training');
     });
 
@@ -83,8 +88,8 @@ Route::group(['prefix' => 'activities', 'middleware' => 'auth'], function () {
 });
 
 /* Настройки */
-Route::group(['prefix' => 'settings', 'middleware' => 'auth'], function () {
-    Route::get('/', function () {
+Route::group(['prefix' => 'settings', 'middleware' => 'auth'], static function () {
+    Route::get('/', static function () {
         return redirect()->route('settings.profile');
     });
 
@@ -95,12 +100,12 @@ Route::group(['prefix' => 'settings', 'middleware' => 'auth'], function () {
 });
 
 /* Загрузка файлов на сервер */
-Route::group(['prefix' => 'upload', 'middleware' => 'auth'], function () {
-    Route::get('/', function () {
+Route::group(['prefix' => 'upload', 'middleware' => 'auth'], static function () {
+    Route::get('/', static function () {
         return redirect()->route('site.dashboard');
     });
 
-    Route::get('workout', function () {
+    Route::get('workout', static function () {
         return view('upload/workout');
     });
 
@@ -108,8 +113,8 @@ Route::group(['prefix' => 'upload', 'middleware' => 'auth'], function () {
 });
 
 /* Друзья */
-Route::group(['prefix' => 'friends', 'middleware' => 'auth'], function () {
-    Route::get('/', function () {
+Route::group(['prefix' => 'friends', 'middleware' => 'auth'], static function () {
+    Route::get('/', static function () {
         return redirect()->route('friends.find');
     });
 
@@ -118,8 +123,8 @@ Route::group(['prefix' => 'friends', 'middleware' => 'auth'], function () {
 });
 
 /* Сегменты */
-Route::group(['prefix' => 'segments'], function () {
-    Route::get('/', function () {
+Route::group(['prefix' => 'segments'], static function () {
+    Route::get('/', static function () {
         return redirect()->route('site.dashboard');
     });
 
@@ -127,7 +132,7 @@ Route::group(['prefix' => 'segments'], function () {
 });
 
 /* Админка */
-Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
+Route::group(['prefix' => 'admin', 'middleware' => 'auth'], static function () {
     Route::get('/', \App\Http\Livewire\Admin\Index::class)->name('admin.index');
     Route::get('users', \App\Http\Livewire\Admin\Users::class)->name('admin.users');
     Route::get('segments', \App\Http\Livewire\Admin\Segments::class)->name('admin.segments');
@@ -136,15 +141,15 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
 });
 
 /* Импорт данных */
-Route::group(['prefix' => 'import'], function () {
+Route::group(['prefix' => 'import'], static function () {
     /* Strava */
     Route::get('strava/auth', [StravaController::class, 'auth'])->name('strava.auth')->middleware('auth');
     Route::get('strava/token', [StravaController::class, 'getToken'])->name('strava.token');
 });
 
 /* Утилиты */
-Route::group(['prefix' => 'tools'], function () {
-    Route::get('/', function () {
+Route::group(['prefix' => 'tools'], static function () {
+    Route::get('/', static function () {
         return redirect()->route('site.dashboard');
     });
 
