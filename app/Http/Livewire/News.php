@@ -11,14 +11,24 @@ use App\Models\News as NewsModel;
 class News extends Component
 {
     public $news;
+    private ?int $newsId = null;
 
-    public function mount(): void
+    public function mount(?int $newsId = null): void
     {
-        $this->news = NewsModel::all();
+        if (!$newsId) {
+            $this->news = NewsModel::where('published', 1)->orderBy('created_at', 'asc')->get();
+        } else {
+            $this->newsId = $newsId;
+            $this->news = NewsModel::where('published', 1)->findOrFail($newsId);
+        }
     }
 
     public function render(): View|Application|Factory|\Illuminate\View\View|\Illuminate\Contracts\Foundation\Application
     {
-        return view('livewire.news');
+        if (!$this->newsId) {
+            return view('livewire.news.index');
+        }
+
+        return view('livewire.news.view');
     }
 }

@@ -1,4 +1,5 @@
 @section('title', __('ANT+') . ' | Zdrava')
+@section('description', __('ANT+ sensor test'))
 @section('js')
     @vite('resources/js/ant.js')
 @endsection
@@ -8,7 +9,7 @@
         <div class="w-full md:w-1/3">
             <div class="w-full">
                 <div class="p-6 bg-white dark:bg-gray-200 rounded-xl shadow-md space-y-4">
-                    <h2 class="text-xl font-bold text-gray-900">Тест датчиков ANT+</h2>
+                    <h2 class="text-xl font-bold text-gray-900">{{ __('ANT+ sensor test') }}</h2>
                     <p class="text-gray-700">Стик ANT+ USB:
                         <strong id="stick-status" class="text-red-600">Отключен</strong>
                     </p>

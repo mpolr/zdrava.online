@@ -36,6 +36,7 @@ Route::group(['prefix' => 'legal'], static function () {
 
 /* Новости */
 Route::group(['prefix' => 'news'], static function () {
+    Route::get('{newsId?}', \App\Http\Livewire\News::class)->name('news.view');
     Route::get('/', \App\Http\Livewire\News::class)->name('news');
 });
 
