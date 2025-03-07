@@ -28,7 +28,7 @@
         "spatie/laravel-csp": "^2.10",
         "spatie/laravel-google-fonts": "^1.2",
         "toin0u/geocoder-laravel": "^4.6",
-        "vladimir-yuldashev/laravel-queue-rabbitmq": "^13.3"
+        "vladimir-yuldashev/laravel-queue-rabbitmq": "^14.1"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^2.13",
