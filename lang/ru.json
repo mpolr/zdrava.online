@@ -32,6 +32,7 @@
     "Analysis": "Анализ",
     "Android": "Андроид",
     "Announcements": "Анонсы",
+    "ANT+ sensor test": "Тест датчиков ANT+",
     "Archive": "Архив",
     "Assign": "Назначить",
     "Associate": "Ассоциировать",
@@ -39,6 +40,7 @@
     "Avg. cadence": "Ср. каденс",
     "Avg. HR": "Ср. пульс",
     "Avg. speed": "Ср. скорость",
+    "Back": "Назад",
     "Bad Gateway": "Проблема с шлюзом",
     "Bad Request": "Некорректный запрос",
     "Bandwidth Limit Exceeded": "Превышена нагрузка на канал связи",
@@ -399,7 +401,5 @@
     "Your provided credentials do not match in our records": "Предоставленные вами учетные данные не совпадают с нашими записями",
     "Your tasks": "Ваши задачи",
     "Zdrava account deleting": "Удаление аккаунта Zdrava",
-    "Zdrava android app": "Zdrava для android",
-    "ANT+ sensor test": "Тест датчиков ANT+",
-    "Back": "Назад"
+    "Zdrava android app": "Zdrava для android"
 }
