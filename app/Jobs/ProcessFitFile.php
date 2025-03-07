@@ -9,7 +9,6 @@ use App\Models\Activities;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
@@ -18,7 +17,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Psr\Log\LogLevel;
 
-class ProcessFitFile implements ShouldQueue, ShouldBeUnique
+class ProcessFitFile implements ShouldQueue
 {
     use Dispatchable;
     use InteractsWithQueue;
@@ -43,69 +42,80 @@ class ProcessFitFile implements ShouldQueue, ShouldBeUnique
         try {
             $fit = new phpFITFileAnalysis(Storage::path('temp/' . $this->fileName));
             $this->validateFitFile($fit);
+            $data = $fit->data_mesgs;
 
             if (
-                !is_array($fit->data_mesgs['record']['timestamp']) ||
-                !is_array($fit->data_mesgs['record']['position_lat']) ||
-                count($fit->data_mesgs['record']['timestamp']) <= 10
+                !is_array($data['record']['timestamp']) ||
+                !is_array($data['record']['position_lat']) ||
+                count($data['record']['timestamp']) <= 10
             ) {
                 // Всего одна запись, скорее всего нам такое не нужно
+                $this->deleteActivity();
                 $this->fail('Very small FIT file!');
             }
 
-            if (isset($fit->data_mesgs['sport'])) {
-                $this->activity->sport = $this->getFitData($fit->data_mesgs['sport'], 'sport');
-                $this->activity->sub_sport = $this->getFitData($fit->data_mesgs['sport'], 'sub_sport');
-            } elseif (isset($fit->data_mesgs['session'])) {
-                $this->activity->sport = $this->getFitData($fit->data_mesgs['session'], 'sport');
-                $this->activity->sub_sport = $this->getFitData($fit->data_mesgs['session'], 'sub_sport');
+            if (isset($data['sport'])) {
+                $this->activity->sport = $this->getFitData($data['sport'], 'sport');
+                $this->activity->sub_sport = $this->getFitData($data['sport'], 'sub_sport');
+            } elseif (isset($data['session'])) {
+                $this->activity->sport = $this->getFitData($data['session'], 'sport');
+                $this->activity->sub_sport = $this->getFitData($data['session'], 'sub_sport');
             }
 
-            $this->activity->name = !empty($fit->data_mesgs['sport']['name']) ? __($fit->data_mesgs['sport']['name']) : __('Workout');
-            if (!empty($fit->data_mesgs['developer_data_id']) && !empty($fit->data_mesgs['developer_data_id']['application_id'])) {
-                $this->activity->creator = $this->byteArrayToString($fit->data_mesgs['developer_data_id']['application_id']);
+            if (!empty($data['sport']['name'])) {
+                $this->activity->name = $data['sport']['name'];
+            } elseif (!empty($data['developer_data']['title']['data'])) {
+                $this->activity->name = $data['developer_data']['title']['data'][0];
             } else {
-                $this->activity->device_manufacturers_id = $fit->data_mesgs['file_id']['manufacturer'] ?: null;
-                if (array_key_exists('product', $fit->data_mesgs['file_id'])) {
-                    $this->activity->device_models_id = $fit->data_mesgs['file_id']['product'];
+                $this->activity->name = trans('Workout');
+            }
+
+            if (!empty($data['developer_data_id']) && !empty($data['developer_data_id']['application_id'])) {
+                $this->activity->creator = $this->byteArrayToString($data['developer_data_id']['application_id']);
+            } else {
+                $this->activity->device_manufacturers_id = $data['file_id']['manufacturer'] ?: null;
+                if (array_key_exists('product', $data['file_id'])) {
+                    $this->activity->device_models_id = $data['file_id']['product'];
                 }
-                if (isset($fit->data_mesgs['file_creator']['software_version'])) {
-                    $this->activity->device_software_version = $fit->data_mesgs['file_creator']['software_version'] * 0.01;
+                if (isset($data['file_creator']['software_version'])) {
+                    $this->activity->device_software_version = $data['file_creator']['software_version'] * 0.01;
                 }
             }
 
-            if (isset($fit->data_mesgs['session']['total_distance'])) {
-                $this->activity->distance = $fit->data_mesgs['session']['total_distance'];
+            if (isset($data['session']['total_distance'])) {
+                $this->activity->distance = $data['session']['total_distance'];
             } else {
-                if (isset($fit->data_mesgs['lap']['total_distance'])) {
-                    $this->activity->distance = isset($fit->data_mesgs['lap']['total_distance']);
+                if (isset($data['lap']['total_distance'])) {
+                    $this->activity->distance = isset($data['lap']['total_distance']);
                 }
             }
-            if (isset($fit->data_mesgs['session']['avg_speed'])) {
-                $this->activity->avg_speed = $fit->data_mesgs['session']['avg_speed'];
-            } elseif (isset($fit->data_mesgs['session']['enhanced_avg_speed'])) {
-                $this->activity->avg_speed = $fit->data_mesgs['session']['enhanced_avg_speed'];
+            if (isset($data['session']['avg_speed'])) {
+                $this->activity->avg_speed = $data['session']['avg_speed'];
+            } elseif (isset($data['session']['enhanced_avg_speed'])) {
+                $this->activity->avg_speed = $data['session']['enhanced_avg_speed'];
             }
-            if (isset($fit->data_mesgs['session']['max_speed'])) {
-                $this->activity->max_speed = $fit->data_mesgs['session']['max_speed'];
-            } elseif (isset($fit->data_mesgs['session']['enhanced_max_speed'])) {
-                $this->activity->max_speed = $fit->data_mesgs['session']['enhanced_max_speed'];
+            if (isset($data['session']['max_speed'])) {
+                $this->activity->max_speed = $data['session']['max_speed'];
+            } elseif (isset($data['session']['enhanced_max_speed'])) {
+                $this->activity->max_speed = $data['session']['enhanced_max_speed'];
             }
-            if (isset($fit->data_mesgs['session']['total_ascent'])) {
-                $this->activity->elevation_gain = $fit->data_mesgs['session']['total_ascent'];
+            if (isset($data['session']['total_ascent'])) {
+                $this->activity->elevation_gain = $data['session']['total_ascent'];
             } else {
                 $this->activity->elevation_gain = 0;
             }
-            if (isset($fit->data_mesgs['session']['total_descent'])) {
-                $this->activity->elevation_loss = $fit->data_mesgs['session']['total_descent'];
+            if (isset($data['session']['total_descent'])) {
+                $this->activity->elevation_loss = $data['session']['total_descent'];
             } else {
                 $this->activity->elevation_loss = 0;
             }
 
             $this->extractTimestamps($fit);
 
-            $this->activity->duration = $fit->data_mesgs['session']['total_timer_time'];
-            $this->activity->duration_total = $fit->data_mesgs['session']['total_elapsed_time'];
+            if (isset($data['session']['total_timer_time'])) {
+                $this->activity->duration = $data['session']['total_timer_time'];
+                $this->activity->duration_total = $data['session']['total_elapsed_time'];
+            }
 
             $exist = Activities::where('user_id', $this->activity->user_id)
                 ->where('started_at', $this->activity->started_at)
@@ -115,34 +125,35 @@ class ProcessFitFile implements ShouldQueue, ShouldBeUnique
 
             if ($exist !== null) {
                 // Такая тренировка уже есть
+                $this->deleteActivity();
                 $this->fail('Activity already exists.');
             }
 
-            if (isset($fit->data_mesgs['session']['avg_heart_rate'])) {
-                $this->activity->avg_heart_rate = $fit->data_mesgs['session']['avg_heart_rate'];
-                $this->activity->max_heart_rate = $fit->data_mesgs['session']['max_heart_rate'];
+            if (isset($data['session']['avg_heart_rate'])) {
+                $this->activity->avg_heart_rate = $data['session']['avg_heart_rate'];
+                $this->activity->max_heart_rate = $data['session']['max_heart_rate'];
             }
 
-            if (!empty($fit->data_mesgs['session']['avg_cadence'])) {
-                $this->activity->avg_cadence = $fit->data_mesgs['session']['avg_cadence'];
-                $this->activity->max_cadence = $fit->data_mesgs['session']['max_cadence'];
+            if (!empty($data['session']['avg_cadence'])) {
+                $this->activity->avg_cadence = $data['session']['avg_cadence'];
+                $this->activity->max_cadence = $data['session']['max_cadence'];
             }
 
-            if (isset($fit->data_mesgs['session']['total_calories'])) {
-                $this->activity->total_calories = $fit->data_mesgs['session']['total_calories'];
+            if (isset($data['session']['total_calories'])) {
+                $this->activity->total_calories = $data['session']['total_calories'];
             }
 
             $this->activity->file = $this->fileName;
             $this->extractCoordinates($fit);
 
             if ($this->activity->end_position_lat === 0.0) {
-                $this->activity->end_position_lat = end($fit->data_mesgs['record']['position_lat']);
+                $this->activity->end_position_lat = end($data['record']['position_lat']);
             }
             if ($this->activity->end_position_long === 0.0) {
-                $this->activity->end_position_long = end($fit->data_mesgs['record']['position_long']);
+                $this->activity->end_position_long = end($data['record']['position_long']);
             }
 
-            $this->activity->polyline = Polyline::convertFitLocationToPolyline($fit->data_mesgs['record']);
+            $this->activity->polyline = Polyline::convertFitLocationToPolyline($data['record']);
 
             if ($this->activity->start_position_lat !== 0.0 || $this->activity->start_position_long !== 0.0) {
                 $geo = GpxTools::geocode($this->activity->start_position_lat, $this->activity->start_position_long);
@@ -179,8 +190,27 @@ class ProcessFitFile implements ShouldQueue, ShouldBeUnique
                 'line' => $e->getLine(),
             ]);
 
+            $this->deleteActivity();
             $this->fail($e->getMessage());
         }
+    }
+
+    private function deleteActivity(): void
+    {
+        $filesToDelete = [
+            Storage::path('temp/' . $this->fileName),
+        ];
+
+        $gpxFile = Storage::path("public/activities/{$this->activity->user_id}/{$this->fileName}.gpx");
+        if (Storage::exists($gpxFile)) {
+            $filesToDelete[] = $gpxFile;
+        }
+        if (!empty($this->activity->image)) {
+            $filesToDelete[] = Storage::path("temp/{$this->fileName}.gpx.png");
+        }
+
+        Storage::delete($filesToDelete);
+        $this->activity->delete();
     }
 
     private function getFitData(array $data, string $key, $default = null)

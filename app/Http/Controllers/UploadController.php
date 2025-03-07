@@ -2,18 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Classes\GpxTools;
 use App\Http\Requests\StoreWorkoutRequest;
 use App\Jobs\ProcessFitFile;
 use App\Jobs\ProcessGpxFile;
 use App\Models\Activities;
 use App\Models\Photo;
-use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Storage;
-use phpGPX\phpGPX;
 
 class UploadController extends Controller
 {
@@ -65,18 +61,10 @@ class UploadController extends Controller
                     switch ($extension) {
                         case 'gpx':
                             ProcessGpxFile::dispatch($user->id, $hashedFileName, $activity->id)->onQueue('process-gpx');
-                            Artisan::call('queue:work', [
-                                '--queue' => 'process-gpx',
-                                '--stop-when-empty' => true,
-                            ]);
                             $result = true;
                             break;
                         case 'fit':
                             ProcessFitFile::dispatch($activity, $hashedFileName)->onQueue('process-fit');
-                            Artisan::call('queue:work', [
-                                '--queue' => 'process-fit',
-                                '--stop-when-empty' => true,
-                            ]);
                             $result = true;
                             break;
                         case 'tcx':
