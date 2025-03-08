@@ -20,7 +20,7 @@
                         <span class="text-xs text-gray-400 dark:text-gray-500">{{ $news->created_at }}</span>
                         <div class="flex flex-col p-4 py-6">
                             <span class="text-sm text-gray-500 dark:text-gray-400">
-                                {{ $news->content }}
+                                {!! $news->content !!}
                             </span>
                         </div>
                     @endif

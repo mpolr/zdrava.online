@@ -401,5 +401,9 @@
     "Your provided credentials do not match in our records": "Предоставленные вами учетные данные не совпадают с нашими записями",
     "Your tasks": "Ваши задачи",
     "Zdrava account deleting": "Удаление аккаунта Zdrava",
-    "Zdrava android app": "Zdrava для android"
+    "Zdrava android app": "Zdrava для android",
+    "News": "Новости",
+    "Title": "Заголовок",
+    "Content": "Содержимое",
+    "Published": "Опубликовано"
 }
