@@ -41,7 +41,7 @@
 
                     </div>
 
-                    <button wire:click="save" type="button" class="object-right px-4 py-2 bg-blue-500 hover:bg-blue-700 text-white font-bold rounded-full">{{ __('Save') }}</button>
+                    <button wire:click="save" type="button" class="w-fit object-right px-4 py-2 bg-blue-500 hover:bg-blue-700 text-white font-bold rounded-full">{{ __('Save') }}</button>
                 </div>
             </div>
         </div>
