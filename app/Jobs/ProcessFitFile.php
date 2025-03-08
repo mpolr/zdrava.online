@@ -84,10 +84,8 @@ class ProcessFitFile implements ShouldQueue
 
             if (isset($data['session']['total_distance'])) {
                 $this->activity->distance = $data['session']['total_distance'];
-            } else {
-                if (isset($data['lap']['total_distance'])) {
-                    $this->activity->distance = isset($data['lap']['total_distance']);
-                }
+            } else if (isset($data['lap']['total_distance'])) {
+                $this->activity->distance = isset($data['lap']['total_distance']);
             }
             if (isset($data['session']['avg_speed'])) {
                 $this->activity->avg_speed = $data['session']['avg_speed'];

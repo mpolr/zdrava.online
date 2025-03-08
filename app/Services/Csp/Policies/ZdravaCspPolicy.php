@@ -19,6 +19,7 @@ class ZdravaCspPolicy extends Csp\Policies\Basic
         $this
             ->addDirective(Directive::DEFAULT, [
                 'googleapis.com',
+                'mc.yandex.ru',
             ])
             ->addDirective(Directive::STYLE, [
                 Keyword::UNSAFE_EVAL,
@@ -35,8 +36,8 @@ class ZdravaCspPolicy extends Csp\Policies\Basic
                 Keyword::STRICT_DYNAMIC,
             ])
             ->addDirective(Directive::CONNECT, [
-                'stat.mpolr.ru',
                 'glitchtip.mpolr.ru',
+                'mc.yandex.ru',
             ])
             ->addDirective(Directive::FONT, [
                 Keyword::SELF,
