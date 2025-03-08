@@ -33,7 +33,7 @@
                             <span class="text-xs text-gray-400 dark:text-gray-500">{{ $item->created_at }}</span>
                             <div class="flex flex-col p-4 py-6">
                                 <span class="text-sm text-gray-500 dark:text-gray-400">
-                                    {{ $item->content }}
+                                    {!! $item->content !!}
                                 </span>
                             </div>
                         @endforeach

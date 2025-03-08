@@ -33,6 +33,9 @@
                 <li class="mb-4">
                     <a href="{{ route('admin.segments') }}">{{ __('Segments') }}</a>
                 </li>
+                <li class="mb-4">
+                    <a href="{{ route('admin.news') }}">{{ __('News') }}</a>
+                </li>
             </ul>
         </div>
         <div>

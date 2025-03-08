@@ -9,8 +9,6 @@ use App\Http\Controllers\DownloadAppController;
 use App\Http\Controllers\Import\StravaController;
 use App\Http\Controllers\UploadController;
 use App\Http\Middleware\Authenticate;
-use App\Http\Middleware\VerifyCsrfToken;
-use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', ['as' => 'index', function () {
@@ -139,6 +137,11 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], static function () {
     Route::get('segments', \App\Http\Livewire\Admin\Segments::class)->name('admin.segments');
     Route::get('crashlogs/{issueId?}', \App\Http\Livewire\Admin\CrashLogs::class)->name('admin.crashlogs');
     Route::get('import/strava', \App\Http\Livewire\Admin\Import\Strava::class)->name('admin.import.strava.csv');
+
+    Route::group(['prefix' => 'news'], static function () {
+        Route::get('/', \App\Http\Livewire\Admin\News\Index::class)->name('admin.news');
+        Route::get('edit/{id?}', \App\Http\Livewire\Admin\News\Edit::class)->name('admin.news.edit');
+    });
 });
 
 /* Импорт данных */

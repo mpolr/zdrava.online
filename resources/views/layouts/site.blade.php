@@ -352,6 +352,9 @@
                     <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">{{ __('New items') }}</h2>
                     <ul class="text-gray-500 dark:text-gray-400 font-medium">
                         <li class="mb-4">
+                            <a href="{{ route('news') }}" class=" hover:underline">{{ __('News') }}</a>
+                        </li>
+                        <li class="mb-4">
                             <a href="{{ route('segments.explore') }}" class=" hover:underline">{{ __('Segments') }}</a>
                         </li>
                         <li class="mb-4">

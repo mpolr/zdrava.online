@@ -20,6 +20,7 @@
         "alpinejs": "^3.13.5",
         "ant-plus-next": "^0.3.2",
         "chart.js": "^4.4.7",
+        "ckeditor5": "^44.3.0",
         "events": "^3.3.0",
         "flowbite": "^1.6.5",
         "leaflet": "^1.9.4",
