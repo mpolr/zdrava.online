@@ -31,6 +31,9 @@
                     {{ __('Search') }}
                 </button>
             </div>
+            <div class="pt-6">
+                <a href="{{ route('admin.news.edit') }}" type="button" class="w-fit object-right px-4 py-2 bg-blue-500 hover:bg-blue-700 text-white font-bold rounded-full">{{ __('Create') }}</a>
+            </div>
             <div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-4">
                 <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                     <thead class="text-xs text-gray-700 uppercase bg-gray-100 dark:bg-gray-700 dark:text-gray-400">

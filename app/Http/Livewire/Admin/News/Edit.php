@@ -22,7 +22,11 @@ class Edit extends Component
 
     public function mount(?int $id = null): void
     {
-        $this->news = News::findOrFail($id);
+        if ($id === null) {
+            $this->news = new News();
+        } else {
+            $this->news = News::findOrFail($id);
+        }
     }
 
     public function render(): View|Application|Factory|\Illuminate\View\View|\Illuminate\Contracts\Foundation\Application
