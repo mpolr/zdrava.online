@@ -68,6 +68,7 @@
     "Connect": "Подключить",
     "Connection Closed Without Response": "Соединение закрыто без ответа",
     "Connection Timed Out": "Соединение не отвечает",
+    "Content": "Содержимое",
     "Continue": "Продолжить",
     "Create": "Создать",
     "Create :name": "Создать :name",
@@ -193,6 +194,7 @@
     "New": "Новый",
     "New :name": "Новый :name",
     "New items": "Новинки",
+    "News": "Новости",
     "Nickname": "Ник",
     "No": "Нет",
     "No announcements yet": "Анонсов пока нет",
@@ -247,6 +249,7 @@
     "Processing": "Идет обработка",
     "Profile successfully updated": "Профиль успешно обновлён",
     "Proxy Authentication Required": "Требуется аутентификация прокси",
+    "Published": "Опубликовано",
     "Railgun Error": "Ошибка соединения с Railgun",
     "Range Not Satisfiable": "Диапазон недостижим",
     "Record": "Запись",
@@ -338,6 +341,7 @@
     "This athlete has no training yet": "У этого спортсмена пока нет тренировок",
     "This password reset link will expire in :count minutes.": "Срок действия ссылки для сброса пароля истекает через :count минут.",
     "Time": "Время",
+    "Title": "Заголовок",
     "to": "по",
     "To complete registration, confirm your email address by clicking the button below.": "Для завершения регистрации подтвердите свой адрес электронной почты, нажав кнопку ниже.",
     "To prevent anyone other than you from deleting your account, you must confirm your request by email. We will send notification of the final step to": "Чтобы никто, кроме вас, не мог удалить ваш аккаунт, необходимо подтвердить запрос по электронной почте. Мы отправим уведомление о последнем этапе по адресу",
@@ -401,9 +405,5 @@
     "Your provided credentials do not match in our records": "Предоставленные вами учетные данные не совпадают с нашими записями",
     "Your tasks": "Ваши задачи",
     "Zdrava account deleting": "Удаление аккаунта Zdrava",
-    "Zdrava android app": "Zdrava для android",
-    "News": "Новости",
-    "Title": "Заголовок",
-    "Content": "Содержимое",
-    "Published": "Опубликовано"
+    "Zdrava android app": "Zdrava для android"
 }
