@@ -31,13 +31,13 @@
                         <canvas id="chart"></canvas>
                         <script type="application/json" id="chartData" nonce="{{ csp_nonce() }}">
                             {
-                                "labels": [
-                                    {!! collect(range(1, 12))->map(fn($monthNumber) => '"' . mb_strtoupper(Carbon::create($year, $monthNumber)->isoFormat('MMMM')) . '"')->join(', ') !!}
-                                ],
-                                "values": [
-                                    {!! collect(range(1, 12))->map(fn($monthNumber) => $monthlyStats[$monthNumber]['count'] ?? 0)->join(', ') !!}
-                                ]
-                            }
+                            "labels": [
+                                {!! collect(range(1, 53))->map(fn($weekNumber) => '"Неделя ' . $weekNumber . '"')->join(', ') !!}
+                            ],
+                            "values": [
+                                {!! collect(range(1, 53))->map(fn($weekNumber) => $weeklyStats[$weekNumber]['count'] ?? 0)->join(', ') !!}
+                            ]
+                        }
                         </script>
                     @else
                         <p class="text-gray-600 dark:text-gray-400">Нет данных для отображения.</p>
