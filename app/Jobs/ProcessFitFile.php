@@ -63,9 +63,9 @@ class ProcessFitFile implements ShouldQueue
             }
 
             if (!empty($data['sport']['name'])) {
-                $this->activity->name = $data['sport']['name'];
+                $this->activity->name = trim($data['sport']['name']);
             } elseif (!empty($data['developer_data']['title']['data'])) {
-                $this->activity->name = $data['developer_data']['title']['data'][0];
+                $this->activity->name = trim($data['developer_data']['title']['data'][0]);
             } else {
                 $this->activity->name = trans('Workout');
             }
@@ -92,11 +92,17 @@ class ProcessFitFile implements ShouldQueue
             } elseif (isset($data['session']['enhanced_avg_speed'])) {
                 $this->activity->avg_speed = $data['session']['enhanced_avg_speed'];
             }
+
             if (isset($data['session']['max_speed'])) {
                 $this->activity->max_speed = $data['session']['max_speed'];
             } elseif (isset($data['session']['enhanced_max_speed'])) {
                 $this->activity->max_speed = $data['session']['enhanced_max_speed'];
+            } else if (isset($data['record']['speed'])) {
+                $this->activity->max_speed = $this->getMaxSpeed($data['record']['speed']);
+            } elseif (isset($data['record']['enhanced_speed'])) {
+                $this->activity->max_speed = $this->getMaxSpeed($data['record']['enhanced_speed']);
             }
+
             if (isset($data['session']['total_ascent'])) {
                 $this->activity->elevation_gain = $data['session']['total_ascent'];
             } else {
@@ -255,5 +261,9 @@ class ProcessFitFile implements ShouldQueue
     private function byteArrayToString(array $byteArray): string
     {
         return pack('C*', ...$byteArray);
+    }
+
+    private function getMaxSpeed(array $data): float {
+        return max($data);
     }
 }
