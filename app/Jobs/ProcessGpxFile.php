@@ -26,6 +26,8 @@ class ProcessGpxFile implements ShouldQueue
 
     protected int $userId;
     protected string $fileName;
+
+    public int $tries = 3;
     public int $timeout = 180;
 
     public function __construct(int $userId, string $fileName)

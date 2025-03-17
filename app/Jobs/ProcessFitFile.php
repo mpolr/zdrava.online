@@ -26,6 +26,8 @@ class ProcessFitFile implements ShouldQueue
 
     protected Activities $activity;
     protected string $fileName;
+
+    public int $tries = 3;
     public int $timeout = 300;
 
     public function __construct(Activities $activity, string $fileName)

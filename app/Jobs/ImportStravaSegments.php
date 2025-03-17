@@ -8,7 +8,6 @@ use App\Models\StravaToken;
 use ASanikovich\LaravelSpatial\Geometry\Point;
 use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
@@ -22,10 +21,9 @@ class ImportStravaSegments implements ShouldQueue
     use Queueable;
     use SerializesModels;
 
-    /**
-     * Количество попыток выполнения задания.
-     */
-    public int $int = 1;
+    public int $tries = 3;
+    public int $timeout = 30;
+
     protected int $userId;
     protected Segment $segment;
 
