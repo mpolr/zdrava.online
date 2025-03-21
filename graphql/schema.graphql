@@ -1,5 +1,7 @@
 "A datetime string with format `Y-m-d H:i:s`, e.g. `2018-05-23 13:43:32`."
 scalar DateTime @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\DateTime")
+scalar Email @scalar(class: "MLL\\GraphQLScalars\\Email")
+scalar JSON @scalar(class: "MLL\\GraphQLScalars\\JSON")
 
 "Indicates what fields are available at the top level of a query operation."
 type Query {
@@ -7,29 +9,85 @@ type Query {
     me: User @auth @guard
 
     user (
-      id: ID @eq @rules(apply: ["prohibits:email", "required_without:email"])
-      email: String @eq @rules(apply: ["prohibits:id", "required_without:id", "email"])
+        id: ID @eq @rules(apply: ["prohibits:email", "required_without:email"])
+        email: Email @eq @rules(apply: ["prohibits:id", "required_without:id", "email"])
     ): User @find
 
     users(
       "Filters by name. Accepts SQL LIKE wildcards `%` and `_`."
       name: String @where(operator: "like")
     ): [User!]! @paginate(defaultCount: 10)
+
+    activities(id: ID!): [Activities!]! @field(resolver: "App\\GraphQL\\Queries\\ActivitiesQuery@resolve")
+    getSubscribers(id: ID!): [User!]! @field(resolver: "App\\GraphQL\\Queries\\SubscribersQuery@resolve")
+    getSubscriptions(id: ID!): [User!]! @field(resolver: "App\\GraphQL\\Queries\\SubscriptionsQuery@resolve")
+    feed: [Activities!]! @field(resolver: "App\\GraphQL\\Queries\\FeedQuery@resolve")
+    notifications: [Notification!]! @field(resolver: "App\\GraphQL\\Queries\\NotificationQuery@resolve")
+    unreadNotificationCount: Int! @field(resolver: "App\\GraphQL\\Queries\\UnreadNotificationCountQuery@resolve")
+    searchAthletes(query: String!): [User!]! @field(resolver: "App\\GraphQL\\Queries\\SearchAthletesQuery@resolve")
+}
+
+type Mutation {
+    subscribe(id: ID!): SubscriptionResponse @field(resolver: "App\\GraphQL\\Mutations\\SubscribeMutation@resolve")
+    subscribeConfirm(id: ID!, notificationId: String): SubscriptionResponse @field(resolver: "App\\GraphQL\\Mutations\\SubscribeConfirmMutation@resolve")
+    subscribeDecline(id: ID!, notificationId: String): SubscriptionResponse @field(resolver: "App\\GraphQL\\Mutations\\SubscribeDeclineMutation@resolve")
+    markNotificationsAsRead(notificationIds: [ID!]!): SubscriptionResponse @field(resolver: "App\\GraphQL\\Mutations\\MarkNotificationsAsReadMutation@resolve")
 }
 
 type User {
     id: ID!
-    name: String!
-    email: String!
+    first_name: String!
+    last_name: String!
+    nickname: String
+    email: Email!
     email_verified_at: DateTime
     created_at: DateTime!
     updated_at: DateTime!
-    activities: [Activities] @belongsTo
+    activities: [Activities] @hasMany @where(key: "status", value: "done")
+    confirmed_subscriptions: [User!]! @belongsToMany(relation: "confirmedSubscriptions")
+    confirmed_subscribers: [User!]! @belongsToMany(relation: "confirmedSubscribers")
+    notifications: [Notification!]! @hasMany
+    photo: String
+    private: Boolean!
+    activities_count: Int
+    subscriptions_count: Int
+    subscribers_count: Int
+    is_subscribed: Boolean
 }
 
 type Activities {
     id: ID!
+    user_id: Int!
+    sport: Int
+    sub_sport: Int
     name: String
     description: String
+    distance: Float
+    avg_speed: Float
+    max_speed: Float
+    elevation_gain: Int
+    started_at: DateTime!
+    finished_at: DateTime!
+    duration: Int
+    avg_heart_rate: Int
+    avg_cadence: Int
+    image: String
+    polyline: String
+    country: String
+    locality: String
     created_at: DateTime!
+    user: User @belongsTo
+}
+
+type Notification {
+    id: ID!
+    type: String!
+    data: JSON!
+    read_at: DateTime
+    created_at: DateTime!
+}
+
+type SubscriptionResponse {
+    success: Boolean!
+    message: String
 }
