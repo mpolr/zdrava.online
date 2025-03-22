@@ -1,7 +1,17 @@
 ## Zdrava.online readme
 [![Build Status](https://ci.mpolr.ru/api/badges/mpolr/zdrava.online/status.svg)](https://ci.mpolr.ru/mpolr/zdrava.online)
 
-Шаги которые нужно выполнить после разворачивания проекта:
+## Установка
+
+1. ```cp .env.example .env```
+2. ```composer install```
+3. ```php artisan key:generate```
+4. ```php artisan migrate```
+5. ```npm install```
+6. ```npm run build```
+7. ```php artisan livewire:publish --assets```
+
+## Шаги которые нужно выполнить после разворачивания проекта:
 
 - Создать символическую ссылку `public/storage` на папку `storage/app/public`: из контейнера php выполнить команду `php artisan storage:link`
 

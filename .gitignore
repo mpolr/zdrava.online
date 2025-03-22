@@ -27,3 +27,5 @@ storage/app/livewire-tmp/
 /.psalm/cache/
 
 storage/app/activities/1/images/
+
+public/vendor/livewire/
