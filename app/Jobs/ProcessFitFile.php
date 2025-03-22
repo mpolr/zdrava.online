@@ -86,7 +86,7 @@ class ProcessFitFile implements ShouldQueue
 
             if (isset($data['session']['total_distance'])) {
                 $this->activity->distance = $data['session']['total_distance'];
-            } else if (isset($data['lap']['total_distance'])) {
+            } elseif (isset($data['lap']['total_distance'])) {
                 $this->activity->distance = isset($data['lap']['total_distance']);
             }
             if (isset($data['session']['avg_speed'])) {
@@ -99,7 +99,7 @@ class ProcessFitFile implements ShouldQueue
                 $this->activity->max_speed = $data['session']['max_speed'];
             } elseif (isset($data['session']['enhanced_max_speed'])) {
                 $this->activity->max_speed = $data['session']['enhanced_max_speed'];
-            } else if (isset($data['record']['speed'])) {
+            } elseif (isset($data['record']['speed'])) {
                 $this->activity->max_speed = $this->getMaxSpeed($data['record']['speed']);
             } elseif (isset($data['record']['enhanced_speed'])) {
                 $this->activity->max_speed = $this->getMaxSpeed($data['record']['enhanced_speed']);
@@ -265,7 +265,8 @@ class ProcessFitFile implements ShouldQueue
         return pack('C*', ...$byteArray);
     }
 
-    private function getMaxSpeed(array $data): float {
+    private function getMaxSpeed(array $data): float
+    {
         return max($data);
     }
 }
