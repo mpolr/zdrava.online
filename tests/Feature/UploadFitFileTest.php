@@ -30,7 +30,7 @@ class UploadFitFileTest extends TestCase
         $user = User::factory()->create();
 
         // Указываем путь к реальному FIT-файлу
-        $fitFilePath = base_path('tests/Fixtures/MyWhoosh_Parramatta.fit');
+        $fitFilePath = base_path('tests/Fixtures/Test.fit');
         $fitFile = new UploadedFile(
             $fitFilePath,
             'MyWhoosh_Parramatta.fit',
@@ -56,11 +56,9 @@ class UploadFitFileTest extends TestCase
         // Проверяем, что задание ProcessFitFile было отправлено в очередь
         Queue::assertPushed(ProcessFitFile::class, static function ($job) use ($user, $realHashName) {
             $reflection = new \ReflectionClass($job);
-            $activityProperty = $reflection->getProperty('activity');
-            $activity = $activityProperty->getValue($job);
 
-            $filenameProperty = $reflection->getProperty('fileName');
-            $filename = $filenameProperty->getValue($job);
+            $activity = $reflection->getProperty('activity')->getValue($job);
+            $filename = $reflection->getProperty('fileName')->getValue($job);
 
             return $activity->user_id === $user->id && $filename === $realHashName;
         });
@@ -68,10 +66,25 @@ class UploadFitFileTest extends TestCase
         // Выполняем все задания из очереди (имитация завершения обработки)
         Bus::dispatchNow(new ProcessFitFile(Activities::first(), $realHashName));
 
+        $this->assertDatabaseCount('activities', 1);
+
         // Проверяем, что запись Activity была добавлена в базу данных
         $this->assertDatabaseHas('activities', [
             'user_id' => $user->id,
             'file' => $realHashName,
+            'sport' => 11,
+            'sub_sport' => 0,
+            'distance' => 2.07,
+            'avg_speed' => 5.6,
+            'max_speed' => 18.8,
+            'elevation_gain' => 76,
+        ]);
+
+        // Проверяем, что геокодер работает
+        $this->assertDatabaseHas('activities', [
+            'file' => $realHashName,
+            'country' => 'RU',
+            'locality' => 'Чебоксары',
         ]);
     }
 }

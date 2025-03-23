@@ -29,3 +29,5 @@ storage/app/livewire-tmp/
 storage/app/activities/1/images/
 
 public/vendor/livewire/
+
+.DS_Store
