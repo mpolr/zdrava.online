@@ -7,9 +7,10 @@
 2. ```composer install```
 3. ```php artisan key:generate```
 4. ```php artisan migrate```
-5. ```npm install```
-6. ```npm run build```
-7. ```php artisan livewire:publish --assets```
+5. ```php artisan db:seed```
+6. ```npm install```
+7. ```npm run build```
+8. ```php artisan livewire:publish --assets```
 
 ## Шаги которые нужно выполнить после разворачивания проекта:
 
