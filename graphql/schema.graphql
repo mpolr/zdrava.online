@@ -11,20 +11,20 @@ type Query {
     user (
         id: ID @eq @rules(apply: ["prohibits:email", "required_without:email"])
         email: Email @eq @rules(apply: ["prohibits:id", "required_without:id", "email"])
-    ): User @find
+    ): User @guard @find
 
     users(
       "Filters by name. Accepts SQL LIKE wildcards `%` and `_`."
       name: String @where(operator: "like")
-    ): [User!]! @paginate(defaultCount: 10)
+    ): [User!]! @guard @paginate(defaultCount: 10)
 
-    activities(id: ID!): [Activities!]! @field(resolver: "App\\GraphQL\\Queries\\ActivitiesQuery@resolve")
-    getSubscribers(id: ID!): [User!]! @field(resolver: "App\\GraphQL\\Queries\\SubscribersQuery@resolve")
-    getSubscriptions(id: ID!): [User!]! @field(resolver: "App\\GraphQL\\Queries\\SubscriptionsQuery@resolve")
-    feed: [Activities!]! @field(resolver: "App\\GraphQL\\Queries\\FeedQuery@resolve")
-    notifications: [Notification!]! @field(resolver: "App\\GraphQL\\Queries\\NotificationQuery@resolve")
-    unreadNotificationCount: Int! @field(resolver: "App\\GraphQL\\Queries\\UnreadNotificationCountQuery@resolve")
-    searchAthletes(query: String!): [User!]! @field(resolver: "App\\GraphQL\\Queries\\SearchAthletesQuery@resolve")
+    activities(id: ID!): [Activities!]! @guard @field(resolver: "App\\GraphQL\\Queries\\ActivitiesQuery@resolve")
+    getSubscribers(id: ID!): [User!]! @guard @field(resolver: "App\\GraphQL\\Queries\\SubscribersQuery@resolve")
+    getSubscriptions(id: ID!): [User!]! @guard @field(resolver: "App\\GraphQL\\Queries\\SubscriptionsQuery@resolve")
+    feed: [Activities!]! @guard @field(resolver: "App\\GraphQL\\Queries\\FeedQuery@resolve")
+    notifications: [Notification!]! @guard @field(resolver: "App\\GraphQL\\Queries\\NotificationQuery@resolve")
+    unreadNotificationCount: Int! @guard @field(resolver: "App\\GraphQL\\Queries\\UnreadNotificationCountQuery@resolve")
+    searchAthletes(query: String!): [User!]! @guard @field(resolver: "App\\GraphQL\\Queries\\SearchAthletesQuery@resolve")
 }
 
 type Mutation {
@@ -39,19 +39,16 @@ type User {
     first_name: String!
     last_name: String!
     nickname: String
-    email: Email!
+    email: String!
     email_verified_at: DateTime
     created_at: DateTime!
     updated_at: DateTime!
     activities: [Activities] @hasMany @where(key: "status", value: "done")
-    confirmed_subscriptions: [User!]! @belongsToMany(relation: "confirmedSubscriptions")
-    confirmed_subscribers: [User!]! @belongsToMany(relation: "confirmedSubscribers")
+    subscriptions: [User!]! @hasMany
+    subscribers: [User!]! @hasMany
     notifications: [Notification!]! @hasMany
     photo: String
     private: Boolean!
-    activities_count: Int
-    subscriptions_count: Int
-    subscribers_count: Int
     is_subscribed: Boolean
 }
 
