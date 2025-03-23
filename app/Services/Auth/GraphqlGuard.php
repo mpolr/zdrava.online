@@ -72,8 +72,8 @@ class GraphqlGuard implements Guard
         $this->user = $user;
     }
 
-    public function hasUser(): void
+    public function hasUser(): bool
     {
-        // TODO: Implement hasUser() method.
+        return !is_null($this->user);
     }
 }
