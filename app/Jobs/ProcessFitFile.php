@@ -28,7 +28,7 @@ class ProcessFitFile implements ShouldQueue
     protected string $fileName;
 
     public int $tries = 3;
-    public int $timeout = 300;
+    public int $timeout = 600;
 
     public function __construct(Activities $activity, string $fileName)
     {
@@ -162,7 +162,14 @@ class ProcessFitFile implements ShouldQueue
             $this->activity->polyline = Polyline::convertFitLocationToPolyline($data['record']);
 
             if ($this->activity->start_position_lat !== 0.0 || $this->activity->start_position_long !== 0.0) {
-                $geo = GpxTools::geocode($this->activity->start_position_lat, $this->activity->start_position_long);
+                //$geo = GpxTools::geocode($this->activity->start_position_lat, $this->activity->start_position_long);
+                // FIXME: Координаты не геокодируются, очередь в rabbit встаёт колом
+                // возможно из-за того что в NekoBox dns-сервер не мог отрезолвить имя хоста
+                // как вариант - надо добавить тайм-аут к запросу геокодера и возвращать null
+                // если что-то пошло не так
+                // Пока всё не очень: https://github.com/geocoder-php/GeocoderLaravel/issues/197
+                //$geo = GpxTools::geocode($this->activity->start_position_lat, $this->activity->start_position_long);
+                $geo = null;
                 if ($geo) {
                     $this->activity->country = $geo['country'];
                     $this->activity->locality = $geo['locality'];

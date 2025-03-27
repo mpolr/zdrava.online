@@ -14,6 +14,7 @@ use Fit\SelectionType;
 use Fit\Sport;
 use Fit\Writer;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 use Livewire\Component;
@@ -28,6 +29,7 @@ class Explore extends Component
     public string $activityType = 'Ride';
     public string $search = '';
     private int $limit = 11;
+    protected $listeners = ['mapBoundsChanged'];
 
     public function setActivityType(string $type = 'Ride'): void
     {
@@ -57,6 +59,8 @@ class Explore extends Component
         $this->segments = Segment::select(['id', 'name', 'distance', 'total_elevation_gain', 'polyline', 'start_latlng'])
             ->where('name', '!=', null)
             ->where('private', '!=', 1)
+            ->whereNotNull('start_latlng')
+            ->whereNotNull('end_latlng')
             ->limit($this->limit)
             ->get();
     }
@@ -130,10 +134,10 @@ class Explore extends Component
                 'uuid' => 'lap' . $segment->id,
                 'total_distance' => $segment->distance / 1000,
                 'total_ascent' => !empty($segment->total_elevation_gain) ? (int)$segment->total_elevation_gain : 0,
-                'swc_lat' => GpxTools::convertCoordinates($borderPoints['SW'][0]),
-                'swc_long' => GpxTools::convertCoordinates($borderPoints['SW'][1]),
-                'nec_lat' => GpxTools::convertCoordinates($borderPoints['NE'][0]),
-                'nec_long' => GpxTools::convertCoordinates($borderPoints['NE'][1]),
+                'swc_lat' => GpxTools::convertCoordinates($borderPoints['SW'][0][0]),
+                'swc_long' => GpxTools::convertCoordinates($borderPoints['SW'][0][1]),
+                'nec_lat' => GpxTools::convertCoordinates($borderPoints['NE'][0][0]),
+                'nec_long' => GpxTools::convertCoordinates($borderPoints['NE'][0][1]),
                 'message_index' => 1,
                 'start_position_lat' => GpxTools::convertCoordinates($segment->start_latlng->latitude),
                 'start_position_long' => GpxTools::convertCoordinates($segment->start_latlng->longitude),
@@ -158,8 +162,8 @@ class Explore extends Component
             }
 
             $data->add('segment_point', [
-                'position_lat' => GpxTools::convertCoordinates($point[0]),
-                'position_long' => GpxTools::convertCoordinates($point[1]),
+                'position_lat' => GpxTools::convertCoordinates($point[0][0]),
+                'position_long' => GpxTools::convertCoordinates($point[0][1]),
                 'altitude' => 1, // TODO: Получить высоту точки
                 'distance' => $distance,
                 'message_index' => $index,
@@ -183,5 +187,45 @@ class Explore extends Component
         );
 
         //unlink($filepath);
+    }
+
+    /**
+     * @throws \JsonException
+     */
+    public function mapBoundsChanged($bounds): void
+    {
+        // Формируем полигон с границами
+        $polygon = "POLYGON((
+            {$bounds['west']} {$bounds['south']},
+            {$bounds['east']} {$bounds['south']},
+            {$bounds['east']} {$bounds['north']},
+            {$bounds['west']} {$bounds['north']},
+            {$bounds['west']} {$bounds['south']}
+        ))";
+
+        $segments = DB::table('segments')
+            ->select(
+                'id',
+                'name',
+                'distance',
+                'total_elevation_gain',
+                'polyline',
+                DB::raw('ST_X(start_latlng) as start_lat'),
+                DB::raw('ST_Y(start_latlng) as start_lng')
+            )
+            ->whereRaw("MBRContains(ST_GeomFromText(?), start_latlng)", [$polygon])
+            ->whereNotNull('start_latlng')
+            ->whereNotNull('end_latlng')
+            ->get();
+
+        // Преобразуем результат в JSON
+        $this->segments = $segments->map(function ($segment) {
+            // Преобразуем start_latlng в координаты
+            $segment->start_latlng['coordinates'] = ['0' => $segment->start_lat, '1' => $segment->start_lng];
+            unset($segment->start_lat, $segment->start_lng);
+            return $segment;
+        });
+
+        $this->emit('updateMap', json_encode($this->segments, JSON_THROW_ON_ERROR));
     }
 }

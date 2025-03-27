@@ -35,6 +35,10 @@ return new class extends Migration
             $table->float('elevation_low')->nullable();
             $table->timestamps();
         });
+
+        // Обновляем значения для start_latlng и end_latlng, добавляя SRID = 4326
+        DB::statement('UPDATE segments SET start_latlng = ST_GeomFromText(CONCAT("POINT(", ST_X(start_latlng), " ", ST_Y(start_latlng), ")"), 4326) WHERE start_latlng IS NOT NULL');
+        DB::statement('UPDATE segments SET end_latlng = ST_GeomFromText(CONCAT("POINT(", ST_X(end_latlng), " ", ST_Y(end_latlng), ")"), 4326) WHERE end_latlng IS NOT NULL');
     }
 
     public function down(): void

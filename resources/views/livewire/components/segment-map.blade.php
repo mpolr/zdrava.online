@@ -30,11 +30,20 @@
                 zoom: 14
             });
 
-            map.on('dragend', function (e) {
-                //console.log("console.log", e);
-                //console.log(e.target.latLngToContainerPoint);
-                //console.log(map.getBounds());
-                //Livewire.emit('mapChanged', map.getBounds());
+            map.on('moveend', function () {
+                if (map.getZoom() >= 11) {
+                    let bounds = map.getBounds();
+
+                    Livewire.emit('mapBoundsChanged', {
+                        north: bounds.getNorth(),
+                        south: bounds.getSouth(),
+                        east: bounds.getEast(),
+                        west: bounds.getWest()
+                    });
+                } else {
+                    let msg = '{{ trans('Your selected area is too large!') }}';
+                    Toaster.warning(msg);
+                }
             });
 
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -54,7 +63,7 @@
                 fillOpacity: 0.9,
             };
 
-            dataSet.forEach((item) => {
+            function addSegmentToMap(item) {
                 let popupText = `<b>${item.name}</b><hr class="h-px my-2 bg-gray-200 border-0 dark:bg-gray-700">{{ __('Distance') }}: ${item.distance} m<br>
                             {{ __('Elevation gain') }}: ${item.total_elevation_gain}<br>`;
 
@@ -85,10 +94,27 @@
                     .addTo(myFGMarker);
 
                 marker.bindPopup(popupText, {closeButton: false});
+            }
+
+            // Добавляем сегменты на карту
+            dataSet.forEach((item) => {
+                addSegmentToMap(item);
             });
 
             myFGMarker.addTo(map);
             map.fitBounds(myFGMarker.getBounds());
+
+            Livewire.on('updateMap', (segments) => {
+                segments = JSON.parse(segments);
+
+                myFGMarker.clearLayers();
+
+                segments.forEach((item) => {
+                    addSegmentToMap(item);
+                });
+
+                myFGMarker.addTo(map);
+            });
         });
 
         function openPopup(id) {
