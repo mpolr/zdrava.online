@@ -6,7 +6,3 @@
 .ck-editor__editable_inline {
     min-height: 250px;
 }
-
-.prose {
-    max-width: 100% !important;
-}

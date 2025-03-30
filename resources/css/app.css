@@ -21,3 +21,13 @@ html {
 .map-tiles-dark {
     filter:var(--map-tiles-filter, none);
 }
+
+.prose {
+    max-width: 100% !important;
+}
+
+.image-style-side {
+    float: right;
+    margin-left: var(--ck-image-style-spacing);
+    max-width: 50%;
+}

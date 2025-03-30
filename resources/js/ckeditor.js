@@ -5,6 +5,7 @@ import {
     Bold,
     Highlight,
     HorizontalLine,
+    Image, ImageInsert, ImageToolbar, ImageCaption, ImageStyle, ImageResize, LinkImage,
     Italic,
     Font,
     SourceEditing,
@@ -26,6 +27,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 Bold,
                 Highlight,
                 HorizontalLine,
+                Image, ImageInsert, ImageToolbar, ImageCaption, ImageStyle, ImageResize, LinkImage,
                 Italic,
                 Underline,
                 Font,
@@ -45,10 +47,26 @@ document.addEventListener('DOMContentLoaded', function () {
                 '|',
                 'fontSize', 'fontFamily', 'fontColor', 'fontBackgroundColor', 'highlight',
                 '|',
-                'link',
+                'link', 'insertImage',
                 '|',
                 'blockQuote', 'codeBlock', 'horizontalLine', 'sourceEditing'
-            ]
+            ],
+            image: {
+                toolbar: [
+                    'imageStyle:block',
+                    'imageStyle:side',
+                    '|',
+                    'toggleImageCaption',
+                    'imageTextAlternative',
+                    '|',
+                    'linkImage'
+                ],
+                insert: {
+                    // If this setting is omitted, the editor defaults to 'block'.
+                    // See explanation below.
+                    type: 'auto'
+                }
+            }
         } )
         .then( editor => {
             // Заменяем Enter на Shift+Enter чтобы не создавать лишние теги <p>
