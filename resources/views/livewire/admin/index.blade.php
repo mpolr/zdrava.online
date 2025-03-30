@@ -1,5 +1,18 @@
 @section('title', __('Admin panel') . ' | Zdrava')
+@vite('resources/js/chart.js')
 <main class="container mx-auto px-0 py-12 max-w-screen-lg">
+    <!-- График регистраций пользователей -->
+    <div class="w-full mx-auto mb-8">
+        <script type="application/json" id="chartData" nonce="{{ csp_nonce() }}">
+        {
+            "label": {!! json_encode('Количество регистраций за последний месяц') !!},
+            "labels": {!! json_encode($userRegistrations['labels']) !!},
+            "values": {!! json_encode($userRegistrations['values']) !!}
+        }
+        </script>
+        <canvas id="chart" class="w-full h-[200px]"></canvas>
+    </div>
+
     <div class="grid grid-cols-1 gap-4">
         <div class="w-full">
             @error('admin') @livewire('toast.errors') @enderror

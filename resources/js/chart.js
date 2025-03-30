@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", () => {
             if (chartData.values) {
                 // Для графиков с одним массивом данных (например, количество тренировок)
                 datasets.push({
-                    label: "Количество тренировок",
+                    label: chartData.label || "Количество тренировок",
                     data: chartData.values,
                     backgroundColor: "rgba(208, 56, 1, 0.4)",
                     borderColor: "rgba(208, 56, 1, 1)",
@@ -163,7 +163,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     },
                     scales: {
                         x: {
-                            display: false,
+                            display: true,
                         },
                         y: {
                             beginAtZero: true,
