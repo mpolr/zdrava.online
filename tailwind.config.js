@@ -15,5 +15,6 @@ export default {
     darkMode: "class",
     plugins: [
         flowbitePlugin,
+        require('@tailwindcss/typography'),
     ]
 };

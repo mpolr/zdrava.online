@@ -11,7 +11,7 @@
 
 <div wire:ignore>
     <div id="component-data" data-route="{{ $route }}" data-attr="{{ $attr }}"></div>
-    <div class="py-6">
+    <div class="py-6 prose">
         <div id="editor" class="h-[400px]">{!! $model !!}</div>
     </div>
 </div>

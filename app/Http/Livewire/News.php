@@ -16,7 +16,7 @@ class News extends Component
     public function mount(?int $newsId = null): void
     {
         if (!$newsId) {
-            $this->news = NewsModel::where('published', 1)->orderBy('created_at', 'asc')->get();
+            $this->news = NewsModel::where('published', 1)->orderBy('created_at', 'DESC')->get();
         } else {
             $this->newsId = $newsId;
             $this->news = NewsModel::where('published', 1)->findOrFail($newsId);

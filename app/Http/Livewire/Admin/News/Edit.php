@@ -17,7 +17,7 @@ class Edit extends Component
     protected array $rules = [
         'news.title' => 'string|min:2|max:64',
         'news.content' => 'string|max:65535',
-        'news.published' => 'boolean',
+        'news.published' => 'boolean|nullable',
     ];
 
     public function mount(?int $id = null): void

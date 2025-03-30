@@ -19,7 +19,7 @@
                         <h3 class="mb-1 text-xl font-medium text-gray-900 dark:text-white">{{ $news->title }}</h3>
                         <span class="text-xs text-gray-400 dark:text-gray-500">{{ $news->created_at }}</span>
                         <div class="flex flex-col p-4 py-6">
-                            <span class="text-sm text-gray-500 dark:text-gray-400">
+                            <span class="prose mx-4 text-sm text-gray-500 dark:text-gray-400">
                                 {!! $news->content !!}
                             </span>
                         </div>

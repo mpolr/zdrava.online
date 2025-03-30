@@ -31,11 +31,14 @@
                                 <h3 class="mb-1 text-xl font-medium text-gray-900 dark:text-white">{{ $item->title }}</h3>
                             </a>
                             <span class="text-xs text-gray-400 dark:text-gray-500">{{ $item->created_at }}</span>
-                            <div class="flex flex-col p-4 py-6">
+                            <article class="flex flex-col p-4 py-6 prose">
                                 <span class="text-sm text-gray-500 dark:text-gray-400">
                                     {!! $item->content !!}
                                 </span>
-                            </div>
+                            </article>
+                            @if(!$loop->last)
+                                <hr class="h-px mt-4 mb-8 bg-gray-300 border-0 dark:bg-gray-600">
+                            @endif
                         @endforeach
                     @else
                         <div class="grid text-sm m-4 grid-cols-1 gap-6 sm:grid-cols-3">

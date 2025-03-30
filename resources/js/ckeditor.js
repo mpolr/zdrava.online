@@ -3,15 +3,18 @@ import {
     Essentials,
     Paragraph,
     Bold,
+    Highlight,
+    HorizontalLine,
     Italic,
     Font,
     SourceEditing,
     CodeBlock,
     Link,
+    List,
     Underline, BlockQuote, RemoveFormat,
 } from 'ckeditor5';
 
-import 'ckeditor5/translations/ru.umd.js'
+import 'ckeditor5/translations/ru.umd.js';
 
 document.addEventListener('DOMContentLoaded', function () {
     ClassicEditor
@@ -21,10 +24,13 @@ document.addEventListener('DOMContentLoaded', function () {
                 Essentials,
                 Paragraph,
                 Bold,
+                Highlight,
+                HorizontalLine,
                 Italic,
                 Underline,
                 Font,
                 Link,
+                List,
                 SourceEditing,
                 CodeBlock,
                 BlockQuote,
@@ -35,14 +41,27 @@ document.addEventListener('DOMContentLoaded', function () {
                 '|',
                 'bold', 'italic', 'underline', 'removeFormat',
                 '|',
-                'fontSize', 'fontFamily', 'fontColor', 'fontBackgroundColor',
+                'bulletedList', 'numberedList',
+                '|',
+                'fontSize', 'fontFamily', 'fontColor', 'fontBackgroundColor', 'highlight',
                 '|',
                 'link',
                 '|',
-                'blockQuote', 'codeBlock', 'sourceEditing'
+                'blockQuote', 'codeBlock', 'horizontalLine', 'sourceEditing'
             ]
         } )
         .then( editor => {
+            // Заменяем Enter на Shift+Enter чтобы не создавать лишние теги <p>
+            // https://github.com/ckeditor/ckeditor5/issues/1141#issuecomment-403403526
+            // editor.editing.view.document.on(
+            //     'enter',
+            //     ( evt, data ) => {
+            //         editor.execute('shiftEnter');
+            //         //Cancel existing event
+            //         data.preventDefault();
+            //         evt.stop();
+            //     }, {priority: 'high' });
+
             editor.model.document.on('change:data', (e) => {
                 let componentData = document.querySelector('#component-data');
                 let route = componentData.getAttribute('data-route');
