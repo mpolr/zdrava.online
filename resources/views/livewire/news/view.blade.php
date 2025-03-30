@@ -1,5 +1,5 @@
-@section('title', __('News') . ' | Zdrava')
-@section('description', __('Zdrava news'))
+@section('title', $news->title . ' | Zdrava')
+@section('description', $news->title . '|' .  __('News') . ' | Zdrava')
 <div class="container mx-auto px-0 py-12">
     <div class="flex sm:flex-row md:flex-row flex-col gap-4">
         {{-- Правый контейнер --}}
