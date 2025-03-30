@@ -106,3 +106,4 @@ steps:
         - docker exec php82 sh -c "cd /var/www/zdrava.online && git pull --rebase origin master && composer install --optimize-autoloader"
         - docker exec php82 sh -c "cd /var/www/zdrava.online && php artisan migrate"
         - docker exec php82 sh -c "cd /var/www/zdrava.online && php artisan livewire:publish --assets"
+        - docker exec php82 sh -c "cd /var/www/zdrava.online && yarn install && yarn run build"
