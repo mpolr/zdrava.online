@@ -29,6 +29,8 @@ class ProcessFitFile implements ShouldQueue
 
     public int $tries = 3;
     public int $timeout = 90;
+    public bool $failOnTimeout = true;
+    public int $maxExceptions = 1;
 
     public function __construct(Activities $activity, string $fileName)
     {
